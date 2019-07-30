@@ -23,7 +23,7 @@ class UsersTableSeeder extends Seeder
             'password'       => bcrypt('pass'),
             'sex'            => 'Male',
             'is_active'      => 1,
-            'remember_token' => str_random(100)
+            'api_token' => str_random(100)
         ]);
 
         User::create([
@@ -36,7 +36,7 @@ class UsersTableSeeder extends Seeder
             'password'       => bcrypt('pass'),
             'sex'            => 'Female',
             'is_active'      => 1,
-            'remember_token' => str_random(100)
+            'api_token' => str_random(100)
         ]);
 
         User::create([
@@ -49,7 +49,7 @@ class UsersTableSeeder extends Seeder
             'password'       => bcrypt('pass'),
             'sex'            => 'Male',
             'is_active'      => 1,
-            'remember_token' => str_random(100)
+            'api_token' => str_random(100)
         ]);
 
 

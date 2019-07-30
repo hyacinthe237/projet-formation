@@ -9,8 +9,8 @@ class Phase extends Model
     protected $table = 'phases';
     protected $guarded = ['id'];
 
-    public function thematique () {
-        return $this->belongsTo(Thematique::class, 'thematique_id');
+    public function thematiques () {
+        return $this->hasMany(Thematique::class);
     }
 
     public function getDateAttribute () {
