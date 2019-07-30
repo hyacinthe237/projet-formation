@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\Thematique;
+use App\Models\Phase;
 
 
 class ThematiquesTableSeeder extends Seeder

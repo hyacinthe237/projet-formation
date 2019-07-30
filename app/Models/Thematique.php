@@ -22,7 +22,7 @@ class Thematique extends Model
         return $this->hasMany(Formation::class);
     }
 
-    public function phase () {
+    public function phases () {
         return $this->hasMany(Phase::class);
     }
 }
