@@ -14,11 +14,11 @@ class UserHelper
         return $last_user ? $last_user->number + rand(1, 3) : 1010103;
     }
 
-    public static function makeRememberToken()
+    public static function makeApiToken()
     {
         $token = self::randomPassword(100);
-        if(User::where('remember_token', $token)->first()){
-            $this->makeRememberToken();
+        if(User::where('api_token', $token)->first()){
+            self::makeApiToken();
         }
         return $token;
     }
