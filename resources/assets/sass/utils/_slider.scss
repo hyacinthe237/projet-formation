@@ -1,0 +1,40 @@
+.slider {
+    max-width:1200px;
+    margin:auto;
+
+    img {
+        width:100%;
+        height: auto;
+    }
+}
+
+.direction {
+    text-decoration:none;
+    font-size: 30px;
+}
+
+.slider-litle {
+    margin:auto;
+
+    div {
+        margin-top:5px;
+        margin:auto;
+        display: block;
+    }
+
+    ul {
+
+        li {
+            margin:auto;
+
+            a {
+                cursor: pointer;
+
+                img {
+                    max-height:50px;
+                    max-width:100px;
+                }
+            }
+        }
+    }
+}

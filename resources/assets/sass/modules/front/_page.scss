@@ -1,0 +1,82 @@
+.full-page {
+    width: 100%;
+    padding: 40px 0;
+
+    &.page-white {
+        background-color: white;
+    }
+
+    .address {
+
+        h4 {
+            margin-bottom: 40px;
+        }
+
+        .details {
+            margin-bottom: 20px;
+            font-size: 16px;
+
+            i {
+                color: $brand-primary;
+                margin-right: 20px;
+                font-size: 30px;
+            }
+
+            span {
+                color: $brand-teal;
+                margin-left: 50px;
+            }
+
+            li {
+                padding-left: 40px;
+            }
+        }
+    }
+}
+
+
+.faq-menu {
+    margin-bottom: 20px;
+
+    a {
+        color: #333;
+        cursor: pointer;
+        font-weight: 5000;
+        border: 1px solid white;
+        background-color: $navBackgroundColour;
+
+        &:hover,
+        &:focus,
+        &.active
+        { background-color: $navActiveBackgroundColour }
+    }
+}
+
+.faq-cat {
+    background-color: $body-bg;
+    width: 100%;
+    padding: 20px 0;
+    margin-bottom: 20px;
+    border-radius: 4px;
+
+    h4 {
+        padding-left: 20px;
+        margin-bottom: 20px;
+        color: $brand-wise;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .faq-item {
+        border-bottom: 1px solid #ccc;
+        padding: 0 20px;
+
+        h5 {
+            font-size: 16px;
+            color: $brand-teal;
+            cursor: pointer;
+        }
+
+        // p { display: none }
+    }
+}

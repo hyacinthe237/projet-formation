@@ -1,0 +1,222 @@
+.admin-search-container {
+    width: 100%;
+    padding: 25px 20px;
+    background-color: white;
+    margin-bottom: 60px;
+    z-index: 2;
+    border-radius: 3px;
+
+    h4 {
+        text-transform: uppercase;
+        font-size: 1.2em;
+        font-weight: bold;
+        border-bottom: 1px solid #e6e6e6;
+        padding-bottom: 15px;
+    }
+
+    .form-control-feedback {
+        top: 10px;
+    }
+}
+
+.search-results {
+    h5 {
+        color: $brand-primary;
+        font-weight: 600;
+    }
+
+    h6 {
+        font-weight: 500;
+        font-size: 14px;
+        color: $brand-teal;
+    }
+
+    .result-row {
+        margin-top:10px;
+        border-top: 1px solid #ccc;
+
+        .name {
+            padding:10px 20px;
+            background-color: $brand-darker;
+            color: white;
+            border-top: 4px solid $brand-yellow;
+            text-transform: uppercase;
+            display: inline-block;
+            border-radius: 0 0 6px 0;
+        }
+
+        .image {
+            padding: 10px;
+        }
+
+        .icons {
+            width: 100%;
+            position: relative;
+            display: block;
+            display: flex;
+
+            .icon {
+                flex: 1;
+                display: inline-block;
+                background-color: #f1f1f2;
+                color: $brand-teal;
+                text-align: center;
+                font-weight: bold;
+                line-height: 30px;
+
+                span { font-size: 13px }
+
+                i {
+                    background-color: #d1d1d1;
+                    float: left;
+                    width: 40px;
+                    text-align: center;
+                    height: 30px;
+                    padding-top: 7px;
+                }
+            }
+        }
+
+        .specs {
+            margin-top: 20px;
+            font-size: 14px;
+
+            .ion-checkmark { color: $brand-success }
+        }
+
+        .rates {
+            width: 100%;
+            display: block;
+            display: flex;
+
+            .rate {
+                flex: 1;
+                position: relative;
+                display: inline-block;
+                text-align: center;
+                padding-top: 20px;
+
+                .amount {
+                    display: inline-block;
+                    background-color: red;
+                    border-radius: 50%;
+                    width: 130px;
+                    height: 130px;
+                    text-align: center;
+                    font-size: 16px;
+                    color: white;
+                    padding-top: 30px;
+                    box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+
+                    span {
+                        font-size: 2.1em;
+                        font-weight: bold;
+                    }
+
+                    .out { display: none }
+                    .dollars { display: block }
+                }
+
+                small {
+                    font-size: 12px;
+                    line-height: 13px;
+                }
+
+                .type {
+                    margin-top: 10px;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+
+                .metas {
+                    li {
+                        line-height: 15px;
+                        font-size: 12px;
+                        font-weight: 500;
+                        color: $brand-teal;
+                    }
+                }
+            }
+
+            &.sold-out {
+                .amount {
+                    background-color: $brand-dark-light;
+
+                    .dollars { display: none }
+
+                    .out {
+                        display: block;
+                        font-weight: bold;
+                        font-size: 25px;
+                        line-height: 35px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.booking-options {
+    padding-bottom: 60px;
+
+    .option {
+        padding: 20px 0;
+        border-top: 1px solid #ddd;
+
+        .option-title {
+            cursor: pointer;
+            font-weight: bold;
+
+            i {
+                font-size: 25px;
+                margin-right: 3px;
+                margin-top:10px;
+            }
+        }
+
+        .option-desc {
+            cursor: pointer;
+            font-size: 16px;
+            i { color: $brand-presumi }
+        }
+
+        .option-amount {
+            font-weight: bold;
+
+            small {
+                font-weight: 500;
+                font-size: 13px;
+            }
+        }
+    }
+}
+
+.booking-steps {
+    background-color: $brand-darker;
+    color: white;
+    text-align: center;
+
+    .steps {
+        padding: 30px 0;
+
+        .step {
+            .number {
+                width: 50px;
+                height: 50px;
+                border-radius: 50px;
+                margin: 0 auto;
+                font-size: 1.5em;
+                font-weight: 500;
+                padding-top: 5px;
+                background-color: $brand-dark-light;
+                color: $brand-grey;
+                margin-bottom: 10px;
+
+                &.active {
+                    background-color: $brand-yellow-dark;
+                    color: $brand-darker;
+                }
+            }
+        }
+    }
+}

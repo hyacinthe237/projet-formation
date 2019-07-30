@@ -1,0 +1,53 @@
+.location-page {
+    width: 100%;
+    background-color: white;
+
+    .location-item {
+        width: 100%;
+        color: $brand-dark;
+        border-bottom: 2px dashed $brand-dark;
+        padding-bottom: 30px;
+        margin-top: 30px;
+
+        .list {
+            margin-top: 10px;
+            padding: 20px;
+            border-left: 4px solid $brand-orange;
+            margin-bottom: 15px;
+
+            .title {
+                font-size: 20px;
+                font-weight: 600;
+                color: $brand-orange;
+            }
+
+            .desc {
+                font-size: 16px;
+                color: $brand-teal;
+
+                i {
+                    font-size: 14px;
+                    padding-right: 5px;
+                    color: $brand-dark;
+                }
+            }
+
+            .days {
+                font-size: 12px;
+
+                .day {
+                    color: $brand-teal;
+                    font-size: 15px;
+
+                    .day-name {
+                        color: $brand-dark;
+                    }
+
+                    i {
+                        color: $brand-dark;
+                    }
+                }
+            }
+        }
+    }
+}

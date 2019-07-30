@@ -1,0 +1,47 @@
+.nav-tabs {
+    border-bottom: 1px solid #acc0d3;
+
+    > li {
+        > a {
+            padding: 10px 30px;
+            font-size: 15px;
+            font-weight: 600;
+            color: $primaryColour;
+            cursor: pointer;
+
+            &:hover,
+            &:focus {
+                border: 0px;
+                background-color: transparent;
+            }
+
+            .badge {
+                vertical-align: super;
+                font-size: 70%;
+                background-color: $primaryColour;
+                color: white;
+                padding: 3px 6px;
+            }
+        }
+
+        &.active {
+            > a {
+                border: 0px;
+                border-bottom: 3px solid $fontColour;
+                background-color: transparent;
+                color: $fontColour;
+
+                &:hover,
+                &:focus {
+                    border: 0px;
+                    border-bottom: 3px solid $fontColour;
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+}
+
+.tab-content {
+    margin-top: 15px;
+}

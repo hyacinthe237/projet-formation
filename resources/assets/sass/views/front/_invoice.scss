@@ -1,0 +1,46 @@
+.invoice-container {
+    background-color: white;
+    width: 100%;
+    min-height: 100px;
+    padding: 40px;
+    border-radius: 5px;
+}
+
+
+.invoice-container,
+.invoice-pdf {
+    .invoice-number {
+        font-weight: 600;
+        font-size: 1em;
+    }
+
+    .invoice-date, .profiles, .summary {
+        color: $brand-teal;
+    }
+
+    .company {
+        color: $brand-teal;
+        font-size: 15px;
+    }
+}
+
+
+.summary {
+    margin-top: 20px;
+    padding-bottom: 20px;
+
+    .summary-items {
+        background-color: #f1f5fa;
+        padding: 0 20px;
+        margin-top: 10px;
+        border-radius: 4px;
+    }
+
+    .summary-item {
+        border-top: 1px solid #dfdfdf;
+        padding: 10px 0;
+        @include ellipsis;
+
+        &.no-border { border: 0 }
+    }
+}

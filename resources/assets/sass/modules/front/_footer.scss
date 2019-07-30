@@ -1,0 +1,65 @@
+.site-footer {
+    background-color: $footerBackground;
+    width: 100%;
+    min-height: 300px;
+    color: white;
+
+    .container {
+        padding-top: 40px;
+    }
+
+    hr {
+        border-color: $brand-wise;
+    }
+}
+
+
+.site-footer-nav {
+    text-align: right;
+
+    li {
+        margin-right: 10px;
+        margin-bottom: 10px;
+        font-size: 15px;
+
+        a { color: white }
+    }
+
+    .social {
+        width: 30px;
+        float: left;
+    }
+
+    i {
+        padding: 6px 15px;
+        border-radius: 50px;
+        background-color: $brand-warning;
+        color: white;
+        font-size: 22px;
+    }
+
+    @media (max-width: $screen-xs) {
+        li {
+            display: block;
+            margin-bottom: 5px;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            background-color: $brand-yellow;
+        }
+
+        .social {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            text-align: center;
+            float: none;
+        }
+    }
+}
+
+.all-logos {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}

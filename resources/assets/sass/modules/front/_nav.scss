@@ -1,0 +1,224 @@
+.navbar-default {
+    background-color: $navBackgroundColour;
+    border-color: none;
+    border-bottom: none;
+    font-family: Averta, 'PT Sans', Avenir, sans-serif;
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+
+    .navbar-toggle {
+        color: white;
+
+        &:focus,
+        &:hover {
+            color: white;
+        }
+    }
+
+    .navbar-brand {
+        color: white;
+        font-weight: 600;
+        font-size: 1.1em;
+        margin-top: 5px;
+        text-transform: uppercase;
+        font-family: 'PT Sans', Avenir, sans-serif;
+        span { color: $navColour }
+    }
+
+    .navbar-nav {
+
+        > li {
+            > a {
+                color: $navColour;
+                font-size: 14px;
+                text-transform: uppercase;
+                font-weight: 600;
+
+                i {
+                    font-size:16px;
+                    margin-right: 5px;
+                }
+
+                &:hover,
+                &:focus {
+                    color: $brand-darker;
+                }
+
+                &.btn {
+                    color: $fontColour;
+                    &:hover,
+                    &:focus {
+                        background-color: $navActiveBackgroundColour;
+                    }
+                }
+            }
+
+            &.active {
+                a {
+                    color: $secondaryFontColour;
+                    background-color: $navActiveBackgroundColour;
+
+                    &:hover,
+                    &:focus {
+                        outline: none;
+                        background-color: $navActiveBackgroundColour;
+                    }
+                }
+
+                &.dropdown {
+                    li {
+                        a {
+                            background-color: white;
+                            color: $brand-dark;
+                            padding: 6px 20px;
+                            font-size: 14px;
+                            color: #153e4d;
+                        }
+
+                    }
+                }
+            }
+
+            .dropdown-menu {
+                border: none;
+                border-radius: 5px;
+                margin-top: 10px;
+
+                li {
+                    padding: 5px 0;
+                }
+            }
+        }
+    }
+
+    .navbar-toggle {
+        padding: 0;
+        border: none;
+        border-radius: 0;
+        margin: 0 10px;;
+        font-size: 25px;
+
+        &:hover,
+        &:focus{
+            background-color: transparent;
+        }
+    }
+
+
+    // Transparent background
+    &.transparent {
+        background-color:rgba(0,0,0,0);
+
+        .navbar-brand {
+            color: $navTransparentLinkActiveColour;
+            span { color: white }
+        }
+
+        .navbar-nav {
+            > li {
+                > a {
+                    color: $navHoverColour;
+                    &.btn {
+                        color: $fontColour;
+                        background-color: $navActiveBackgroundColour;
+
+                        @media (max-width: 480px) {
+                            border-radius: 0;
+                        }
+
+                        &:hover,
+                        &:focus {
+                            background-color: $brand-warning;
+                        }
+                    }
+                }
+
+                &.active {
+                    a {
+                        color: $navTransparentLinkActiveColour;
+                        background-color:rgba(0,0,0,0);
+
+                        &:hover,
+                        &:focus {
+                            background-color: inherit;
+                            color: inherit;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // End of transparent navbar
+}
+
+.navbar {
+    min-height: $navbar-height;
+    line-height: $navbar-height;
+    border-radius: none;
+    border: none;
+    margin-bottom: 0;
+}
+
+
+
+@media (min-width: 768px) {
+
+    .navbar-default {
+        border-radius: 0px;
+
+        .navbar-nav {
+            >.open {
+                > a {
+                    &:focus,
+                    &:hover {
+                        background-color: $linkHoverBackgroundColour;
+                        color: white;
+                    }
+                }
+            }
+        }
+    }
+    .navbar-nav {
+        > li {
+            > a {
+                padding-top: 20px;
+                padding-bottom: 20px;
+
+                span {
+                    display: none;
+                }
+
+                &.btn {
+                    margin-top:10px;
+                    color: $fontColour;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                    background-color: $brand-warning;
+                }
+            }
+            >.dropdown-menu {
+                min-width: 200px;
+                border-radius: 0;
+
+                li {
+                    padding: 0;
+                    a {
+                        padding: 9px 20px;
+                        color: $linkColour;
+                        font-size:14px;
+                        text-transform: uppercase;
+                        font-weight: 600;
+                        background-color: transparent;
+
+                        &:hover,
+                        &:focus {
+                            background-color: $brand-wise;
+                            color: white;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}

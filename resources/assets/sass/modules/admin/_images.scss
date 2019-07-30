@@ -1,0 +1,30 @@
+.img-item {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    text-align: center;
+    // height: 250px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+
+    ._delete {
+        width: 25px;
+        height: 25px;
+        background-color: $brand-danger;
+        border-radius: 100%;
+        font-weight: bold;
+        font-size: 13px;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        padding-top: 3px;
+        font-family: sans-serif;
+        cursor: pointer;
+        z-index: 5;
+
+        .ion-close {
+            color: #ffffff;
+        }
+    }
+
+}

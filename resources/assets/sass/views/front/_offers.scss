@@ -1,0 +1,120 @@
+.offers {
+    .offer-image {
+        width: 800px;
+    }
+}
+
+._offer {
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 20px;
+    font-family: Averta, sans-serif;
+    position: relative;
+    border-radius: 2px;
+
+    ._offer-content {
+        width: 100%;
+        max-width: 500px;
+        background-color: white;
+        padding: 10px 10px;
+        margin-bottom: 20px;
+
+        .img-content {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: local;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .title {
+            background-color: $brand-yellow-dark;
+            padding: 10px 10px;
+            border-radius: 0 0px 10px 10px;
+        }
+
+        .desc {
+            margin-top: 10px;
+            text-align: justify;
+            color: $brand-darker;
+            font-size: 16px;
+            position: relative;
+            display: inline-block;
+            word-wrap: break-word;
+            overflow: hidden;
+            max-height: 5em;
+            line-height: 1.5em;
+        }
+
+        .more {
+            text-align: right;
+            margin-top: 10px;
+            margin-bottom: 10px;
+
+            a {
+                padding: 13px 40px;
+                border-radius: 4px;
+                background-color: $brand-dark;
+                color: white;
+
+                &:hover,
+                &:focus {
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}
+
+.offer-row {
+    width: 100%;
+    font-family: Averta, sans-serif;
+
+    h3 {
+        margin-bottom: 20px;
+    }
+
+    .offer-item {
+        background-color: white;
+        margin-bottom: 20px;
+        padding: 20px;
+        max-height: 400px;
+        @include box-shadow;
+
+        img {
+            width: 100%;
+            max-height: 350px;
+        }
+
+        .details {
+            padding-top: 15px;
+            padding-bottom: 15px;
+
+            .title {
+                font-size: 20px;
+                color: $brand-darker;
+            }
+
+            .excerpt {
+                text-align: justify;
+                color: $brand-darker;
+                font-size: 16px;
+                padding-top: 10px;
+                position: relative;
+                display: inline-block;
+                word-wrap: break-word;
+                overflow: hidden;
+                max-height: 5em; /* (Number of lines you want visible) * (line-height) */
+                line-height: 1.5em;
+            }
+
+            a {
+                font-size: 14px;
+                margin-top: 15px;
+            }
+        }
+    }
+}

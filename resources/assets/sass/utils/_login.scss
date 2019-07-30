@@ -1,0 +1,177 @@
+._login_form-page {
+    background-color: #ebf4f9;
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+    margin: 0;
+    padding-top: 4%;
+    /* background-image: url('../images/background.jpg'); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+._login_form-container {
+    width: 100%;
+    height: 80%;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    overflow: hidden;
+}
+
+._login_form-inner {
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.055);
+    border-radius: 8px;
+    width: 400px;
+    max-width: 98%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+._login_form-logo {
+    width: 150px;
+    height: 150px;
+    background-image: url('./assets/images/bg.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0 auto;
+    border-radius: 10%;
+}
+
+._login_form-logo-name {
+    width: 100%;
+    padding-top:10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 26px;
+    color: $brand-dark;
+    text-transform: uppercase;
+}
+
+._login-container, h4 {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 20px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+._login_form-container, ._login_form-group {
+    margin: 0;
+    margin-bottom: 5px;
+}
+
+._login-container {
+  width: 100%;
+  height: 100%;
+}
+
+._login_form {
+    width: 100%;
+    height: 100%;
+    -webkit-box-shadow: 0 1px 5px rgba(255, 255, 255, 0.3);
+    -moz-box-shadow: 0 1px 5px rgba(255, 255, 255, 0.3);
+    -ms-box-shadow: 0 1px 5px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 1px 5px rgba(255, 255, 255, 0.3);
+}
+
+/* début style sur ._login_form-links */
+._login_form-links {
+    margin-top:20px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+    color: $brand-teal;
+    text-transform: lowercase;
+}
+
+._login_form-links a:hover,
+._login_form-links a:focus {
+    color: $brand-success;
+}
+/* fin style sur ._login_form-links */
+
+/* début style sur ._login_form-control */
+._login_form-control {
+    width: 100%;
+    height: 60px;
+    border-radius: 5px;
+    background-color: #eff2fa;
+    border: 2px solid #e0e5e6;
+    box-shadow: none;
+    color: $brand-dark;
+    font-size: 20px;
+}
+
+._login_form-control ._login_input-white {
+    background-color: white;
+}
+
+._login_form-control:hover,
+._login_form-control:focus {
+    cursor: pointer;
+    border: 2px solid $brand-success;
+}
+/* fin style sur ._login_form-control */
+
+._login_form_label {
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'PT Sans', 'Source Sans Pro', sans-serif;
+    text-align: left;
+    color: $brand-teal;
+}
+
+._login_form-group {
+    margin-bottom: 10px;
+}
+
+._login_form-group, .has-error {
+    color: $brand-danger;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+select._login_form-control {
+    border-radius: 0;
+    -webkit-appearance: none;
+    line-height: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-position: right 50%;
+    background-repeat: no-repeat;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDZFNDEwNjlGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDZFNDEwNkFGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo0NkU0MTA2N0Y3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo0NkU0MTA2OEY3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PuGsgwQAAAA5SURBVHjaYvz//z8DOYCJgUxAf42MQIzTk0D/M+KzkRGPoQSdykiKJrBGpOhgJFYTWNEIiEeAAAMAzNENEOH+do8AAAAASUVORK5CYII=);
+    padding: .5em;
+    padding-right: 1.5em
+}
+
+/* enable absolute positioning */
+._login_inner-addon {
+    position: relative;
+}
+
+/* style icon */
+._login_inner-addon .glyphicon {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+}
+
+/* align icon */
+._login_left-addon .glyphicon  { left:  0px;}
+._login_right-addon .glyphicon { right: 0px;}
+
+/* add padding  */
+._login_left-addon input  { padding-left:  30px; }
+._login_right-addon input { padding-right: 30px; }
+
+/* Footer of Login  */
+._login_form-footer {
+    width: 100%;
+    padding-top: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: $brand-teal;
+}

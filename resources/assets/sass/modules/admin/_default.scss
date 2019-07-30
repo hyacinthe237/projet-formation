@@ -1,0 +1,75 @@
+* { margin: 0; padding: 0 }
+a { text-decoration: none; color: $linkColour }
+
+@font-face {
+    font-family: "Averta";
+    src: url("/assets/fonts/averta/AvertaDemo-Regular.otf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'PT Sans', 'Libre Franklin', 'Source Sans Pro', Calibri, sans-serif;
+    background-color: $body-bg;
+    font-size: 16px;
+    color: $fontColour;
+    font-weight: 500;
+}
+
+h1,h2,h3,h4 { margin: 0 }
+h1 { font-size: 3em }
+h2 { font-size: 2.4em }
+h3 { font-size: 2em }
+h4 { font-size: 1.5em }
+h5 { font-size: 1.1em }
+
+.red { color: red }
+.bold { font-weight: bold }
+.primary { color: $brand-primary }
+.elevated { box-shadow: 2px 8px 20px rgba(0, 0, 0, 0.2) }
+.w-100 { width: 100px }
+.w-150 { width: 150px }
+.w-200 { width: 200px }
+.w-250 { width: 250px }
+.w-300 { width: 300px }
+.fw-300 { font-weight: 300 }
+.fw-500 { font-weight: 500 }
+.fw-600 { font-weight: 600 }
+.pointer { cursor: pointer }
+.text-right { text-align: right }
+.capitalize { text-transform: capitalize }
+
+.btn-teal { background-color: $brand-teal; color: white }
+.btn-dark { background-color: $brand-dark; color: white }
+.btn-wise { background-color: $brand-wise; color: white }
+.btn-presumi { background-color: $brand-presumi; color: white }
+.btn:focus { outline: none }
+.btn-lg {
+    border-radius: 3px;
+
+    &:hover,
+    &:focus { color: white }
+    i { font-size: 1.2em; margin-right: 5px }
+}
+
+.pagination-lg {
+    > li {
+        &:last-child {
+            > a,
+            > span {
+                border-bottom-right-radius: 3px;
+                border-top-right-radius: 3px;
+            }
+        }
+
+        &:first-child {
+            > a,
+            > span {
+                border-bottom-left-radius: 3px;
+                border-top-left-radius: 3px;
+            }
+        }
+    }
+}

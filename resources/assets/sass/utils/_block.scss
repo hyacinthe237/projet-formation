@@ -1,0 +1,34 @@
+._block {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    color: $brand-dark;
+
+    ._block-title {
+        text-align: center;
+        padding: 10px 0;
+        border-bottom: 1px solid inherit;
+    }
+
+    &._block-radius { border-radius: 4px }
+    &._block-info { background-color: $brand-info; color: $brand-dark }
+    &._block-primary { background-color: $brand-primary; color: white }
+    &._block-grey { background-color: #c5ccd0; color: #333; border: 1px solid #e1e1e1 }
+    &._block-blue { background-color: #3B548B; color: white }
+    &._block-black { background-color: $brand-darker; color: white }
+
+}
+
+
+._block-blue {
+    .table-striped {
+        > tbody > tr:nth-of-type(odd) {
+            background-color: $brand-primary;
+        }
+    }
+
+    .table > tbody > tr > td {
+        border: none;
+    }
+}

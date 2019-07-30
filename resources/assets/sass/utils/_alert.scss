@@ -1,0 +1,18 @@
+
+.alert {
+    border-radius: 3px;
+    color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 16px;
+
+    &.alert-info {
+        background-color: $brand-presumi;
+    }
+    &.alert-success {
+        background-color: $brand-success;
+    }
+    &.alert-danger {
+        background-color: $brand-danger;
+    }
+}

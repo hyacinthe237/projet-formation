@@ -1,0 +1,19 @@
+.logo-section {
+    background-color: $navActiveBackgroundColour;
+    text-align: center;
+    padding: 40px 0;
+    font-weight: bold;
+    font-family: 'PT Sans', 'Source Sans Pro', sans-serif;
+    color: white;
+    font-weight: 600;
+
+    .logo-title {
+        font-size: 3.1em;
+        line-height: 1em;
+    }
+
+    .logo-description {
+        font-size: 1.1em;
+        font-weight: 500;
+    }
+}

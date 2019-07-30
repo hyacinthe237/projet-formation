@@ -19,7 +19,7 @@ class Formation extends Model
     protected $table = 'formations';
 
     public function thematiques () {
-        return $this->belongsTo(Thematique::class, FormationThematique::class);
+        return $this->belongsToMany(Thematique::class, FormationThematique::class);
     }
 
     public function etudiants () {
