@@ -15,7 +15,7 @@ class FormationsTableSeeder extends Seeder
     public function run()
     {
         $form_01 = Formation::create([
-            'number'      => 100000,
+            'number'      => 1000000,
             'title'       => 'Résilience des collectivités locales aux effets des changements climatiques et développement local',
             'site'        => 'Garoua',
             'start_date'  => '2019-07-15 08:00',
@@ -27,7 +27,7 @@ class FormationsTableSeeder extends Seeder
         ]);
 
         $form_02 = Formation::create([
-            'number'      => 100001,
+            'number'      => 1000001,
             'title'       => 'Développement des projets ecojobs',
             'site'        => 'Yaoundé',
             'start_date'  => '2019-06-15 08:00',

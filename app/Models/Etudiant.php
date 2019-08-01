@@ -18,8 +18,8 @@ class Etudiant extends Model
      */
     protected $table = 'etudiants';
 
-    public function formation () {
-        return $this->belongsTo(Formation::class, 'formation_id');
+    public function formations () {
+        return $this->belongsToMany(Formation::class, 'formation_etudiants')->withPivot('etat');
     }
 
     public function location () {

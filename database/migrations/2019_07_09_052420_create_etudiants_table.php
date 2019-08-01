@@ -30,7 +30,7 @@ class CreateEtudiantsTable extends Migration
           $table->text('form_initiale')->nullable();
           $table->text('diplome_elev')->nullable();
           $table->text('form_compl')->nullable();
-          $table->integer('an_exp')->nullable();
+          $table->string('an_exp')->nullable();
           $table->boolean('is_active')->default(true);
           $table->string('signature_url')->nullable();
           $table->string('photo')->nullable();
