@@ -26,7 +26,6 @@ class CreateEtudiantsTable extends Migration
           $table->string('structure')->nullable();
           $table->string('fonction')->nullable();
           $table->text('desc_fonction')->nullable();
-          $table->string('location')->nullable();
           $table->text('form_souhaitee')->nullable();
           $table->text('form_initiale')->nullable();
           $table->text('diplome_elev')->nullable();
