@@ -13,4 +13,8 @@ class BudgetItem extends Model
         return $this->belongsTo(Budget::class);
     }
 
+    public function type () {
+        return $this->belongsTo(TypeItem::class);
+    }
+
 }

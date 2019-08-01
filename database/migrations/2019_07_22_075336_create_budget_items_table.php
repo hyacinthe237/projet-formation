@@ -16,8 +16,8 @@ class CreateBudgetItemsTable extends Migration
         Schema::create('budget_items', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('budget_id')->unsigned();
+            $table->string('type_item_id');
             $table->string('designation');
-            $table->string('type');
             $table->string('unite')->nullable();
             $table->integer('nb_unite')->nullable();
             $table->integer('cout_unite')->nullable();
