@@ -16,12 +16,12 @@ class FormationEtudiant extends Model
      */
     protected $table = 'formation_etudiants';
 
-    public function formations () {
-        return $this->hasMany(Formation::class, 'formation_id');
+    public function formation () {
+        return $this->belongsTo(Formation::class, 'formation_id');
     }
 
-    public function etudiants () {
-        return $this->hasMany(Etudiant::class, 'etudiant_id');
+    public function etudiant () {
+        return $this->belongsTo(Etudiant::class, 'etudiant_id');
     }
 
 }
