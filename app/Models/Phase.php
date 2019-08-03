@@ -16,4 +16,8 @@ class Phase extends Model
     public function getDateAttribute () {
         return date('d/m/Y H:i', strtotime($this->created_at));
     }
+
+    public function formations () {
+        return $this->belongsToMany(Formation::class, FormationPhase::class);
+    }
 }

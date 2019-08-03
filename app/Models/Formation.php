@@ -25,4 +25,8 @@ class Formation extends Model
     public function etudiants () {
         return $this->belongsToMany(Etudiant::class, FormationEtudiant::class)->withPivot('etat');
     }
+
+    public function phases () {
+        return $this->belongsToMany(Phase::class, FormationPhase::class);
+    }
 }
