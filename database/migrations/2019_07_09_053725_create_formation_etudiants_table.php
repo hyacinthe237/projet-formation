@@ -14,6 +14,7 @@ class CreateFormationEtudiantsTable extends Migration
     public function up()
     {
         Schema::create('formation_etudiants', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->integer('etudiant_id');
             $table->integer('thematique_id');
             $table->string('etat');
