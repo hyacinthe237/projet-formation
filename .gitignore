@@ -3,6 +3,7 @@
 /public/backend/css
 /public/backend/js
 /public/storage
+/public/docs
 /storage/*.key
 /vendor
 .env

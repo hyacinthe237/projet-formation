@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\Etudiant;
+use Carbon\Carbon;
 
 class EtudiantsTableSeeder extends Seeder
 {
@@ -29,6 +30,12 @@ class EtudiantsTableSeeder extends Seeder
             'form_compl'      => 'Aucune formation complémentaire',
             'an_exp'          => '4 ans'
         ]);
+        $etudiant_01->formations()->create([
+            'formation_id'  => 1,
+            'etat'          => 'inscris',
+            'created_at'    => Carbon::now(),
+            'updated_at'    => Carbon::now()
+        ]);
 
         $etudiant_02 = Etudiant::create([
             'location_id'     => 2,
@@ -46,6 +53,20 @@ class EtudiantsTableSeeder extends Seeder
             'diplome_elev'    => 'Diplôme en DRH',
             'form_compl'      => 'Aucune formation complémentaire',
             'an_exp'          => '6 ans'
+        ]);
+
+        $etudiant_02->formations()->create([
+            'formation_id'  => 1,
+            'etat'          => 'inscris',
+            'created_at'    => Carbon::now(),
+            'updated_at'    => Carbon::now()
+        ]);
+
+        $etudiant_02->formations()->create([
+            'formation_id'  => 2,
+            'etat'          => 'inscris',
+            'created_at'    => Carbon::now(),
+            'updated_at'    => Carbon::now()
         ]);
     }
 }

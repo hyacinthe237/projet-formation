@@ -13,9 +13,9 @@
             {{ Request::is('admin/bookings*') ? 'active' : '' }}
             {{ Request::is('admin/pickups*') ? 'active' : '' }}"
         >
-            <a href="/admin/stagiaires">
+            <a href="/admin/etudiants">
                 <i class="ion-android-cart"></i>
-                Stagiaires
+                Etudiants
             </a>
         </li>
 

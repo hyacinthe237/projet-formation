@@ -28,7 +28,7 @@ class Etudiant extends Model
     }
 
     public function formations () {
-        return $this->belongsToMany(Formation::class, 'formation_etudiants')->withPivot('etat');
+        return $this->hasMany(FormationEtudiant::class);
     }
 
     public function location () {

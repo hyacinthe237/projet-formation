@@ -4,13 +4,13 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
-            <a href="{{ route('roles.index') }}" class="btn btn-lg btn-primary">
-                <i class="ion-grid"></i> Roles
+            <a href="{{ route('etudiants.create') }}" class="btn btn-lg btn-primary">
+                <i class="ion-plus"></i> Ajouter Etudiant
             </a>
         </div>
 
         <div class="title">
-            Stagiaires
+            Etudiants
         </div>
     </div>
 
@@ -89,7 +89,7 @@
 
                     <tbody>
                         @foreach($etudiants as $etudiant)
-                            <tr data-href="/admin/etudiants/{{ $etudiant->id }}/edit">
+                            <tr data-href="{{ route('etudiants.edit', $etudiant->number) }}">
                                 <td> <img src="{{ $etudiant->getImgAttribute() }}" alt="" width="40px" class="img-circle"> </td>
                                 <td class="bold">{{ $etudiant->getNameAttribute() }}</td>
                                 <td>{{ $etudiant->email }}</td>

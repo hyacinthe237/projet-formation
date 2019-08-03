@@ -4,6 +4,7 @@ namespace App\Http\Controllers\views\admin;
 
 use Auth;
 use DB;
+use Carbon\Carbon;
 use App\Models\Etudiant;
 use App\Models\Formation;
 use App\Models\Thematique;
@@ -25,7 +26,7 @@ class EtudiantController extends Controller
   public function index(Request $request)
   {
       $keywords = $request->keywords;
-      $etudiants = Etudiant::with('location')
+      $etudiants = Etudiant::with(['location', 'formations'])
       ->when($keywords, function($query) use ($keywords) {
           return $query->where('firstname', 'like', '%'.$keywords.'%')
           ->orWhere('lastname', 'like', '%'.$keywords.'%');
@@ -36,15 +37,15 @@ class EtudiantController extends Controller
       ->orderBy('id', 'desc')
       ->paginate(50);
 
-      $formations = Formation::orderBy('id', 'desc')->get();
+      $formations = Formation::orderBy('id', 'desc')->with('phases')->get();
       $locations = Location::get();
       return view('admin.etudiants.index', compact('etudiants', 'formations', 'locations'));
   }
 
     public function create ()
     {
-        $formations = Formation::get()->orderBy('id', 'desc');
-        $locations = Location::get()->orderBy('id', 'desc');
+        $formations = Formation::orderBy('id', 'desc')->get();
+        $locations = Location::orderBy('id', 'desc')->get();
         return view('admin.etudiants.create', compact('formations', 'locations'));
     }
 
@@ -54,8 +55,8 @@ class EtudiantController extends Controller
         if (!$etudiant)
             return redirect()->route('etudiants.index');
 
-        $formations = Formation::get()->orderBy('id', 'desc');
-        $locations = Location::get()->orderBy('id', 'desc');
+            $formations = Formation::orderBy('id', 'desc')->get();
+            $locations = Location::orderBy('id', 'desc')->get();
         return view('admin.etudiants.edit', compact('formations', 'locations', 'etudiant'));
     }
 
@@ -98,11 +99,16 @@ class EtudiantController extends Controller
         ]);
 
         if ($etudiant) {
-          FormationEtudiant::create([
-            'etudiant_id'    => $etudiant->id,
-            'thematique_id'  => $request->thematique_id,
-            'etat'           => 'incris',
-          ])
+            $form_etud = FormationEtudiant::whereFormationId($request->formation_id)->whereEtat('inscris')->first();
+            if (!$form_etud) {
+                $etudiant->formations()->create([
+                    'formation_id'  => $request->formation_id,
+                    'etat'          => 'inscris',
+                    'created_at'    => Carbon::now(),
+                    'updated_at'    => Carbon::now()
+                ]);
+            }
+
         }
 
         return redirect()->back()->with('message', 'Etudiant ajouté avec succès');
@@ -125,7 +131,7 @@ class EtudiantController extends Controller
         if ($validator->fails())
             return redirect()->back()->withErrors(['validator' => 'Les champs Prénom & Email sont obligatoires']);
 
-        $etudiant = Etudiant::whereNumber($number)->whereIsActive(true)->first();
+        $etudiant = Etudiant::whereNumber($number)->first();
         if (!$etudiant)
             return redirect()->back()->withErrors(['user' => 'Etudiant inconnu!']);
 

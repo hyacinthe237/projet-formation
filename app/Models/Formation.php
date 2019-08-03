@@ -19,7 +19,7 @@ class Formation extends Model
     protected $table = 'formations';
 
     public function etudiants () {
-        return $this->belongsToMany(Etudiant::class, FormationEtudiant::class)->withPivot('etat');
+        return $this->hasMany(FormationEtudiant::class);
     }
 
     public function phases () {

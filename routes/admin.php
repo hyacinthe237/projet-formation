@@ -22,5 +22,5 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], fun
     Route::resource('users', 'views\admin\UserController');
     Route::resource('roles', 'views\admin\RoleController');
     Route::resource('permissions', 'views\admin\PermissionController');
-    Route::resource('stagiaires', 'views\admin\EtudiantController');
+    Route::resource('etudiants', 'views\admin\EtudiantController');
 });
