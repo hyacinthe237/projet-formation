@@ -8,133 +8,48 @@
             </a>
         </li>
 
-        <li class="
-            {{ Request::is('admin/returns*') ? 'active' : '' }}
-            {{ Request::is('admin/bookings*') ? 'active' : '' }}
-            {{ Request::is('admin/pickups*') ? 'active' : '' }}"
-        >
+        <li class="{{ Request::is('admin/etudiants*') ? 'active' : '' }}">
             <a href="/admin/etudiants">
                 <i class="ion-android-cart"></i>
                 Etudiants
             </a>
         </li>
 
-        <li class="dropdown {{ Request::is('admin/vehicles*') ? 'active open' : '' }}">
-            <a href="" data-toggle="dropdown">
-                <i class="ion-android-car"></i>
-                Vehicles <span class="ml-10 ion-chevron-down"></span>
+        <li class="{{ Request::is('admin/formations*') ? 'active' : '' }}">
+            <a href="/admin/formations">
+                <i class="ion-android-cart"></i>
+                Formations
             </a>
-
-            <ul class="sidebar-dropdown">
-                <li>
-                    <a href="#">
-                        Makes
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        Models
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        Cars
-                    </a>
-                </li>
-            </ul>
         </li>
 
+        <li class="{{ Request::is('admin/phases*') ? 'active' : '' }}">
+            <a href="/admin/phases">
+                <i class="ion-android-cart"></i>
+                Phases
+            </a>
+        </li>
+
+        <li class="{{ Request::is('admin/formateurs*') ? 'active' : '' }}">
+            <a href="/admin/formateurs">
+                <i class="ion-android-cart"></i>
+                Formateurs
+            </a>
+        </li>
 
         @if (Auth::user()->role->name === 'admin')
-            <li class="{{ Request::is('admin/pages*') ? 'active' : '' }}">
-                <a href="#">
-                    <i class="ion-document-text"></i>
-                    Pages
-                </a>
-            </li>
-
-            <li class="{{ Request::is('admin/posts*') ? 'active' : '' }}">
-                <a href="#">
-                    <i class="ion-document"></i>
-                    Posts
-                </a>
-            </li>
-
             <li class="{{ Request::is('admin/users*') ? 'active' : '' }}">
                 <a href="/admin/users">
                     <i class="ion-android-people"></i>
-                    Users
+                    Utilisateurs
                 </a>
             </li>
 
-
-            <li class="{{ Request::is('admin/payments*') ? 'active' : '' }}">
-                <a href="/admin/payments">
+            <li class="{{ Request::is('admin/budgets*') ? 'active' : '' }}">
+                <a href="/admin/budgets">
                     <i class="ion-card"></i>
-                    Payments
+                    Budgets
                 </a>
             </li>
-
-
-            <li class="dropdown {{ Request::is('admin/extra*') ? 'active open' : '' }}">
-                <a href="" data-toggle="dropdown">
-                    <i class="ion-plus"></i>
-                    Extra <span class="ml-10 ion-chevron-down"></span>
-                </a>
-
-                <ul class="sidebar-dropdown">
-                    <li>
-                        <a href="/admin/coupons">
-                            <i class="ion-cash"></i>
-                            Coupons
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="ion-document-text"></i>
-                            Options
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            <i class="ion-pin"></i>
-                            Locations
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                             <i class="ion-help"></i> FAQs
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/admin/files">
-                            <i class="ion-folder"></i>
-                            Files
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/admin/settings">
-                            <i class="ion-android-options"></i>
-                            Settings
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/admin/seasonals">
-                            <i class="ion-calendar"></i>
-                            Seasonal
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="ion-android-send"></i>
-                            Home Slider
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
         @endif
 
         <li class="separer"></li>

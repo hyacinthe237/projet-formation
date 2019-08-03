@@ -19,8 +19,8 @@
 
             <div class="col-sm-3">
                 <div class="card red">
-                    <h3></h3>
-                    <h5>Formations</h5>
+                    <h3>{{ $etudiants }}</h3>
+                    <h5>Etudiants</h5>
                 </div>
             </div>
 
