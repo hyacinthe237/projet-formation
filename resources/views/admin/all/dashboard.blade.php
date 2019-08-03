@@ -26,8 +26,15 @@
 
             <div class="col-sm-3">
                 <div class="card green">
-                    <h3></h3>
-                    <h5>Inscris</h5>
+                    <h3>{{ $formateurs }}</h3>
+                    <h5>Formateurs</h5>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="card dark">
+                    <h3>{{ $formations }}</h3>
+                    <h5>Formations</h5>
                 </div>
             </div>
         </div>
