@@ -142,14 +142,14 @@
         <li>
             <a href="/" target="_blank">
                 <i class="ion-ios-world-outline"></i>
-                Main Website
+                Aller sur le site
             </a>
         </li>
 
         <li>
-            <a href="#">
+            <a href="{{ route('admin.logout') }}">
                 <i class="ion-power"></i>
-                Sign Out
+                Déconnexion
             </a>
         </li>
     </ul>

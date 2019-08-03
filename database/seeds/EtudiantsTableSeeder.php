@@ -39,7 +39,7 @@ class EtudiantsTableSeeder extends Seeder
 
         $etudiant_02 = Etudiant::create([
             'location_id'     => 2,
-            'number'          => 1000000,
+            'number'          => 1000001,
             'firstname'       => 'Marceline',
             'lastname'        => 'MINFOUMOU',
             'phone'           => '691604363',
