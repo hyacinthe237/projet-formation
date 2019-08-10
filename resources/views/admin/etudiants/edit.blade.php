@@ -1,5 +1,9 @@
 @extends('admin.body')
 
+@section('head')
+    <link rel="stylesheet" type="text/css" href="/backend/fancybox/jquery.fancybox.css" media="screen" />
+@endsection
+
 @section('body')
     <div class="page-heading">
         <div class="buttons">
@@ -139,7 +143,7 @@
                               <div class="form-select grey">
                                   <select class="form-control input-lg" name="location_id">
                                     @foreach($locations as $location)
-                                        <option value="{{ $location->id }}"> {{ $etudiant->location_id == $location->id ? 'selected' : '' }}
+                                        <option value="{{ $location->id }}" {{ $etudiant->location_id == $location->id ? 'selected' : '' }}>
                                             {{ 'Région: ' . $location->region }}|
                                             {{ 'Département: ' . $location->departement }}|
                                             {{ 'Commune: ' .$location->commune }}
@@ -152,12 +156,12 @@
                           <div class="form-group">
                               <label>Upload photo</h4>
 
-                              <input type="hidden" class="form-control" id='photo' name="photo" readonly value="{{ $etudiant->getImgAttribute() }}">
+                              <input type="hidden" class="form-control" id='photo' name="photo" readonly value="{{ $etudiant->photo }}">
                               <div id="photo_view" class="mt-20"></div>
 
                               <div class="text-right mt-10">
                                   <a href="/backend/filemanager/dialog.php?type=1&field_id=photo" class="iframe-btn btn-dark btn round">
-                                      <i class='ion-android-attach mr-10'></i> Uploader une photo
+                                      <i class='ion-android-attach mr-10'></i> modifier la photo
                                   </a>
                               </div>
                           </div>

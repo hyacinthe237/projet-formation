@@ -51,7 +51,7 @@ class EtudiantController extends Controller
 
     public function edit ($number)
     {
-        $etudiant  = Etudiant::whereIsActive(true)->whereNumber($number)->first();
+        $etudiant  = Etudiant::whereNumber($number)->first();
         if (!$etudiant)
             return redirect()->route('etudiants.index');
 

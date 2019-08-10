@@ -10,14 +10,14 @@
 
         <li class="{{ Request::is('admin/etudiants*') ? 'active' : '' }}">
             <a href="/admin/etudiants">
-                <i class="ion-android-cart"></i>
+                <i class="ion-ios-people"></i>
                 Etudiants
             </a>
         </li>
 
         <li class="{{ Request::is('admin/formations*') ? 'active' : '' }}">
             <a href="/admin/formations">
-                <i class="ion-android-cart"></i>
+                <i class="ion-android-bookmark"></i>
                 Formations
             </a>
         </li>

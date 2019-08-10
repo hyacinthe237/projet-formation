@@ -156,7 +156,7 @@
                           <div class="form-group">
                               <label>Upload photo</h4>
 
-                              <input type="hidden" class="form-control" id='photo' name="photo" readonly value="{{ old('photo') }}">
+                              <input type="hidden" class="form-control" id="photo" name='photo' readonly value="{{ old('photo') }}">
                               <div id="photo_view" class="mt-20"></div>
 
                               <div class="text-right mt-10">
