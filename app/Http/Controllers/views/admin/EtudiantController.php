@@ -77,41 +77,46 @@ class EtudiantController extends Controller
         if ($validator->fails())
             return redirect()->back()->withErrors(['validator' => 'Les champs Prénom & Email sont obligatoires']);
 
-        $etudiant = Etudiant::create([
-          'location_id'     => $request->location_id,
-          'number'          => EtudiantHelper::makeEtudiantNumber(),
-          'firstname'       => $request->firstname,
-          'lastname'        => $request->lastname,
-          'phone'           => $request->phone,
-          'email'           => $request->email,
-          'sex'             => $request->sex,
-          'dob'             => $request->dob,
-          'structure'       => $request->structure,
-          'fonction'        => $request->fonction,
-          'desc_fonction'   => $request->desc_fonction,
-          'form_souhaitee'  => $request->form_souhaitee,
-          'diplome_elev'    => $request->diplome_elev,
-          'form_compl'      => $request->form_compl,
-          'an_exp'          => $request->an_exp,
-          'is_active'       => $request->is_active,
-          'signature_url'   => $request->signature_url,
-          'photo'           => $request->photo,
-        ]);
+        $existing = Etudiant::whereFirstname($request->firstname)->whereLastname($request->lastname)->first();
+        if (!$existing) {
+            $etudiant = Etudiant::create([
+              'location_id'     => $request->location_id,
+              'number'          => EtudiantHelper::makeEtudiantNumber(),
+              'firstname'       => $request->firstname,
+              'lastname'        => $request->lastname,
+              'phone'           => $request->phone,
+              'email'           => $request->email,
+              'sex'             => $request->sex,
+              'dob'             => $request->dob,
+              'structure'       => $request->structure,
+              'fonction'        => $request->fonction,
+              'desc_fonction'   => $request->desc_fonction,
+              'form_souhaitee'  => $request->form_souhaitee,
+              'diplome_elev'    => $request->diplome_elev,
+              'form_compl'      => $request->form_compl,
+              'an_exp'          => $request->an_exp,
+              'is_active'       => $request->is_active,
+              'signature_url'   => $request->signature_url,
+              'photo'           => $request->photo,
+            ]);
 
-        if ($etudiant) {
-            $form_etud = FormationEtudiant::whereFormationId($request->formation_id)->whereEtat('inscris')->first();
-            if (!$form_etud) {
-                $etudiant->formations()->create([
-                    'formation_id'  => $request->formation_id,
-                    'etat'          => 'inscris',
-                    'created_at'    => Carbon::now(),
-                    'updated_at'    => Carbon::now()
-                ]);
+            if ($etudiant) {
+                $form_etud = FormationEtudiant::whereFormationId($request->formation_id)->whereEtat('inscris')->first();
+                if (!$form_etud) {
+                    $etudiant->formations()->create([
+                        'formation_id'  => $request->formation_id,
+                        'etat'          => 'inscris',
+                        'created_at'    => Carbon::now(),
+                        'updated_at'    => Carbon::now()
+                    ]);
+                }
+
             }
 
+            return redirect()->back()->with('message', 'Etudiant ajouté avec succès');
         }
 
-        return redirect()->back()->with('message', 'Etudiant ajouté avec succès');
+        return redirect()->back()->withErrors(['existing' => 'Cet Etudiant existe déjà']);
     }
 
     /**

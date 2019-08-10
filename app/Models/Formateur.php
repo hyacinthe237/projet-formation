@@ -17,12 +17,9 @@ class Formateur extends Model
      * @var string
      */
     protected $table = 'formateurs';
+    protected $appends = ['name'];
 
-    public function thematiques () {
-        return $this->belongsTo(Thematique::class, FormateurThematique::class);
-    }
-
-    public function formations () {
-        return $this->belongsToMany(Etudiant::class, FormateurFormation00 ::class)->withPivot('etat');
+    public function getNameAttribute () {
+        return $this->firstname . ' ' . $this->lastname;
     }
 }
