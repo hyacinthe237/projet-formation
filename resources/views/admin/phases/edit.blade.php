@@ -20,7 +20,7 @@
 
         @include('errors.list')
 
-        </div><div class="block">
+        <div class="block">
             <div class="block-content form">
                   <div class="row mt-20">
                     <div class="col-sm-12">

@@ -80,6 +80,7 @@ class PhaseController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $validator = Validator::make($request->all(), [
             'title'     => 'required'
         ]);
@@ -88,10 +89,11 @@ class PhaseController extends Controller
             return redirect()->back()->withErrors(['validator' => 'Tous les champs sont obligatoires']);
 
         $phase = phase::find($id);
-        if (!$phase)
+        if (!$phase) {
             return redirect()->back()->withErrors(['phase' => 'phase inconnue!']);
+        }
 
-        $phase->title      = $request->has('title') ? $request->title : $phase->title;
+        $phase->title = $request->has('title') ? $request->title : $phase->title;
         $phase->update();
 
         return redirect()->back()->with('message', 'phase mise à jour avec succès');

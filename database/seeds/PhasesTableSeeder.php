@@ -13,9 +13,7 @@ class PhasesTableSeeder extends Seeder
      */
     public function run()
     {
-        $phase_01 = Phase::create([
-            'title' => 'Phase 1',
-            'slug'  => 'phase-1' ]);
+        $phase_01 = Phase::create([ 'title' => 'Phase 1' ]);
 
         $phase_01->thematiques()->createMany([
           [ 'name' => 'Conception des cartes de visite', 'duree' => '10 jours'],
@@ -23,9 +21,7 @@ class PhasesTableSeeder extends Seeder
           [ 'name' => 'Management', 'duree' => '10 jours']
         ]);
 
-        $phase_02 = Phase::create([
-            'title' => 'Phase 2',
-            'slug'  => 'phase-2' ]);
+        $phase_02 = Phase::create([ 'title' => 'Phase 2' ]);
 
         $phase_02->thematiques()->createMany([
           [ 'name' => 'Conception des sites web', 'duree' => '10 jours'],

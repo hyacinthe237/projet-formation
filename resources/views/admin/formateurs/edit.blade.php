@@ -14,7 +14,7 @@
         </div>
     </div>
 
-{!! Form::model($formateur, ['method' => 'PATCH', 'route' => ['formateurs.update', $formateur->id], 'class' => '_form' ]) !!}
+{!! Form::model($formateur, ['method' => 'PUT', 'route' => ['formateurs.update', $formateur->id], 'class' => '_form' ]) !!}
 
     <section class="container-fluid mt-20">
 
