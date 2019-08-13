@@ -16,7 +16,6 @@ class CreateThematiquesTable extends Migration
         Schema::create('thematiques', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('phase_id')->nullable();
-            $table->integer('parent_id')->nullable();
             $table->string('name');
             $table->string('duree')->nullable();
             $table->timestamps();
