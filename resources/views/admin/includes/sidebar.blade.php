@@ -15,17 +15,17 @@
             </a>
         </li>
 
-        <li class="{{ Request::is('admin/formations*') ? 'active' : '' }}">
-            <a href="/admin/formations">
-                <i class="ion-android-bookmark"></i>
-                Formations
-            </a>
-        </li>
-
         <li class="{{ Request::is('admin/phases*') ? 'active' : '' }}">
             <a href="/admin/phases">
                 <i class="ion-android-cart"></i>
                 Phases
+            </a>
+        </li>
+
+        <li class="{{ Request::is('admin/thematiques*') ? 'active' : '' }}">
+            <a href="/admin/thematiques">
+                <i class="ion-android-bookmark"></i>
+                Thématiques
             </a>
         </li>
 

@@ -88,7 +88,7 @@ class PhaseController extends Controller
         if ($validator->fails())
             return redirect()->back()->withErrors(['validator' => 'Tous les champs sont obligatoires']);
 
-        $phase = phase::find($id);
+        $phase = Phase::find($id);
         if (!$phase) {
             return redirect()->back()->withErrors(['phase' => 'phase inconnue!']);
         }
