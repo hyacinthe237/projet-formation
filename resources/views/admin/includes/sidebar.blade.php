@@ -28,6 +28,12 @@
                 Thématiques
             </a>
         </li>
+        <li class="{{ Request::is('admin/formations*') ? 'active' : '' }}">
+            <a href="/admin/formations">
+                <i class="ion-android-bookmark"></i>
+                Formations
+            </a>
+        </li>
 
         <li class="{{ Request::is('admin/formateurs*') ? 'active' : '' }}">
             <a href="/admin/formateurs">
