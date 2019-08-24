@@ -39,75 +39,71 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Date de dedut</label>
-                                        <input type="date" name="start_date" class="form-control input-lg" value="{{ $formation->datesdebut }}">
-                                    </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Date de dedut</label>
+                                    <input type="date" name="start_date" class="form-control input-lg" value="{{ $formation->datesdebut }}">
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                          <div class="form-group">
-                                              <label>Heure</label>
-                                              <select class="form-control input-lg" name="start_heure">
-                                                  @for($i=0; i< 24; $i++)
-                                                    <?php $value = $i < 10 ? '0' . $i :$i ;?>
-                                                    <option value="{{ $value }}" {{ $value == $formation->heuresdebut ? 'selected' : ''}}>{{ $value }}</option>
-                                                  @endfor
-                                              </select>
-                                          </div>
-                                        </div>
-                                        <div class="col-xs-6">
-                                          <div class="form-group">
-                                              <label>Minutes</label>
-                                              <select class="form-control input-lg" name="start_minutes">
-                                                  @for($i=0; i< 60; $i+=5)
-                                                    <?php $value = $i < 10 ? '0' . $i :$i ;?>
-                                                    <option value="{{ $value }}"{{ $value == $formation->minutesdebut ? 'selected' : ''}}>
-                                                      {{ $value }}</option>
-                                                  @endfor
-                                              </select>
-                                          </div>
-                                        </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                      <div class="form-group">
+                                          <label>Heure</label>
+                                          <select class="form-control input-lg" name="start_heure">
+                                              @for($i=0; $i< 24; $i++)
+                                                <?php $value = $i < 10 ? '0' . $i :$i ;?>
+                                                <option value="{{ $value }}" {{ $value == $formation->heuresdebut ? 'selected' : ''}}>{{ $value }}</option>
+                                              @endfor
+                                          </select>
+                                      </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                      <div class="form-group">
+                                          <label>Minutes</label>
+                                          <select class="form-control input-lg" name="start_minutes">
+                                              @for($i=0; $i< 60; $i+=5)
+                                                <?php $value = $i < 10 ? '0' . $i :$i ;?>
+                                                <option value="{{ $value }}"{{ $value == $formation->minutesdebut ? 'selected' : ''}}>
+                                                  {{ $value }}</option>
+                                              @endfor
+                                          </select>
+                                      </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Date de fin</label>
-                                        <input type="date" name="end_date" class="form-control input-lg" value="{{ $formation->datesfin }}">
-                                    </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Date de fin</label>
+                                    <input type="date" name="end_date" class="form-control input-lg" value="{{ $formation->datesfin }}">
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                          <div class="form-group">
-                                              <label>Heure</label>
-                                              <select class="form-control input-lg" name="end_heure">
-                                                  @for($i=0; i< 24; $i++)
-                                                    <?php $value = $i < 10 ? '0' . $i :$i ;?>
-                                                    <option value="{{ $value }}" {{ $value == $formation->heuresfin ? 'selected' : ''}}>
-                                                      {{ $value }}</option>
-                                                  @endfor
-                                              </select>
-                                          </div>
-                                        </div>
-                                        <div class="col-xs-6">
-                                          <div class="form-group">
-                                              <label>Minutes</label>
-                                              <select class="form-control input-lg" name="end_minutes">
-                                                  @for($i=0; i< 60; $i+=5)
-                                                    <?php $value = $i < 10 ? '0' . $i :$i ;?>
-                                                    <option value="{{ $value }}" {{ $value == $formation->minutesfin ? 'selected' : ''}}>
-                                                      {{ $value }}</option>
-                                                  @endfor
-                                              </select>
-                                          </div>
-                                        </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                      <div class="form-group">
+                                          <label>Heure</label>
+                                          <select class="form-control input-lg" name="end_heure">
+                                              @for($i=0; $i< 24; $i++)
+                                                <?php $value = $i < 10 ? '0' . $i :$i ;?>
+                                                <option value="{{ $value }}" {{ $value == $formation->heuresfin ? 'selected' : ''}}>
+                                                  {{ $value }}</option>
+                                              @endfor
+                                          </select>
+                                      </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                      <div class="form-group">
+                                          <label>Minutes</label>
+                                          <select class="form-control input-lg" name="end_minutes">
+                                              @for($i=0; $i< 60; $i+=5)
+                                                <?php $value = $i < 10 ? '0' . $i :$i ;?>
+                                                <option value="{{ $value }}" {{ $value == $formation->minutesfin ? 'selected' : ''}}>
+                                                  {{ $value }}</option>
+                                              @endfor
+                                          </select>
+                                      </div>
                                     </div>
                                 </div>
                             </div>

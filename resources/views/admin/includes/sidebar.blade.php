@@ -17,27 +17,27 @@
 
         <li class="{{ Request::is('admin/phases*') ? 'active' : '' }}">
             <a href="/admin/phases">
-                <i class="ion-android-cart"></i>
+                <i class="ion-levels"></i>
                 Phases
             </a>
         </li>
 
         <li class="{{ Request::is('admin/thematiques*') ? 'active' : '' }}">
             <a href="/admin/thematiques">
-                <i class="ion-android-bookmark"></i>
+                <i class="ion-ribbon-b"></i>
                 Thématiques
             </a>
         </li>
         <li class="{{ Request::is('admin/formations*') ? 'active' : '' }}">
             <a href="/admin/formations">
-                <i class="ion-android-bookmark"></i>
+                <i class="ion-university"></i>
                 Formations
             </a>
         </li>
 
         <li class="{{ Request::is('admin/formateurs*') ? 'active' : '' }}">
             <a href="/admin/formateurs">
-                <i class="ion-android-cart"></i>
+                <i class="ion-ios-person"></i>
                 Formateurs
             </a>
         </li>
