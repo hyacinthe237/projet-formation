@@ -65,13 +65,17 @@ class FormationController extends Controller
             return redirect()->back()->withErrors(['validator' => 'Les champs Titre, Date début & Date fin sont obligatoires']);
 
         $existing = Formation::whereTitle($request->title)->first();
+
+        $debut = $request->start_date .' '. $request->start_heure.':'.$request->start_minutes;
+        $fin = $request->end_date .' '. $request->end_heure.':'.$request->end_minutes;
+
         if (!$existing) {
             $formation = Formation::create([
               'number'      => FormationHelper::makeFormationNumber(),
               'title'       => $request->title,
               'site'        => $request->site,
-              'start_date'  => $request->start_date,
-              'end_date'    => $request->end_date,
+              'start_date'  => Carbon::parse($debut)->format('Y-m-d H:i'),
+              'end_date'    => Carbon::parse($fin)->format('Y-m-d H:i'),
               'description' => $request->description,
               'qte_requis'  => $request->qte_requis,
               'duree'       => $request->duree,
@@ -107,10 +111,13 @@ class FormationController extends Controller
         if (!$formation)
             return redirect()->back()->withErrors(['user' => 'Formation inconnue!']);
 
+        $debut = $request->start_date .' '. $request->start_heure.':'.$request->start_minutes;
+        $fin = $request->end_date .' '. $request->end_heure.':'.$request->end_minutes;
+
         $formation->title        = $request->has('title') ? $request->title : $formation->title;
         $formation->site         = $request->has('site') ? $request->site : $formation->site;
-        $formation->start_date   = $request->has('start_date') ? $request->start_date : $formation->start_date;
-        $formation->end_date     = $request->has('end_date') ? $request->end_date : $formation->end_date;
+        $formation->start_date   = $request->has('start_date') ? Carbon::parse($debut)->format('Y-m-d H:i') : $formation->start_date;
+        $formation->end_date     = $request->has('end_date') ? Carbon::parse($fin)->format('Y-m-d H:i') : $formation->end_date;
         $formation->description  = $request->has('description') ? $request->description : $formation->description;
         $formation->qte_requis   = $request->has('qte_requis') ? $request->qte_requis : $formation->qte_requis;
         $formation->duree        = $request->has('duree') ? $request->duree : $formation->duree;

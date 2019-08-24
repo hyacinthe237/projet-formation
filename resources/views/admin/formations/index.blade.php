@@ -76,6 +76,4 @@
             <!-- End of table *123*10*99#. -->
         </div>
     </section>
-
-
 @endsection
