@@ -30,6 +30,7 @@
     },
     "dependencies": {
         "bootstrap-sass": "^3.4.1",
-        "laravel-mix-merge-manifest": "^0.1.2"
+        "laravel-mix-merge-manifest": "^0.1.2",
+        "sweetalert2": "^8.16.3"
     }
 }

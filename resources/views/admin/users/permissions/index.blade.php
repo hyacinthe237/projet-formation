@@ -8,7 +8,7 @@
                 <i class="ion-grid"></i> Roles
             </a>
             <a href="{{ route('permissions.create') }}" class="btn btn-lg btn-success">
-                <i class="ion-plus"></i> Add Permission
+                <i class="ion-plus"></i> Ajouter Permission
             </a>
         </div>
 
@@ -34,7 +34,7 @@
                                         name="keywords"
                                         class="form-control input-lg"
                                         value="{{ Request::get('keywords') }}"
-                                        placeholder="Find role">
+                                        placeholder="Recherche...">
                                     </div>
                                 </div>
 

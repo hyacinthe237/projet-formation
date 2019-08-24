@@ -9,7 +9,7 @@ import globalMixins from './mixins/global'
 import swal from './plugins/swal'
 import toastr from './plugins/toastr'
 
-require('./bootstrap')
+// require('./bootstrap')
 
 window.Vue = require('vue')
 window.eventBus = new Vue()
