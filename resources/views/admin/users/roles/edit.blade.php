@@ -12,12 +12,13 @@
             Edit Role
         </div>
     </div>
-    
+
     <section class="container-fluid mt-20">
         {!! Form::model($role, ['method' => 'PATCH', 'route' => ['roles.update', $role->id], 'class' => '_form' ]) !!}
 
 
         @include('errors.list')
+        {{ csrf_field() }}
 
         <div class="block">
             <div class="block-content form">

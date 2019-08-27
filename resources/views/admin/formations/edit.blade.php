@@ -18,6 +18,7 @@
     <section class="container-fluid mt-20">
 
         @include('errors.list')
+        {{ csrf_field() }}
 
         <div class="block">
             <div class="block-content form">
@@ -42,7 +43,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Date de dedut</label>
-                                    <input type="date" name="start_date" class="form-control input-lg" value="{{ $formation->datesdebut }}">
+                                    <input type="date" name="start_date" class="form-control input-lg datepicker" value="{{ $formation->datesdebut }}">
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -76,7 +77,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Date de fin</label>
-                                    <input type="date" name="end_date" class="form-control input-lg" value="{{ $formation->datesfin }}">
+                                    <input type="date" name="end_date" class="form-control input-lg datepicker" value="{{ $formation->datesfin }}">
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -165,12 +166,13 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="/backend/scripts/scripts.min.js"></script>
 <script>
 $(document).ready(function() {
-    $('.date').datepicker({
-        autoclose: true,
-        format: 'dd-mm-yyyy'
+    $('.datepicker').datepicker({
+      startdate: 'd',
+      format: 'dd-mm-yyyy',
+      autoclose: true,
+      todayHightlight: true,
     })
 })
 </script>

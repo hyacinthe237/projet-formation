@@ -42,31 +42,32 @@
     </div>
 
 
+    <script src="{{ asset('/backend/js/scripts.min.js') }}"></script>
     <script src="{{ asset('/backend/js/admin.js') }}"></script>
     <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
+      $("#menu-toggle").click(function(e) {
+          e.preventDefault();
+          $("#wrapper").toggleClass("toggled");
+      });
 
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    });
+      $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+      });
 
-    $(function(){
-        $('.table tr[data-href]').each(function(){
-            $(this).css('cursor','pointer').hover(
-                function(){
-                    $(this).addClass('active');
-                },
-                function(){
-                    $(this).removeClass('active');
-                }).click( function(){
-                    document.location = $(this).attr('data-href');
-                }
-            );
-        });
-    });
+      $(function(){
+          $('.table tr[data-href]').each(function(){
+              $(this).css('cursor','pointer').hover(
+                  function(){
+                      $(this).addClass('active');
+                  },
+                  function(){
+                      $(this).removeClass('active');
+                  }).click( function(){
+                      document.location = $(this).attr('data-href');
+                  }
+              );
+          });
+      });
     </script>
     @yield('js')
 </body>

@@ -19,6 +19,8 @@
 
         @include('errors.list')
 
+        {{ csrf_field() }}
+
         <div class="block">
             <div class="block-content form">
                   <div class="row mt-20">

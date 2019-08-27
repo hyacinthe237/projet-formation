@@ -17,6 +17,7 @@
     <section class="container-fluid mt-20">
 
         @include('errors.list')
+        {{ csrf_field() }}
 
         <div class="block">
             <div class="block-content form">

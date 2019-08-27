@@ -16,7 +16,7 @@
     <section class="container-fluid mt-20">
         {!! Form::model($permission, ['method' => 'PATCH', 'route' => ['permissions.update', $permission->id], 'class' => '_form' ]) !!}
 
-
+        {{ csrf_field() }}
         @include('errors.list')
 
         <div class="block">
