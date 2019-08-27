@@ -90,7 +90,7 @@
                     <tbody>
                         @foreach($etudiants as $etudiant)
                             <tr data-href="{{ route('etudiants.edit', $etudiant->number) }}">
-                                <td> <img src="{{ $etudiant->getImgAttribute() }}" alt="" width="40px" class="img-circle"> </td>
+                                <td> <img src="{{ $etudiant->getImgAttribute() }}" alt="" width="70px" height="70px" class="img-round"> </td>
                                 <td class="bold">{{ $etudiant->getNameAttribute() }}</td>
                                 <td>{{ $etudiant->email }}</td>
                                 <td>{{ $etudiant->structure }}</td>

@@ -9,7 +9,7 @@
     <meta name="name" content="{{ config('app.name') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/backend/css/admin.css') }}">
-    @include('admin.includes.favicons')
+    <!-- @include('admin.includes.favicons') -->
     @yield('head')
 
     <script>
