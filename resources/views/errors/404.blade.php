@@ -1,7 +1,7 @@
-@extends('front.templates.app.default')
+@extends('front.templates.default')
 
 @section('head')
-<title>404 | Izylearn</title>
+<title>404 | Formation</title>
 @endsection
 
 

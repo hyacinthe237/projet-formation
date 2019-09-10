@@ -2,6 +2,8 @@
 /public/hot
 /public/backend/css
 /public/backend/js
+/public/assets/css
+/public/assets/js
 /public/storage
 /public/docs
 /storage/*.key

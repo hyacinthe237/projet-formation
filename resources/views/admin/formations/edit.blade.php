@@ -3,17 +3,17 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
-            <a href="{{ route('formations.index') }}" class="btn btn-lg btn-teal">
-                <i class="ion-reply"></i> Cancel
+            <a href="{{ route('formation.index') }}" class="btn btn-lg btn-teal">
+                <i class="ion-reply"></i> Annuler
             </a>
         </div>
 
         <div class="title">
-            Edit Formation
+            Editer une Formation
         </div>
     </div>
 
-{!! Form::model($formation, ['method' => 'PATCH', 'route' => ['formations.update', $formation->number], 'class' => '_form' ]) !!}
+{!! Form::model($formation, ['method' => 'PUT', 'route' => ['formation.update', $formation->number], 'class' => '_form' ]) !!}
 
     <section class="container-fluid mt-20">
 
@@ -26,14 +26,14 @@
                 <div class="row mt-20">
                       <div class="col-sm-8">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-9">
                                 <div class="form-group">
                                     <label>Titre</label>
                                     <input type="text" name="title" class="form-control input-lg" value="{{ $formation->title }}" required>
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Site</label>
                                     <input type="text" name="site" class="form-control input-lg" value="{{ $formation->site }}" required>
@@ -109,24 +109,15 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Nombre de stagiaire</label>
-                                    <input type="number" name="qte_requis" class="form-control input-lg" value="{{ $formation->qte_requis }}">
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Durée</label>
-                                    <input type="text" name="duree" class="form-control input-lg" value="{{ $formation->duree }}">
-                                </div>
-                            </div>
-
                         </div>
                     </div>
 
                     <div class="col-sm-4">
+                          <div class="form-group">
+                              <label>Nombre de stagiaire</label>
+                              <input type="number" name="qte_requis" class="form-control input-lg" value="{{ $formation->qte_requis }}">
+                          </div>
+
                           <div class="form-group">
                               <label>Type</label>
                               <div class="form-select grey">

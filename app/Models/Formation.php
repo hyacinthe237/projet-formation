@@ -45,10 +45,10 @@ class Formation extends Model
     }
 
     public function etudiants () {
-        return $this->hasMany(FormationEtudiant::class);
+        return $this->belongsToMany(Etudiant::class, 'formation_etudiants', 'formation_id', 'etudiant_id');
     }
 
     public function phases () {
-        return $this->belongsToMany(Phase::class, FormationPhase::class);
+        return $this->belongsToMany(Phase::class, 'formation_phases', 'formation_id', 'phase_id');
     }
 }

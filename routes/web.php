@@ -11,6 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect()->to('admin');
+Route::group(['prefix' => 'inscriptions'], function() {
+    Route::get('/', 'views\front\EtudiantController@create')->name('inscriptions.create');
+    Route::post('/', 'views\front\EtudiantController@store')->name('inscriptions.store');
 });

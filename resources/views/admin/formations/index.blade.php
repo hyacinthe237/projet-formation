@@ -4,7 +4,7 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
-            <a href="{{ route('formations.create') }}" class="btn btn-lg btn-primary">
+            <a href="{{ route('formation.create') }}" class="btn btn-lg btn-primary">
                 <i class="ion-plus"></i> Ajouter Formation
             </a>
         </div>
@@ -59,7 +59,7 @@
 
                     <tbody>
                         @foreach($formations as $formation)
-                            <tr data-href="{{ route('formations.edit', $formation->number) }}">
+                            <tr data-href="{{ route('formation.edit', $formation->number) }}">
                                 <td class="bold">{{ $formation->title }}</td>
                                 <td>{{ $formation->site }}</td>
                                 <td>{{ date('d/m/Y H:i', strtotime($formation->start_date)) }}</td>
@@ -67,7 +67,7 @@
                                 <td>{{ $formation->type }}</td>
                                 <td>{{ $formation->duree }}</td>
                                 <td>{{ date('d/m/Y H:i', strtotime($formation->created_at)) }}</td>
-                                <td> <a href="{{ route('formations.edit', $formation->number) }}" class="btn btn-primary">Modifier</a> </td>
+                                <td> <a href="{{ route('formation.edit', $formation->number) }}" class="btn btn-primary">Modifier</a> </td>
                             </tr>
                         @endforeach
                     </tbody>

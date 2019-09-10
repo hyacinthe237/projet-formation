@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
+
 Route::get('admin/login', 'views\admin\AuthController@login')->name('admin.login');
 Route::post('admin/login', 'views\admin\AuthController@signin')->name('admin.signin');
 
@@ -23,9 +24,19 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], fun
     Route::resource('users', 'views\admin\UserController');
     Route::resource('roles', 'views\admin\RoleController');
     Route::resource('permissions', 'views\admin\PermissionController');
-    Route::resource('formations', 'views\admin\FormationController');
     Route::resource('etudiants', 'views\admin\EtudiantController');
     Route::resource('formateurs', 'views\admin\FormateurController');
     Route::resource('phases', 'views\admin\PhaseController');
     Route::resource('thematiques', 'views\admin\ThematiqueController');
+    // Route::resource('formation', 'views\admin\FormationsController');
+
+    Route::group(['prefix' => 'formations'], function () {
+        Route::get('/', 'views\admin\FormationsController@index')->name('formation.index');
+        Route::get('/create', 'views\admin\FormationsController@create')->name('formation.create');
+        Route::post('/', 'views\admin\FormationsController@store')->name('formation.store');
+        Route::get('{number}/edit', 'views\admin\FormationsController@edit')->name('formation.edit');
+        Route::get('{number}/show', 'views\admin\FormationsController@show')->name('formation.show');
+        Route::put('{number}/edit', 'views\admin\FormationsController@update')->name('formation.update');
+        Route::delete('{id}', 'views\admin\FormationsController@destroy')->name('formation.delete');
+    });
 });

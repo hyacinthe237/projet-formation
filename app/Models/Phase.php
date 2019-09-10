@@ -18,6 +18,6 @@ class Phase extends Model
     }
 
     public function formations () {
-        return $this->belongsToMany(Formation::class, FormationPhase::class);
+        return $this->belongsToMany(Formation::class, 'formation_phases', 'formation_id', 'phase_id');
     }
 }

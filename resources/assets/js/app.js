@@ -4,7 +4,7 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-import store from './store/store'
+// import store from './store/store'
 import globalMixins from './mixins/global'
 import swal from './plugins/swal'
 import toastr from './plugins/toastr'
@@ -20,9 +20,10 @@ Vue.use(swal)
 Vue.use(toastr)
 // Vue.use(VeeValidate)
 
-require('./ui')
+// require('./ui')
+
+// Vue.component('input-files', require('./components/frontend/images/input'))
 
 const app = new Vue({
-    el: '#app',
-    store
+    el: '#app'
 })
