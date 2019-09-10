@@ -1,6 +1,5 @@
 ._block {
     margin-bottom: 30px;
-    background-color: white;
     @include border-radius(2px);
     -webkit-box-shadow: 0 2px rgba(0, 0, 0, 0.01);
     box-shadow: 0 2px rgba(0, 0, 0, 0.01);
@@ -21,20 +20,23 @@
     &._block-grey { background-color: #c5ccd0; color: #333; border: 1px solid #e1e1e1 }
     &._block-blue { background-color: #3B548B; color: white }
     &._block-black { background-color: $brand-darker; color: white }
+    &._block-white { background-color: white; color: $brand-dark }
 
-}
+    .block-content {
+        padding: 10px;
 
-.block-content {
-    padding: 10px;
-
-    h3 {
-        margin: 0px;
-        padding: 0;
-        font-size:25px;
-        font-weight: 500;
-        line-height: 20px;
+        h3 {
+            margin: 0px;
+            padding: 0;
+            font-size:25px;
+            font-weight: 500;
+            line-height: 20px;
+        }
     }
+
 }
+
+
 
 
 ._block-blue {

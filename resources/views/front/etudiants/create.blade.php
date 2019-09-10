@@ -5,14 +5,15 @@
 @endsection()
 
 @section('body')
-{!! Form::open(['method' => 'POST', 'route' => ['inscriptions.store'], 'class' => '_form' ]) !!}
+{!! Form::open(['method' => 'POST', 'route' => ['inscriptions.store'], 'class' => '_form bg-white' ]) !!}
 
-    <section class="container mt-20">
+    <section class="container mt-60">
 
         @include('errors.list')
         {{ csrf_field() }}
 
         <div class="block">
+            <h2 class="_block-title mt-20">Formulaire d'inscription</h2>
             <div class="block-content form">
 
                 <div class="row mt-20">
@@ -48,7 +49,7 @@
                       <div class="col-sm-6">
                           <div class="form-group">
                               <label>Date de naissance</label>
-                              <input type="date" name="dob" class="form-control input-lg date" placeholder="Date de naissance">
+                              <input type="date" name="dob" class="form-control input-lg datepicker" placeholder="Date de naissance">
                           </div>
                       </div>
 
@@ -117,8 +118,8 @@
                               <textarea name="form_souhaitee" rows="4" cols="80" class="form-control input-lg" placeholder="Formation souhaitée"></textarea>
                           </div>
                       </div>
-                 </div>
-                 <div class="row">
+                  </div>
+                  <div class="row">
                       <div class="col-sm-6">
                           <div class="form-group">
                               <label>Formation complémentire</label>
@@ -132,13 +133,13 @@
                               <textarea name="diplome_elev" rows="4" cols="80" class="form-control input-lg" placeholder="Diplôme élevée"></textarea>
                           </div>
                       </div>
-                </div>
+                  </div>
                 <div class="row">
                       <div class="col-sm-6">
                         <div class="form-group">
                             <label>Upload photo</h4>
 
-
+                            <input type="file" name="photo">
                         </div>
                       </div>
 
@@ -151,7 +152,6 @@
                             </div>
 
 
-                            <hr>
                             <div class="form-group text-right mt-60">
                                 <button type="submit" class="btn btn-lg btn-primary">
                                     <i class="ion-checkmark"></i> Enregistrer
@@ -163,7 +163,6 @@
 
                 </div>
 
-
             </div>
         </div>
     </section>
@@ -171,13 +170,16 @@
 @endsection
 
 @section('js')
+<script src="{{ asset('/assets/js/scripts.min.js') }}"></script>
 @include('front.includes.signature-js')
 <script>
 $(document).ready(function() {
-    $('.date').datepicker({
-        autoclose: true,
-        format: 'dd-mm-yyyy'
-    })
+  $('.datepicker').datepicker({
+      startdate: 'd',
+      format: 'yyyy-mm-dd',
+      autoclose: true,
+      todayHightlight: true,
+  })
 })
 </script>
 @endsection
