@@ -22,7 +22,7 @@ Vue.use(toastr)
 
 // require('./ui')
 
-// Vue.component('input-files', require('./components/frontend/images/input'))
+Vue.component('input-files', require('./components/frontend/images/input'))
 
 const app = new Vue({
     el: '#app'

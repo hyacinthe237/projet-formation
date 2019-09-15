@@ -4,6 +4,7 @@ namespace App\Http\Controllers\views\front;
 
 use Auth;
 use DB;
+use Mail;
 use Carbon\Carbon;
 use App\Models\Etudiant;
 use App\Models\Formation;
@@ -11,12 +12,15 @@ use App\Models\Thematique;
 use App\Models\FormationEtudiant;
 use App\Models\Location;
 use App\Helpers\EtudiantHelper;
+use App\Traits\Uploads;
+use App\Mail\RegistrationMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 
 class EtudiantController extends Controller
 {
+    use Uploads;
 
     public function create ()
     {
@@ -73,6 +77,8 @@ class EtudiantController extends Controller
                         'created_at'    => Carbon::now(),
                         'updated_at'    => Carbon::now()
                     ]);
+
+                    // Mail::to($etudiant->email)->send(new RegistrationMail($etudiant));
                 }
 
                 // Student's signature pad
@@ -80,8 +86,12 @@ class EtudiantController extends Controller
                     EtudiantHelper::signaturePAD($etudiant, $request->signature_url);
 
                 // Upload photo
-                if ($request->photo !== null)
-                    EtudiantHelper::uploadFile($etudiant, $request->photo);
+                if ($request->photo !== null) {
+                    $file = $this->upload($request->photo, self::USER_IMAGE_FOLDER);
+
+                    $etudiant->photo = $file->link;
+                    $etudiant->save;
+                }
 
             }
 

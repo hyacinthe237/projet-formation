@@ -19,23 +19,21 @@
             <div class="mt-10">
                 <div class="row">
                     <form class="_form" action="" method="get">
-                        <div class="row">
-                            <div class="col-sm-8">
-                                <div class="form-group">
-                                    <input type="text"
-                                    name="keywords"
-                                    class="form-control input-lg"
-                                    value="{{ Request::get('keywords') }}"
-                                    placeholder="Recherche...">
-                                </div>
-                            </div>
+                      <div class="col-sm-8">
+                          <div class="form-group">
+                              <input type="text"
+                              name="keywords"
+                              class="form-control input-lg"
+                              value="{{ Request::get('keywords') }}"
+                              placeholder="Recherche...">
+                          </div>
+                      </div>
 
-                            <div class="col-sm-4">
-                                <button type="submit" class="btn btn-lg btn-primary btn-block">
-                                    Filtrer
-                                </button>
-                            </div>
-                        </div>
+                      <div class="col-sm-4">
+                          <button type="submit" class="btn btn-lg btn-primary btn-block">
+                              Filtrer
+                          </button>
+                      </div>
                     </form>
                 </div>
             </div>

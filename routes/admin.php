@@ -20,6 +20,7 @@ Route::post('admin/login', 'views\admin\AuthController@signin')->name('admin.sig
 Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], function() {
     Route::get('/', 'views\admin\AdminController@dashboard')->name('admin');
     Route::get('logout', 'views\admin\AuthController@logout')->name('admin.logout');
+    Route::post('/', 'views\admin\FormationsController@store')->name('formation');
 
     Route::resource('users', 'views\admin\UserController');
     Route::resource('roles', 'views\admin\RoleController');
@@ -33,7 +34,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], fun
     Route::group(['prefix' => 'formations'], function () {
         Route::get('/', 'views\admin\FormationsController@index')->name('formation.index');
         Route::get('/create', 'views\admin\FormationsController@create')->name('formation.create');
-        Route::post('/', 'views\admin\FormationsController@store')->name('formation.store');
         Route::get('{number}/edit', 'views\admin\FormationsController@edit')->name('formation.edit');
         Route::get('{number}/show', 'views\admin\FormationsController@show')->name('formation.show');
         Route::put('{number}/edit', 'views\admin\FormationsController@update')->name('formation.update');

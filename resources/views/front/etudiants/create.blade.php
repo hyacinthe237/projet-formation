@@ -7,7 +7,7 @@
 @section('body')
 {!! Form::open(['method' => 'POST', 'route' => ['inscriptions.store'], 'class' => '_form bg-white' ]) !!}
 
-    <section class="container mt-60">
+    <section class="container">
 
         @include('errors.list')
         {{ csrf_field() }}
@@ -139,7 +139,7 @@
                         <div class="form-group">
                             <label>Upload photo</h4>
 
-                            <input type="file" name="photo">
+                            <input type="file" name="photo" class="form-control">
                         </div>
                       </div>
 
@@ -150,14 +150,19 @@
                                 <input type="hidden" name="signature_url" id="etudiantData" value="">
                                 <button class="btn btn-danger pull-right" id="etudiantClear">Effacer</button>
                             </div>
-
-
-                            <div class="form-group text-right mt-60">
-                                <button type="submit" class="btn btn-lg btn-primary">
-                                    <i class="ion-checkmark"></i> Enregistrer
-                                </button>
-                            </div>
                       </div>
+                  </div>
+
+                  <div class="row mt-60">
+                      <div class="col-sm-4"></div>
+                      <div class="col-sm-4">
+                          <div class="form-group">
+                              <button type="submit" class="btn btn-lg btn-block btn-success bold">
+                                  <i class="ion-checkmark"></i> S'inscrire
+                              </button>
+                          </div>
+                      </div>
+                      <div class="col-sm-4"></div>
                   </div>
 
 
