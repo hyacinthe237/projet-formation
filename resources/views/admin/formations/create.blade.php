@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    {!! Form::model(['method' => 'POST', 'route' => ['formation'], 'class' => '_form' ]) !!}
+    {!! Form::model(['method' => 'POST', 'route' => ['formation.store'], 'class' => '_form' ]) !!}
 
         <section class="container-fluid mt-20">
 
