@@ -17,6 +17,10 @@ class Budget extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function formation () {
+        return $this->belongsTo(Formation::class, 'formation_id');
+    }
+
     public function getDateAttribute () {
         return date('d/m/Y H:i', strtotime($this->created_at));
     }

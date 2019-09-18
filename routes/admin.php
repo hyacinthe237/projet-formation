@@ -28,7 +28,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], fun
     Route::resource('formateurs', 'views\admin\FormateurController');
     Route::resource('phases', 'views\admin\PhaseController');
     Route::resource('thematiques', 'views\admin\ThematiqueController');
-    // Route::resource('formation', 'views\admin\FormationsController');
+    Route::resource('budgets', 'views\admin\BudgetController');
 
     Route::group(['prefix' => 'formations'], function () {
         Route::get('/', 'views\admin\FormationsController@index')->name('formation.index');

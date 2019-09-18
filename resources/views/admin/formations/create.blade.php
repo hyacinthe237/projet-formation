@@ -12,10 +12,8 @@
             Nouvelle Formation
         </div>
     </div>
-
+<section class="container-fluid mt-20">
     {!! Form::model(['method' => 'POST', 'route' => ['formation.store'], 'class' => '_form' ]) !!}
-
-        <section class="container-fluid mt-20">
 
             @include('errors.list')
 
@@ -106,7 +104,6 @@
                                           </div>
                                       </div>
                                   </div>
-
                               </div>
                         </div>
 
@@ -144,12 +141,10 @@
                               </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
-
     {!! Form::close() !!}
+</section>
 
 @endsection
 

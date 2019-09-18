@@ -6,6 +6,7 @@ use Auth;
 use DB;
 use Carbon\Carbon;
 use App\Models\Budget;
+use App\Models\Formation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
@@ -25,6 +26,7 @@ class BudgetController extends Controller
           return $query->where('budget_initial', 'like', '%'.$keywords.'%')
           ->orWhere('budget_reel', 'like', '%'.$keywords.'%');
       })
+      ->with('formation')
       ->orderBy('id', 'desc')
       ->paginate(50);
 
@@ -33,16 +35,24 @@ class BudgetController extends Controller
 
     public function create ()
     {
-        return view('admin.budgets.create');
+        $formations = Formation::get();
+        return view('admin.budgets.create', compact('formations'));
     }
 
     public function edit ($id)
     {
-        $budget  = Budget::find($id);
+        $budget  = Budget::with('items', 'items.type')->find($id);
+        $formations = Formation::get();
         if (!$budget)
             return redirect()->route('budgets.index');
 
-        return view('admin.budgets.edit', compact('budget'));
+        $total = 0;
+        foreach ($budget->items as $item) {
+          $item->total = $item->nb_unite * $item->cout_unite;
+          $total += $item->total;
+        }
+        // dd($budget->items);
+        return view('admin.budgets.edit', compact('budget', 'total', 'formations'));
     }
 
     /**
@@ -64,14 +74,15 @@ class BudgetController extends Controller
         $existing = Budget::whereBudgetInitial($request->budget_initial)->whereFormationId($request->formation_id)->first();
 
         if (!$existing) {
-            Budget::create([
+            $budget = Budget::create([
               'formation_id'    => $request->formation_id,
               'user_id'         => Auth::user()->id,
               'budget_initial'  => $request->budget_initial,
               'budget_reel'     => $request->budget_reel
             ]);
 
-            return redirect()->back()->with('message', 'Budget Enregistré avec succès');
+            return redirect()->route('budgets.edit', $budget->id)
+                            ->withSuccess("Budget Enregistré avec succès");
         }
 
         return redirect()->back()->withErrors(['existing' => 'Ce budget a déjà été enregistré pour cette formation']);
@@ -93,8 +104,8 @@ class BudgetController extends Controller
         if ($validator->fails())
             return redirect()->back()->withErrors(['validator' => 'Tous les champs sont obligatoires']);
 
-        $budget = Budget::find($id);
-        if (!$formateur)
+        $budget = Budget::with('items', 'items.type')->find($id);
+        if (!$budget)
             return redirect()->back()->withErrors(['formateur' => 'Budget inconnu!']);
 
         $budget->formation_id    = $request->has('formation_id') ? $request->formation_id : $budget->formation_id;
@@ -102,7 +113,8 @@ class BudgetController extends Controller
         $budget->budget_reel     = $request->has('budget_reel') ? $request->budget_reel : $budget->budget_reel;
         $budget->update();
 
-        return redirect()->back()->with('message', 'Budget mis à jour avec succès');
+        return redirect()->route('budgets.edit', $budget->id)
+                        ->withSuccess("Budget mis à jour avec succès");
     }
 
     public function destroy ($id)

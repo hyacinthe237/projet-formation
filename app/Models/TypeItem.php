@@ -10,7 +10,7 @@ class TypeItem extends Model
     protected $guarded = ['id'];
 
     public function budget_items () {
-        return $this->hasMany(BudgetItem::class);
+        return $this->hasMany(BudgetItem::class, 'type_item_id');
     }
 
 }

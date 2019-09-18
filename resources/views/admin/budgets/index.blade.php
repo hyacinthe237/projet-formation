@@ -1,0 +1,73 @@
+@extends('admin.body')
+
+
+@section('body')
+    <div class="page-heading">
+        <div class="buttons">
+            <a href="{{ route('budgets.create') }}" class="btn btn-lg btn-primary">
+                <i class="ion-plus"></i> Ajouter
+            </a>
+        </div>
+
+        <div class="title">
+            Budgets
+        </div>
+    </div>
+
+    <section class="page page-white">
+        <div class="container-fluid">
+            <div class="mt-10">
+                <div class="row">
+                    <form class="_form" action="" method="get">
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <input type="text"
+                                name="keywords"
+                                class="form-control input-lg"
+                                value="{{ Request::get('keywords') }}"
+                                placeholder="Recherche...">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <button type="submit" class="btn btn-lg btn-primary btn-block">
+                                Filtrer
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            @include('errors.list')
+
+            <div class="mt-10">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Formation</th>
+                            <th>Budget Initial</th>
+                            <th>Budget Réel</th>
+                            <th>Ajouté le</th>
+                            <th>Modifié le</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach($budgets as $budget)
+                            <tr data-href="{{ route('budgets.edit', $budget->id) }}">
+                                <td>{{ $budget->formation->title }}</td>
+                                <td>{{ $budget->budget_initial }}</td>
+                                <td>{{ $budget->budget_reel }}</td>
+                                <td>{{ date('d/m/Y H:i', strtotime($budget->created_at)) }}</td>
+                                <td>{{ date('d/m/Y H:i', strtotime($budget->updated_at)) }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <!-- End of table -->
+        </div>
+    </section>
+
+
+@endsection

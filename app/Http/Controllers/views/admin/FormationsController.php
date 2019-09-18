@@ -64,7 +64,7 @@ class FormationsController extends Controller
          $fin = $request->end_date .' '. $request->end_heure.':'.$request->end_minutes;
          $start_date = Carbon::parse($debut)->format('Y-m-d H:i');
          $end_date = Carbon::parse($fin)->format('Y-m-d H:i');
-         $duree = $end_date->diffInDays($start_date);
+         $duree = FormationHelper::dateDifference($start_date, $end_date, '%a');
 
          if (!$existing) {
              $formation = Formation::create([
@@ -142,12 +142,12 @@ class FormationsController extends Controller
          $fin = $request->end_date .' '. $request->end_heure.':'.$request->end_minutes;
          $start_date = Carbon::parse($debut)->format('Y-m-d H:i');
          $end_date = Carbon::parse($fin)->format('Y-m-d H:i');
-         $duree = $end_date->diffInDays($start_date);
+         $duree = FormationHelper::dateDifference($start_date, $end_date, '%a');
 
          $formation->title        = $request->has('title') ? $request->title : $formation->title;
          $formation->site         = $request->has('site') ? $request->site : $formation->site;
          $formation->start_date   = $request->has('start_date') ? $start_date : $formation->start_date;
-         $formation->end_date     = $request->has('end_date') ? Carbon::parse($fin)->format('Y-m-d H:i') : $formation->end_date;
+         $formation->end_date     = $request->has('end_date') ? $end_date : $formation->end_date;
          $formation->description  = $request->has('description') ? $end_date : $formation->description;
          $formation->qte_requis   = $request->has('qte_requis') ? $request->qte_requis : $formation->qte_requis;
          $formation->duree        = $duree > 1 ? $duree . ' jours' : $duree . ' jour';
