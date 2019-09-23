@@ -13,15 +13,15 @@ require('laravel-mix-merge-manifest');
  */
 
  mix.js('resources/assets/js/admin.js', 'public/backend/js')
- // .scripts([
- //     'node_modules/speakingurl/lib/speakingurl.js',
- //     'node_modules/jquery-slugify/dist/slugify.js',
- //     'node_modules/bootstrap-tokenfield/dist/bootstrap-tokenfield.js',
- //     'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
- //     'node_modules/datatables.net/js/jquery.dataTables.js',
- //     'node_modules/datatables.net-bs/js/dataTables-bootstrap.js',
- //     'resources/assets/js/libs/select2.min.js'
- // ], 'public/backend/js/scripts.js');
+ .scripts([
+     // 'node_modules/speakingurl/lib/speakingurl.js',
+     // 'node_modules/jquery-slugify/dist/slugify.js',
+     // 'node_modules/bootstrap-tokenfield/dist/bootstrap-tokenfield.js',
+     // 'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
+     // 'node_modules/datatables.net/js/jquery.dataTables.js',
+     // 'node_modules/datatables.net-bs/js/dataTables-bootstrap.js',
+     // 'resources/assets/js/libs/select2.min.js'
+ ], 'public/backend/js/scripts.js');
  //
  mix.sass('resources/assets/sass/admin.scss', 'public/backend/css')
  .mergeManifest()

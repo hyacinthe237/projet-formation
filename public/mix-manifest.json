@@ -4,5 +4,6 @@
     "/assets/js/app.js": "/assets/js/app.js",
     "/assets/css/app.css": "/assets/css/app.css",
     "/assets/js/manifest.js": "/assets/js/manifest.js",
-    "/assets/js/vendor.js": "/assets/js/vendor.js"
+    "/assets/js/vendor.js": "/assets/js/vendor.js",
+    "/backend/js/scripts.js": "/backend/js/scripts.js"
 }

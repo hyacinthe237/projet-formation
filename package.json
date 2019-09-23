@@ -30,12 +30,14 @@
     },
     "dependencies": {
         "bootstrap-sass": "^3.4.1",
+        "epic-spinners": "^1.1.0",
         "laravel-mix-merge-manifest": "^0.1.2",
         "moment": "^2.24.0",
         "moment-range": "^4.0.2",
         "signature_pad": "^3.0.0-beta.3",
         "sweetalert2": "^8.16.3",
         "toastr": "^2.1.4",
+        "trumbowyg": "^2.19.1",
         "vee-validate": "^3.0.3",
         "vue2-dropzone": "^3.6.0",
         "vuex": "^3.1.1"

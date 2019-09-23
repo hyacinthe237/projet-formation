@@ -70,7 +70,6 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                {{-- <th>Type</th> --}}
                                 <th>Désignation</th>
                                 <th>Unité</th>
                                 <th>Nombre Unité</th>
@@ -82,7 +81,6 @@
                         <tbody>
                             @foreach($budget->items as $item)
                                 <tr>
-                                    {{-- <td>{{ $item->type->name }}</td> --}}
                                     <td>{{ $item->designation }}</td>
                                     <td>{{ $item->unite }}</td>
                                     <td>{{ $item->nb_unite }}</td>
@@ -99,8 +97,66 @@
                   </div>
               </div>
 
+              {!! Form::model(['method' => 'POST', 'route' => ['items.store'], 'class' => '_form' ]) !!}
+
+                  @include('errors.list')
+                  {{ csrf_field() }}
+                      <input type="hidden" name="budget_id" value="{{ $budget->id }}">
+                      <div class="row mt-20">
+                              <div class="col-sm-4">
+                                  <div class="form-group">
+                                      <label>Désignation</label>
+                                      <input type="text" name="designation" class="form-control input-lg" placeholder="Désignation" required>
+                                  </div>
+                              </div>
+                              <div class="col-sm-2">
+                                  <div class="form-group">
+                                      <label>Nombre d'unité</label>
+                                      <input type="number" name="nb_unite" class="form-control input-lg" placeholder="Nombre d'unité">
+                                  </div>
+                              </div>
+                              <div class="col-sm-3">
+                                  <div class="form-group">
+                                      <label>Unité de quantification</label>
+                                      <select class="form-control input-lg" name="unite">
+                                          <option value="Billet d'avion/Expert">Billet d'avion/Expert</option>
+                                          <option value="Billet d'avion/personne">Billet d'avion/personne</option>
+                                          <option value="Forfait">Forfait</option>
+                                          <option value="Homme/jour">Homme/jour</option>
+                                          <option value="Jour">Jour</option>
+                                          <option value="Par jour">Par jour</option>
+                                          <option value="Unité">Unité</option>
+                                      </select>
+                                  </div>
+                              </div>
+
+                              <div class="col-sm-3">
+                                  <div class="form-group">
+                                      <label>Sélectionnez le type</label>
+                                      <select class="form-control input-lg" name="type_item_id">
+                                          @foreach ($types as $type)
+                                              <option value="{{ $type->id }}">
+                                                {{ $type->name }}</option>
+                                          @endforeach
+                                      </select>
+                                  </div>
+                              </div>
+
+                              <div class="col-sm-12">
+                                  <div class="form-group text-right mt-20">
+                                      <button type="submit" class="btn btn-lg btn-primary">
+                                          <i class="ion-checkmark"></i> Ajouter
+                                      </button>
+                                  </div>
+                              </div>
+                      </div>
+
+              {!! Form::close() !!}
+
         </div>
     </div>
+
+
 
 </section>
 

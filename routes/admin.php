@@ -39,4 +39,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], fun
         Route::put('{number}/edit', 'views\admin\FormationsController@update')->name('formation.update');
         Route::delete('{id}', 'views\admin\FormationsController@destroy')->name('formation.delete');
     });
+
+    Route::group(['prefix' => 'items'], function () {
+        Route::post('/', 'views\admin\BudgetController@addBudgetItem')->name('items.store');
+        Route::delete('{id}', 'views\admin\BudgetController@removeBugetItem')->name('items.delete');
+    });
 });

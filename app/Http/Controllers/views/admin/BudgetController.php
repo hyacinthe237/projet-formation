@@ -6,7 +6,9 @@ use Auth;
 use DB;
 use Carbon\Carbon;
 use App\Models\Budget;
+use App\Models\BudgetItem;
 use App\Models\Formation;
+use App\Models\TypeItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
@@ -43,6 +45,7 @@ class BudgetController extends Controller
     {
         $budget  = Budget::with('items', 'items.type')->find($id);
         $formations = Formation::get();
+        $types = TypeItem::get();
         if (!$budget)
             return redirect()->route('budgets.index');
 
@@ -51,8 +54,68 @@ class BudgetController extends Controller
           $item->total = $item->nb_unite * $item->cout_unite;
           $total += $item->total;
         }
-        // dd($budget->items);
-        return view('admin.budgets.edit', compact('budget', 'total', 'formations'));
+
+        return view('admin.budgets.edit', compact('budget', 'total', 'formations', 'types'));
+    }
+
+    /**
+     * [addBudgetItem description]
+     * @param [type]  $budget_id [description]
+     * @param Request $request  [description]
+     */
+    public function addBudgetItem (Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'type_item_id'  => 'required',
+            'designation'   => 'required',
+            'unite'         => 'required',
+            'nb_unite'      => 'required',
+            'cout_unite'    => 'required'
+        ]);
+
+        if ($validator->fails())
+            return redirect()->back()->withInput($request->all())
+                   ->withErrors(['validator' => 'Saisissez tous les champs']);
+
+        $budget = Budget::find($request->budget_id);
+
+        $existing_record = $budget->items()->where('type_item_id', $request->type_item_id)
+            ->where('designation', $request->designation)->first();
+
+        if( !$existing_record ) {
+            $budget->items()->create([
+                'type_item_id'  => $request->type_item_id,
+                'designation'   => $request->designation,
+                'unite'         => $request->unite,
+                'nb_unite'      => $request->nb_unite,
+                'cout_unite'    => $request->cout_unite
+            ]);
+            return redirect()->back()->with('message', 'ajout enregistré');
+        } else {
+            $existing_record->type_item_id = $request->type_item_id;
+            $existing_record->designation = $request->designation;
+            $existing_record->unite = $request->unite;
+            $existing_record->nb_unite = $request->nb_unite;
+            $existing_record->cout_unite = $request->cout_unite;
+            $existing_record->update();
+            return redirect()->back()->with('message', 'Mise a jour effective');
+        }
+    }
+
+    /**
+     * [removePrice description]
+     * @param  [type] $price_id [description]
+     * @return [type]           [description]
+     */
+    public function removeBugetItem ($id)
+    {
+        $item = BudgetItem::find($id);
+
+        if ( !$item )
+            return redirect()->back()->with('message', 'Elément non existant');
+
+        $item->delete();
+        return redirect()->back()->with('message', 'Retrait éffectif');
     }
 
     /**
