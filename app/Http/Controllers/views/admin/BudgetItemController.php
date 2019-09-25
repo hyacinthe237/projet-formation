@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\views\admin;
 
+use App\Models\Budget;
 use App\Models\BudgetItem;
 use App\Models\TypeItem;
 use Illuminate\Http\Request;
@@ -9,6 +10,20 @@ use App\Http\Controllers\Controller;
 
 class BudgetItemController extends Controller
 {
+    /**
+     * [edit description]
+     *
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function create ($id)
+    {
+        $budget = Budget::findOrFail($id);
+        $types = TypeItem::get();
+
+        return view('admin.budgets.item-add', compact('types', 'budget'));
+    }
+
     /**
      * [edit description]
      *

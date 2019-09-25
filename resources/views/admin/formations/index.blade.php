@@ -51,7 +51,6 @@
                             <th>Type</th>
                             <th>Durée</th>
                             <th>Created</th>
-                            <th></th>
                         </tr>
                     </thead>
 
@@ -65,7 +64,6 @@
                                 <td>{{ $formation->type }}</td>
                                 <td>{{ $formation->duree }}</td>
                                 <td>{{ date('d/m/Y H:i', strtotime($formation->created_at)) }}</td>
-                                <td> <a href="{{ route('formation.edit', $formation->number) }}" class="btn btn-primary">Modifier</a> </td>
                             </tr>
                         @endforeach
                     </tbody>

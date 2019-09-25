@@ -42,6 +42,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], fun
 
     Route::group(['prefix' => 'items'], function () {
         Route::post('/', 'views\admin\BudgetController@addBudgetItem')->name('items.store');
+        Route::get('{id}', 'views\admin\BudgetItemController@edit')->name('items.edit');
+        Route::get('{id}/create', 'views\admin\BudgetItemController@create')->name('items.create');
+        Route::put('{id}', 'views\admin\BudgetItemController@update')->name('items.update');
         Route::delete('{id}', 'views\admin\BudgetController@removeBugetItem')->name('items.delete');
     });
 });
