@@ -102,7 +102,6 @@
                     </tbody>
                 </table>
             </div>
-            <!-- End of table *123*10*99#. -->
         </div>
     </section>
 

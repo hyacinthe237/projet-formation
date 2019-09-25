@@ -101,22 +101,40 @@ class EtudiantController extends Controller
             ]);
 
             if ($etudiant) {
-                $form_etud = FormationEtudiant::whereFormationId($request->formation_id)->whereEtat('inscris')->first();
-                if (!$form_etud) {
-                    $etudiant->formations()->create([
-                        'formation_id'  => $request->formation_id,
-                        'etat'          => 'inscris',
-                        'created_at'    => Carbon::now(),
-                        'updated_at'    => Carbon::now()
-                    ]);
-                }
+                $form_etud = FormationEtudiant::whereEtudiantId($etudiant->id)
+                             ->whereFormationId($request->formation_id)
+                             ->whereEtat('inscris')
+                             ->first();
 
+                $formation = Formation::findOrFail($request->formation_id);
+                $count = FormationEtudiant::whereFormationId($request->formation_id)->whereEtat('inscris')->count();
+
+                if (!$form_etud) {
+                    if ($count <= $formation->qte_requis) {
+                      $etudiant->formations()->create([
+                          'formation_id'  => $request->formation_id,
+                          'etat'          => 'inscris',
+                          'created_at'    => Carbon::now(),
+                          'updated_at'    => Carbon::now()
+                      ]);
+
+                      return redirect()->back()->with('message', 'Etudiant ajouté avec succès');
+                    } else {
+                      return redirect()->back()
+                              ->withInput($request->all())
+                              ->withErrors(['existing' => 'Le nombre de place requis de la formation est atteint.']);
+                    }
+                } else {
+                  return redirect()->back()
+                         ->withInput($request->all())
+                         ->withErrors(['existing' => 'Cet Etudiant a déjà été inscris à cette formation']);
+                }
             }
 
-            return redirect()->back()->with('message', 'Etudiant ajouté avec succès');
+
         }
 
-        return redirect()->back()->withErrors(['existing' => 'Cet Etudiant existe déjà']);
+
     }
 
     /**

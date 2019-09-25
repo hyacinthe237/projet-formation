@@ -46,11 +46,12 @@
                         <tr>
                             <th>Titre</th>
                             <th>Site</th>
-                            <th>Début</th>
-                            <th>Fin</th>
+                            <th>Places</th>
+                            <th>Incris</th>
                             <th>Type</th>
                             <th>Durée</th>
-                            <th>Created</th>
+                            <th>Début</th>
+                            <th>Fin</th>
                         </tr>
                     </thead>
 
@@ -59,11 +60,12 @@
                             <tr data-href="{{ route('formation.edit', $formation->number) }}">
                                 <td class="bold">{{ $formation->title }}</td>
                                 <td>{{ $formation->site }}</td>
-                                <td>{{ date('d/m/Y H:i', strtotime($formation->start_date)) }}</td>
-                                <td>{{ date('d/m/Y H:i', strtotime($formation->end_date)) }}</td>
+                                <td>{{ $formation->qte_requis }}</td>
+                                <td>{{ count($formation->etudiants) }}</td>
                                 <td>{{ $formation->type }}</td>
                                 <td>{{ $formation->duree }}</td>
-                                <td>{{ date('d/m/Y H:i', strtotime($formation->created_at)) }}</td>
+                                <td>{{ date('d/m/Y H:i', strtotime($formation->start_date)) }}</td>
+                                <td>{{ date('d/m/Y H:i', strtotime($formation->end_date)) }}</td>
                             </tr>
                         @endforeach
                     </tbody>

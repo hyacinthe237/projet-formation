@@ -12,15 +12,14 @@
             Editer une Formation
         </div>
     </div>
-
-{!! Form::model($formation, ['method' => 'PUT', 'route' => ['formation.update', $formation->number], 'class' => '_form' ]) !!}
-
     <section class="container-fluid mt-20">
 
-        @include('errors.list')
-        {{ csrf_field() }}
+        {!! Form::model($formation, ['method' => 'PUT', 'route' => ['formation.update', $formation->number], 'class' => '_form' ]) !!}
 
-        <div class="block">
+            @include('errors.list')
+            {{ csrf_field() }}
+
+            <div class="block">
             <div class="block-content form">
 
                 <div class="row mt-20">
@@ -152,7 +151,45 @@
             </div>
         </div>
 
-{!! Form::close() !!}
+        {!! Form::close() !!}
+
+        @if (sizeOf($formation->etudiants))
+          <h3 class="_block-title mb-20">Liste d'étudiants</h3>
+          <div class="block">
+              <div class="block-content form">
+                <div class="mt-10">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Structure</th>
+                                <th>Fonction</th>
+                                <th>Active</th>
+                                <th>Crée le</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach($formation->etudiants as $etudiant)
+                                <tr data-href="{{ route('etudiants.edit', $etudiant->number) }}">
+                                    <td> <img src="{{ $etudiant->getImgAttribute() }}" alt="" width="50px" height="50px" class="img-round"> </td>
+                                    <td class="bold">{{ $etudiant->getNameAttribute() }}</td>
+                                    <td>{{ $etudiant->email }}</td>
+                                    <td>{{ $etudiant->structure }}</td>
+                                    <td>{{ $etudiant->fonction }}</td>
+                                    <td>{{ $etudiant->is_active ? 'Yes' : 'No'}}</td>
+                                    <td>{{ date('d/m/Y H:i', strtotime($etudiant->created_at)) }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+              </div>
+          </div>
+        @endif
+    </section>
 
 @endsection
 
