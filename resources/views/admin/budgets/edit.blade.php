@@ -4,8 +4,8 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
-            <a href="{{ route('items.create', $budget->id) }}" class="btn btn-lg btn-primary">
-                <i class="ion-plus"></i> Ajouter Item
+            <a href="#" class="btn btn-lg btn-success">
+                <i class="ion-plus"></i> Visualiser le PDF
             </a>
 
             <a href="{{ route('budgets.index') }}" class="btn btn-lg btn-teal">
@@ -74,6 +74,7 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
+                                {{-- <th>Type</th> --}}
                                 <th>Désignation</th>
                                 <th>Unité</th>
                                 <th>Nombre Unité</th>
@@ -85,6 +86,7 @@
                         <tbody>
                             @foreach($budget->items as $item)
                                 <tr data-href="{{ route('items.edit', $item->id) }}">
+                                    {{-- <td>{{ $item->type->name }}</td> --}}
                                     <td>{{ $item->designation }}</td>
                                     <td>{{ $item->unite }}</td>
                                     <td>{{ $item->nb_unite }}</td>
@@ -100,6 +102,73 @@
                     </table>
                   </div>
               </div>
+
+
+              <form class="_form" action="{{ route('items.store') }}" method="post">
+
+                {{ csrf_field() }}
+
+                <h3>Ajouter un item au budget</h3>
+                <input type="hidden" name="budget_id" value="{{ $budget->id }}">
+                <div class="block">
+                    <div class="block-content form">
+                      <div class="row mt-20">
+                              <div class="col-sm-12">
+                                  <div class="form-group">
+                                      <label>Désignation</label>
+                                      <input type="text" name="designation" class="form-control input-lg" placeholder="Désignation" required>
+                                  </div>
+                              </div>
+                              <div class="col-sm-2">
+                                  <div class="form-group">
+                                      <label>Coût Unitaire</label>
+                                      <input type="number" name="cout_unite" class="form-control input-lg" placeholder="Coût Unitaire">
+                                  </div>
+                              </div>
+                              <div class="col-sm-2">
+                                  <div class="form-group">
+                                      <label>Nombre d'unité</label>
+                                      <input type="number" name="nb_unite" class="form-control input-lg" placeholder="Nombre d'unité">
+                                  </div>
+                              </div>
+                              <div class="col-sm-4">
+                                  <div class="form-group">
+                                      <label>Unité de quantification</label>
+                                      <select class="form-control input-lg" name="unite">
+                                          <option value="Billet d'avion/Expert">Billet d'avion/Expert</option>
+                                          <option value="Billet d'avion/personne">Billet d'avion/personne</option>
+                                          <option value="Forfait">Forfait</option>
+                                          <option value="Homme/jour">Homme/jour</option>
+                                          <option value="Jour">Jour</option>
+                                          <option value="Par jour">Par jour</option>
+                                          <option value="Unité">Unité</option>
+                                      </select>
+                                  </div>
+                              </div>
+
+                              <div class="col-sm-4">
+                                  <div class="form-group">
+                                      <label>Sélectionnez le type</label>
+                                      <select class="form-control input-lg" name="type_item_id">
+                                          @foreach ($types as $type)
+                                              <option value="{{ $type->id }}">
+                                                {{ $type->name }}</option>
+                                          @endforeach
+                                      </select>
+                                  </div>
+                              </div>
+
+                              <div class="col-sm-12">
+                                  <div class="form-group text-right mt-20">
+                                      <button type="submit" class="btn btn-lg btn-primary">
+                                          <i class="ion-checkmark"></i> Ajouter
+                                      </button>
+                                  </div>
+                              </div>
+                      </div>
+                    </div>
+                </div>
+              </form>
 
         </div>
     </div>

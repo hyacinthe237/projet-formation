@@ -3,6 +3,10 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
+            <a href="{{ route('etudiants.create') }}" class="btn btn-lg btn-primary">
+                <i class="ion-plus"></i> Ajouter Etudiant
+            </a>
+            
             <a href="{{ route('formation.index') }}" class="btn btn-lg btn-teal">
                 <i class="ion-reply"></i> Annuler
             </a>

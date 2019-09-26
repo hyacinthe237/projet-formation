@@ -80,17 +80,24 @@
                               </div>
                           </div>
                   </div>
+                  <div class="mt-20">
+                    <a class="btn btn-lg btn-danger" data-toggle="modal" data-target="#confirmModal">
+                        <i class="ion-trash-a"></i> Supprimer
+                    </a>
+                  </div>
                 </div>
             </div>
 
 
             {!! Form::close() !!}
         </div>
+
+
     </section>
 
     @include('admin.modals.confirm', [
         'route'    => 'items.delete',
-        'method'   => 'POST',
+        'method'   => 'delete',
         'resource' => $item,
         'confirm'  => 'Oui, Je supprime',
         'message'  => 'Voulez-vous vraiment supprimer cet élément du budget ?'

@@ -55,6 +55,8 @@ class BudgetController extends Controller
           $total += $item->total;
         }
 
+        // dd($budget);
+
         return view('admin.budgets.edit', compact('budget', 'total', 'formations', 'types'));
     }
 
@@ -90,7 +92,7 @@ class BudgetController extends Controller
                 'nb_unite'      => $request->nb_unite,
                 'cout_unite'    => $request->cout_unite
             ]);
-            return redirect()->back()->with('message', 'ajout enregistré');
+            return redirect()->back()->with('message', 'Elément du budget ajouté avec succès !');
         } else {
             $existing_record->type_item_id = $request->type_item_id;
             $existing_record->designation = $request->designation;
@@ -103,19 +105,55 @@ class BudgetController extends Controller
     }
 
     /**
-     * [removePrice description]
+     * [removeBudgetItem description]
      * @param  [type] $price_id [description]
      * @return [type]           [description]
      */
     public function removeBugetItem ($id)
     {
         $item = BudgetItem::find($id);
+        $budget = Budget::find($item->budget_id);
 
-        if ( !$item )
-            return redirect()->back()->with('message', 'Elément non existant');
+        if (!$item)
+            return redirect()->route('budgets.edit', $budget->id)->with('message', 'Elément non existant');
 
         $item->delete();
-        return redirect()->back()->with('message', 'Retrait éffectif');
+        return redirect()->route('budgets.edit', $budget->id)->with('message', 'Suppression éffective');
+    }
+
+    /**
+     * Download PDF Budget
+     * @param  [type] $id [description]
+     * @return [type]         [description]
+     */
+    public function downloadBudget (int $id)
+    {
+        $data = self::takeBudgetInfos($id);
+
+        // $pdf = PDF::loadView('pdfs.budget', $data);
+        // return $pdf->stream();
+    }
+
+    /**
+     * Recup Budget Information
+     * @param  [type] $id [description]
+     * @return [type]         [description]
+     */
+    private static function takeBudgetInfos (int $id)
+    {
+        $budget = Budget::whereId($id)
+                    ->with('items', 'items.type', 'formation', 'formation.formateurs', 'formation.etudiants')
+                    ->firstOrFail();
+
+        $data = [
+            'items' => $budget->items,
+            'formation' => $budget->formation,
+            'formateurs' => $budget->formation->formateurs,
+            'etudiants' => $budget->formation->etudiants,
+            'budget' => $budget
+        ];
+
+        return $data;
     }
 
     /**
@@ -180,7 +218,7 @@ class BudgetController extends Controller
                         ->withSuccess("Budget mis à jour avec succès");
     }
 
-    public function destroy ($id)
+    public function destroy (Request $request, $id)
     {
         $budget = Budget::find($id);
         if (!$budget)

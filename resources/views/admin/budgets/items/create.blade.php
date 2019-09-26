@@ -83,9 +83,6 @@
               </div>
             </form>
 
-
-
-            {{-- {!! Form::close() !!} --}}
         </div>
     </section>
 @endsection

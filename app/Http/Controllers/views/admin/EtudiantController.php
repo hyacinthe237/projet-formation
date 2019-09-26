@@ -130,10 +130,7 @@ class EtudiantController extends Controller
                          ->withErrors(['existing' => 'Cet Etudiant a déjà été inscris à cette formation']);
                 }
             }
-
-
         }
-
 
     }
 

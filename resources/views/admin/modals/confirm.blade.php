@@ -8,7 +8,9 @@
                     <h4>Confirmation</h4>
 
                     <h5 class="mt-20">{{ $message }}</h5>
-
+                    @if ($resource->budget_id)
+                        <input type="hidden" name="budget_id" value="{{ $resource->budget_id }}">
+                    @endif
 
                     <div class="mt-20 pb-10 text-right">
                         <a class="btn btn-teal mr-10 btn-lg" data-dismiss="modal">

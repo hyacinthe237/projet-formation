@@ -21,7 +21,7 @@ class BudgetItemController extends Controller
         $budget = Budget::findOrFail($id);
         $types = TypeItem::get();
 
-        return view('admin.budgets.item-add', compact('types', 'budget'));
+        return view('admin.budgets.items.create', compact('types', 'budget'));
     }
 
     /**
@@ -35,7 +35,7 @@ class BudgetItemController extends Controller
         $item = BudgetItem::with('budget')->findOrFail($id);
         $types = TypeItem::get();
 
-        return view('admin.budgets.item-edit', compact('item', 'types'));
+        return view('admin.budgets.items.edit', compact('item', 'types'));
     }
 
     /**
