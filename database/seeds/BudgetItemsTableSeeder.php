@@ -13,7 +13,7 @@ class BudgetItemsTableSeeder extends Seeder
     public function run()
     {
         $type_01 = TypeItem::create([ 'name' => 'Frais pédagogiques']);
-        $type_01->budget_items()->createMany([
+        $type_01->items()->createMany([
             [ 'budget_id' => 1, 'designation' => 'Honoraires formateurs N°1', 'unite' => 'Homme/jour',
             'nb_unite' => 8, 'cout_unite' => 125000 ],
             [ 'budget_id' => 1, 'designation' => 'Honoraires formateurs N°2', 'unite' => 'Homme/jour',
@@ -29,7 +29,7 @@ class BudgetItemsTableSeeder extends Seeder
         ]);
 
         $type_02 = TypeItem::create([ 'name' => 'Frais logistiques']);
-        $type_02->budget_items()->createMany([
+        $type_02->items()->createMany([
             [ 'budget_id' => 1, 'designation' => 'Location de la salle', 'unite' => 'Jour',
             'nb_unite' => 5, 'cout_unite' => 200000 ],
             [ 'budget_id' => 1, 'designation' => 'Restauration: Pause-café (35 pers*5jrs*2500), Pause déjeuner (35pers*5jrs*5500)', 'unite' => 'personne/Jour',
@@ -43,7 +43,7 @@ class BudgetItemsTableSeeder extends Seeder
         ]);
 
         $type_03 = TypeItem::create([ 'name' => 'Frais de communication']);
-        $type_03->budget_items()->createMany([
+        $type_03->items()->createMany([
             [ 'budget_id' => 1, 'designation' => 'Banderole', 'unite' => 'Unité',
             'nb_unite' => 1, 'cout_unite' => 75000 ],
             [ 'budget_id' => 1, 'designation' => 'Relation publique', 'unite' => 'Forfait',
@@ -53,7 +53,7 @@ class BudgetItemsTableSeeder extends Seeder
         ]);
 
         $type_04 = TypeItem::create([ 'name' => 'Prise en charge du personnel PNFMV']);
-        $type_04->budget_items()->createMany([
+        $type_04->items()->createMany([
             [ 'budget_id' => 1, 'designation' => 'billet d\'avion personnel PNFMV (aller/retour)', 'unite' => 'billet d\'avion/personne',
             'nb_unite' => 3, 'cout_unite' => 242240 ],
             [ 'budget_id' => 1, 'designation' => 'location de véhicule sur le terrain (05 jours)', 'unite' => 'forfait',

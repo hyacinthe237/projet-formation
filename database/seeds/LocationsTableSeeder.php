@@ -6,32 +6,47 @@ use Carbon\Carbon;
 
 class LocationsTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
-          Location::create([
-              'region'      => 'Centre',
-              'commune'     => 'Yaoundé 3',
-              'departement' => 'Mfoundi',
-              'lon'         => 3.831622,
-              'lat'         => 11.488940,
-              'created_at'  => Carbon::now(),
-              'updated_at'  => Carbon::now()
-          ]);
+  /**
+   * Run the database seeds.
+   *
+   * @return void
+   */
+  public function run()
+  {
+      $file = 'public/data/location.csv';
 
-          Location::create([
-              'region'      => 'Nord',
-              'commune'     => 'Garoua 1',
-              'departement' => 'Moundam',
-              'lon'         => 3.831622,
-              'lat'         => 11.488940,
-              'created_at'  => Carbon::now(),
-              'updated_at'  => Carbon::now()
-          ]);
-          
-    }
+      $this->loadFile($file);
+
+  }
+
+  /**
+   * [loadFile description]
+   * @param  [type] $filename [description]
+   * @param  [type] $city_id  [description]
+   * @return [type]           [description]
+   */
+  private function loadFile($file){
+      $column_size = 3;
+
+      $errors = [];
+
+      if (($handle = fopen($file, "r")) !== FALSE) {
+          $row_number = 0;
+          while (($data = fgetcsv($handle, 10000, ",")) !== FALSE) {
+              if ($row_number == 0) {
+                  $row_number ++;
+                  continue;
+              }
+
+              // field data
+              $location = new Location();
+
+              $location->departement = $data[0];
+              $location->lat = floatval($data[1]);
+              $location->lon = floatval($data[2]);
+
+              $location->save();
+          }
+      }
+  }
 }

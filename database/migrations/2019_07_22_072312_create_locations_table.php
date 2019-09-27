@@ -15,8 +15,8 @@ class CreateLocationsTable extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('region');
-            $table->string('commune');
+            $table->string('region')->nullable();
+            $table->string('commune')->nullable();
             $table->string('departement');
             $table->decimal('lon', 8, 6)->nullable();
             $table->decimal('lat', 8, 6)->nullable();
