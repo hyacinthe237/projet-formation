@@ -45,7 +45,7 @@ class EtudiantController extends Controller
     public function create ()
     {
         $formations = Formation::orderBy('id', 'desc')->get();
-        $locations = Location::orderBy('id', 'desc')->get();
+        $locations = Location::orderBy('departement', 'asc')->get();
         return view('admin.etudiants.create', compact('formations', 'locations'));
     }
 
