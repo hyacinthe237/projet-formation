@@ -4,7 +4,7 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
-            <a href="#" class="btn btn-lg btn-success">
+            <a href="{{ route('budgets.download', $budget->id)}}" class="btn btn-lg btn-success" target="_blank">
                 <i class="ion-plus"></i> Visualiser le PDF
             </a>
 

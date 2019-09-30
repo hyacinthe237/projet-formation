@@ -4,6 +4,7 @@ namespace App\Http\Controllers\views\admin;
 
 use Auth;
 use DB;
+use PDF;
 use Carbon\Carbon;
 use App\Models\Budget;
 use App\Models\BudgetItem;
@@ -126,12 +127,12 @@ class BudgetController extends Controller
      * @param  [type] $id [description]
      * @return [type]         [description]
      */
-    public function downloadBudget (int $id)
+    public function downloadBudget ($id)
     {
         $data = self::takeBudgetInfos($id);
 
-        // $pdf = PDF::loadView('pdfs.budget', $data);
-        // return $pdf->stream();
+        $pdf = PDF::loadView('pdfs.budget', $data);
+        return $pdf->stream();
     }
 
     /**
@@ -139,7 +140,7 @@ class BudgetController extends Controller
      * @param  [type] $id [description]
      * @return [type]         [description]
      */
-    private static function takeBudgetInfos (int $id)
+    private static function takeBudgetInfos ($id)
     {
         $budget = Budget::whereId($id)
                     ->with('items', 'items.type', 'formation', 'formation.formateurs', 'formation.etudiants')
