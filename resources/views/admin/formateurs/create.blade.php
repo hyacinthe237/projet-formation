@@ -52,7 +52,7 @@
                                 <select name="type" class="form-control input-lg" required>
                                     <option value="">Sélectionnez le type</option>
                                     <option value="Expert">Expert</option>
-                                    <option value="Personnels PNMFV">Personnels PNMFV</option>
+                                    <option value="Personnel PNFMV">Personnel PNFMV</option>
                                 </select>
                             </div>
                         </div>

@@ -26,7 +26,7 @@
             -webkit-text-size-adjust: none;
             margin: 0 auto;
             font-family: sans-serif;
-            font-size: 14px;
+            font-size: 10px;
             font-weight: 400;
         }
         .bold { font-weight: bold }
@@ -42,8 +42,8 @@
         .teal { color: #636d7e }
         table {  }
         table > thead { border-top: 2px solid #ccc; border-bottom: 2px solid #ccc }
-        table > tbody > tr > td { padding: 5px 10px; border: 1px solid #777; }
-        table.table-white > tbody > tr > td { padding: 5px 10px; border: none; }
+        table > tbody > tr > td { padding: 3px 6px; border: 1px solid #777; }
+        table.table-white > tbody > tr > td { padding: 3px 6px; border: none; }
         input[type=checkbox] { display: inline; }
 
         .table { display: table; width: 100% }
@@ -56,9 +56,11 @@
         .fs-16 { font-size: 16px }
         .fs-14 { font-size: 14px }
 
-        .tr-section { background-color:#d4d4d4; color:red; font-weight:bold; padding:20px; }
-        .td-section { background-color:#d4d4d4; color:red; font-weight:bold; }
+        .tr-section { background-color:#d4d4d4; color:#000; font-weight:bold;}
+        .td-section { background-color:#d4d4d4; color:#000; font-weight:bold; }
         .td-title { background-color: #eaeaea; font-size: 13px }
+        .td-100 { width:100% }
+        .td-85 { width:85% }
         .td-80 { width:80% }
         .td-70 { width:70% }
         .td-60 { width:60% }
@@ -69,6 +71,7 @@
         .td-30 { width:30% }
         .td-25 { width:25% }
         .td-20 { width:20% }
+        .td-15 { width:15% }
         .td-10 { width:10% }
 
         .grey { background-color: #eaeaea }

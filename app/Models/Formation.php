@@ -11,7 +11,8 @@ class Formation extends Model
     use SoftDeletes;
 
     protected $guarded = ['id'];
-    protected $appends = ['datesdebut', 'heuresdebut', 'minutesdebut', 'datesfin', 'heuresfin', 'minutesfin'];
+    protected $appends = ['datesdebut', 'heuresdebut', 'minutesdebut', 'datesfin',
+     'heuresfin', 'minutesfin', 'du', 'au'];
 
     /**
      * The database table used by the model.
@@ -19,6 +20,14 @@ class Formation extends Model
      * @var string
      */
     protected $table = 'formations';
+
+    public function getDuAttribute () {
+        return Carbon::parse($this->start_date)->format('d M Y H:i');
+    }
+
+    public function getAuAttribute () {
+        return Carbon::parse($this->end_date)->format('d M Y H:i');
+    }
 
     public function getDatesdebutAttribute () {
         return Carbon::parse($this->start_date)->format('Y-m-d');

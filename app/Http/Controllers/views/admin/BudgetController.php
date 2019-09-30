@@ -131,6 +131,8 @@ class BudgetController extends Controller
     {
         $data = self::takeBudgetInfos($id);
 
+        // dd($data);
+
         $pdf = PDF::loadView('pdfs.budget', $data);
         return $pdf->stream();
     }
@@ -146,11 +148,57 @@ class BudgetController extends Controller
                     ->with('items', 'items.type', 'formation', 'formation.formateurs', 'formation.etudiants')
                     ->firstOrFail();
 
+        $types = TypeItem::get();
+        $items = $budget->items;
+        $itemPedagogiques = $budget->items->where('type_item_id', 1);
+        $itemLogistiques = $budget->items->where('type_item_id', 2);
+        $itemCommunications = $budget->items->where('type_item_id', 3);
+        $itemPersonnels = $budget->items->where('type_item_id', 4);
+        $formation = $budget->formation;
+        $formateurs = $budget->formation->formateurs;
+        $etudiants = $budget->formation->etudiants;
+
+        $totalBudgets = 0;
+        $totalPedagogiques = 0;
+        foreach ($itemPedagogiques as $item) {
+          $item->total = $item->nb_unite * $item->cout_unite;
+          $totalPedagogiques += $item->total;
+        }
+
+        $totalLogistiques = 0;
+        foreach ($itemLogistiques as $item) {
+          $item->total = $item->nb_unite * $item->cout_unite;
+          $totalLogistiques += $item->total;
+        }
+
+        $totalCommunications = 0;
+        foreach ($itemCommunications as $item) {
+          $item->total = $item->nb_unite * $item->cout_unite;
+          $totalCommunications += $item->total;
+        }
+
+        $totalPersonnels = 0;
+        foreach ($itemPersonnels as $item) {
+          $item->total = $item->nb_unite * $item->cout_unite;
+          $totalPersonnels += $item->total;
+        }
+
+        $totalBudgets = $totalPedagogiques + $totalLogistiques + $totalCommunications + $totalPersonnels;
+
         $data = [
-            'items' => $budget->items,
-            'formation' => $budget->formation,
-            'formateurs' => $budget->formation->formateurs,
-            'etudiants' => $budget->formation->etudiants,
+            'itemPedagogiques' => $itemPedagogiques,
+            'itemLogistiques' => $itemLogistiques,
+            'itemCommunications' => $itemCommunications,
+            'itemPersonnels' => $itemPersonnels,
+            'types' => $types,
+            'formation' => $formation,
+            'formateurs' => $formateurs,
+            'etudiants' => $etudiants,
+            'totalBudgets' => $totalBudgets,
+            'totalPedagogiques' => $totalPedagogiques,
+            'totalLogistiques' => $totalLogistiques,
+            'totalCommunications' => $totalCommunications,
+            'totalPersonnels' => $totalPersonnels,
             'budget' => $budget
         ];
 
