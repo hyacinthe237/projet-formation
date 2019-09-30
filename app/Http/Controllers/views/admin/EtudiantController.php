@@ -34,6 +34,11 @@ class EtudiantController extends Controller
       ->when($request->location_id, function($query) use ($request) {
           return $query->where('location_id', $request->location_id);
       })
+      ->when($request->formation_id, function ($q) use ($request) {
+          return $q->whereHas('formations', function($sql) use ($request) {
+              return $sql->where('formations.id', $request->formation_id);
+          });
+      })
       ->orderBy('id', 'desc')
       ->paginate(50);
 

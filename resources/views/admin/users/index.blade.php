@@ -4,6 +4,9 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
+            <a href="{{ route('users.create') }}" class="btn btn-lg btn-success">
+                <i class="ion-plus"></i> Ajouter Utilisateur
+            </a>
             <a href="{{ route('roles.index') }}" class="btn btn-lg btn-primary">
                 <i class="ion-grid"></i> Roles
             </a>
@@ -19,10 +22,10 @@
             <div class="mt-10">
                 <div class="row">
                     <form class="_form" action="" method="get">
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <div class="form-select grey">
                                 <select class="form-control input-lg" name="role">
-                                    <option value="">All</option>
+                                    <option value="">Tous les rôles</option>
                                     @foreach($roles as $role)
                                         <option value="{{ $role->name }}" {{ Request::get('role') == $role->
                                             name ? 'selected' : '' }}>
@@ -33,7 +36,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-8">
+                        <div class="col-sm-9">
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="form-group">
@@ -47,7 +50,7 @@
 
                                 <div class="col-sm-4">
                                     <button type="submit" class="btn btn-lg btn-primary btn-block">
-                                        Filter
+                                        Filtrer
                                     </button>
                                 </div>
                             </div>
@@ -62,21 +65,21 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Nom</th>
                             <th>Email</th>
-                            <th>Role</th>
-                            <th>Active</th>
-                            <th>Created</th>
+                            <th>Rôle</th>
+                            <th>Status</th>
+                            <th>Ajouté le</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         @foreach($users as $user)
-                            <tr data-href="/admin/users/{{ $user->id }}/edit">
+                            <tr data-href="{{ route('users.edit', $user->number) }}">
                                 <td class="bold">{{ $user->getNameAttribute() }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->role->name }}</td>
-                                <td>{{ $user->is_active ? 'Yes' : 'No'}}</td>
+                                <td>{{ $user->is_active ? 'Oui' : 'Non'}}</td>
                                 <td>{{ date('d/m/Y H:i', strtotime($user->created_at)) }}</td>
                             </tr>
                         @endforeach

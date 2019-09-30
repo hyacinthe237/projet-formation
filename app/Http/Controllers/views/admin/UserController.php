@@ -68,12 +68,14 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'firstname' => 'required',
-            'email' => 'required',
-            'cni' => 'required'
+            'lastname' => 'required',
+            'email' => 'required'
         ]);
 
         if ($validator->fails())
-            return redirect()->back()->withErrors(['validator' => 'Les champs Prénom, CNI & Email sont obligatoires']);
+            return redirect()->back()
+                   ->withInput($request->all())
+                   ->withErrors(['validator' => 'Les champs Prénom, Nom & Email sont obligatoires']);
 
         User::create([
           'role_id'     => $request->role_id,
@@ -89,7 +91,7 @@ class UserController extends Controller
           'api_token'   => UserHelper::makeApiToken()
         ]);
 
-        return redirect()->back()->with('message', 'Membre ajouté avec succès');
+        return redirect()->back()->with('message', 'Utilisateur ajouté avec succès');
     }
 
     /**

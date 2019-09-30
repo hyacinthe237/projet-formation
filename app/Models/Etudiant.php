@@ -28,7 +28,7 @@ class Etudiant extends Model
     }
 
     public function formations () {
-        return $this->hasMany(FormationEtudiant::class);
+        return $this->belongsToMany(Formation::class, 'formation_etudiants', 'formation_id', 'etudiant_id');
     }
 
     public function location () {

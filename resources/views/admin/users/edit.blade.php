@@ -10,12 +10,6 @@
 
         <div class="title">
             Edit User
-
-            @if ($user->is_verified)
-                <div class="verify">
-                    <i class="ion-checkmark"></i> Verified Account
-                </div>
-            @endif
         </div>
     </div>
 
@@ -30,17 +24,27 @@
             <div class="block-content form">
 
                 <div class="row pb-20">
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
                         <label>Status</label>
                         <div class="form-select grey">
                             <select name="is_active" class="form-control input-lg">
-                                <option value="0" {{ $user->is_active ? '' : 'selected'}}>Inactive</option>
-                                <option value="1" {{ $user->is_active ? 'selected' : ''}}>Active</option>
+                                <option value="0" {{ $user->is_active == 0 ? 'selected' : ''}}>Inactif</option>
+                                <option value="1" {{ $user->is_active == 1 ? 'selected' : ''}}>Actif</option>
                             </select>
                         </div>
                     </div>
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
+                        <label>Sexe</label>
+                        <div class="form-select grey">
+                            <select name="sex" class="form-control input-lg">
+                                <option value="Feminin" {{ $user->sex == 'Feminin' ? 'selected' : ''}}>Feminin</option>
+                                <option value="Masculin" {{ $user->sex == 'Masculin' ? 'selected' : ''}}>Masculin</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
                         <label>Role</label>
                         <div class="form-select grey">
                             <select name="role_id" class="form-control input-lg">
@@ -50,88 +54,38 @@
                             </select>
                         </div>
                     </div>
-
-                    <div class="col-sm-3">
-                        <label>Location</label>
-                        <div class="form-select grey">
-                            <select name="location_id" class="form-control input-lg">
-                                @foreach($locations as $location)
-                                    <option value="{{$location->id}}" {{ $user->location_id == $location->id ? 'selected' : ''}}>{{ $location->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
                 </div>
 
 
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-6">
                         <div class="form-group">
-                            <label>First name</label>
+                            <label>Prénom</label>
                             <input type="text" name="firstname" class="form-control input-lg" value="{{ $user->firstname }}">
                         </div>
                     </div>
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-6">
                         <div class="form-group">
-                            <label>Last name</label>
+                            <label>Nom</label>
                             <input type="text" name="lastname" class="form-control input-lg" value="{{ $user->lastname }}">
                         </div>
                     </div>
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-6">
                         <div class="form-group">
                             <label>Email</label>
                             <input type="email" name="email" class="form-control input-lg" value="{{ $user->email }}">
                         </div>
                     </div>
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-6">
                         <div class="form-group">
-                            <label>Mobile</label>
+                            <label>Téléphone</label>
                             <input type="text" name="phone" class="form-control input-lg" required value="{{ $user->phone }}">
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Driving Licence</label>
-                            <input type="text" name="licence_number" class="form-control input-lg" value="{{ $user->licence_number }}">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Licence Expiry Date</label>
-                            <input type="text" name="license_expiry_date"
-                                class="form-control input-lg date"
-                                value="{{ $user->license_expiry_date }}"
-                                readonly>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            {!! Form::label('Country of issue') !!}
-
-                            <select class="form-control input-lg" name="license_issued_place">
-                                <option value="Australia">Australia</option>
-                                 <option disabled>-------------------------------------</option>
-                                @foreach ($countries as $c)
-                                    <option value="{{ $c->name }}"
-                                        {{ ($user && $user->license_issued_place == $c->name) ? 'selected' : '' }}
-                                    >
-                                        {{ $c->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Address</label>
-                    <input type="text" name="address" class="form-control input-lg" value="{{ $user->address }}">
                 </div>
 
             </div>
@@ -143,14 +97,14 @@
 
     <div class="text-right mr-20">
         <button type="submit" class="btn btn-lg btn-primary">
-            <i class="ion-checkmark"></i> Update User
+            <i class="ion-checkmark"></i> Enregistrer
         </button>
     </div>
 
 {!! Form::close() !!}
 
 
-<section class="mt-40">
+{{-- <section class="mt-40">
 
     <form class="_form" action="{{ route('admin.password') }}" method="post">
         {{ csrf_field() }}
@@ -186,7 +140,7 @@
 
         </div>
     </form>
-</section>
+</section> --}}
 @endsection
 
 @section('js')
