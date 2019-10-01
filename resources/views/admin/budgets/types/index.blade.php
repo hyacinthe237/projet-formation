@@ -4,17 +4,13 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
-            <a href="{{ route('types.index') }}" class="btn btn-lg btn-success">
-                <i class="ion-plus"></i> Types
-            </a>
-
-            <a href="{{ route('budgets.create') }}" class="btn btn-lg btn-primary">
-                <i class="ion-plus"></i> Ajouter
+            <a href="{{ route('types.create') }}" class="btn btn-lg btn-primary">
+                <i class="ion-plus"></i> Ajouter type
             </a>
         </div>
 
         <div class="title">
-            Budgets
+            types
         </div>
     </div>
 
@@ -48,22 +44,16 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Formation</th>
-                            <th>Budget Initial</th>
-                            <th>Budget Réel</th>
-                            <th>Ajouté le</th>
-                            <th>Modifié le</th>
+                            <th>Titre</th>
+                            <th>Created</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @foreach($budgets as $budget)
-                            <tr data-href="{{ route('budgets.edit', $budget->id) }}">
-                                <td>{{ $budget->formation->title }}</td>
-                                <td>{{ $budget->budget_initial }}</td>
-                                <td>{{ $budget->budget_reel }}</td>
-                                <td>{{ date('d/m/Y H:i', strtotime($budget->created_at)) }}</td>
-                                <td>{{ date('d/m/Y H:i', strtotime($budget->updated_at)) }}</td>
+                        @foreach($types as $type)
+                            <tr data-href="{{ route('types.edit', $type->id) }}">
+                                <td>{{ $type->name }}</td>
+                                <td>{{ date('d/m/Y H:i', strtotime($type->created_at)) }}</td>
                             </tr>
                         @endforeach
                     </tbody>

@@ -29,6 +29,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], fun
     Route::resource('phases', 'views\admin\PhaseController');
     Route::resource('thematiques', 'views\admin\ThematiqueController');
     Route::resource('budgets', 'views\admin\BudgetController');
+    Route::resource('types', 'views\admin\TypeItemController');
     Route::get('budgets/{id}/download', 'views\admin\BudgetController@downloadBudget')->name('budgets.download');
 
     Route::group(['prefix' => 'formations'], function () {
