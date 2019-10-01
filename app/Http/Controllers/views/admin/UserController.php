@@ -105,12 +105,11 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'firstname' => 'required',
-            'email' => 'required',
-            'cni' => 'required'
+            'email' => 'required'
         ]);
 
         if ($validator->fails())
-            return redirect()->back()->withErrors(['validator' => 'Les champs Prénom, CNI & Email sont obligatoires']);
+            return redirect()->back()->withInput($request->all())->withErrors(['validator' => 'Les champs Prénom & Email sont obligatoires']);
 
         $user = User::whereNumber($number)->whereIsActive(true)->first();
         if (!$user)

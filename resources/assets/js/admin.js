@@ -5,7 +5,7 @@ window.eventBus = new Vue()
 import globalMixins from './mixins/global'
 import swal from './plugins/swal'
 import toastr from './plugins/toastr'
-import VeeValidate from 'vee-validate'
+// import VeeValidate from 'vee-validate'
 
 require('./bootstrap')
 
@@ -16,7 +16,7 @@ window.eventBus = new Vue()
 require('./ui')
 Vue.use(swal)
 Vue.use(toastr)
-Vue.use(VeeValidate)
+// Vue.use(VeeValidate)
 Vue.use(VueFlashMessage);
 
 

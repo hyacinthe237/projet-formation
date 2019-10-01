@@ -42,8 +42,8 @@
         .teal { color: #636d7e }
         table {  }
         table > thead { border-top: 2px solid #ccc; border-bottom: 2px solid #ccc }
-        table > tbody > tr > td { padding: 3px 6px; border: 1px solid #777; }
-        table.table-white > tbody > tr > td { padding: 3px 6px; border: none; }
+        table > tbody > tr > td { padding: 3px 3px; border: 1px solid #777; }
+        table.table-white > tbody > tr > td { padding: 3px 3px; border: none; }
         input[type=checkbox] { display: inline; }
 
         .table { display: table; width: 100% }

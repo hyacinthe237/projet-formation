@@ -56,8 +56,6 @@ class BudgetController extends Controller
           $total += $item->total;
         }
 
-        // dd($budget);
-
         return view('admin.budgets.edit', compact('budget', 'total', 'formations', 'types'));
     }
 
@@ -131,8 +129,6 @@ class BudgetController extends Controller
     {
         $data = self::takeBudgetInfos($id);
 
-        // dd($data);
-
         $pdf = PDF::loadView('pdfs.budget', $data);
         return $pdf->stream();
     }
@@ -156,7 +152,6 @@ class BudgetController extends Controller
         $itemPersonnels = $budget->items->where('type_item_id', 4);
         $formation = $budget->formation;
         $formateurs = $budget->formation->formateurs;
-        $etudiants = $budget->formation->etudiants;
 
         $totalBudgets = 0;
         $totalPedagogiques = 0;
@@ -193,7 +188,6 @@ class BudgetController extends Controller
             'types' => $types,
             'formation' => $formation,
             'formateurs' => $formateurs,
-            'etudiants' => $etudiants,
             'totalBudgets' => $totalBudgets,
             'totalPedagogiques' => $totalPedagogiques,
             'totalLogistiques' => $totalLogistiques,
@@ -219,7 +213,9 @@ class BudgetController extends Controller
         ]);
 
         if ($validator->fails())
-            return redirect()->back()->withErrors(['validator' => 'Tous les champs sont obligatoires']);
+            return redirect()->back()
+                  ->withInput($request->all())
+                  ->withErrors(['validator' => 'Tous les champs sont obligatoires']);
 
         $existing = Budget::whereBudgetInitial($request->budget_initial)->whereFormationId($request->formation_id)->first();
 
@@ -252,7 +248,9 @@ class BudgetController extends Controller
         ]);
 
         if ($validator->fails())
-            return redirect()->back()->withErrors(['validator' => 'Tous les champs sont obligatoires']);
+            return redirect()->back()
+                  ->withInput($request->all())
+                  ->withErrors(['validator' => 'Tous les champs sont obligatoires']);
 
         $budget = Budget::with('items', 'items.type')->find($id);
         if (!$budget)

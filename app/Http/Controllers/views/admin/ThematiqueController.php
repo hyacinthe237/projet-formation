@@ -65,7 +65,7 @@ class ThematiqueController extends Controller
         ]);
 
         if ($validator->fails())
-            return redirect()->back()->withErrors(['validator' => 'Tous les champs sont obligatoires']);
+            return redirect()->back()->withInput($request->all())->withErrors(['validator' => 'Tous les champs sont obligatoires']);
 
         $existing = Thematique::whereName($request->title)->first();
 
@@ -79,7 +79,7 @@ class ThematiqueController extends Controller
             return redirect()->back()->with('message', 'Thematique ajoutée avec succès');
         }
 
-        return redirect()->back()->withErrors(['existing' => 'Thematique existante']);
+        return redirect()->back()->withInput($request->all())->withErrors(['existing' => 'Thematique existante']);
     }
 
     /**
@@ -98,7 +98,7 @@ class ThematiqueController extends Controller
         ]);
 
         if ($validator->fails())
-            return redirect()->back()->withErrors(['validator' => 'Tous les champs sont obligatoires']);
+            return redirect()->back()->withInput($request->all())->withErrors(['validator' => 'Tous les champs sont obligatoires']);
 
         $thematique = Thematique::find($id);
         if (!$thematique) {

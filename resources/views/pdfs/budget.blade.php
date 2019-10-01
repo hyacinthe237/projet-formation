@@ -38,7 +38,7 @@
                 <tr style="border:1px solid #000;">
                   <td class="td-25 text-center bold">Experts: {{ count($formateurs->contains('type', 'Expert')) }}</td>
                   <td class="td-25 text-center bold">Personnel PNFMV: {{ count($formateurs->contains('type', 'Personnel PNFMV')) }}</td>
-                  <td class="td-25 text-center bold">Stagiaires : {{ count($etudiants) }}</td>
+                  <td class="td-25 text-center bold">Stagiaires : {{ $formation->qte_requis }}</td>
                   <td class="td-25 text-center bold">Durée : {{ $formation->duree }}</td>
                 </tr>
               </tbody>

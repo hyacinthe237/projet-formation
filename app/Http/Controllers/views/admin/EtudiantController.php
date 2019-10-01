@@ -73,6 +73,7 @@ class EtudiantController extends Controller
      */
     public function store(Request $request)
     {
+      // dd($request->all());
         $validator = Validator::make($request->all(), [
             'firstname' => 'required',
             'email' => 'required',
@@ -116,11 +117,11 @@ class EtudiantController extends Controller
 
                 if (!$form_etud) {
                     if ($count <= $formation->qte_requis) {
-                      $etudiant->formations()->create([
+                      FormationEtudiant::create([
+                          'etudiant_id'  => $etudiant->id,
                           'formation_id'  => $request->formation_id,
                           'etat'          => 'inscris',
-                          'created_at'    => Carbon::now(),
-                          'updated_at'    => Carbon::now()
+                          'created_at'    => Carbon::now()
                       ]);
 
                       return redirect()->back()->with('message', 'Etudiant ajouté avec succès');

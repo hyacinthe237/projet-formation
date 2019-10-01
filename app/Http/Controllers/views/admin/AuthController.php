@@ -43,18 +43,20 @@ class AuthController extends Controller
         ]);
 
         if($validator->fails())
-            return redirect()->back()->withErrors(['validator' => 'All fields are required']);
+            return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['validator' => 'Email & Mot de passe sont obligatoires']);
 
         $user = User::where('email', $request->email)->first();
 
         if ( !$user )
         return redirect()->back()->withErrors([
-            "user"   => "Account not found"
+            "user"   => "Ce compte n'existe pas"
         ])->withInput($request->except('password'));
 
         if ( !$user->is_active ) {
             return redirect()->back()->withErrors([
-                "user"   => "This account is not activated"
+                "user"   => "Ce compte n'est pas actif"
             ])->withInput($request->except('password'));
         }
 
@@ -63,7 +65,7 @@ class AuthController extends Controller
         }
 
         return redirect()->back()->withErrors([
-            "message"   => "Please check your credentials"
+            "message"   => "Vérifiez vos identifiants"
         ])->withInput($request->except('password'));
     }
 
@@ -75,7 +77,7 @@ class AuthController extends Controller
         ]);
 
         if($validator->fails()) {
-            return redirect()->back()->withErrors(['validator' => 'Both passwords should match and not be empty']);
+            return redirect()->back()->withErrors(['validator' => 'Le mot de passe ne correspond pas à la confirmation']);
         }
 
         $user = User::find($request->user_id);
@@ -85,7 +87,7 @@ class AuthController extends Controller
 
         $user->password = bcrypt($request->password);
         $user->save();
-        return redirect()->back()->with('message', 'Password successfully changed');
+        return redirect()->back()->with('message', 'Mot de passe changé avec succès');
     }
 
 

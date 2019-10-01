@@ -6,7 +6,7 @@
             <a href="{{ route('etudiants.create') }}" class="btn btn-lg btn-primary">
                 <i class="ion-plus"></i> Ajouter Etudiant
             </a>
-            
+
             <a href="{{ route('formation.index') }}" class="btn btn-lg btn-teal">
                 <i class="ion-reply"></i> Annuler
             </a>
@@ -170,7 +170,7 @@
                                 <th>Email</th>
                                 <th>Structure</th>
                                 <th>Fonction</th>
-                                <th>Active</th>
+                                <th>Status</th>
                                 <th>Crée le</th>
                             </tr>
                         </thead>
@@ -183,7 +183,7 @@
                                     <td>{{ $etudiant->email }}</td>
                                     <td>{{ $etudiant->structure }}</td>
                                     <td>{{ $etudiant->fonction }}</td>
-                                    <td>{{ $etudiant->is_active ? 'Yes' : 'No'}}</td>
+                                    <td>{{ $etudiant->is_active ? 'Oui' : 'Non'}}</td>
                                     <td>{{ date('d/m/Y H:i', strtotime($etudiant->created_at)) }}</td>
                                 </tr>
                             @endforeach

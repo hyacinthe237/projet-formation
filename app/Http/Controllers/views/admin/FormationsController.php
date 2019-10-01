@@ -56,7 +56,9 @@ class FormationsController extends Controller
          ]);
 
          if ($validator->fails())
-             return redirect()->back()->withErrors(['validator' => 'Les champs Titre, Date début & Date fin sont obligatoires']);
+             return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['validator' => 'Les champs Titre, Date début & Date fin sont obligatoires']);
 
          $existing = Formation::whereTitle($request->title)->first();
 
@@ -83,7 +85,9 @@ class FormationsController extends Controller
              return redirect()->back()->with('message', 'Formation ajoutée avec succès');
          }
 
-         return redirect()->back()->withErrors(['existing' => 'Cette Formation existe déjà']);
+         return redirect()->back()
+              ->withInput($request->all())
+              ->withErrors(['existing' => 'Cette Formation existe déjà']);
      }
 
     /**
@@ -132,7 +136,9 @@ class FormationsController extends Controller
          ]);
 
          if ($validator->fails())
-             return redirect()->back()->withErrors(['validator' => 'Les champs Titre, Date début & Date fin sont obligatoires']);
+             return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['validator' => 'Les champs Titre, Date début & Date fin sont obligatoires']);
 
          $formation = Formation::whereNumber($number)->first();
          if (!$formation)

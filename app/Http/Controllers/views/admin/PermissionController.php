@@ -59,7 +59,7 @@ class PermissionController extends Controller
         if ($existing) {
             return redirect()->back()
             ->withInput($request->all())
-            ->withErrors(['exists' => 'That permission already exists']);
+            ->withErrors(['exists' => 'Cette permission existe déjà']);
         }
 
         $validator = Validator::make($request->all(), [

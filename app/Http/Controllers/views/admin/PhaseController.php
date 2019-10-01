@@ -56,7 +56,9 @@ class PhaseController extends Controller
         ]);
 
         if ($validator->fails())
-            return redirect()->back()->withErrors(['validator' => 'Tous les champs sont obligatoires']);
+            return redirect()->back()
+                  ->withInput($request->all())
+                  ->withErrors(['validator' => 'Tous les champs sont obligatoires']);
 
         $existing = Phase::whereTitle($request->title)->first();
 
@@ -86,7 +88,7 @@ class PhaseController extends Controller
         ]);
 
         if ($validator->fails())
-            return redirect()->back()->withErrors(['validator' => 'Tous les champs sont obligatoires']);
+            return redirect()->back()->withInput($request->all())->withErrors(['validator' => 'Tous les champs sont obligatoires']);
 
         $phase = Phase::find($id);
         if (!$phase) {

@@ -61,7 +61,9 @@ class FormateurController extends Controller
         ]);
 
         if ($validator->fails())
-            return redirect()->back()->withErrors(['validator' => 'Tous les champs sont obligatoires']);
+            return redirect()->back()
+                  ->withInput($request->all())
+                  ->withErrors(['validator' => 'Tous les champs sont obligatoires']);
 
         $existingFormateur = Formateur::whereFirstname($request->firstname)->whereLastname($request->lastname)->first();
 
@@ -76,7 +78,9 @@ class FormateurController extends Controller
             return redirect()->back()->with('message', 'Formateur ajouté avec succès');
         }
 
-        return redirect()->back()->withErrors(['existing' => 'Ce formateur existe déjà']);
+        return redirect()->back()
+            ->withInput($request->all())
+            ->withErrors(['existing' => 'Ce formateur existe déjà']);
     }
 
     /**
@@ -96,7 +100,9 @@ class FormateurController extends Controller
         ]);
 
         if ($validator->fails())
-            return redirect()->back()->withErrors(['validator' => 'Tous les champs sont obligatoires']);
+            return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['validator' => 'Tous les champs sont obligatoires']);
 
         $formateur = Formateur::find($id);
         if (!$formateur)

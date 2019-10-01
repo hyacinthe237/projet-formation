@@ -4,9 +4,11 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
-            <a href="{{ route('budgets.download', $budget->id)}}" class="btn btn-lg btn-success" target="_blank">
-                <i class="ion-plus"></i> Visualiser le PDF
-            </a>
+            @if (sizeOf($budget->items))
+                <a href="{{ route('budgets.download', $budget->id)}}" class="btn btn-lg btn-success" target="_blank">
+                    <i class="ion-plus"></i> Visualiser le PDF
+                </a>
+            @endif
 
             <a href="{{ route('budgets.index') }}" class="btn btn-lg btn-teal">
                 <i class="ion-reply"></i> Annuler
