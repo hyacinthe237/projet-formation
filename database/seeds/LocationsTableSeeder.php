@@ -41,7 +41,7 @@ class LocationsTableSeeder extends Seeder
               // field data
               $location = new Location();
 
-              $location->departement = $data[0];
+              $location->name = $data[0];
               $location->lat = floatval($data[1]);
               $location->lon = floatval($data[2]);
 
