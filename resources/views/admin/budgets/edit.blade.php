@@ -24,25 +24,36 @@
     {!! Form::model($budget, ['method' => 'PATCH', 'route' => ['budgets.update', $budget->id], 'class' => '_form' ]) !!}
 
         @include('errors.list')
+        
         {{ csrf_field() }}
 
         <div class="block">
             <div class="block-content form">
                   <div class="row mt-20">
-                    <div class="col-sm-4">
+                    <div class="col-sm-6">
                         <div class="form-group">
                             <label>Budget Initial</label>
                             <input type="text" name="budget_initial" class="form-control input-lg" value="{{ $budget->budget_initial }}" required>
                         </div>
                     </div>
-                    <div class="col-sm-4">
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Budget en lettre</label>
+                            <textarea name="description" class="form-control input-lg" rows="1" cols="80">
+                            {{ $budget->description }}</textarea>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="row mt-20">
+                    <div class="col-sm-6">
                         <div class="form-group">
                             <label>Budget Réel</label>
                             <input type="text" name="budget_reel" class="form-control input-lg" value="{{ $budget->budget_reel }}">
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-6">
                         <div class="form-group">
                             <label>Sélectionnez une formation</label>
                             <select class="form-control input-lg" name="formation_id">

@@ -26,7 +26,7 @@
             -webkit-text-size-adjust: none;
             margin: 0 auto;
             font-family: sans-serif;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 400;
         }
         .bold { font-weight: bold }
@@ -40,6 +40,7 @@
         .card { background-color: #efefef; border-radius: 2px }
         .accent { background-color: #efefef; font-weight: bold }
         .teal { color: #636d7e }
+        .bg-teal { background-color: #ccc }
         table {  }
         table > thead { border-top: 2px solid #ccc; border-bottom: 2px solid #ccc }
         table > tbody > tr > td { padding: 3px 3px; border: 1px solid #777; }

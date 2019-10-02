@@ -143,11 +143,10 @@
                               <label>Résidence</label>
                               <div class="form-select grey">
                                   <select class="form-control input-lg" name="location_id">
+                                      <option value="">Sélectionnez le lieu de résidence</option>
                                     @foreach($locations as $location)
                                         <option value="{{ $location->id }}">
-                                            {{ 'Région: ' . $location->region }}|
-                                            {{ 'Département: ' . $location->departement }}|
-                                            {{ 'Commune: ' .$location->commune }}
+                                            {{ $location->name }}
                                         </option>
                                     @endforeach
                                   </select>

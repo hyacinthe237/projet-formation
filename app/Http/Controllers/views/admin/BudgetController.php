@@ -224,7 +224,8 @@ class BudgetController extends Controller
               'formation_id'    => $request->formation_id,
               'user_id'         => Auth::user()->id,
               'budget_initial'  => $request->budget_initial,
-              'budget_reel'     => $request->budget_reel
+              'budget_reel'     => $request->budget_reel,
+              'description'     => $request->description
             ]);
 
             return redirect()->route('budgets.edit', $budget->id)
@@ -259,10 +260,10 @@ class BudgetController extends Controller
         $budget->formation_id    = $request->has('formation_id') ? $request->formation_id : $budget->formation_id;
         $budget->budget_initial  = $request->has('budget_initial') ? $request->budget_initial : $budget->budget_initial;
         $budget->budget_reel     = $request->has('budget_reel') ? $request->budget_reel : $budget->budget_reel;
+        $budget->description     = $request->has('description') ? $request->description : $budget->description;
         $budget->update();
 
-        return redirect()->route('budgets.edit', $budget->id)
-                        ->withSuccess("Budget mis à jour avec succès");
+        return redirect()->back()->withSuccess("Budget mis à jour avec succès");
     }
 
     public function destroy (Request $request, $id)

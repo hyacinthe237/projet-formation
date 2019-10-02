@@ -50,7 +50,7 @@ class EtudiantController extends Controller
     public function create ()
     {
         $formations = Formation::orderBy('id', 'desc')->get();
-        $locations = Location::orderBy('departement', 'asc')->get();
+        $locations = Location::orderBy('name', 'asc')->get();
         return view('admin.etudiants.create', compact('formations', 'locations'));
     }
 
@@ -61,7 +61,7 @@ class EtudiantController extends Controller
             return redirect()->route('etudiants.index');
 
             $formations = Formation::orderBy('id', 'desc')->get();
-            $locations = Location::orderBy('id', 'desc')->get();
+            $locations = Location::orderBy('name', 'asc')->get();
         return view('admin.etudiants.edit', compact('formations', 'locations', 'etudiant'));
     }
 
@@ -73,7 +73,6 @@ class EtudiantController extends Controller
      */
     public function store(Request $request)
     {
-      // dd($request->all());
         $validator = Validator::make($request->all(), [
             'firstname' => 'required',
             'email' => 'required',
@@ -115,25 +114,18 @@ class EtudiantController extends Controller
                 $formation = Formation::findOrFail($request->formation_id);
                 $count = FormationEtudiant::whereFormationId($request->formation_id)->whereEtat('inscris')->count();
 
-                if (!$form_etud) {
-                    if ($count <= $formation->qte_requis) {
-                      FormationEtudiant::create([
-                          'etudiant_id'  => $etudiant->id,
-                          'formation_id'  => $request->formation_id,
-                          'etat'          => 'inscris',
-                          'created_at'    => Carbon::now()
-                      ]);
+                if (!$form_etud && ($count <= $formation->qte_requis)) {
+                    FormationEtudiant::create([
+                        'etudiant_id'  => $etudiant->id,
+                        'formation_id'  => $formation->id,
+                        'etat'          => 'inscris',
+                        'created_at'    => Carbon::now()
+                    ]);
 
-                      return redirect()->back()->with('message', 'Etudiant ajouté avec succès');
-                    } else {
-                      return redirect()->back()
-                              ->withInput($request->all())
-                              ->withErrors(['existing' => 'Le nombre de place requis de la formation est atteint.']);
-                    }
+                    return redirect()->back()->with('message', 'Etudiant enregistré et ajouté avec succès à la formation');
                 } else {
                   return redirect()->back()
-                         ->withInput($request->all())
-                         ->withErrors(['existing' => 'Cet Etudiant a déjà été inscris à cette formation']);
+                         ->withErrors(['existing' => 'Etudiant enregistré, mais pas lié à la formation car le quota requis est atteint']);
                 }
             }
         }

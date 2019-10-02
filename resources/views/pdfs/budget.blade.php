@@ -86,7 +86,7 @@
           <tbody>
             <tr>
               <td class="td-80 bold">Sous total I</td>
-              <td class="td-20 text-center">{{ $totalPedagogiques }}</td>
+              <td class="td-20 text-center bold">{{ $totalPedagogiques }}</td>
             </tr>
           </tbody>
         </table>
@@ -120,7 +120,7 @@
           <tbody>
             <tr>
               <td class="td-80 bold">Sous total II</td>
-              <td class="td-20 text-center">{{ $totalLogistiques }}</td>
+              <td class="td-20 text-center bold">{{ $totalLogistiques }}</td>
             </tr>
           </tbody>
         </table>
@@ -154,7 +154,7 @@
           <tbody>
             <tr>
               <td class="td-80 bold">Sous total III</td>
-              <td class="td-20 text-center">{{ $totalCommunications }}</td>
+              <td class="td-20 text-center bold">{{ $totalCommunications }}</td>
             </tr>
           </tbody>
         </table>
@@ -188,17 +188,26 @@
           <tbody>
             <tr>
               <td class="td-80 bold">Sous total IV</td>
-              <td class="td-20 text-center">{{ $totalPersonnels }}</td>
+              <td class="td-20 text-center bold">{{ $totalPersonnels }}</td>
             </tr>
           </tbody>
         </table>
 
         <table width="100%" cellspacing="0" cellpadding="0">
           <tbody>
-            <tr>
+            <tr class="bg-teal">
               <td class="td-80 bold">TOTAL (Sous total I + Sous total II + Sous total III + Sous total IV)</td>
-              <td class="td-20 text-center">{{ $totalBudgets }}</td>
+              <td class="td-20 text-center bold">{{ $totalBudgets }}</td>
             </tr>
+          </tbody>
+        </table>
+
+        <table width="100%" cellspacing="0" cellpadding="0">
+          <tbody>
+            <th>
+              <td class="td-100 text-center bold" style="text-transform:uppercase;">
+                arreter le present budget a la somme de {{ $budget->description }} Francs CFA</td>
+            </th>
           </tbody>
         </table>
     </section>

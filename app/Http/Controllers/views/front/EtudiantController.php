@@ -70,16 +70,8 @@ class EtudiantController extends Controller
 
             if ($etudiant) {
                 $form_etud = FormationEtudiant::whereFormationId($request->formation_id)->whereEtat('inscris')->first();
-                if (!$form_etud) {
-                    $etudiant->formations()->create([
-                        'formation_id'  => $request->formation_id,
-                        'etat'          => 'inscris',
-                        'created_at'    => Carbon::now(),
-                        'updated_at'    => Carbon::now()
-                    ]);
-
-                    // Mail::to($etudiant->email)->send(new RegistrationMail($etudiant));
-                }
+                $formation = Formation::findOrFail($request->formation_id);
+                $count = FormationEtudiant::whereFormationId($request->formation_id)->whereEtat('inscris')->count();
 
                 // Student's signature pad
                 if ($request->signature_url !== null)
@@ -92,6 +84,21 @@ class EtudiantController extends Controller
                     $etudiant->photo = $file->link;
                     $etudiant->save;
                 }
+
+                if (!$form_etud && ($count <= $formation->qte_requis)) {
+                    FormationEtudiant::create([
+                        'etudiant_id'  => $etudiant->id,
+                        'formation_id'  => $formation->id,
+                        'etat'          => 'inscris',
+                        'created_at'    => Carbon::now()
+                    ]);
+
+                    return redirect()->back()->with('message', 'Etudiant enregistré et ajouté avec succès à la formation');
+                } else {
+                  return redirect()->back()
+                         ->withErrors(['existing' => 'Etudiant enregistré, mais pas lié à la formation car le quota requis est atteint. Contacter le PNFMV la suite...']);
+                }
+
 
             }
 

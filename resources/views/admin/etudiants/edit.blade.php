@@ -145,9 +145,7 @@
                                   <select class="form-control input-lg" name="location_id">
                                     @foreach($locations as $location)
                                         <option value="{{ $location->id }}" {{ $etudiant->location_id == $location->id ? 'selected' : '' }}>
-                                            {{ 'Région: ' . $location->region }}|
-                                            {{ 'Département: ' . $location->departement }}|
-                                            {{ 'Commune: ' .$location->commune }}
+                                            {{ $location->name }}
                                         </option>
                                     @endforeach
                                   </select>
