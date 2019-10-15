@@ -154,10 +154,9 @@
 
             </div>
         </div>
-
         {!! Form::close() !!}
 
-        @if (sizeOf($formation->phases))
+        {{-- @if (sizeOf($formation->phases))
           <h3 class="_block-title mb-20">Phases</h3>
           <div class="block">
               <div class="block-content form">
@@ -192,7 +191,7 @@
                 </div>
               </div>
           </div>
-        @endif
+        @endif --}}
 
 
         @if (sizeOf($formation->etudiants))
