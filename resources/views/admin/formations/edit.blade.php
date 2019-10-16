@@ -7,6 +7,10 @@
                 <i class="ion-plus"></i> Ajouter Etudiant
             </a>
 
+            <a href="{{ route('formateurs.create') }}" class="btn btn-lg btn-success">
+                <i class="ion-plus"></i> Ajouter Formateur
+            </a>
+
             <a href="{{ route('formation.index') }}" class="btn btn-lg btn-teal">
                 <i class="ion-reply"></i> Annuler
             </a>
@@ -156,33 +160,71 @@
         </div>
         {!! Form::close() !!}
 
-        @if (sizeOf($formation->phases))
-          <h3 class="_block-title mb-20">Phases</h3>
-          <div class="block">
-              <div class="block-content form">
-                <div class="mt-10">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Titre</th>
-                                <th>Crée le</th>
-                            </tr>
-                        </thead>
+        <div class="row">
+            <div class="col-sm-4">
+              @if (sizeOf($formation->phases))
+                <h3 class="_block-title mb-20">Phases</h3>
+                <div class="block">
+                    <div class="block-content form">
+                      <div class="mt-10">
+                          <table class="table table-striped">
+                              <thead>
+                                  <tr>
+                                      <th>Titre</th>
+                                      <th>Crée le</th>
+                                  </tr>
+                              </thead>
 
-                        <tbody>
-                            @foreach($formation->phases as $phase)
-                                <tr data-href="{{ route('phases.edit', $phase->id) }}">
-                                    <td class="bold">{{ $phase->title }}</td>
-                                    <td>{{ date('d/m/Y H:i', strtotime($phase->created_at)) }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                              <tbody>
+                                  @foreach($formation->phases as $phase)
+                                      <tr data-href="{{ route('phases.edit', $phase->id) }}">
+                                          <td class="bold">{{ $phase->title }}</td>
+                                          <td>{{ date('d/m/Y H:i', strtotime($phase->created_at)) }}</td>
+                                      </tr>
+                                  @endforeach
+                              </tbody>
+                          </table>
+                      </div>
+                    </div>
                 </div>
-              </div>
-          </div>
-        @endif
+              @endif
+            </div>
 
+            <div class="col-sm-8">
+              <h3 class="_block-title mb-20">Formateurs</h3>
+                <div class="block">
+                    <div class="block-content form">
+                      <div class="mt-10">
+                        @if (sizeOf($formation->formateurs))
+                          <table class="table table-striped">
+                              <thead>
+                                  <tr>
+                                      <th>Name</th>
+                                      <th>Qualification</th>
+                                      <th>Type</th>
+                                      <th>Crée le</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  @foreach($formation->formateurs as $formateur)
+                                      <tr data-href="{{ route('formateurs.edit', $formateur->id) }}">
+                                          <td class="bold">{{ $formateur->getNameAttribute() }}</td>
+                                          <td>{{ $formateur->qualification }}</td>
+                                          <td>{{ $formateur->type }}</td>
+                                          <td>{{ date('d/m/Y H:i', strtotime($formateur->created_at)) }}</td>
+                                      </tr>
+                                  @endforeach
+                              </tbody>
+                          </table>
+                        @else
+                          <h4>Cette formation n'a pas encore de formateur</h4>
+                        @endif
+                      </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
         @if (sizeOf($formation->etudiants))
           <h3 class="_block-title mb-20">Liste d'étudiants</h3>

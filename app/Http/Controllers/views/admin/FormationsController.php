@@ -113,7 +113,7 @@ class FormationsController extends Controller
      */
      public function edit ($number)
      {
-         $formation  = Formation::whereNumber($number)->with('etudiants', 'phases')->first();
+         $formation  = Formation::whereNumber($number)->with('etudiants', 'phases', 'formateurs')->first();
          if (!$formation)
              return redirect()->route('formations.index');
 
