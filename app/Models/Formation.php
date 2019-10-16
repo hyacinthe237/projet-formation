@@ -54,7 +54,7 @@ class Formation extends Model
     }
 
     public function etudiants () {
-        return $this->belongsToMany(Etudiant::class, 'formation_etudiants', 'formation_id', 'etudiant_id');
+        return $this->belongsToMany(Etudiant::class, 'formation_etudiants', 'formation_id', 'etudiant_id')->withPivot('etat');
     }
 
     public function formateurs () {

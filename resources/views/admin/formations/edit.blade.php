@@ -156,7 +156,7 @@
         </div>
         {!! Form::close() !!}
 
-        {{-- @if (sizeOf($formation->phases))
+        @if (sizeOf($formation->phases))
           <h3 class="_block-title mb-20">Phases</h3>
           <div class="block">
               <div class="block-content form">
@@ -164,26 +164,16 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Structure</th>
-                                <th>Fonction</th>
-                                <th>Status</th>
+                                <th>Titre</th>
                                 <th>Crée le</th>
                             </tr>
                         </thead>
 
                         <tbody>
                             @foreach($formation->phases as $phase)
-                                <tr data-href="{{ route('etudiants.edit', $etudiant->number) }}">
-                                    <td> <img src="{{ $etudiant->getImgAttribute() }}" alt="" width="50px" height="50px" class="img-round"> </td>
-                                    <td class="bold">{{ $etudiant->getNameAttribute() }}</td>
-                                    <td>{{ $etudiant->email }}</td>
-                                    <td>{{ $etudiant->structure }}</td>
-                                    <td>{{ $etudiant->fonction }}</td>
-                                    <td>{{ $etudiant->is_active ? 'Oui' : 'Non'}}</td>
-                                    <td>{{ date('d/m/Y H:i', strtotime($etudiant->created_at)) }}</td>
+                                <tr data-href="{{ route('phases.edit', $phase->id) }}">
+                                    <td class="bold">{{ $phase->title }}</td>
+                                    <td>{{ date('d/m/Y H:i', strtotime($phase->created_at)) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -191,7 +181,7 @@
                 </div>
               </div>
           </div>
-        @endif --}}
+        @endif
 
 
         @if (sizeOf($formation->etudiants))
@@ -203,11 +193,10 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Name</th>
-                                <th>Email</th>
+                                <th>Nom</th>
                                 <th>Structure</th>
                                 <th>Fonction</th>
-                                <th>Status</th>
+                                {{-- <th>Etat</th> --}}
                                 <th>Crée le</th>
                             </tr>
                         </thead>
@@ -217,10 +206,9 @@
                                 <tr data-href="{{ route('etudiants.edit', $etudiant->number) }}">
                                     <td> <img src="{{ $etudiant->getImgAttribute() }}" alt="" width="50px" height="50px" class="img-round"> </td>
                                     <td class="bold">{{ $etudiant->getNameAttribute() }}</td>
-                                    <td>{{ $etudiant->email }}</td>
                                     <td>{{ $etudiant->structure }}</td>
                                     <td>{{ $etudiant->fonction }}</td>
-                                    <td>{{ $etudiant->is_active ? 'Oui' : 'Non'}}</td>
+                                    {{-- <td>{{ $etudiant->pivot_etat }}</td> --}}
                                     <td>{{ date('d/m/Y H:i', strtotime($etudiant->created_at)) }}</td>
                                 </tr>
                             @endforeach
