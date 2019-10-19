@@ -44,11 +44,14 @@ class FormateurController extends Controller
 
     public function edit ($id)
     {
-        $formateur  = Formateur::find($id);
+        $formateur  = Formateur::with('formations', 'thematiques', 'thematiques.thematique', 'thematiques.thematique')->find($id);
+        $formations  = Formation::whereIsActive(1)->orderBy('id', 'desc')->get();
+        $thematiques  = Thematique::orderBy('id', 'desc')->get();
+        
         if (!$formateur)
             return redirect()->route('formateurs.index');
 
-        return view('admin.formateurs.edit', compact('formateur'));
+        return view('admin.formateurs.edit', compact('formateur', 'formations', 'thematiques'));
     }
 
     /**

@@ -22,4 +22,12 @@ class Formateur extends Model
     public function getNameAttribute () {
         return $this->firstname . ' ' . $this->lastname;
     }
+
+    public function formations () {
+        return $this->belongsToMany(Formation::class, 'formateur_formations', 'formation_id', 'formateur_id');
+    }
+
+    public function thematiques () {
+        return $this->hasMany(FormateurThematique::class);
+    }
 }

@@ -83,6 +83,7 @@
                             <th>Structure</th>
                             <th>Fonction</th>
                             <th>Active</th>
+                            <th>Nbre de formation</th>
                             <th>Created</th>
                         </tr>
                     </thead>
@@ -96,6 +97,7 @@
                                 <td>{{ $etudiant->structure }}</td>
                                 <td>{{ $etudiant->fonction }}</td>
                                 <td>{{ $etudiant->is_active ? 'Yes' : 'No'}}</td>
+                                <td>{{ count($etudiant->formations) }}</td>
                                 <td>{{ date('d/m/Y H:i', strtotime($etudiant->created_at)) }}</td>
                             </tr>
                         @endforeach
