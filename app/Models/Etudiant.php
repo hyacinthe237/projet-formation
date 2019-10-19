@@ -31,10 +31,6 @@ class Etudiant extends Model
         return $this->hasMany(FormationEtudiant::class);
     }
 
-    public function location () {
-        return $this->belongsTo(Location::class, 'location_id');
-    }
-
     public function files () {
         return $this->hasMany(File::class, 'fileable');
     }

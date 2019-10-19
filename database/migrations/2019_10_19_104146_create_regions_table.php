@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFormationEtudiantsTable extends Migration
+class CreateRegionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateFormationEtudiantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('formation_etudiants', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('etudiant_id');
-            $table->integer('formation_id');
-            $table->integer('commune_id');
-            $table->string('etat');
+        Schema::create('regions', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->decimal('lon', 8, 6)->nullable();
+            $table->decimal('lat', 8, 6)->nullable();
+            $table->string('image_region')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateFormationEtudiantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('formation_etudiants');
+        Schema::dropIfExists('regions');
     }
 }

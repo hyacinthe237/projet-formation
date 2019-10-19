@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLocationsTable extends Migration
+class CreateCommunesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateLocationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('locations', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('communes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('departement_id');
             $table->string('name');
             $table->decimal('lon', 8, 6)->nullable();
             $table->decimal('lat', 8, 6)->nullable();
-            $table->string('image_region')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateLocationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('locations');
+        Schema::dropIfExists('communes');
     }
 }

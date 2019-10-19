@@ -15,7 +15,6 @@ class EtudiantsTableSeeder extends Seeder
     public function run()
     {
         $etudiant_01 = Etudiant::create([
-            'location_id'     => 1,
             'number'          => 1000000,
             'firstname'       => 'Jean Jacques',
             'lastname'        => 'ABEGA',
@@ -35,13 +34,13 @@ class EtudiantsTableSeeder extends Seeder
         FormationEtudiant::create([
             'etudiant_id'  => $etudiant_01->id,
             'formation_id'  => 1,
+            'commune_id'  => 1,
             'etat'          => 'inscris',
             'created_at'    => Carbon::now(),
             'updated_at'    => Carbon::now()
         ]);
 
         $etudiant_02 = Etudiant::create([
-            'location_id'     => 2,
             'number'          => 1000001,
             'firstname'       => 'Marceline',
             'lastname'        => 'MINFOUMOU',
@@ -61,6 +60,7 @@ class EtudiantsTableSeeder extends Seeder
         FormationEtudiant::create([
             'etudiant_id'  => $etudiant_02->id,
             'formation_id'  => 1,
+            'commune_id'  => 111,
             'etat'          => 'inscris',
             'created_at'    => Carbon::now(),
             'updated_at'    => Carbon::now()
@@ -69,6 +69,7 @@ class EtudiantsTableSeeder extends Seeder
         FormationEtudiant::create([
             'etudiant_id'  => $etudiant_02->id,
             'formation_id'  => 2,
+            'commune_id'  => 91,
             'etat'          => 'inscris',
             'created_at'    => Carbon::now(),
             'updated_at'    => Carbon::now()
