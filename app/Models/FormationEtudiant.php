@@ -14,11 +14,12 @@ class FormationEtudiant extends Model
      */
     protected $table = 'formation_etudiants';
 
-    public function formation () {
-        return $this->belongsTo(Formation::class, 'formation_id');
+    public function site () {
+        return $this->belongsTo(CommuneFormation::class, 'commune_formation_id');
     }
-    
+
     public function etudiant () {
         return $this->belongsTo(Etudiant::class, 'etudiant_id');
     }
+
 }

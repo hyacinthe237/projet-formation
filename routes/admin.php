@@ -20,6 +20,7 @@ Route::post('admin/login', 'views\admin\AuthController@signin')->name('admin.sig
 Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], function() {
     Route::get('/', 'views\admin\AdminController@dashboard')->name('admin');
     Route::get('logout', 'views\admin\AuthController@logout')->name('admin.logout');
+    Route::post('etudiants/{number}/inscrire', 'views\admin\EtudiantController@inscrireEtudiant')->name('inscrire.etudiant.formation');
 
     Route::resource('users', 'views\admin\UserController');
     Route::resource('roles', 'views\admin\RoleController');

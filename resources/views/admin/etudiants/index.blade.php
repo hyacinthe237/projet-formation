@@ -21,14 +21,14 @@
                     <form class="_form" action="" method="get">
                         <div class="col-sm-3">
                             <div class="form-select grey">
-                                <select class="form-control input-lg" name="location_id">
+                                <select class="form-control input-lg" name="residence_id">
                                     <option value="">Toutes les lieux de résidence</option>
-                                    @foreach($locations as $location)
-                                        <option value="{{ $location->id }}"
-                                          {{ Request::get('location_id') == $location->id ? 'selected' : '' }}>
-                                            {{ 'Région: ' . $location->region }}|
-                                            {{ 'Département: ' . $location->departement }}|
-                                            {{ 'Commune: ' .$location->commune }}
+                                    @foreach($communes as $item)
+                                        <option value="{{ $item->id }}"
+                                          {{ Request::get('residence_id') == $item->id ? 'selected' : '' }}>
+                                            {{ 'Région: ' . $item->departement->region->name }} |
+                                            {{ 'Département: ' . $item->departement->name }} |
+                                            {{ 'Commune: ' .$item->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -82,7 +82,8 @@
                             <th>Email</th>
                             <th>Structure</th>
                             <th>Fonction</th>
-                            <th>Active</th>
+                            <th>Status</th>
+                            <th>Résident à</th>
                             <th>Nbre de formation</th>
                             <th>Created</th>
                         </tr>
@@ -97,6 +98,7 @@
                                 <td>{{ $etudiant->structure }}</td>
                                 <td>{{ $etudiant->fonction }}</td>
                                 <td>{{ $etudiant->is_active ? 'Yes' : 'No'}}</td>
+                                <td>{{ $etudiant->residence ? $etudiant->residence->name : 'Non defini' }}</td>
                                 <td>{{ count($etudiant->formations) }}</td>
                                 <td>{{ date('d/m/Y H:i', strtotime($etudiant->created_at)) }}</td>
                             </tr>

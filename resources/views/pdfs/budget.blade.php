@@ -17,7 +17,7 @@
               <tbody>
                 <tr>
                   <td class="td-100 text-center bold">
-                    Site : {{ $formation->site }}
+                    Site : {{ $site->commune->name }}
                   </td>
                 </tr>
               </tbody>
@@ -27,7 +27,7 @@
               <tbody>
                 <tr>
                   <td class="td-100 text-center bold">
-                    Du {{ $formation->du }} au {{ $formation->au }}
+                    Du {{  date('d/m/Y H:i', strtotime($site->start_date)) }} au {{  date('d/m/Y H:i', strtotime($site->end_date)) }}
                   </td>
                 </tr>
               </tbody>
@@ -36,10 +36,10 @@
             <table width="100%" cellspacing="0" cellpadding="0">
               <tbody>
                 <tr style="border:1px solid #000;">
-                  <td class="td-25 text-center bold">Experts: {{ count($formateurs->contains('type', 'Expert')) }}</td>
-                  <td class="td-25 text-center bold">Personnel PNFMV: {{ count($formateurs->contains('type', 'Personnel PNFMV')) }}</td>
+                  <td class="td-25 text-center bold">Experts: {{ count($formateurs->where('type', 'Expert')) }}</td>
+                  <td class="td-25 text-center bold">Personnel PNFMV: {{ count($formateurs->where('type', 'Personnel PNFMV')) }}</td>
                   <td class="td-25 text-center bold">Stagiaires : {{ $formation->qte_requis }}</td>
-                  <td class="td-25 text-center bold">Durée : {{ $formation->duree }}</td>
+                  <td class="td-25 text-center bold">Durée : {{ $site->duree }}</td>
                 </tr>
               </tbody>
             </table>

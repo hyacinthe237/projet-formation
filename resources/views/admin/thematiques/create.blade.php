@@ -23,21 +23,21 @@
         <div class="block">
             <div class="block-content form">
                   <div class="row mt-20">
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label>Nom</label>
                             <input type="text" name="name" class="form-control input-lg" placeholder="Nom" required>
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label>Durée</label>
                             <input type="text" name="duree" class="form-control input-lg" placeholder="Durée: 5 jours" required>
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label>Phase</label>
                             <div class="form-select grey">

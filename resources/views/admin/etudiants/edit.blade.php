@@ -130,9 +130,11 @@
                                 <div class="form-group">
                                     <label>Formation</label>
                                     <div class="form-select grey">
-                                        <select class="form-control input-lg" name="formation_id">
-                                            @foreach($formations as $formation)
-                                                <option value="{{ $formation->id }}">{{ $formation->title }}</option>
+                                        <select class="form-control input-lg" name="commune_formation_id">
+                                            @foreach($formations as $item)
+                                              <option value="{{ $item->id }}">
+                                                {{ $item->formation->title }} de {{ $item->commune->name }}
+                                              </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -140,10 +142,12 @@
                                 <div class="form-group">
                                     <label>Résidence</label>
                                     <div class="form-select grey">
-                                        <select class="form-control input-lg" name="location_id">
-                                          @foreach($locations as $location)
-                                              <option value="{{ $location->id }}" {{ $etudiant->location_id == $location->id ? 'selected' : '' }}>
-                                                  {{ $location->name }}
+                                        <select class="form-control input-lg" name="residence_id">
+                                          @foreach($communes as $commune)
+                                              <option value="{{ $commune->id }}" {{ $etudiant->residence_id == $commune->id ? 'selected' : '' }}>
+                                                  {{ $commune->departement->region->name }} |
+                                                  {{ $commune->departement->name }} |
+                                                  {{ $commune->name }}
                                               </option>
                                           @endforeach
                                         </select>
@@ -153,7 +157,7 @@
                                 <div class="form-group">
                                     <label>Upload photo</h4>
 
-                                    <input type="hidden" class="form-control" id='photo' name="photo" readonly value="{{ $etudiant->photo }}">
+                                    <input type="hidden" class="form-control" id="photo" name="photo" readonly value="{{ $etudiant->photo }}">
                                     <div id="photo_view" class="mt-20"></div>
 
                                     <div class="text-right mt-10">
@@ -187,7 +191,6 @@
                             <tr>
                                 <th>Titre</th>
                                 <th>Site</th>
-                                <th>Type</th>
                                 <th>Durée</th>
                                 <th>Début</th>
                                 <th>Fin</th>
@@ -196,23 +199,48 @@
 
                         <tbody>
                             @foreach($etudiant->formations as $item)
-                                <tr data-href="{{ route('formation.edit', $item->formation->number) }}">
-                                    <td class="bold">{{ $item->formation->title }}</td>
-                                    <td>{{ $item->formation->site }}</td>
-                                    <td>{{ $item->formation->type }}</td>
-                                    <td>{{ $item->formation->duree }}</td>
-                                    <td>{{ date('d/m/Y H:i', strtotime($item->formation->start_date)) }}</td>
-                                    <td>{{ date('d/m/Y H:i', strtotime($item->formation->end_date)) }}</td>
+                                <tr data-href="{{ route('formation.edit', $item->site->formation->number) }}">
+                                    <td class="bold">{{ $item->site->formation->title }}</td>
+                                    <td>{{ $item->site->commune->name }}</td>
+                                    <td>{{ $item->site->duree }}</td>
+                                    <td>{{ date('d/m/Y H:i', strtotime($item->site->formation->start_date)) }}</td>
+                                    <td>{{ date('d/m/Y H:i', strtotime($item->site->formation->end_date)) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
+
+                <div class="mt-20">
+                  <h3 class="_block-title mb-20">Inscrire l'étudiant à une autre formation</h3>
+                  {!! Form::model($etudiant, ['method' => 'POST', 'route' => ['inscrire.etudiant.formation', $etudiant->number], 'class' => '_form' ]) !!}
+                    <div class="row mt-10">
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                              <label>Sélectionner une formation</label>
+                              <div class="form-select grey">
+                                  <select class="form-control input-lg" name="commune_formation_id">
+                                      @foreach($formations as $item)
+                                          <option value="{{ $item->id }}">
+                                            {{ $item->formation->title }} de {{ $item->commune->name }}
+                                          </option>
+                                      @endforeach
+                                  </select>
+                              </div>
+                          </div>
+                          <div class="form-group text-right mb-20">
+                              <button type="submit" class="btn btn-lg btn-primary">
+                                  <i class="ion-checkmark"></i> Inscrire l'étudiant
+                              </button>
+                          </div>
+                        </div>
+                    </div>
+                  {!! Form::close() !!}
+                </div>
               </div>
           </div>
         @endif
    </section>
-
 @endsection
 
 @section('js')

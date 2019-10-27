@@ -24,7 +24,7 @@
     {!! Form::model($budget, ['method' => 'PATCH', 'route' => ['budgets.update', $budget->id], 'class' => '_form' ]) !!}
 
         @include('errors.list')
-        
+
         {{ csrf_field() }}
 
         <div class="block">
@@ -40,8 +40,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Budget en lettre</label>
-                            <textarea name="description" class="form-control input-lg" rows="1" cols="80">
-                            {{ $budget->description }}</textarea>
+                            <input type="text" name="description" class="form-control input-lg" value="{{ $budget->description }}" required>
                         </div>
                     </div>
                   </div>
@@ -57,9 +56,9 @@
                         <div class="form-group">
                             <label>Sélectionnez une formation</label>
                             <select class="form-control input-lg" name="formation_id">
-                                @foreach ($formations as $formation)
-                                    <option value="{{ $formation->id }}" {{ $formation->id === $budget->formation_id ? 'selected' : '' }}>
-                                      {{ $formation->title }}</option>
+                                @foreach ($formations as $item)
+                                    <option value="{{ $item->id }}" {{ $item->id === $budget->commune_formation_id ? 'selected' : '' }}>
+                                      {{ $item->formation->title }} de {{ $item->commune->name }}</option>
                                 @endforeach
                             </select>
                         </div>

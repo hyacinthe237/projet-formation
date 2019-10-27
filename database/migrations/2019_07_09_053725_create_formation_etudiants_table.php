@@ -16,8 +16,7 @@ class CreateFormationEtudiantsTable extends Migration
         Schema::create('formation_etudiants', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('etudiant_id');
-            $table->integer('formation_id');
-            $table->integer('commune_id');
+            $table->integer('commune_formation_id');
             $table->string('etat');
             $table->timestamps();
         });

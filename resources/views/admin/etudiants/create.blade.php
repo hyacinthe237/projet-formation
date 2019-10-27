@@ -123,8 +123,8 @@
                               <label>Status</label>
                               <div class="form-select grey">
                                   <select name="is_active" class="form-control input-lg">
-                                      <option value="0">Inactivé</option>
                                       <option value="1">Activé</option>
+                                      <option value="0">Inactivé</option>
                                   </select>
                               </div>
                           </div>
@@ -132,9 +132,11 @@
                           <div class="form-group">
                               <label>Formation</label>
                               <div class="form-select grey">
-                                  <select class="form-control input-lg" name="formation_id">
-                                      @foreach($formations as $formation)
-                                          <option value="{{ $formation->id }}">{{ $formation->title }}</option>
+                                  <select class="form-control input-lg" name="commune_formation_id">
+                                      @foreach($formations as $item)
+                                          <option value="{{ $item->id }}">
+                                            {{ $item->formation->title }} de {{ $item->commune->name }}
+                                          </option>
                                       @endforeach
                                   </select>
                               </div>
@@ -142,11 +144,13 @@
                           <div class="form-group">
                               <label>Résidence</label>
                               <div class="form-select grey">
-                                  <select class="form-control input-lg" name="location_id">
+                                  <select class="form-control input-lg" name="residence_id">
                                       <option value="">Sélectionnez le lieu de résidence</option>
-                                    @foreach($locations as $location)
-                                        <option value="{{ $location->id }}">
-                                            {{ $location->name }}
+                                    @foreach($communes as $commune)
+                                        <option value="{{ $commune->id }}">
+                                          {{ 'Région: ' . $commune->departement->region->name }} |
+                                          {{ 'Département: ' . $commune->departement->name }} |
+                                          {{ 'Commune: ' .$commune->name }}
                                         </option>
                                     @endforeach
                                   </select>
@@ -156,7 +160,7 @@
                           <div class="form-group">
                               <label>Upload photo</h4>
 
-                              <input type="hidden" class="form-control" id="photo" name='photo' readonly value="{{ old('photo') }}">
+                              <input type="hidden" class="form-control" id="photo" name="photo" readonly value="{{ old('photo') }}">
                               <div id="photo_view" class="mt-20"></div>
 
                               <div class="text-right mt-10">

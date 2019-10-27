@@ -17,8 +17,8 @@ class Budget extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function formation () {
-        return $this->belongsTo(Formation::class, 'formation_id');
+    public function site () {
+        return $this->belongsTo(CommuneFormation::class, 'commune_formation_id');
     }
 
     public function getDateAttribute () {

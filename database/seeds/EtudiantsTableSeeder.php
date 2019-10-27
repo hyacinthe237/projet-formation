@@ -32,9 +32,8 @@ class EtudiantsTableSeeder extends Seeder
         ]);
 
         FormationEtudiant::create([
-            'etudiant_id'  => $etudiant_01->id,
-            'formation_id'  => 1,
-            'commune_id'  => 1,
+            'etudiant_id'   => $etudiant_01->id,
+            'commune_formation_id'  => 1,
             'etat'          => 'inscris',
             'created_at'    => Carbon::now(),
             'updated_at'    => Carbon::now()
@@ -59,17 +58,7 @@ class EtudiantsTableSeeder extends Seeder
 
         FormationEtudiant::create([
             'etudiant_id'  => $etudiant_02->id,
-            'formation_id'  => 1,
-            'commune_id'  => 111,
-            'etat'          => 'inscris',
-            'created_at'    => Carbon::now(),
-            'updated_at'    => Carbon::now()
-        ]);
-
-        FormationEtudiant::create([
-            'etudiant_id'  => $etudiant_02->id,
-            'formation_id'  => 2,
-            'commune_id'  => 91,
+            'commune_formation_id'  => 1,
             'etat'          => 'inscris',
             'created_at'    => Carbon::now(),
             'updated_at'    => Carbon::now()

@@ -59,7 +59,7 @@
                     <tbody>
                         @foreach($budgets as $budget)
                             <tr data-href="{{ route('budgets.edit', $budget->id) }}">
-                                <td>{{ $budget->formation->title }}</td>
+                                <td>{{ $budget->site->formation->title }}</td>
                                 <td>{{ $budget->budget_initial }}</td>
                                 <td>{{ $budget->budget_reel }}</td>
                                 <td>{{ date('d/m/Y H:i', strtotime($budget->created_at)) }}</td>

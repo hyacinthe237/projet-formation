@@ -8,7 +8,7 @@ use PDF;
 use Carbon\Carbon;
 use App\Models\Budget;
 use App\Models\BudgetItem;
-use App\Models\Formation;
+use App\Models\CommuneFormation;
 use App\Models\TypeItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -29,7 +29,7 @@ class BudgetController extends Controller
           return $query->where('budget_initial', 'like', '%'.$keywords.'%')
           ->orWhere('budget_reel', 'like', '%'.$keywords.'%');
       })
-      ->with('formation')
+      ->with('site')
       ->orderBy('id', 'desc')
       ->paginate(50);
 
@@ -38,14 +38,14 @@ class BudgetController extends Controller
 
     public function create ()
     {
-        $formations = Formation::get();
+        $formations = CommuneFormation::with('formation', 'formation.sites')->get();
         return view('admin.budgets.create', compact('formations'));
     }
 
     public function edit ($id)
     {
         $budget  = Budget::with('items', 'items.type')->find($id);
-        $formations = Formation::get();
+        $formations = CommuneFormation::with('formation', 'commune')->orderBy('id', 'desc')->get();
         $types = TypeItem::get();
         if (!$budget)
             return redirect()->route('budgets.index');
@@ -141,7 +141,7 @@ class BudgetController extends Controller
     private static function takeBudgetInfos ($id)
     {
         $budget = Budget::whereId($id)
-                    ->with('items', 'items.type', 'formation', 'formation.formateurs', 'formation.etudiants')
+                    ->with('items', 'items.type', 'site', 'site.formation',  'site.formation.formateurs', 'site.formation.etudiants', 'site.commune')
                     ->firstOrFail();
 
         $types = TypeItem::get();
@@ -150,8 +150,9 @@ class BudgetController extends Controller
         $itemLogistiques = $budget->items->where('type_item_id', 2);
         $itemCommunications = $budget->items->where('type_item_id', 3);
         $itemPersonnels = $budget->items->where('type_item_id', 4);
-        $formation = $budget->formation;
-        $formateurs = $budget->formation->formateurs;
+        $formation = $budget->site->formation;
+        $site = $budget->site;
+        $formateurs = $budget->site->formation->formateurs;
 
         $totalBudgets = 0;
         $totalPedagogiques = 0;
@@ -193,10 +194,12 @@ class BudgetController extends Controller
             'totalLogistiques' => $totalLogistiques,
             'totalCommunications' => $totalCommunications,
             'totalPersonnels' => $totalPersonnels,
+            'site' => $site,
             'budget' => $budget
         ];
 
         return $data;
+
     }
 
     /**

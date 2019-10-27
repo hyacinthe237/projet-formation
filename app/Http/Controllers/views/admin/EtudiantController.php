@@ -9,7 +9,8 @@ use App\Models\Etudiant;
 use App\Models\Formation;
 use App\Models\Thematique;
 use App\Models\FormationEtudiant;
-use App\Models\Location;
+use App\Models\Commune;
+use App\Models\CommuneFormation;
 use App\Helpers\EtudiantHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -26,43 +27,78 @@ class EtudiantController extends Controller
   public function index(Request $request)
   {
       $keywords = $request->keywords;
-      $etudiants = Etudiant::with(['location', 'formations'])
+      $etudiants = Etudiant::with('residence', 'formations', 'formations.site', 'formations.site.commune', 'formations.site.formation')
       ->when($keywords, function($query) use ($keywords) {
           return $query->where('firstname', 'like', '%'.$keywords.'%')
           ->orWhere('lastname', 'like', '%'.$keywords.'%');
       })
-      ->when($request->location_id, function($query) use ($request) {
-          return $query->where('location_id', $request->location_id);
+      ->when($request->residence_id, function($query) use ($request) {
+          return $query->where('residence_id', $request->residence_id);
       })
-      ->when($request->formation_id, function ($q) use ($request) {
-          return $q->whereHas('formations', function($sql) use ($request) {
-              return $sql->where('formations.id', $request->formation_id);
-          });
-      })
+      // ->whereHas('formations', function($query) use ($request) {
+      //     return $query->where('formations.formation_id', $request->formation_id);
+      // })
+      // ->when($request->formation_id, function ($q) use ($request) {
+      //     return $q->whereHas('formations', function($sql) use ($request) {
+      //         return $sql->where('formations.id', $request->formation_id);
+      //     });
+      // })
       ->orderBy('id', 'desc')
       ->paginate(50);
 
       $formations = Formation::orderBy('id', 'desc')->with('phases')->get();
-      $locations = Location::get();
-      return view('admin.etudiants.index', compact('etudiants', 'formations', 'locations'));
+      $communes = Commune::with('departement', 'departement.region')->get();
+
+      return view('admin.etudiants.index', compact('etudiants', 'formations', 'communes'));
   }
 
     public function create ()
     {
-        $formations = Formation::orderBy('id', 'desc')->get();
-        $locations = Location::orderBy('name', 'asc')->get();
-        return view('admin.etudiants.create', compact('formations', 'locations'));
+        $formations = CommuneFormation::with('commune', 'formation')->orderBy('id', 'desc')->get();
+        $communes = Commune::with('departement', 'departement.region')->get();
+        return view('admin.etudiants.create', compact('formations', 'communes'));
     }
 
     public function edit ($number)
     {
-        $etudiant  = Etudiant::with(['location', 'formations', 'formations.formation'])->whereNumber($number)->first();
+        $etudiant  = Etudiant::with('formations', 'formations.site', 'formations.site.commune', 'formations.site.formation')
+                      ->whereNumber($number)->first();
+
         if (!$etudiant)
             return redirect()->route('etudiants.index');
 
-            $formations = Formation::orderBy('id', 'desc')->get();
-            $locations = Location::orderBy('name', 'asc')->get();
-        return view('admin.etudiants.edit', compact('formations', 'locations', 'etudiant'));
+        $formations = CommuneFormation::with('commune', 'formation')->orderBy('id', 'desc')->get();
+        $communes = Commune::with('departement', 'departement.region')->get();
+
+        return view('admin.etudiants.edit', compact('formations', 'communes', 'etudiant'));
+    }
+
+    public function inscrireEtudiant (Request $request, $number) {
+       $etudiant  = Etudiant::whereNumber($number)->whereIsActive(true)->first();
+
+       if (!$etudiant)
+         return redirect()->back()->withErrors(['existing' => 'Etudiant non actif']);
+
+         $form_etud = FormationEtudiant::whereEtudiantId($etudiant->id)
+                      ->whereCommuneFormationId($request->commune_formation_id)
+                      ->whereEtat('inscris')
+                      ->first();
+
+         $commune_formation = CommuneFormation::with('formation')->findOrFail($request->commune_formation_id);
+         $count = FormationEtudiant::whereCommuneFormationId($request->commune_formation_id)->whereEtat('inscris')->count();
+
+         if (!$form_etud && ($count <= $commune_formation->formation->qte_requis)) {
+             FormationEtudiant::create([
+                 'etudiant_id'          => $etudiant->id,
+                 'commune_formation_id' => $request->commune_formation_id,
+                 'etat'                 => 'inscris',
+                 'created_at'           => Carbon::now()
+             ]);
+
+             return redirect()->back()->with('message', 'Etudiant enregistré et ajouté avec succès à la formation');
+         } else {
+            return redirect()->back()->withErrors(['existing' => "Nombre requis de la formation est atteind ou Vous voulez inscrire l'étudiant à formation qui suit déjà"]);
+         }
     }
 
     /**
@@ -76,16 +112,17 @@ class EtudiantController extends Controller
         $validator = Validator::make($request->all(), [
             'firstname' => 'required',
             'email' => 'required',
-            'formation_id' => 'required'
+            'formation_id' => 'required',
+            'residence_id' => 'required'
         ]);
 
         if ($validator->fails())
-            return redirect()->back()->withErrors(['validator' => 'Les champs Prénom & Email sont obligatoires']);
+            return redirect()->back()->withInputwithErrors(['validator' => 'Les champs Prénom, residence & Email sont obligatoires']);
 
         $existing = Etudiant::whereFirstname($request->firstname)->whereLastname($request->lastname)->first();
         if (!$existing) {
             $etudiant = Etudiant::create([
-              'location_id'     => $request->location_id,
+              'residence_id'     => $request->residence_id,
               'number'          => EtudiantHelper::makeEtudiantNumber(),
               'firstname'       => $request->firstname,
               'lastname'        => $request->lastname,
@@ -107,17 +144,17 @@ class EtudiantController extends Controller
 
             if ($etudiant) {
                 $form_etud = FormationEtudiant::whereEtudiantId($etudiant->id)
-                             ->whereFormationId($request->formation_id)
+                             ->whereCommuneFormationId($request->commune_formation_id)
                              ->whereEtat('inscris')
                              ->first();
 
-                $formation = Formation::findOrFail($request->formation_id);
-                $count = FormationEtudiant::whereFormationId($request->formation_id)->whereEtat('inscris')->count();
+                $commune_formation = CommuneFormation::with('formation')->findOrFail($request->commune_formation_id);
+                $count = FormationEtudiant::whereCommuneFormationId($request->commune_formation_id)->whereEtat('inscris')->count();
 
-                if (!$form_etud && ($count <= $formation->qte_requis)) {
+                if (!$form_etud && ($count <= $commune_formation->formation->qte_requis)) {
                     FormationEtudiant::create([
-                        'etudiant_id'  => $etudiant->id,
-                        'formation_id'  => $formation->id,
+                        'etudiant_id'   => $etudiant->id,
+                        'commune_formation_id'    => $request->commune_formation_id,
                         'etat'          => 'inscris',
                         'created_at'    => Carbon::now()
                     ]);
@@ -142,18 +179,19 @@ class EtudiantController extends Controller
     public function update(Request $request, $number)
     {
         $validator = Validator::make($request->all(), [
+            'residence_id' => 'required',
             'firstname' => 'required',
             'email' => 'required'
         ]);
 
         if ($validator->fails())
-            return redirect()->back()->withErrors(['validator' => 'Les champs Prénom & Email sont obligatoires']);
+            return redirect()->back()->withErrors(['validator' => 'Les champs Prénom, residence & Email sont obligatoires']);
 
         $etudiant = Etudiant::whereNumber($number)->first();
         if (!$etudiant)
             return redirect()->back()->withErrors(['user' => 'Etudiant inconnu!']);
 
-        $etudiant->location_id       = $request->has('location_id') ? $request->location_id : $etudiant->location_id;
+        $etudiant->residence_id      = $request->has('residence_id') ? $request->residence_id : $etudiant->residence_id;
         $etudiant->firstname         = $request->has('firstname') ? $request->firstname : $etudiant->firstname;
         $etudiant->lastname          = $request->has('lastname') ? $request->lastname : $etudiant->lastname;
         $etudiant->phone             = $request->has('phone') ? $request->phone : $etudiant->phone;
