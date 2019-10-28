@@ -45,8 +45,8 @@
                     <thead>
                         <tr>
                             <th>Titre</th>
-                            <th>Site</th>
-                            <th>Places</th>
+                            <th>Nbre sites</th>
+                            <th>Nbre places</th>
                             <th>Début</th>
                             <th>Fin</th>
                         </tr>
