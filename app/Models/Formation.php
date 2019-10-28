@@ -19,10 +19,6 @@ class Formation extends Model
      */
     protected $table = 'formations';
 
-    public function etudiants () {
-        return $this->belongsToMany(Etudiant::class, 'formation_etudiants', 'commune_formation_id', 'etudiant_id')->withPivot('etat');
-    }
-
     public function formateurs () {
         return $this->belongsToMany(Formateur::class, 'formateur_formations', 'formateur_id', 'formation_id');
     }

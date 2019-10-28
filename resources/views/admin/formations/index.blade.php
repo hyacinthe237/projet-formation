@@ -47,9 +47,6 @@
                             <th>Titre</th>
                             <th>Site</th>
                             <th>Places</th>
-                            <th>Incris</th>
-                            <th>Type</th>
-                            <th>Durée</th>
                             <th>Début</th>
                             <th>Fin</th>
                         </tr>
@@ -59,11 +56,8 @@
                         @foreach($formations as $formation)
                             <tr data-href="{{ route('formation.edit', $formation->number) }}">
                                 <td class="bold">{{ $formation->title }}</td>
-                                <td>{{ $formation->site }}</td>
+                                <td>{{ count($formation->sites) }}</td>
                                 <td>{{ $formation->qte_requis }}</td>
-                                <td>{{ count($formation->etudiants) }}</td>
-                                <td>{{ $formation->type }}</td>
-                                <td>{{ $formation->duree }}</td>
                                 <td>{{ date('d/m/Y H:i', strtotime($formation->start_date)) }}</td>
                                 <td>{{ date('d/m/Y H:i', strtotime($formation->end_date)) }}</td>
                             </tr>

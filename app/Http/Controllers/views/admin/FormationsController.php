@@ -23,7 +23,7 @@ class FormationsController extends Controller
      * @return \Illuminate\Http\Response
      */
      public function index(Request $request) {
-         $formations = Formation::with(['etudiants', 'phases'])
+         $formations = Formation::with(['sites', 'sites.commune', 'phases'])
              ->when($request->keywords, function($query) use ($request) {
                  return $query->where('title', 'like', '%'.$request->keywords.'%')
                               ->orWhere('site', 'like', '%'.$request->keywords.'%');
@@ -53,15 +53,13 @@ class FormationsController extends Controller
      */
      public function store(Request $request) {
          $validator = Validator::make($request->all(), [
-             'title'      => 'required',
-             'start_date' => 'required',
-             'end_date'   => 'required'
+             'title'      => 'required'
          ]);
 
          if ($validator->fails())
              return redirect()->back()
                 ->withInput($request->all())
-                ->withErrors(['validator' => 'Les champs Titre, Date début & Date fin sont obligatoires']);
+                ->withErrors(['validator' => 'Le champ Titre est obligatoire']);
 
          $existing = Formation::whereTitle($request->title)->first();
 
@@ -114,38 +112,33 @@ class FormationsController extends Controller
                 ->withInput($request->all())
                 ->withErrors(['validator' => 'Les champs Site, Date début & Date fin sont obligatoires']);
 
-         $existing = Formation::whereTitle($request->title)->first();
-
          $debut = $request->start_date .' '. $request->start_heure.':'.$request->start_minutes;
          $fin = $request->end_date .' '. $request->end_heure.':'.$request->end_minutes;
          $start_date = Carbon::parse($debut)->format('Y-m-d H:i');
          $end_date = Carbon::parse($fin)->format('Y-m-d H:i');
          $duree = FormationHelper::dateDifference($start_date, $end_date, '%a');
 
-         if (!$existing) {
-             $formation = Formation::create([
-               'number'      => FormationHelper::makeFormationNumber(),
-               'title'       => $request->title,
-               'description' => $request->description,
-               'qte_requis'  => $request->qte_requis,
-               'is_active'   => $request->is_active
-             ]);
+         $formation = Formation::whereNumber($number)->whereIsActive(true)->first();
+         if (!$formation)
+             return redirect()->back()->withErrors(['status' => "Cette Formation n'est pas active"]);
 
-             CommuneFormation::create([
-                 'formation_id' => $formation->id,
-                 'commune_id'  => $request->commune_id,
-                 'start_date'  => $start_date,
-                 'end_date'    => $end_date,
-                 'duree'       => $duree > 1 ? $duree . ' jours' : $duree . ' jour',
-                 'type'        => $request->type
-             ]);
+         $site = CommuneFormation::whereFormationId($formation->id)->whereCommuneId($request->commune_id)->first();
+         if (!$site) {
+           CommuneFormation::create([
+               'formation_id' => $formation->id,
+               'commune_id'  => $request->commune_id,
+               'start_date'  => $start_date,
+               'end_date'    => $end_date,
+               'duree'       => $duree > 1 ? $duree . ' jours' : $duree . ' jour',
+               'type'        => $request->type
+           ]);
 
-             return redirect()->back()->with('message', 'Formation ajoutée avec succès');
+           return redirect()->route('formation.edit', $formation->number)->with('message', 'Site ajouté avec succès');
+         } else {
+           return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['status' => "Vous tentez d'ajouter un site qui existe deja pour cette formation"]);
          }
-
-         return redirect()->back()
-              ->withInput($request->all())
-              ->withErrors(['existing' => 'Cette Formation existe déjà']);
      }
 
     /**
@@ -169,15 +162,13 @@ class FormationsController extends Controller
      * @return \Illuminate\Http\Response
      */
      public function edit ($number) {
-         $formation  = Formation::whereNumber($number)->with('etudiants', 'phases', 'formateurs', 'sites', 'sites.commune')->first();
+         $formation  = Formation::whereNumber($number)->with('phases', 'formateurs', 'sites', 'sites.commune', 'sites.etudiants')->first();
          if (!$formation)
-             return redirect()->route('formation.index');
+             return redirect()->route('formation.edit', $formation->number);
 
-         $formations = CommuneFormation::with('formation', 'commune')->whereFormationId($formation->id)->get();
-         $communes = Commune::with('departement', 'departement.region')->get();
-         $etudiants = Etudiant::whereIsActive(true)->get();
+         $communes   = Commune::with('departement', 'departement.region')->get();
 
-         return view('admin.formations.edit', compact('formation', 'formations', 'etudiants', 'communes'));
+         return view('admin.formations.edit', compact('formation', 'communes'));
      }
 
     /**
@@ -187,13 +178,14 @@ class FormationsController extends Controller
      * @return \Illuminate\Http\Response
      */
      public function editSite ($id) {
-         $site = CommuneFormation::->with('formation')->find($id);
+         $site = CommuneFormation::with('formation', 'commune', 'etudiants')->find($id);
          if (!$site)
              return redirect()->back()->withErrors(['status' => 'Site inconnu']);
 
          $communes = Commune::orderBy('name', 'asc')->get();
+         $etudiants  = Etudiant::whereIsActive(true)->get();
 
-         return view('admin.formations.edit-site', compact('communes', 'site'));
+         return view('admin.formations.edit-site', compact('communes', 'etudiants', 'site'));
      }
 
      /**
@@ -256,7 +248,7 @@ class FormationsController extends Controller
              return redirect()->back()->withErrors(['user' => 'Formation inconnue!']);
 
          $formation->title        = $request->has('title') ? $request->title : $formation->title;
-         $formation->description  = $request->has('description') ? $end_date : $formation->description;
+         $formation->description  = $request->has('description') ? $request->description : $formation->description;
          $formation->qte_requis   = $request->has('qte_requis') ? $request->qte_requis : $formation->qte_requis;
          $formation->is_active    = $request->has('is_active') ? $request->is_active : $formation->is_active;
          $formation->update();
