@@ -3,19 +3,19 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
-            <a href="{{ route('formation.index') }}" class="btn btn-lg btn-teal">
+            <a href="{{ route('formation.edit', $site->formation->number) }}" class="btn btn-lg btn-teal">
                 <i class="ion-reply"></i> Annuler
             </a>
         </div>
 
         <div class="title">
-            Nouvelle Formation
+          Modifier le site
         </div>
     </div>
 <section class="container-fluid mt-20">
 
 @include('errors.list')
-    <form class="_form" action="{{ route('formation.store') }}" method="post">
+    {!! Form::model($site, ['method' => 'POST', 'route' => ['formation.update.site', $site->id], 'class' => '_form' ]) !!}
       {{ csrf_field() }}
 
       <div class="block">
@@ -24,19 +24,14 @@
               <div class="row mt-20">
                     <div class="col-sm-9">
                         <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label>Titre</label>
-                                    <input type="text" name="title" class="form-control input-lg" placeholder="Titre" required>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
+                                <input type="hidden" name="formation_id" value="{{ $site->formation_id }}">
                                 <div class="form-group">
                                     <label>Date de début</label>
-                                    <input type="date" name="start_date" class="form-control input-lg datepicker" placeholder="Date de début" required>
+                                    <input type="date" name="start_date" class="form-control input-lg datepicker" value="{{ $site->datesdebut }}" required>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
                                 <div class="row">
                                     <div class="col-xs-6">
                                       <div class="form-group">
@@ -44,7 +39,7 @@
                                           <select class="form-control input-lg" name="start_heure">
                                               @for($i=0; $i< 24; $i++)
                                                 <?php $value = $i < 10 ? '0' . $i :$i ;?>
-                                                <option value="{{ $value }}" {{ $value == '08' ? 'selected' : ''}}>{{ $value }}</option>
+                                                <option value="{{ $value }}" {{ $value == $site->heuresdebut ? 'selected' : ''}}>{{ $value }}</option>
                                               @endfor
                                           </select>
                                       </div>
@@ -55,7 +50,7 @@
                                           <select class="form-control input-lg" name="start_minutes">
                                               @for($i=0; $i< 60; $i+=5)
                                                 <?php $value = $i < 10 ? '0' . $i :$i ;?>
-                                                <option value="{{ $value }}">
+                                                <option value="{{ $value }}" {{ $value == $site->minutesdebut ? 'selected' : ''}}>
                                                   {{ $value }}</option>
                                               @endfor
                                           </select>
@@ -63,13 +58,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Date de fin</label>
-                                    <input type="date" name="end_date" class="form-control input-lg datepicker" placeholder="Date de fin">
+                                    <input type="date" name="end_date" class="form-control input-lg datepicker" value="{{ $site->datesfin }}">
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
                                 <div class="row">
                                     <div class="col-xs-6">
                                       <div class="form-group">
@@ -77,7 +72,7 @@
                                           <select class="form-control input-lg" name="end_heure">
                                               @for($i=0; $i< 24; $i++)
                                                 <?php $value = $i < 10 ? '0' . $i :$i ;?>
-                                                <option value="{{ $value }}" {{ $value == '19' ? 'selected' : ''}}>
+                                                <option value="{{ $value }}" {{ $value == $site->heuresfin ? 'selected' : ''}}>
                                                   {{ $value }}</option>
                                               @endfor
                                           </select>
@@ -89,7 +84,7 @@
                                           <select class="form-control input-lg" name="end_minutes">
                                               @for($i=0; $i< 60; $i+=5)
                                                 <?php $value = $i < 10 ? '0' . $i :$i ;?>
-                                                <option value="{{ $value }}">
+                                                <option value="{{ $value }}" {{ $value == $site->minutesfin ? 'selected' : ''}}>
                                                   {{ $value }}</option>
                                               @endfor
                                           </select>
@@ -98,27 +93,16 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-12">
-                              <div class="form-group">
-                                <label>Description</label>
-                                <textarea name="description" class="form-control input-lg" rows="5" cols="80"></textarea>
-                              </div>
-                            </div>
                         </div>
                   </div>
 
                   <div class="col-sm-3">
                         <div class="form-group">
-                            <label>Nombre de stagiaire</label>
-                            <input type="number" name="qte_requis" class="form-control input-lg" placeholder="Nombre de stagiaire">
-                        </div>
-
-                        <div class="form-group">
                             <label>Site</label>
                             <div class="form-select grey">
                                 <select name="commune_id" class="form-control input-lg">
                                   @foreach($communes as $commune)
-                                      <option value="{{ $commune->id }}">
+                                      <option value="{{ $commune->id }}" {{ $commune->id == $site->commune_id ? 'selected' : ''}}>
                                         {{ $commune->name }}
                                       </option>
                                   @endforeach
@@ -132,16 +116,6 @@
                                 <select name="type" class="form-control input-lg">
                                     <option value="Effective">Effective</option>
                                     <option value="Besoin">Besoins</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Status</label>
-                            <div class="form-select grey">
-                                <select name="is_active" class="form-control input-lg">
-                                    <option value="1">Activée</option>
-                                    <option value="0">Inactivée</option>
                                 </select>
                             </div>
                         </div>

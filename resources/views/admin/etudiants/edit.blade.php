@@ -210,36 +210,40 @@
                         </tbody>
                     </table>
                 </div>
-
-                <div class="mt-20">
-                  <h3 class="_block-title mb-20">Inscrire l'étudiant à une autre formation</h3>
-                  {!! Form::model($etudiant, ['method' => 'POST', 'route' => ['inscrire.etudiant.formation', $etudiant->number], 'class' => '_form' ]) !!}
-                    <div class="row mt-10">
-                        <div class="col-sm-12">
-                          <div class="form-group">
-                              <label>Sélectionner une formation</label>
-                              <div class="form-select grey">
-                                  <select class="form-control input-lg" name="commune_formation_id">
-                                      @foreach($formations as $item)
-                                          <option value="{{ $item->id }}">
-                                            {{ $item->formation->title }} de {{ $item->commune->name }}
-                                          </option>
-                                      @endforeach
-                                  </select>
-                              </div>
-                          </div>
-                          <div class="form-group text-right mb-20">
-                              <button type="submit" class="btn btn-lg btn-primary">
-                                  <i class="ion-checkmark"></i> Inscrire l'étudiant
-                              </button>
-                          </div>
-                        </div>
-                    </div>
-                  {!! Form::close() !!}
-                </div>
               </div>
           </div>
         @endif
+        
+        <div class="block">
+            <div class="block-content form">
+              <div class="mt-20">
+                <h3 class="_block-title mb-20">Inscrire l'étudiant à une autre formation</h3>
+                {!! Form::model($etudiant, ['method' => 'POST', 'route' => ['inscrire.etudiant.formation', $etudiant->number], 'class' => '_form' ]) !!}
+                  <div class="row mt-10">
+                      <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Sélectionner une formation</label>
+                            <div class="form-select grey">
+                                <select class="form-control input-lg" name="commune_formation_id">
+                                    @foreach($formations as $item)
+                                        <option value="{{ $item->id }}">
+                                          {{ $item->formation->title }} de {{ $item->commune->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group text-right mb-20">
+                            <button type="submit" class="btn btn-lg btn-primary">
+                                <i class="ion-checkmark"></i> Inscrire l'étudiant
+                            </button>
+                        </div>
+                      </div>
+                  </div>
+                {!! Form::close() !!}
+              </div>
+            </div>
+        </div>
    </section>
 @endsection
 

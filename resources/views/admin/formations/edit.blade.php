@@ -18,6 +18,14 @@
 
         <div class="title">
             Editer une Formation
+            <div class="mt-10">
+              @if (!$formation->is_active)
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Formation non active, bien vouloir l'activer
+                </div>
+              @endif
+            </div>
         </div>
     </div>
     <section class="container-fluid mt-20">
@@ -33,89 +41,20 @@
                 <div class="row mt-20">
                       <div class="col-sm-8">
                         <div class="row">
-                            <div class="col-sm-9">
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Titre</label>
                                     <input type="text" name="title" class="form-control input-lg" value="{{ $formation->title }}" required>
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label>Site</label>
-                                    <input type="text" name="site" class="form-control input-lg" value="{{ $formation->site }}" required>
-                                </div>
+                            <div class="col-sm-12">
+                              <div class="form-group">
+                                <label>Description</label>
+                                <textarea name="description"
+                                    class="form-control input-lg" rows="1" cols="80">{{ $formation->description }}</textarea>
+                              </div>
                             </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Date de dedut</label>
-                                    <input type="date" name="start_date" class="form-control input-lg datepicker" value="{{ $formation->datesdebut }}">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                      <div class="form-group">
-                                          <label>Heure</label>
-                                          <select class="form-control input-lg" name="start_heure">
-                                              @for($i=0; $i< 24; $i++)
-                                                <?php $value = $i < 10 ? '0' . $i :$i ;?>
-                                                <option value="{{ $value }}" {{ $value == $formation->heuresdebut ? 'selected' : ''}}>{{ $value }}</option>
-                                              @endfor
-                                          </select>
-                                      </div>
-                                    </div>
-                                    <div class="col-xs-6">
-                                      <div class="form-group">
-                                          <label>Minutes</label>
-                                          <select class="form-control input-lg" name="start_minutes">
-                                              @for($i=0; $i< 60; $i+=5)
-                                                <?php $value = $i < 10 ? '0' . $i :$i ;?>
-                                                <option value="{{ $value }}"{{ $value == $formation->minutesdebut ? 'selected' : ''}}>
-                                                  {{ $value }}</option>
-                                              @endfor
-                                          </select>
-                                      </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Date de fin</label>
-                                    <input type="date" name="end_date" class="form-control input-lg datepicker" value="{{ $formation->datesfin }}">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                      <div class="form-group">
-                                          <label>Heure</label>
-                                          <select class="form-control input-lg" name="end_heure">
-                                              @for($i=0; $i< 24; $i++)
-                                                <?php $value = $i < 10 ? '0' . $i :$i ;?>
-                                                <option value="{{ $value }}" {{ $value == $formation->heuresfin ? 'selected' : ''}}>
-                                                  {{ $value }}</option>
-                                              @endfor
-                                          </select>
-                                      </div>
-                                    </div>
-                                    <div class="col-xs-6">
-                                      <div class="form-group">
-                                          <label>Minutes</label>
-                                          <select class="form-control input-lg" name="end_minutes">
-                                              @for($i=0; $i< 60; $i+=5)
-                                                <?php $value = $i < 10 ? '0' . $i :$i ;?>
-                                                <option value="{{ $value }}" {{ $value == $formation->minutesfin ? 'selected' : ''}}>
-                                                  {{ $value }}</option>
-                                              @endfor
-                                          </select>
-                                      </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
 
@@ -123,16 +62,6 @@
                           <div class="form-group">
                               <label>Nombre de stagiaire</label>
                               <input type="number" name="qte_requis" class="form-control input-lg" value="{{ $formation->qte_requis }}">
-                          </div>
-
-                          <div class="form-group">
-                              <label>Type</label>
-                              <div class="form-select grey">
-                                  <select name="type" class="form-control input-lg">
-                                      <option value="Besoin" {{ $formation->type == 'Besoin' ? 'selected' : '' }}>Besoins</option>
-                                      <option value="Effective" {{ $formation->type == 'Effective' ? 'selected' : '' }}>Effective</option>
-                                  </select>
-                              </div>
                           </div>
 
                           <div class="form-group">
@@ -191,40 +120,185 @@
             </div>
 
             <div class="col-sm-8">
-              <h3 class="_block-title mb-20">Formateurs</h3>
-                <div class="block">
-                    <div class="block-content form">
-                      <div class="mt-10">
-                        @if (sizeOf($formation->formateurs))
-                          <table class="table table-striped">
-                              <thead>
-                                  <tr>
-                                      <th>Name</th>
-                                      <th>Qualification</th>
-                                      <th>Type</th>
-                                      <th>Crée le</th>
-                                  </tr>
-                              </thead>
-                              <tbody>
-                                  @foreach($formation->formateurs as $formateur)
-                                      <tr data-href="{{ route('formateurs.edit', $formateur->id) }}">
-                                          <td class="bold">{{ $formateur->getNameAttribute() }}</td>
-                                          <td>{{ $formateur->qualification }}</td>
-                                          <td>{{ $formateur->type }}</td>
-                                          <td>{{ date('d/m/Y H:i', strtotime($formateur->created_at)) }}</td>
-                                      </tr>
-                                  @endforeach
-                              </tbody>
-                          </table>
-                        @else
-                          <h4>Cette formation n'a pas encore de formateur</h4>
-                        @endif
-                      </div>
-                    </div>
-                </div>
+              @if (sizeOf($formation->formateurs))
+                <h3 class="_block-title mb-20">Formateurs</h3>
+                  <div class="block">
+                      <div class="block-content form">
+                        <div class="mt-10">
 
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Qualification</th>
+                                        <th>Type</th>
+                                        <th>Crée le</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($formation->formateurs as $formateur)
+                                        <tr data-href="{{ route('formateurs.edit', $formateur->id) }}">
+                                            <td class="bold">{{ $formateur->getNameAttribute() }}</td>
+                                            <td>{{ $formateur->qualification }}</td>
+                                            <td>{{ $formateur->type }}</td>
+                                            <td>{{ date('d/m/Y H:i', strtotime($formateur->created_at)) }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+                        </div>
+                      </div>
+                  </div>
+              @endif
             </div>
         </div>
+
+        @if (sizeOf($formation->sites))
+          <h3 class="_block-title mb-20">Sites de la formation</h3>
+          <div class="block">
+              <div class="block-content form">
+                <div class="mt-10">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Site</th>
+                                <th>Du</th>
+                                <th>Au</th>
+                                <th>Durée</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach($formation->sites as $item)
+                                <tr data-href="{{ route('formation.edit.site', $item->id)}}">
+                                    <td class="bold">{{ $item->commune->name }}</td>
+                                    <td>{{ date('d/m/Y H:i', strtotime($item->start_date)) }}</td>
+                                    <td>{{ date('d/m/Y H:i', strtotime($item->end_date)) }}</td>
+                                    <td>{{ $item->duree }}</td>
+                                    <td>{{ $item->type }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+              </div>
+          </div>
+        @endif
+
+        {!! Form::model($formation, ['method' => 'POST', 'route' => ['formation.update.site', $formation->number], 'class' => '_form' ]) !!}
+          {{ csrf_field() }}
+          <div class="block">
+              <div class="block-content form">
+                  <h3>Ajoutez un site à cette formation</h3>
+                  <div class="row mt-20">
+                        <div class="col-sm-9">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Date de début</label>
+                                        <input type="date" name="start_date" class="form-control input-lg datepicker" placeholder="Date de début" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                          <div class="form-group">
+                                              <label>Heure</label>
+                                              <select class="form-control input-lg" name="start_heure">
+                                                  @for($i=0; $i< 24; $i++)
+                                                    <?php $value = $i < 10 ? '0' . $i :$i ;?>
+                                                    <option value="{{ $value }}" {{ $value == '08' ? 'selected' : ''}}>{{ $value }}</option>
+                                                  @endfor
+                                              </select>
+                                          </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                          <div class="form-group">
+                                              <label>Minutes</label>
+                                              <select class="form-control input-lg" name="start_minutes">
+                                                  @for($i=0; $i< 60; $i+=5)
+                                                    <?php $value = $i < 10 ? '0' . $i :$i ;?>
+                                                    <option value="{{ $value }}">
+                                                      {{ $value }}</option>
+                                                  @endfor
+                                              </select>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Date de fin</label>
+                                        <input type="date" name="end_date" class="form-control input-lg datepicker" placeholder="Date de fin">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                          <div class="form-group">
+                                              <label>Heure</label>
+                                              <select class="form-control input-lg" name="end_heure">
+                                                  @for($i=0; $i< 24; $i++)
+                                                    <?php $value = $i < 10 ? '0' . $i :$i ;?>
+                                                    <option value="{{ $value }}" {{ $value == '19' ? 'selected' : ''}}>
+                                                      {{ $value }}</option>
+                                                  @endfor
+                                              </select>
+                                          </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                          <div class="form-group">
+                                              <label>Minutes</label>
+                                              <select class="form-control input-lg" name="end_minutes">
+                                                  @for($i=0; $i< 60; $i+=5)
+                                                    <?php $value = $i < 10 ? '0' . $i :$i ;?>
+                                                    <option value="{{ $value }}">
+                                                      {{ $value }}</option>
+                                                  @endfor
+                                              </select>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+
+                      <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Site</label>
+                                <div class="form-select grey">
+                                    <select name="commune_id" class="form-control input-lg">
+                                      @foreach($communes as $commune)
+                                          <option value="{{ $commune->id }}">
+                                            {{ $commune->name }}
+                                          </option>
+                                      @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Type</label>
+                                <div class="form-select grey">
+                                    <select name="type" class="form-control input-lg">
+                                        <option value="Effective">Effective</option>
+                                        <option value="Besoin">Besoins</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group text-right mb-20">
+                                <button type="submit" class="btn btn-lg btn-primary">
+                                    <i class="ion-checkmark"></i> Ajouter un site
+                                </button>
+                            </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        {!! Form::close() !!}
 
         @if (sizeOf($formation->etudiants))
           <h3 class="_block-title mb-20">Liste d'étudiants</h3>
@@ -260,6 +334,51 @@
               </div>
           </div>
         @endif
+
+        <div class="block">
+            <div class="block-content form">
+              <div class="mt-20">
+                <h3 class="_block-title mb-20">Inscrire l'étudiant à une autre formation</h3>
+                {!! Form::model($formation, ['method' => 'POST', 'route' => ['ajouter.etudiant.formation', $formation->number], 'class' => '_form' ]) !!}
+                  <div class="row mt-10">
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Sélectionner un étudiant</label>
+                            <div class="form-select grey">
+                                <select class="form-control input-lg" name="etudiant_id">
+                                    @foreach($etudiants as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Sélectionner une formation</label>
+                            <div class="form-select grey">
+                                <select class="form-control input-lg" name="commune_formation_id">
+                                    @foreach($formations as $item)
+                                        <option value="{{ $item->id }}">
+                                          {{ $item->formation->title }} de {{ $item->commune->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group text-right mb-20">
+                          <button type="submit" class="btn btn-lg btn-primary">
+                              <i class="ion-checkmark"></i> Ajouter un étudiant
+                          </button>
+                      </div>
+                  </div>
+                {!! Form::close() !!}
+              </div>
+            </div>
+        </div>
     </section>
 
 @endsection
