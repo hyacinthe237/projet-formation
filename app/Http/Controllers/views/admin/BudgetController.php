@@ -141,7 +141,7 @@ class BudgetController extends Controller
     private static function takeBudgetInfos ($id)
     {
         $budget = Budget::whereId($id)
-                    ->with('items', 'items.type', 'site', 'site.formation',  'site.formation.formateurs', 'site.formation.etudiants', 'site.commune')
+                    ->with('items', 'items.type', 'site', 'site.etudiants', 'site.formation',  'site.formation.formateurs', 'site.commune')
                     ->firstOrFail();
 
         $types = TypeItem::get();
@@ -195,6 +195,7 @@ class BudgetController extends Controller
             'totalCommunications' => $totalCommunications,
             'totalPersonnels' => $totalPersonnels,
             'site' => $site,
+            'etudiants' => $site->etudiants,
             'budget' => $budget
         ];
 
