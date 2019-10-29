@@ -39,6 +39,7 @@ class FormateurController extends Controller
     {
         $formations  = Formation::whereIsActive(1)->orderBy('id', 'desc')->get();
         $thematiques  = Thematique::orderBy('id', 'desc')->get();
+        
         return view('admin.formateurs.create', compact('formations', 'thematiques'));
     }
 
@@ -47,7 +48,7 @@ class FormateurController extends Controller
         $formateur  = Formateur::with('formations', 'thematiques', 'thematiques.thematique', 'thematiques.thematique')->find($id);
         $formations  = Formation::whereIsActive(1)->orderBy('id', 'desc')->get();
         $thematiques  = Thematique::orderBy('id', 'desc')->get();
-        
+
         if (!$formateur)
             return redirect()->route('formateurs.index');
 

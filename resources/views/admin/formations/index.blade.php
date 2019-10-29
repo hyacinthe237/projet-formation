@@ -19,6 +19,15 @@
             <div class="mt-10">
                 <div class="row">
                     <form class="_form" action="" method="get">
+                      <div class="col-sm-2">
+                          {{-- <div class="form-select grey">
+                              <select name="is_active" class="form-control input-lg">
+                                  <option value="">Tous les status</option>
+                                  <option value="0" {{ Request::get('is_active') == 0 ? 'selected' : '' }}>Inactivée</option>
+                                  <option value="1" {{ Request::get('is_active') == 1 ? 'selected' : '' }}>Activée</option>
+                              </select>
+                          </div> --}}
+                      </div>
                       <div class="col-sm-8">
                           <div class="form-group">
                               <input type="text"
@@ -29,7 +38,7 @@
                           </div>
                       </div>
 
-                      <div class="col-sm-4">
+                      <div class="col-sm-2">
                           <button type="submit" class="btn btn-lg btn-primary btn-block">
                               Filtrer
                           </button>
@@ -45,10 +54,12 @@
                     <thead>
                         <tr>
                             <th>Titre</th>
+                            <th>Status</th>
+                            <th>Nbre formateurs</th>
                             <th>Nbre sites</th>
                             <th>Nbre places</th>
-                            <th>Début</th>
-                            <th>Fin</th>
+                            <th>Nbre phases</th>
+                            <th>Cree le</th>
                         </tr>
                     </thead>
 
@@ -56,10 +67,12 @@
                         @foreach($formations as $formation)
                             <tr data-href="{{ route('formation.edit', $formation->number) }}">
                                 <td class="bold">{{ $formation->title }}</td>
-                                <td>{{ count($formation->sites) }}</td>
-                                <td>{{ $formation->qte_requis }}</td>
-                                <td>{{ date('d/m/Y H:i', strtotime($formation->start_date)) }}</td>
-                                <td>{{ date('d/m/Y H:i', strtotime($formation->end_date)) }}</td>
+                                <td class="text-center">{{ $formation->is_active ? 'Active' : 'Non active' }}</td>
+                                <td class="text-center">{{ count($formation->formateurs) }}</td>
+                                <td class="text-center">{{ count($formation->sites) }}</td>
+                                <td class="text-center">{{ $formation->qte_requis }}</td>
+                                <td class="text-center">{{ count($formation->phases) }}</td>
+                                <td class="text-center">{{ date('d/m/Y H:i', strtotime($formation->created_at)) }}</td>
                             </tr>
                         @endforeach
                     </tbody>

@@ -23,15 +23,18 @@ class FormationsController extends Controller
      * @return \Illuminate\Http\Response
      */
      public function index(Request $request) {
+         $status = $request->is_active;
          $formations = Formation::with(['sites', 'sites.commune', 'phases'])
              ->when($request->keywords, function($query) use ($request) {
-                 return $query->where('title', 'like', '%'.$request->keywords.'%')
-                              ->orWhere('site', 'like', '%'.$request->keywords.'%');
+                 return $query->where('title', 'like', '%'.$request->keywords.'%');
+             })
+             ->when($status, function($query) use ($status) {
+                 return $query->where('is_active', $status);
              })
              ->orderBy('id', 'desc')
              ->paginate(50);
 
-         return view('admin.formations.index', compact('formations'));
+         return view('admin.formations.index', compact('formations', 'status'));
      }
 
     /**
@@ -162,12 +165,12 @@ class FormationsController extends Controller
      * @return \Illuminate\Http\Response
      */
      public function edit ($number) {
-         $formation  = Formation::whereNumber($number)->with('phases', 'formateurs', 'sites', 'sites.commune', 'sites.etudiants')->first();
+         $formation  = Formation::whereNumber($number)->with('phases', 'formateurs', 'formateurs.formateur', 'sites', 'sites.commune', 'sites.etudiants')->first();
          if (!$formation)
              return redirect()->route('formation.edit', $formation->number);
 
          $communes   = Commune::with('departement', 'departement.region')->get();
-
+         // dd($formation->formateurs);
          return view('admin.formations.edit', compact('formation', 'communes'));
      }
 

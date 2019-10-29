@@ -20,7 +20,7 @@ class Formation extends Model
     protected $table = 'formations';
 
     public function formateurs () {
-        return $this->belongsToMany(Formateur::class, 'formateur_formations', 'formateur_id', 'formation_id');
+        return $this->hasMany(FormateurFormation::class);
     }
 
     public function sites () {

@@ -281,12 +281,12 @@
                                       </tr>
                                   </thead>
                                   <tbody>
-                                      @foreach($formation->formateurs as $formateur)
-                                          <tr data-href="{{ route('formateurs.edit', $formateur->id) }}">
-                                              <td class="bold">{{ $formateur->getNameAttribute() }}</td>
-                                              <td>{{ $formateur->qualification }}</td>
-                                              <td>{{ $formateur->type }}</td>
-                                              <td>{{ date('d/m/Y H:i', strtotime($formateur->created_at)) }}</td>
+                                      @foreach($formation->formateurs as $item)
+                                          <tr data-href="{{ route('formateurs.edit', $item->formateur->id) }}">
+                                              <td class="bold">{{ $item->formateur->getNameAttribute() }}</td>
+                                              <td>{{ $item->formateur->qualification }}</td>
+                                              <td>{{ $item->formateur->type }}</td>
+                                              <td>{{ date('d/m/Y H:i', strtotime($item->formateur->created_at)) }}</td>
                                           </tr>
                                       @endforeach
                                   </tbody>

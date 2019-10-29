@@ -30,24 +30,17 @@ class EtudiantController extends Controller
       $etudiants = Etudiant::with('residence', 'formations', 'formations.site', 'formations.site.commune', 'formations.site.formation')
       ->when($keywords, function($query) use ($keywords) {
           return $query->where('firstname', 'like', '%'.$keywords.'%')
-          ->orWhere('lastname', 'like', '%'.$keywords.'%');
+                      ->orWhere('lastname', 'like', '%'.$keywords.'%');
       })
       ->when($request->residence_id, function($query) use ($request) {
           return $query->where('residence_id', $request->residence_id);
       })
-      // ->whereHas('formations', function($query) use ($request) {
-      //     return $query->where('formations.formation_id', $request->formation_id);
-      // })
-      // ->when($request->formation_id, function ($q) use ($request) {
-      //     return $q->whereHas('formations', function($sql) use ($request) {
-      //         return $sql->where('formations.id', $request->formation_id);
-      //     });
-      // })
+
       ->orderBy('id', 'desc')
       ->paginate(50);
 
-      $formations = Formation::orderBy('id', 'desc')->with('phases')->get();
-      $communes = Commune::with('departement', 'departement.region')->get();
+      $formations = CommuneFormation::with('commune', 'formation')->orderBy('id', 'desc')->get();
+      $communes = Commune::orderBy('name', 'asc')->get();
 
       return view('admin.etudiants.index', compact('etudiants', 'formations', 'communes'));
   }

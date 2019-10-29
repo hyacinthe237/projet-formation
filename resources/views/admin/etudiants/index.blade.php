@@ -19,16 +19,14 @@
             <div class="mt-10">
                 <div class="row">
                     <form class="_form" action="" method="get">
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <div class="form-select grey">
                                 <select class="form-control input-lg" name="residence_id">
-                                    <option value="">Toutes les lieux de résidence</option>
+                                    <option value="">Lieux de résidence</option>
                                     @foreach($communes as $item)
                                         <option value="{{ $item->id }}"
                                           {{ Request::get('residence_id') == $item->id ? 'selected' : '' }}>
-                                            {{ 'Région: ' . $item->departement->region->name }} |
-                                            {{ 'Département: ' . $item->departement->name }} |
-                                            {{ 'Commune: ' .$item->name }}
+                                            {{ $item->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -36,19 +34,19 @@
                         </div>
                         <div class="col-sm-3">
                             <div class="form-select grey">
-                                <select class="form-control input-lg" name="formation_id">
+                                <select class="form-control input-lg" name="commune_formation_id">
                                     <option value="">Toutes les formations</option>
-                                    @foreach($formations as $formation)
-                                        <option value="{{ $formation->id }}"
-                                          {{ Request::get('formation_id') == $formation->id ? 'selected' : '' }}>
-                                            {{ $formation->title }}
+                                    @foreach($formations as $item)
+                                        <option value="{{ $item->id }}"
+                                          {{ Request::get('commune_formation_id') == $item->id ? 'selected' : '' }}>
+                                            {{ $item->formation->title }} de {{ $item->commune->name }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
 
-                        <div class="col-sm-6">
+                        <div class="col-sm-7">
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="form-group">
