@@ -10,7 +10,6 @@ use App\Models\Etudiant;
 use App\Models\Formation;
 use App\Models\Thematique;
 use App\Models\FormationEtudiant;
-use App\Models\Location;
 use App\Helpers\EtudiantHelper;
 use App\Traits\Uploads;
 use App\Mail\RegistrationMail;
@@ -25,8 +24,8 @@ class EtudiantController extends Controller
     public function create ()
     {
         $formations = Formation::orderBy('id', 'desc')->get();
-        $locations = Location::orderBy('id', 'desc')->get();
-        return view('front.etudiants.create', compact('formations', 'locations'));
+        // $locations = Location::orderBy('id', 'desc')->get();
+        return view('front.etudiants.create', compact('formations'));
     }
 
     /**
