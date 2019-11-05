@@ -38,7 +38,7 @@ class BudgetController extends Controller
 
     public function create ()
     {
-        $formations = CommuneFormation::with('formation', 'formation.sites')->get();
+        $formations = CommuneFormation::with('formation', 'commune')->get();
         return view('admin.budgets.create', compact('formations'));
     }
 

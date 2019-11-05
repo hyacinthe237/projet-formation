@@ -45,107 +45,12 @@
 
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label>Formation</label>
-                                <div class="form-select grey">
-                                    <select name="formation_id" class="form-control input-lg" required>
-                                        @foreach ($formations as $item)
-                                            <option value="{{ $item->id }}">{{ $item->title }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Thematique</label>
-                                <div class="form-select grey">
-                                    <select name="thematique_id" class="form-control input-lg" required>
-                                        @foreach ($thematiques as $item)
-                                            <option value="{{ $item->id }}"><b>{{ $item->name }}</b>{{ ': ' . $item->duree }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <div class="form-group">
                                 <label>Type</label>
                                 <div class="form-select grey">
                                     <select name="type" class="form-control input-lg" required>
                                         <option value="Expert" {{ $formateur->type == 'Expert' ? 'selected' : '' }}>Expert</option>
                                         <option value="Personnels PNMFV" {{ $formateur->type == 'Personnels PNMFV' ? 'selected' : '' }}>Personnels PNMFV</option>
                                     </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label>Date de dedut</label>
-                                <input type="date" name="start_date" class="form-control input-lg datepicker" value="{{ $formateur->datesdebut }}">
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="row">
-                                <div class="col-xs-6">
-                                  <div class="form-group">
-                                      <label>Heure</label>
-                                      <select class="form-control input-lg" name="start_heure">
-                                          @for($i=0; $i< 24; $i++)
-                                            <?php $value = $i < 10 ? '0' . $i :$i ;?>
-                                            <option value="{{ $value }}" {{ $value == $formateur->heuresdebut ? 'selected' : ''}}>{{ $value }}</option>
-                                          @endfor
-                                      </select>
-                                  </div>
-                                </div>
-                                <div class="col-xs-6">
-                                  <div class="form-group">
-                                      <label>Minutes</label>
-                                      <select class="form-control input-lg" name="start_minutes">
-                                          @for($i=0; $i< 60; $i+=5)
-                                            <?php $value = $i < 10 ? '0' . $i :$i ;?>
-                                            <option value="{{ $value }}"{{ $value == $formateur->minutesdebut ? 'selected' : ''}}>
-                                              {{ $value }}</option>
-                                          @endfor
-                                      </select>
-                                  </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label>Date de fin</label>
-                                <input type="date" name="end_date" class="form-control input-lg datepicker" value="{{ $formateur->datesfin }}">
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="row">
-                                <div class="col-xs-6">
-                                  <div class="form-group">
-                                      <label>Heure</label>
-                                      <select class="form-control input-lg" name="end_heure">
-                                          @for($i=0; $i< 24; $i++)
-                                            <?php $value = $i < 10 ? '0' . $i :$i ;?>
-                                            <option value="{{ $value }}" {{ $value == $formateur->heuresfin ? 'selected' : ''}}>
-                                              {{ $value }}</option>
-                                          @endfor
-                                      </select>
-                                  </div>
-                                </div>
-                                <div class="col-xs-6">
-                                  <div class="form-group">
-                                      <label>Minutes</label>
-                                      <select class="form-control input-lg" name="end_minutes">
-                                          @for($i=0; $i< 60; $i+=5)
-                                            <?php $value = $i < 10 ? '0' . $i :$i ;?>
-                                            <option value="{{ $value }}" {{ $value == $formateur->minutesfin ? 'selected' : ''}}>
-                                              {{ $value }}</option>
-                                          @endfor
-                                      </select>
-                                  </div>
                                 </div>
                             </div>
                         </div>
@@ -173,23 +78,17 @@
                 <thead>
                     <tr>
                         <th>Titre</th>
-                        <th>Site</th>
-                        <th>Type</th>
-                        <th>Durée</th>
-                        <th>Début</th>
-                        <th>Fin</th>
+                        <th>Nbre de Places</th>
+                        <th>Etat</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @foreach($formateur->formations as $formation)
-                        <tr data-href="{{ route('formation.edit', $formation->number) }}">
-                            <td class="bold">{{ $formation->title }}</td>
-                            <td>{{ $formation->site }}</td>
-                            <td>{{ $formation->type }}</td>
-                            <td>{{ $formation->duree }}</td>
-                            <td>{{ date('d/m/Y H:i', strtotime($formation->start_date)) }}</td>
-                            <td>{{ date('d/m/Y H:i', strtotime($formation->end_date)) }}</td>
+                    @foreach($formateur->formations as $item)
+                        <tr data-href="{{ route('formation.edit', $item->formation->number) }}">
+                            <td class="bold">{{ $item->formation->title }}</td>
+                            <td>{{ $item->formation->qte_requis }}</td>
+                            <td>{{ $item->formation->is_active ? 'Active' : 'Non active' }}</td>
                         </tr>
                     @endforeach
                 </tbody>

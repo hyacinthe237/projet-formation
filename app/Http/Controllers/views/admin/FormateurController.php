@@ -39,13 +39,13 @@ class FormateurController extends Controller
     {
         $formations  = Formation::whereIsActive(1)->orderBy('id', 'desc')->get();
         $thematiques  = Thematique::orderBy('id', 'desc')->get();
-        
+
         return view('admin.formateurs.create', compact('formations', 'thematiques'));
     }
 
     public function edit ($id)
     {
-        $formateur  = Formateur::with('formations', 'thematiques', 'thematiques.thematique', 'thematiques.thematique')->find($id);
+        $formateur  = Formateur::with('formations', 'formations.formation', 'formations.formation.sites', 'thematiques', 'thematiques.thematique', 'thematiques.thematique')->find($id);
         $formations  = Formation::whereIsActive(1)->orderBy('id', 'desc')->get();
         $thematiques  = Thematique::orderBy('id', 'desc')->get();
 

@@ -24,7 +24,7 @@ class Formateur extends Model
     }
 
     public function formations () {
-        return $this->belongsToMany(Formation::class, 'formateur_formations', 'formation_id', 'formateur_id');
+        return $this->hasMany(FormateurFormation::class);
     }
 
     public function thematiques () {

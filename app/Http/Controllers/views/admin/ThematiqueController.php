@@ -60,7 +60,6 @@ class ThematiqueController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'phase_id' => 'required',
             'name'     => 'required'
         ]);
 
@@ -93,7 +92,6 @@ class ThematiqueController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'phase_id' => 'required',
             'name'     => 'required'
         ]);
 

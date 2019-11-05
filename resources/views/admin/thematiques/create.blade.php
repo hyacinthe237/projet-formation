@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <label>Phase</label>
                             <div class="form-select grey">
-                                <select name="phase_id" class="form-control input-lg" required>
+                                <select name="phase_id" class="form-control input-lg">
                                     <option value="">Sélectionnez la phase</option>
                                     @foreach ($phases as $phase)
                                         <option value="{{ $phase->id }}">{{ $phase->title }}</option>
