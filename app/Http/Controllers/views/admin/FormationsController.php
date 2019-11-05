@@ -4,6 +4,7 @@ namespace App\Http\Controllers\views\admin;
 
 use Auth;
 use DB;
+use PDF;
 use Carbon\Carbon;
 use App\Models\Etudiant;
 use App\Models\Formation;
@@ -334,5 +335,35 @@ class FormationsController extends Controller
 
          $formation->delete();
          return redirect()->back()->with('message', 'Formation supprimée');
+     }
+
+     /**
+      * Download PDF Formation
+      * @param  [type] $id [description]
+      * @return [type]         [description]
+      */
+     public function downloadFormation ()
+     {
+         $data = self::takeFormationInfos();
+
+         $pdf = PDF::loadView('pdfs.formation', $data);
+         return $pdf->stream();
+     }
+
+     /**
+      * Recup Formation Information
+      * @param  [type] $id [description]
+      * @return [type]         [description]
+      */
+     private static function takeFormationInfos ()
+     {
+         $formations = Formation::with('sites', 'sites.commune')->whereIsActive(true)->get();
+
+         $data = [
+             'formations' => $formations
+         ];
+
+         return $data;
+
      }
 }

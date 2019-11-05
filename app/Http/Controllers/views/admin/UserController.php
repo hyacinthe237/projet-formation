@@ -115,7 +115,7 @@ class UserController extends Controller
         if (!$user)
             return redirect()->back()->withErrors(['user' => 'Utilisateur inconnu!']);
 
-        $user->role_id   = $request->has('role_id') ? $request->role_id : $user->role_id;
+        $user->role_id     = $request->has('role_id') ? $request->role_id : $user->role_id;
         $user->firstname   = $request->has('firstname') ? $request->firstname : $user->firstname;
         $user->lastname    = $request->has('lastname') ? $request->lastname : $user->lastname;
         $user->phone       = $request->has('phone') ? $request->phone : $user->phone;

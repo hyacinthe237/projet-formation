@@ -12,8 +12,11 @@
         </div>
 
         <div class="title">
-          Modification du site <strong>"{{ $site->commune->name }}"</strong> <br>
-          <small>Formation <strong>"{{ $site->formation->title }}"</strong></small>
+          Modification du site <strong>"{{ $site->commune->name }}"</strong>
+
+          <div class="alert alert-info alert-dismissible mt-10" role="alert">
+              Formation <strong>"{{ $site->formation->title }}"</strong>
+          </div>
         </div>
     </div>
 <section class="container-fluid mt-20">
