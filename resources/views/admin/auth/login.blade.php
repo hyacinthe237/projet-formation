@@ -8,7 +8,8 @@
     <meta name="robots" content="noindex,nofollow">
     <meta name="name" content="{{ config('app.name') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/backend/css/admin.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/backend/css/admin.css') }}">    
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
     <script>
         var _auth = undefined;
     </script>
