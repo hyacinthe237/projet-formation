@@ -43,9 +43,9 @@
     </div>
 </body>
 
-@if(config('app.environment') !== 'local')
+{{-- @if(config('app.environment') !== 'local')
     <script src="//code.tidio.co/y5p5xtkspfjewohbdhjykef5ovl2ybu8.js"></script>
-@endif
+@endif --}}
 
 {{-- <script src="{{ asset('/assets/js/app.js') }}"></script> --}}
 <script src="{{ mix('/assets/js/manifest.js') }}"></script>
