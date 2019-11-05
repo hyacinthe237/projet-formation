@@ -65,7 +65,7 @@
                         @foreach($thematiques as $thematique)
                             <tr data-href="{{ route('thematiques.edit', $thematique->id) }}">
                                 <td class="bold">{{ $thematique->name }}</td>
-                                <td>{{ $thematique->phase->title }}</td>
+                                <td>{{ $thematique->phase ? $thematique->phase->title : '...' }}</td>
                                 <td>{{ $thematique->duree }}</td>
                                 <td>{{ date('d/m/Y H:i', strtotime($thematique->created_at)) }}</td>
                             </tr>

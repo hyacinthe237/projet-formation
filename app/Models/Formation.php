@@ -30,4 +30,8 @@ class Formation extends Model
     public function phases () {
         return $this->belongsToMany(Phase::class, 'formation_phases', 'formation_id', 'phase_id');
     }
+
+    // public function etudiants () {
+    //     return $this->hasMany(FormationEtudiant::class);
+    // }
 }

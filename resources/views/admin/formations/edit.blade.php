@@ -86,6 +86,7 @@
         {!! Form::close() !!}
 
         @if ($formation->is_active)
+          
           @if (sizeOf($formation->sites))
             <h3 class="_block-title mb-20">Sites de la formation</h3>
             <div class="block">
