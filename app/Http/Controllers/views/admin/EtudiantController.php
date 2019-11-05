@@ -4,6 +4,7 @@ namespace App\Http\Controllers\views\admin;
 
 use Auth;
 use DB;
+use PDF;
 use Carbon\Carbon;
 use App\Models\Etudiant;
 use App\Models\Formation;
@@ -237,6 +238,35 @@ class EtudiantController extends Controller
 
         $etudiant->delete();
         return redirect()->back()->with('message', 'Etudiant supprimé');
+    }
+
+    /**
+     * Download PDF Etudiant
+     * @param  [type] $id [description]
+     * @return [type]         [description]
+     */
+    public function downloadEtudiant ()
+    {
+        $data = self::takeEtudiantInfos();
+
+        $pdf = PDF::loadView('pdfs.etudiant', $data);
+        return $pdf->stream();
+    }
+
+    /**
+     * Recup Etudiant Information
+     * @param  [type] $id [description]
+     * @return [type]         [description]
+     */
+    private static function takeEtudiantInfos ()
+    {
+        $etudiants = Etudiant::with('residence', 'formations')->whereIsActive(true)->get();
+
+        $data = [
+            'etudiants' => $etudiants
+        ];
+
+        return $data;
     }
 
 }

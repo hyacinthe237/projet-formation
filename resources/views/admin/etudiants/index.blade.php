@@ -4,6 +4,9 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
+            <a href="{{ route('etudiants.download')}}" class="btn btn-lg btn-success" target="_blank">
+                <i class="ion-pdf"></i> PDF Liste
+            </a>
             <a href="{{ route('etudiants.create') }}" class="btn btn-lg btn-primary">
                 <i class="ion-plus"></i> Ajouter Etudiant
             </a>

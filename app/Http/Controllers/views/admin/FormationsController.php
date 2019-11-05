@@ -364,6 +364,5 @@ class FormationsController extends Controller
          ];
 
          return $data;
-
      }
 }
