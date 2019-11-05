@@ -32,7 +32,7 @@ class ThematiqueController extends Controller
       ->paginate(50);
 
       $phases = Phase::all();
-      // dd($thematiques);
+      
       return view('admin.thematiques.index', compact('thematiques', 'phases'));
   }
 

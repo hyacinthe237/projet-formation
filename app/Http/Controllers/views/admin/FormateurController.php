@@ -108,7 +108,8 @@ class FormateurController extends Controller
 
             }
 
-            return redirect()->back()->with('message', 'Formateur ajouté avec succès');
+            return redirect()->route('formateurs.index')
+                            ->withSuccess("Formateur ajouté avec succès");
         }
 
         return redirect()->back()

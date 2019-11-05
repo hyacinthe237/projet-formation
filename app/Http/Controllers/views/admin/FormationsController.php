@@ -300,7 +300,7 @@ class FormationsController extends Controller
          return redirect()->route('formation.edit', $formation->number)->with('message', 'Site mit à jour avec succès');
      }
 
-     public function desactivateOrActivate (Request $request, $number) {
+     public function desactivateOrActivate ($number) {
          $formation = Formation::whereNumber($numer)->first();
 
          if (!$formation)

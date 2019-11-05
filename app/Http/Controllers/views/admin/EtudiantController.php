@@ -152,7 +152,8 @@ class EtudiantController extends Controller
                         'created_at'    => Carbon::now()
                     ]);
 
-                    return redirect()->back()->with('message', 'Etudiant enregistré et ajouté avec succès à la formation');
+                    return redirect()->route('etudiants.index')
+                                    ->withSuccess("Etudiant enregistré et ajouté avec succès à la formation");
                 } else {
                   return redirect()->back()
                          ->withErrors(['existing' => 'Etudiant enregistré, mais pas lié à la formation car le quota requis est atteint']);
