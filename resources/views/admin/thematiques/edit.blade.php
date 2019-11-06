@@ -14,13 +14,14 @@
         </div>
     </div>
 
-{!! Form::model($thematique, ['method' => 'PUT', 'route' => ['thematiques.update', $thematique->id], 'class' => '_form' ]) !!}
+
 
     <section class="container-fluid mt-20">
 
         @include('errors.list')
-        {{ csrf_field() }}
 
+    {!! Form::model($thematique, ['method' => 'PUT', 'route' => ['thematiques.update', $thematique->id], 'class' => '_form' ]) !!}
+      {{ csrf_field() }}
         <div class="block">
             <div class="block-content form">
                   <div class="row mt-20">
@@ -61,9 +62,29 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+   {!! Form::close() !!}
 
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-6 text-left">
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">
+                            Supprimer
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-{!! Form::close() !!}
+
+
+@include('admin.modals.confirm', [
+    'route'    => 'thematiques.destroy',
+    'method'   => 'delete',
+    'resource' => $thematique,
+    'confirm'  => 'Oui, je supprimer',
+    'message'  => 'Voulez-vous de façon permanente supprimer cette Thématique ?'
+])
 @endsection

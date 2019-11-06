@@ -22,6 +22,10 @@ class Thematique extends Model
         return $this->hasMany(Formation::class);
     }
 
+    public function formateurs () {
+        return $this->hasMany(FormateurThematique::class);
+    }
+
     public function phase () {
         return $this->belongsTo(Phase::class);
     }

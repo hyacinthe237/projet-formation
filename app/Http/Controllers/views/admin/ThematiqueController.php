@@ -7,6 +7,7 @@ use DB;
 use Carbon\Carbon;
 use App\Models\Phase;
 use App\Models\Thematique;
+use App\Models\FormateurThematique;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
@@ -32,7 +33,7 @@ class ThematiqueController extends Controller
       ->paginate(50);
 
       $phases = Phase::all();
-      
+
       return view('admin.thematiques.index', compact('thematiques', 'phases'));
   }
 
@@ -117,6 +118,10 @@ class ThematiqueController extends Controller
         $thematique = Thematique::find($id);
         if (!$thematique)
             return redirect()->back()->withErrors(['message' => 'Thématique non existante']);
+
+        $them = FormateurThematique::whereThematiqueId($thematique->id)->first();
+        if ($them)
+            return redirect()->back()->withErrors(['message' => 'Cette thématique est dispensée par un formateur. impossible de la supprimer !']);
 
         $thematique->delete();
         return redirect()->back()->with('message', 'Thématique supprimée');
