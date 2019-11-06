@@ -101,7 +101,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $number)
+    public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             'firstname' => 'required',
@@ -111,7 +111,7 @@ class UserController extends Controller
         if ($validator->fails())
             return redirect()->back()->withInput($request->all())->withErrors(['validator' => 'Les champs Prénom & Email sont obligatoires']);
 
-        $user = User::whereNumber($number)->whereIsActive(true)->first();
+        $user = User::find($id);
         if (!$user)
             return redirect()->back()->withErrors(['user' => 'Utilisateur inconnu!']);
 

@@ -171,7 +171,15 @@ class FormationsController extends Controller
              return redirect()->route('formation.edit', $formation->number);
 
          $communes   = Commune::with('departement', 'departement.region')->get();
-         // dd($formation->formateurs);
+         $formation->commune_formations = CommuneFormation::with('etudiants.etudiant')->whereFormationId($formation->id)->get();
+
+         $formation->etudiants = [];
+         foreach ($formation->commune_formations as $item) {
+           foreach ($item->etudiants as $etud) {
+             $formation->etudiants = $etud->etudiant;
+           }
+         }
+         
          return view('admin.formations.edit', compact('formation', 'communes'));
      }
 
