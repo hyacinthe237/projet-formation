@@ -4,6 +4,10 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
+            <a href="{{ route('budgets.index') }}" class="btn btn-lg btn-success">
+                <i class="ion-ios-list"></i> Budgets
+            </a>
+
             <a href="{{ route('types.create') }}" class="btn btn-lg btn-primary">
                 <i class="ion-plus"></i> Ajouter type
             </a>

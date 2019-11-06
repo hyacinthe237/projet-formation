@@ -5,7 +5,7 @@
     <div class="page-heading">
         <div class="buttons">
             <a href="{{ route('types.index') }}" class="btn btn-lg btn-success">
-                <i class="ion-plus"></i> Types
+                <i class="ion-ios-list"></i> Types
             </a>
 
             <a href="{{ route('budgets.create') }}" class="btn btn-lg btn-primary">
