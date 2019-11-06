@@ -5,7 +5,7 @@
     <div class="page-heading">
         <div class="buttons">
             <a href="{{ route('etudiants.download')}}" class="btn btn-lg btn-success" target="_blank">
-                <i class="ion-pdf"></i> PDF Liste
+                <i class="ion-document"></i> PDF Liste
             </a>
             <a href="{{ route('etudiants.create') }}" class="btn btn-lg btn-primary">
                 <i class="ion-plus"></i> Ajouter Etudiant
@@ -57,7 +57,7 @@
                                         name="keywords"
                                         class="form-control input-lg"
                                         value="{{ Request::get('keywords') }}"
-                                        placeholder="Recherche...">
+                                        placeholder="Recherche (nom, prénom, struture, fonction)">
                                     </div>
                                 </div>
 

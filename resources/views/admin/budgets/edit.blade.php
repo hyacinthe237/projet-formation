@@ -6,7 +6,7 @@
         <div class="buttons">
             @if (sizeOf($budget->items))
                 <a href="{{ route('budgets.download', $budget->id)}}" class="btn btn-lg btn-success" target="_blank">
-                    <i class="ion-plus"></i> Visualiser le PDF
+                    <i class="ion-document"></i> Visualiser le PDF
                 </a>
             @endif
 

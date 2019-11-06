@@ -31,7 +31,9 @@ class EtudiantController extends Controller
       $etudiants = Etudiant::with('residence', 'formations', 'formations.site', 'formations.site.commune', 'formations.site.formation')
       ->when($keywords, function($query) use ($keywords) {
           return $query->where('firstname', 'like', '%'.$keywords.'%')
-                      ->orWhere('lastname', 'like', '%'.$keywords.'%');
+                      ->orWhere('lastname', 'like', '%'.$keywords.'%')
+                      ->orWhere('fonction', 'like', '%'.$keywords.'%')
+                      ->orWhere('structure', 'like', '%'.$keywords.'%');
       })
       ->when($request->residence_id, function($query) use ($request) {
           return $query->where('residence_id', $request->residence_id);
