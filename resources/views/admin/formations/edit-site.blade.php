@@ -3,7 +3,7 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
-            <a href="{{ route('etudiants.create') }}" class="btn btn-lg btn-primary">
+            <a href="{{ route('stagiaires.create') }}" class="btn btn-lg btn-primary">
                 <i class="ion-plus"></i> Ajouter nouveau etudiant
             </a>
             <a href="{{ route('formation.edit', $site->formation->number) }}" class="btn btn-lg btn-teal">
@@ -140,7 +140,7 @@
     </form>
 
     @if (sizeOf($site->etudiants))
-      <h3 class="_block-title mb-20">Liste d'étudiants</h3>
+      <h3 class="_block-title mb-20">Liste des stagiaires</h3>
       <div class="block">
           <div class="block-content form">
             <div class="mt-10">
@@ -158,7 +158,7 @@
 
                     <tbody>
                         @foreach($site->etudiants as $item)
-                            <tr data-href="{{ route('etudiants.edit', $item->etudiant->number) }}">
+                            <tr data-href="{{ route('stagiaires.edit', $item->etudiant->number) }}">
                                 <td> <img src="{{ $item->etudiant->getImgAttribute() }}" alt="" width="50px" height="50px" class="img-round"> </td>
                                 <td class="bold">{{ $item->etudiant->getNameAttribute() }}</td>
                                 <td>{{ $item->etudiant->structure }}</td>

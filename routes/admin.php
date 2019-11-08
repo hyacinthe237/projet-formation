@@ -20,18 +20,18 @@ Route::post('admin/login', 'views\admin\AuthController@signin')->name('admin.sig
 Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], function() {
     Route::get('/', 'views\admin\AdminController@dashboard')->name('admin');
     Route::get('logout', 'views\admin\AuthController@logout')->name('admin.logout');
-    Route::post('etudiants/{number}/inscrire', 'views\admin\EtudiantController@inscrireEtudiant')->name('inscrire.etudiant.formation');
+    Route::post('stagiaires/{number}/inscrire', 'views\admin\EtudiantController@inscrireEtudiant')->name('inscrire.etudiant.formation');
     Route::post('formation/{number}/ajouterEtudiant', 'views\admin\FormationsController@ajouterEtudiant')->name('ajouter.etudiant.formation');
     Route::post('formations/{id}/updateSite', 'views\admin\FormationsController@updateSite')->name('formation.update.site');
     Route::get('formations/{id}/editSite', 'views\admin\FormationsController@editSite')->name('formation.edit.site');
     Route::post('formations/{number}/addSite', 'views\admin\FormationsController@storeSite')->name('formation.store.site');
     Route::get('formations/liste-des-formations-pnfmv', 'views\admin\FormationsController@downloadFormation')->name('formations.download');
-    Route::get('etudiants/liste-des-etudiants-pnfmv', 'views\admin\EtudiantController@downloadEtudiant')->name('etudiants.download');
+    Route::get('stagiaires/liste-des-etudiants-pnfmv', 'views\admin\EtudiantController@downloadEtudiant')->name('stagiaires.download');
 
     Route::resource('users', 'views\admin\UserController');
     Route::resource('roles', 'views\admin\RoleController');
     Route::resource('permissions', 'views\admin\PermissionController');
-    Route::resource('etudiants', 'views\admin\EtudiantController');
+    Route::resource('stagiaires', 'views\admin\EtudiantController');
     Route::resource('formateurs', 'views\admin\FormateurController');
     Route::resource('phases', 'views\admin\PhaseController');
     Route::resource('thematiques', 'views\admin\ThematiqueController');

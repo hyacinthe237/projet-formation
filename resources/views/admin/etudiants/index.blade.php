@@ -4,16 +4,16 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
-            <a href="{{ route('etudiants.download')}}" class="btn btn-lg btn-success" target="_blank">
+            <a href="{{ route('stagiaires.download')}}" class="btn btn-lg btn-success" target="_blank">
                 <i class="ion-document"></i> PDF Liste
             </a>
-            <a href="{{ route('etudiants.create') }}" class="btn btn-lg btn-primary">
-                <i class="ion-plus"></i> Ajouter Etudiant
+            <a href="{{ route('stagiaires.create') }}" class="btn btn-lg btn-primary">
+                <i class="ion-plus"></i> Ajouter stagiaire
             </a>
         </div>
 
         <div class="title">
-            Etudiants
+            Stagiaires
         </div>
     </div>
 
@@ -92,7 +92,7 @@
 
                     <tbody>
                         @foreach($etudiants as $etudiant)
-                            <tr data-href="{{ route('etudiants.edit', $etudiant->number) }}">
+                            <tr data-href="{{ route('stagiaires.edit', $etudiant->number) }}">
                                 <td> <img src="{{ $etudiant->getImgAttribute() }}" alt="" width="70px" height="70px" class="img-round"> </td>
                                 <td class="bold">{{ $etudiant->getNameAttribute() }}</td>
                                 <td>{{ $etudiant->email }}</td>

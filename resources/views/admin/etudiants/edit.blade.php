@@ -7,17 +7,17 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
-            <a href="{{ route('etudiants.index') }}" class="btn btn-lg btn-teal">
+            <a href="{{ route('stagiaires.index') }}" class="btn btn-lg btn-teal">
                 <i class="ion-reply"></i> Cancel
             </a>
         </div>
 
         <div class="title">
-            Edit Etudiant
+            Modifier stagiaire
         </div>
     </div>
 <section class="container-fluid mt-20">
-      {!! Form::model($etudiant, ['method' => 'PATCH', 'route' => ['etudiants.update', $etudiant->number], 'class' => '_form' ]) !!}
+      {!! Form::model($etudiant, ['method' => 'PATCH', 'route' => ['stagiaires.update', $etudiant->number], 'class' => '_form' ]) !!}
 
               @include('errors.list')
               {{ csrf_field() }}
@@ -213,7 +213,7 @@
               </div>
           </div>
         @endif
-        
+
         <div class="block">
             <div class="block-content form">
               <div class="mt-20">
