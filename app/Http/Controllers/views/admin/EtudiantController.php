@@ -35,6 +35,11 @@ class EtudiantController extends Controller
                       ->orWhere('fonction', 'like', '%'.$keywords.'%')
                       ->orWhere('structure', 'like', '%'.$keywords.'%');
       })
+      ->when($request->commune_formation_id, function ($q) use ($request) {
+          return $q->whereHas('formations', function($sql) use ($request) {
+              return $sql->where('commune_formation_id', $request->commune_formation_id);
+          });
+      })
       ->when($request->residence_id, function($query) use ($request) {
           return $query->where('residence_id', $request->residence_id);
       })
