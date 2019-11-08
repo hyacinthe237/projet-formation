@@ -6,6 +6,7 @@ use Auth;
 use DB;
 use PDF;
 use Carbon\Carbon;
+use App\Models\Phase;
 use App\Models\Etudiant;
 use App\Models\Formation;
 use App\Models\Thematique;
@@ -57,7 +58,8 @@ class EtudiantController extends Controller
     {
         $formations = CommuneFormation::with('commune', 'formation')->orderBy('id', 'desc')->get();
         $communes = Commune::with('departement', 'departement.region')->get();
-        return view('admin.etudiants.create', compact('formations', 'communes'));
+        $phase = Phase::whereTitle('Formation')->first();
+        return view('admin.etudiants.create', compact('formations', 'communes', 'phase'));
     }
 
     public function edit ($number)
@@ -92,6 +94,7 @@ class EtudiantController extends Controller
              FormationEtudiant::create([
                  'etudiant_id'          => $etudiant->id,
                  'commune_formation_id' => $request->commune_formation_id,
+                 'phases'               => $request->phase_id.',',
                  'etat'                 => 'inscris',
                  'created_at'           => Carbon::now()
              ]);

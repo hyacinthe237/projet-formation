@@ -82,6 +82,8 @@ class FormationsController extends Controller
                'is_active'   => $request->is_active
              ]);
 
+            $formation->phases()->attach([1,2]);
+
              CommuneFormation::create([
                  'formation_id' => $formation->id,
                  'commune_id'  => $request->commune_id,
@@ -179,7 +181,7 @@ class FormationsController extends Controller
              $formation->etudiants = $etud->etudiant;
            }
          }
-         
+
          return view('admin.formations.edit', compact('formation', 'communes'));
      }
 

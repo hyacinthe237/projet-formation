@@ -34,6 +34,7 @@ class EtudiantsTableSeeder extends Seeder
         FormationEtudiant::create([
             'etudiant_id'   => $etudiant_01->id,
             'commune_formation_id'  => 1,
+            'phases'          => '1,2',
             'etat'          => 'inscris',
             'created_at'    => Carbon::now(),
             'updated_at'    => Carbon::now()
@@ -59,6 +60,7 @@ class EtudiantsTableSeeder extends Seeder
         FormationEtudiant::create([
             'etudiant_id'  => $etudiant_02->id,
             'commune_formation_id'  => 1,
+            'phases'        => '1,',
             'etat'          => 'inscris',
             'created_at'    => Carbon::now(),
             'updated_at'    => Carbon::now()

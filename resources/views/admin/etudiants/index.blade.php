@@ -22,6 +22,15 @@
             <div class="mt-10">
                 <div class="row">
                     <form class="_form" action="" method="get">
+                        {{-- <div class="col-sm-2">
+                            <div class="form-select grey">
+                                <select class="form-control input-lg" name="etat">
+                                    <option value="">Tous les états</option>
+                                    <option value="{{ Request::get('etat') }}" {{ Request::get('etat') == 1 ? 'selected' : '' }}>Actif</option>
+                                    <option value="{{ Request::get('etat') }}" {{ Request::get('etat') == 0 ? 'selected' : '' }}>Non Actif</option>
+                                </select>
+                            </div>
+                        </div> --}}
                         <div class="col-sm-2">
                             <div class="form-select grey">
                                 <select class="form-control input-lg" name="residence_id">
@@ -51,7 +60,7 @@
 
                         <div class="col-sm-7">
                             <div class="row">
-                                <div class="col-sm-8">
+                                <div class="col-sm-9">
                                     <div class="form-group">
                                         <input type="text"
                                         name="keywords"
@@ -61,7 +70,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <button type="submit" class="btn btn-lg btn-primary btn-block">
                                         Filtrer
                                     </button>
@@ -83,9 +92,9 @@
                             <th>Email</th>
                             <th>Structure</th>
                             <th>Fonction</th>
-                            <th>Status</th>
+                            <th>Etat</th>
                             <th>Résident à</th>
-                            <th>Nbre de formation</th>
+                            <th>Nbre Form.</th>
                             <th>Created</th>
                         </tr>
                     </thead>
@@ -98,7 +107,7 @@
                                 <td>{{ $etudiant->email }}</td>
                                 <td>{{ $etudiant->structure }}</td>
                                 <td>{{ $etudiant->fonction }}</td>
-                                <td>{{ $etudiant->is_active ? 'Yes' : 'No'}}</td>
+                                <td>{{ $etudiant->is_active ? 'Actif' : 'Non Actif'}}</td>
                                 <td>{{ $etudiant->residence ? $etudiant->residence->name : 'Non defini' }}</td>
                                 <td>{{ count($etudiant->formations) }}</td>
                                 <td>{{ date('d/m/Y H:i', strtotime($etudiant->created_at)) }}</td>

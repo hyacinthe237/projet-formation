@@ -34,6 +34,7 @@
                                 <div class="form-group">
                                     <label>Prénom(s)</label>
                                     <input type="text" name="firstname" class="form-control input-lg" placeholder="prénom(s)" required>
+                                    <input type="hidden" name="phase_id" value="{{ $phase->id }}">
                                 </div>
                             </div>
 

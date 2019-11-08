@@ -49,7 +49,7 @@ class FormationsTableSeeder extends Seeder
             'type'        => 'Effective'
         ]);
 
-        $form_02->phases()->attach([2]);
+        $form_02->phases()->attach([1,2]);
 
         $form_03 = Formation::create([
             'number'      => 1000003,
@@ -66,8 +66,8 @@ class FormationsTableSeeder extends Seeder
             'duree'       => '5 jours',
             'type'        => 'Effective'
         ]);
-        
-        $form_02->phases()->attach([2]);
+
+        $form_02->phases()->attach([1,2]);
 
     }
 }
