@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPhaseIdToFormationEtudiants extends Migration
+class CreateFormationEtudiantPhasesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddPhaseIdToFormationEtudiants extends Migration
      */
     public function up()
     {
-        Schema::table('formation_etudiants', function (Blueprint $table) {
-           $table->string('phases')->nullable()->after('commune_formation_id');
+        Schema::create('formation_etudiant_phases', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('phase_id');
+            $table->integer('formation_etudiant_id');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AddPhaseIdToFormationEtudiants extends Migration
      */
     public function down()
     {
-        Schema::table('formation_etudiants', function (Blueprint $table) {
-            $table->dropColumn('phases');
-        });
+        Schema::dropIfExists('formation_etudiant_phases');
     }
 }

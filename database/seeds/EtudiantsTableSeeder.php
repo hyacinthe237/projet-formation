@@ -31,14 +31,15 @@ class EtudiantsTableSeeder extends Seeder
             'an_exp'          => '4 ans'
         ]);
 
-        FormationEtudiant::create([
+        $fe1 = FormationEtudiant::create([
             'etudiant_id'   => $etudiant_01->id,
             'commune_formation_id'  => 1,
-            'phases'          => '1,2',
             'etat'          => 'inscris',
             'created_at'    => Carbon::now(),
             'updated_at'    => Carbon::now()
         ]);
+
+        $fe1->phases()->sync([1]);
 
         $etudiant_02 = Etudiant::create([
             'number'          => 1000001,
@@ -57,13 +58,14 @@ class EtudiantsTableSeeder extends Seeder
             'an_exp'          => '6 ans'
         ]);
 
-        FormationEtudiant::create([
+        $fe2 = FormationEtudiant::create([
             'etudiant_id'  => $etudiant_02->id,
             'commune_formation_id'  => 1,
-            'phases'        => '1,',
             'etat'          => 'inscris',
             'created_at'    => Carbon::now(),
             'updated_at'    => Carbon::now()
         ]);
+
+        $fe2->phases()->sync([1,2]);
     }
 }

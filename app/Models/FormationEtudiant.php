@@ -22,4 +22,8 @@ class FormationEtudiant extends Model
         return $this->belongsTo(Etudiant::class, 'etudiant_id');
     }
 
+    public function phases () {
+        return $this->belongsToMany(Phase::class, 'formation_etudiant_phases', 'phase_id', 'formation_etudiant_id');
+    }
+
 }

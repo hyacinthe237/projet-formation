@@ -64,7 +64,7 @@ class EtudiantController extends Controller
 
     public function edit ($number)
     {
-        $etudiant  = Etudiant::with('formations', 'formations.site', 'formations.site.commune', 'formations.site.formation')
+        $etudiant  = Etudiant::with('formations', 'formations.phases', 'formations.site', 'formations.site.commune', 'formations.site.formation')
                       ->whereNumber($number)->first();
 
         if (!$etudiant)
@@ -72,8 +72,9 @@ class EtudiantController extends Controller
 
         $formations = CommuneFormation::with('commune', 'formation')->orderBy('id', 'desc')->get();
         $communes = Commune::with('departement', 'departement.region')->get();
-
-        return view('admin.etudiants.edit', compact('formations', 'communes', 'etudiant'));
+        $phases = Phase::get();
+        
+        return view('admin.etudiants.edit', compact('formations', 'communes', 'etudiant', 'phases'));
     }
 
     public function inscrireEtudiant (Request $request, $number) {
@@ -91,17 +92,19 @@ class EtudiantController extends Controller
          $count = FormationEtudiant::whereCommuneFormationId($request->commune_formation_id)->whereEtat('inscris')->count();
 
          if (!$form_etud && ($count <= $commune_formation->formation->qte_requis)) {
-             FormationEtudiant::create([
+             $form = FormationEtudiant::create([
                  'etudiant_id'          => $etudiant->id,
                  'commune_formation_id' => $request->commune_formation_id,
-                 'phases'               => $request->phase_id.',',
                  'etat'                 => 'inscris',
                  'created_at'           => Carbon::now()
              ]);
 
-             return redirect()->back()->with('message', 'Etudiant enregistré et ajouté avec succès à la formation');
+             $form->phases()->sync($request->phases);
+
+             return redirect()->back()->with('message', 'stagiaire enregistré et ajouté avec succès à la formation');
          } else {
-            return redirect()->back()->withErrors(['existing' => "Nombre requis de la formation est atteind ou Vous voulez inscrire l'étudiant à formation qui suit déjà"]);
+            $form_etud->phases()->sync($request->phases);
+            return redirect()->back()->with('message', 'formation du stagiaire modifié avec succès');
          }
     }
 

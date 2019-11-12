@@ -13,7 +13,7 @@
         </div>
 
         <div class="title">
-            Modifier stagiaire
+            Modifier le stagiaire <strong>{{ $etudiant->name }}</strong>
         </div>
     </div>
 <section class="container-fluid mt-20">
@@ -191,6 +191,7 @@
                             <tr>
                                 <th>Titre</th>
                                 <th>Site</th>
+                                <th>Phases</th>
                                 <th>Durée</th>
                                 <th>Début</th>
                                 <th>Fin</th>
@@ -199,12 +200,17 @@
 
                         <tbody>
                             @foreach($etudiant->formations as $item)
-                                <tr data-href="{{ route('formation.edit', $item->site->formation->number) }}">
+                                <tr>
                                     <td class="bold">{{ $item->site->formation->title }}</td>
                                     <td>{{ $item->site->commune->name }}</td>
+                                    <td>
+                                      @foreach ($item->phases as $phase)
+                                        <p>{{ $phase->title }}</p>
+                                      @endforeach
+                                    </td>
                                     <td>{{ $item->site->duree }}</td>
-                                    <td>{{ date('d/m/Y H:i', strtotime($item->site->formation->start_date)) }}</td>
-                                    <td>{{ date('d/m/Y H:i', strtotime($item->site->formation->end_date)) }}</td>
+                                    <td>{{ date('d/m/Y H:i', strtotime($item->site->start_date)) }}</td>
+                                    <td>{{ date('d/m/Y H:i', strtotime($item->site->end_date)) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -233,12 +239,27 @@
                                 </select>
                             </div>
                         </div>
+                      </div>
+
+                      <div class="col-sm-6">
+                        {!! Form::label('phases', 'Choix des phases') !!}
+                        <div class="">
+                            <select class="js-example-basic-multiple form-control input-lg" name="phases[]" multiple="multiple">
+                                @foreach ($phases as $phase)
+                                    <option value="{{ $phase->id}}"> {{ $phase->title }} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-12">
                         <div class="form-group text-right mb-20">
                             <button type="submit" class="btn btn-lg btn-primary">
                                 <i class="ion-checkmark"></i> Inscrire l'étudiant
                             </button>
                         </div>
                       </div>
+
                   </div>
                 {!! Form::close() !!}
               </div>
@@ -263,6 +284,10 @@ $(document).ready(function() {
     $('.date').datepicker({
         autoclose: true,
         format: 'dd-mm-yyyy'
+    })
+
+    $('.js-example-basic-multiple').select2({
+        placeholder: 'Choix des phases'
     })
 
     $("body").hover(function() {
