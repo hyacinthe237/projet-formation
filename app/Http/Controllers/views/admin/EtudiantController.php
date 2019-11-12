@@ -81,7 +81,7 @@ class EtudiantController extends Controller
        $etudiant  = Etudiant::whereNumber($number)->whereIsActive(true)->first();
 
        if (!$etudiant)
-         return redirect()->back()->withErrors(['existing' => 'Etudiant non actif']);
+         return redirect()->back()->withErrors(['existing' => 'stagiaire non actif']);
 
          $form_etud = FormationEtudiant::whereEtudiantId($etudiant->id)
                       ->whereCommuneFormationId($request->commune_formation_id)
@@ -99,12 +99,15 @@ class EtudiantController extends Controller
                  'created_at'           => Carbon::now()
              ]);
 
-             $form->phases()->sync($request->phases);
+             if ($request->phases)
+               $form->phases()->sync($request->phases);
 
              return redirect()->back()->with('message', 'stagiaire enregistré et ajouté avec succès à la formation');
          } else {
-            $form_etud->phases()->sync($request->phases);
-            return redirect()->back()->with('message', 'formation du stagiaire modifié avec succès');
+           if ($request->phases)
+             $form_etud->phases()->sync($request->phases);
+
+            return redirect()->back()->with('existing', 'Phase modifiée avec avec succès.');
          }
     }
 
@@ -119,14 +122,21 @@ class EtudiantController extends Controller
         $validator = Validator::make($request->all(), [
             'firstname' => 'required',
             'email' => 'required',
-            'formation_id' => 'required',
+            'commune_formation_id' => 'required',
             'residence_id' => 'required'
         ]);
 
-        if ($validator->fails())
-            return redirect()->back()->withInputwithErrors(['validator' => 'Les champs Prénom, residence & Email sont obligatoires']);
+        if ($validator->fails()) {
+          return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['validator' => 'Les champs prénom, formation, résidence et Email sont obligatoires']);
+        }
 
-        $existing = Etudiant::whereFirstname($request->firstname)->whereLastname($request->lastname)->first();
+        $existing = Etudiant::whereResidenceId($request->residence_id)
+                    ->whereFirstname($request->firstname)
+                    ->wherePhone($request->phone)
+                    ->whereEmail($request->email)->first();
+
         if (!$existing) {
             $etudiant = Etudiant::create([
               'residence_id'     => $request->residence_id,
@@ -159,20 +169,27 @@ class EtudiantController extends Controller
                 $count = FormationEtudiant::whereCommuneFormationId($request->commune_formation_id)->whereEtat('inscris')->count();
 
                 if (!$form_etud && ($count <= $commune_formation->formation->qte_requis)) {
-                    FormationEtudiant::create([
+                    $form = FormationEtudiant::create([
                         'etudiant_id'   => $etudiant->id,
                         'commune_formation_id'    => $request->commune_formation_id,
                         'etat'          => 'inscris',
                         'created_at'    => Carbon::now()
                     ]);
 
-                    return redirect()->route('etudiants.index')
-                                    ->withSuccess("Etudiant enregistré et ajouté avec succès à la formation");
+                    $form->phases()->sync($request->phase_id);
+
+                    return redirect()->route('stagiaires.index')
+                                    ->withSuccess("stagiaire enregistré et ajouté avec succès à la formation");
                 } else {
                   return redirect()->back()
-                         ->withErrors(['existing' => 'Etudiant enregistré, mais pas lié à la formation car le quota requis est atteint']);
+                         ->withErrors(['existing' => 'stagiaire enregistré, mais pas lié à la formation car le quota requis est atteint']);
                 }
+
             }
+        } else {
+          return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['existing' => 'Ce stagiaire a déjà été enregistré']);
         }
 
     }
