@@ -73,7 +73,7 @@ class EtudiantController extends Controller
         $formations = CommuneFormation::with('commune', 'formation')->orderBy('id', 'desc')->get();
         $communes = Commune::with('departement', 'departement.region')->get();
         $phases = Phase::get();
-        
+
         return view('admin.etudiants.edit', compact('formations', 'communes', 'etudiant', 'phases'));
     }
 
@@ -107,7 +107,7 @@ class EtudiantController extends Controller
            if ($request->phases)
              $form_etud->phases()->sync($request->phases);
 
-            return redirect()->back()->with('existing', 'Phase modifiée avec avec succès.');
+            return redirect()->back()->with('message', 'Phase modifiée avec avec succès.');
          }
     }
 
