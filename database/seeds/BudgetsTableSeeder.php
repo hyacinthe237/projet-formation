@@ -15,8 +15,7 @@ class BudgetsTableSeeder extends Seeder
         Budget::create([
             'commune_formation_id' => 1,
             'user_id'      => 1,
-            'budget_initial' => 7964200,
-            'description' => 'Sept Millions neuf cent soixante quatre mille deux cent'
+            'budget_initial' => 7964200
         ]);
     }
 }

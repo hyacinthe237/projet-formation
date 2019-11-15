@@ -19,6 +19,7 @@ class CreateBudgetsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('budget_initial');
             $table->integer('budget_reel')->nullable();
+            $table->float('taux')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

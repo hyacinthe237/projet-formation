@@ -51,6 +51,7 @@
                             <th>Formation</th>
                             <th>Budget Initial</th>
                             <th>Budget Réel</th>
+                            <th>Taux de consommation</th>
                             <th>Ajouté le</th>
                             <th>Modifié le</th>
                         </tr>
@@ -62,6 +63,7 @@
                                 <td>{{ $budget->site->formation->title }}</td>
                                 <td>{{ $budget->budget_initial }}</td>
                                 <td>{{ $budget->budget_reel }}</td>
+                                <td>{{ $budget->taux }}</td>
                                 <td>{{ date('d/m/Y H:i', strtotime($budget->created_at)) }}</td>
                                 <td>{{ date('d/m/Y H:i', strtotime($budget->updated_at)) }}</td>
                             </tr>

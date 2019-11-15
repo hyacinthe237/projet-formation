@@ -201,15 +201,6 @@
             </tr>
           </tbody>
         </table>
-
-        <table width="100%" cellspacing="0" cellpadding="0">
-          <tbody>
-            <th>
-              <td class="td-100 text-center bold" style="text-transform:uppercase;">
-                arreter le present budget a la somme de {{ $budget->description }} Francs CFA</td>
-            </th>
-          </tbody>
-        </table>
     </section>
 
 </body>

@@ -213,23 +213,23 @@ class BudgetController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'budget_initial' => 'required',
-            'formation_id'   => 'required'
+            'commune_formation_id'   => 'required'
         ]);
 
         if ($validator->fails())
             return redirect()->back()
                   ->withInput($request->all())
-                  ->withErrors(['validator' => 'Tous les champs sont obligatoires']);
+                  ->withErrors(['validator' => 'Budget initial est obligatoire']);
 
-        $existing = Budget::whereBudgetInitial($request->budget_initial)->whereFormationId($request->formation_id)->first();
+        $existing = Budget::whereBudgetInitial($request->budget_initial)->whereCommuneFormationId($request->commune_formation_id)->first();
 
         if (!$existing) {
             $budget = Budget::create([
-              'formation_id'    => $request->formation_id,
-              'user_id'         => Auth::user()->id,
-              'budget_initial'  => $request->budget_initial,
-              'budget_reel'     => $request->budget_reel,
-              'description'     => $request->description
+              'commune_formation_id' => $request->commune_formation_id,
+              'user_id'              => Auth::user()->id,
+              'budget_initial'       => $request->budget_initial,
+              'budget_reel'          => $request->budget_reel,
+              'taux'                 => $request->taux
             ]);
 
             return redirect()->route('budgets.edit', $budget->id)
@@ -255,16 +255,16 @@ class BudgetController extends Controller
         if ($validator->fails())
             return redirect()->back()
                   ->withInput($request->all())
-                  ->withErrors(['validator' => 'Tous les champs sont obligatoires']);
+                  ->withErrors(['validator' => 'Budget initial obligatoire']);
 
         $budget = Budget::with('items', 'items.type')->find($id);
         if (!$budget)
-            return redirect()->back()->withErrors(['formateur' => 'Budget inconnu!']);
+            return redirect()->back()->withErrors(['budget' => 'Budget inconnu!']);
 
-        $budget->formation_id    = $request->has('formation_id') ? $request->formation_id : $budget->formation_id;
-        $budget->budget_initial  = $request->has('budget_initial') ? $request->budget_initial : $budget->budget_initial;
-        $budget->budget_reel     = $request->has('budget_reel') ? $request->budget_reel : $budget->budget_reel;
-        $budget->description     = $request->has('description') ? $request->description : $budget->description;
+        $budget->commune_formation_id  = $request->has('commune_formation_id') ? $request->commune_formation_id : $budget->commune_formation_id;
+        $budget->budget_initial        = $request->has('budget_initial') ? $request->budget_initial : $budget->budget_initial;
+        $budget->budget_reel           = $request->has('budget_reel') ? $request->budget_reel : $budget->budget_reel;
+        $budget->taux                  = $request->has('taux') ? $request->taux : $budget->taux;
         $budget->update();
 
         return redirect()->back()->withSuccess("Budget mis à jour avec succès");

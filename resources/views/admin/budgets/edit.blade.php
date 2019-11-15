@@ -30,29 +30,29 @@
         <div class="block">
             <div class="block-content form">
                   <div class="row mt-20">
-                    <div class="col-sm-6">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <label>Budget Initial</label>
                             <input type="text" name="budget_initial" class="form-control input-lg" value="{{ $budget->budget_initial }}" required>
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-3">
                         <div class="form-group">
-                            <label>Budget en lettre</label>
-                            <input type="text" name="description" class="form-control input-lg" value="{{ $budget->description }}" required>
-                        </div>
-                    </div>
-                  </div>
-                  <div class="row mt-20">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Budget Réel</label>
+                            <label>Budget Réalisé</label>
                             <input type="text" name="budget_reel" class="form-control input-lg" value="{{ $budget->budget_reel }}">
                         </div>
                     </div>
 
                     <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Taux de consommation</label>
+
+                        </div>
+                    </div>
+                  </div>
+                  <div class="row mt-20">
+                    <div class="col-sm-12">
                         <div class="form-group">
                             <label>Sélectionnez une formation</label>
                             <select class="form-control input-lg" name="formation_id">
@@ -120,7 +120,7 @@
 
                 {{ csrf_field() }}
 
-                <h3>Ajouter un item au budget</h3>
+                <h3>Ajouter un élément au budget</h3>
                 <input type="hidden" name="budget_id" value="{{ $budget->id }}">
                 <div class="block">
                     <div class="block-content form">
