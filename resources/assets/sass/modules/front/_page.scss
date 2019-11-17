@@ -80,3 +80,73 @@
         // p { display: none }
     }
 }
+
+.home-how {
+    padding: 10px 0;
+    width: 100%;
+    font-size: 20px;
+    margin-bottom: 60px;
+    // background-color: white;
+
+    h1 {
+        color: $color-blue-presumi;
+        font-weight: 600;
+        font-family: Athiti, 'Open Sans', Calibri, sans-serif;
+        margin-bottom: 60px;
+    }
+
+    .how-card {
+        background-color: white;
+        box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.1);
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        padding-bottom: 40px;
+        margin-bottom: 20px;
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        h4 {
+            font-family: Athiti, 'Open Sans', Calibri, sans-serif;
+            font-size: 20px;
+            font-weight: 500;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            color: $color-blue-presumi;
+        }
+
+        .card-desc {
+            border-radius: 4px;
+            font-size: 17px;
+            margin-top: 20px;
+            color: $color-teal;
+            font-weight: 400;
+        }
+
+        .image {
+            width: 180px;
+            margin:10px auto;
+
+            img {
+                width: 100%;
+            }
+        }
+
+        &.green {
+            margin-top:30px;
+            h4 {color: $color-greener;}
+            .image {width: 150px}
+        }
+
+        &.purple {
+            margin-top:30px;
+            h4 {color: $color-purple;}
+            .image {width: 150px}
+        }
+    }
+}

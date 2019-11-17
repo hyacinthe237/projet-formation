@@ -5,7 +5,7 @@
 @endsection()
 
 @section('body')
-{!! Form::open(['method' => 'POST', 'route' => ['inscriptions.store'], 'class' => '_form bg-white' ]) !!}
+{!! Form::open(['method' => 'POST', 'route' => ['front.stagiaires.store'], 'class' => '_form bg-white' ]) !!}
 
     <section class="container">
 
@@ -13,11 +13,11 @@
         {{ csrf_field() }}
 
         <div class="block">
-            <h2 class="_block-title mt-20">Formulaire d'inscription</h2>
+            <h2 class="_block-title mt-20">Je suis un stagiaire, je m'inscris</h2>
             <div class="block-content form">
-
                 <div class="row mt-20">
                   <div class="row">
+                      <input type="hidden" name="phase_id" value="{{ $phase->id }}">
                       <div class="col-sm-6">
                           <div class="form-group">
                               <label>Prénom(s)</label>
@@ -78,30 +78,33 @@
                         <div class="form-group">
                             <label>Formation</label>
                             <div class="form-select grey">
-                                <select class="form-control input-lg" name="formation_id">
-                                    @foreach($formations as $formation)
-                                        <option value="{{ $formation->id }}">{{ $formation->title }}</option>
+                                <select class="form-control input-lg" name="commune_formation_id">
+                                    @foreach($formations as $item)
+                                        <option value="{{ $item->id }}">
+                                          {{ $item->formation->title }} de {{ $item->commune->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                       </div>
 
-                      {{-- <div class="col-sm-6">
+                      <div class="col-sm-6">
                         <div class="form-group">
-                            <label>Résidence</label>
-                            <div class="form-select grey">
-                                <select class="form-control input-lg" name="location_id">
-                                  @foreach($locations as $location)
-                                      <option value="{{ $location->id }}">
-                                          {{ 'Région: ' . $location->region }}|
-                                          {{ 'Département: ' . $location->departement }}|
-                                          {{ 'Commune: ' .$location->commune }}
-                                      </option>
-                                  @endforeach
-                                </select>
-                            </div>
-                        </div> --}}
+                          <label>Résidence</label>
+                          <div class="form-select grey">
+                              <select class="form-control input-lg" name="residence_id">
+                                  <option value="">Sélectionnez le lieu de résidence</option>
+                                @foreach($communes as $commune)
+                                    <option value="{{ $commune->id }}">
+                                      {{ 'Région: ' . $commune->departement->region->name }} |
+                                      {{ 'Département: ' . $commune->departement->name }} |
+                                      {{ 'Commune: ' .$commune->name }}
+                                    </option>
+                                @endforeach
+                              </select>
+                          </div>
+                        </div>
                       </div>
                   </div>
                   <div class="row">
@@ -167,7 +170,6 @@
 
 
                 </div>
-
             </div>
         </div>
     </section>

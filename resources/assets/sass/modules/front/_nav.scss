@@ -22,7 +22,17 @@
         margin-top: 5px;
         text-transform: uppercase;
         font-family: 'PT Sans', Avenir, sans-serif;
-        span { color: $navColour }
+        span {
+          color: $navColour; 
+
+          &:hover {
+            color: $color-blue-presumi;
+          }
+        }
+
+        &:hover {
+          color: $color-blue-presumi;
+        }
     }
 
     .navbar-nav {
@@ -41,7 +51,8 @@
 
                 &:hover,
                 &:focus {
-                    color: $brand-darker;
+                    color: white;
+                    background-color: $color-blue-presumi;
                 }
 
                 &.btn {
