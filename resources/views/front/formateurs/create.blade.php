@@ -6,7 +6,9 @@
 
     <section class="container">
 
-        @include('errors.list')
+        <div class="mt-20">
+          @include('errors.list')
+        </div>
 
         {{ csrf_field() }}
 

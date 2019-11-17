@@ -96,7 +96,7 @@ class EtudiantController extends Controller
 
                     $form->phases()->sync($request->phase_id);
 
-                    return redirect()->back()->withSuccess("stagiaire enregistré et ajouté avec succès à la formation");
+                    return redirect()->back()->with('message', "stagiaire enregistré et ajouté avec succès à la formation");
                 } else {
                   return redirect()->back()
                          ->withErrors(['existing' => 'stagiaire enregistré, mais pas lié à la formation car le quota requis est atteint']);
