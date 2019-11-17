@@ -185,8 +185,6 @@ class FormationsController extends Controller
          $formation->commune_formations = CommuneFormation::with('etudiants.etudiant')->whereFormationId($formation->id)->get();
          $formation->etudiants = $this->formRepo->getStagiaireFormation($formation->id);
 
-         dd($formation->etudiants);
-
          return view('admin.formations.edit', compact('formation', 'communes'));
      }
 
