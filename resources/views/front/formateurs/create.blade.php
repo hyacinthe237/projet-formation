@@ -1,5 +1,9 @@
 @extends('front.templates.default')
 
+@section('head')
+    <title>Inscription Formateur</title>
+@endsection()
+
 @section('body')
 
 {!! Form::open(['method' => 'POST', 'route' => ['front.formateurs.store'], 'class' => '_form bg-white' ]) !!}
@@ -13,7 +17,6 @@
         {{ csrf_field() }}
 
         <div class="home-how">
-            <h2 class="_block-title mt-20">Je suis un formateur, je m'inscris</h2>
             <div class="block-content form">
                   <div class="row mt-20">
                     <div class="col-sm-4">

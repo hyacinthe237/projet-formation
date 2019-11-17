@@ -10,8 +10,8 @@
     <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
             <li class="{{ Request::is('about') ? 'active' : '' }}"><a href="https://www.pnfmv.org/" target="_blank">A propos</a></li>
-            <li class="{{ Request::is('faqs') ? 'active' : '' }}"><a href="https://www.pnfmv.org/evenements/" target="_blank">Evènements</a></li>
-            <li class="{{ Request::is('models*') ? 'active' : '' }}"><a href="https://www.pnfmv.org/contacts/" target="_blank">Nous contacter</a></li>
+            <li class="{{ Request::is('stagiaires') ? 'active' : '' }}"><a href="{{ route('front.stagiaires.create') }}">Je suis Stagiaire</a></li>
+            <li class="{{ Request::is('formateurs') ? 'active' : '' }}"><a href="{{ route('front.formateurs.create') }}">Je suis formateur</a></li>
 
             <li>
                 <a href="tel:{{ config('site.phone') }}">{{ config('site.phone') }}</a>

@@ -23,7 +23,7 @@
         text-transform: uppercase;
         font-family: 'PT Sans', Avenir, sans-serif;
         span {
-          color: $navColour; 
+          color: $navColour;
 
           &:hover {
             color: $color-blue-presumi;
@@ -67,12 +67,12 @@
             &.active {
                 a {
                     color: $secondaryFontColour;
-                    background-color: $navActiveBackgroundColour;
+                    background-color: $color-blue-presumi;
 
                     &:hover,
                     &:focus {
                         outline: none;
-                        background-color: $navActiveBackgroundColour;
+                        background-color: $color-blue-presumi;
                     }
                 }
 

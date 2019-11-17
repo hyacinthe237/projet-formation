@@ -1,7 +1,7 @@
 @extends('front.templates.default')
 
 @section('head')
-    <title>Formulaire d'inscription</title>
+    <title>Inscription Stagiaire</title>
 @endsection()
 
 @section('body')
@@ -15,7 +15,6 @@
         {{ csrf_field() }}
 
         <div class="block">
-            <h2 class="_block-title mt-20">Je suis un stagiaire, je m'inscris</h2>
             <div class="block-content form">
                 <div class="row mt-20">
                   <div class="row">

@@ -78,7 +78,7 @@ class FormateurController extends Controller
 
             }
 
-            return redirect()->back()->with('message', "Formateur ajouté avec succès");
+            return redirect()->back()->with('message', "Votre inscription a été enregistré avec succès");
         }
 
         return redirect()->back()
