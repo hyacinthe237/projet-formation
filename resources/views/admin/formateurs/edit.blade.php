@@ -125,6 +125,60 @@
                 </tbody>
             </table>
         </div>
+
+        {{-- <div class="mt-20">
+          {!! Form::model(['method' => 'POST', 'route' => 'formateurs.store.thematique', 'class' => '_form' ]) !!}
+            {{ csrf_field() }}
+
+            <div class="block">
+                <div class="block-content form">
+
+                    <div class="row mt-20">
+                          <div class="col-sm-9">
+                              <div class="row">
+                                  <div class="col-sm-6">
+                                      <input type="hidden" name="formateur_id" value="{{ $thematique->formateur_id }}">
+                                      <div class="form-group">
+                                          <label>Date de début</label>
+                                          <input type="datetime-local" name="start_date" class="form-control input-lg" value="{{ $thematique->datesdebut }}" required>
+                                      </div>
+                                  </div>
+
+                                  <div class="col-sm-6">
+                                      <div class="form-group">
+                                          <label>Date de fin</label>
+                                          <input type="datetime-local" name="end_date" class="form-control input-lg" value="{{ $thematique->datesfin }}">
+                                      </div>
+                                  </div>
+
+                              </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                              <div class="form-group">
+                                  <label>thematiques</label>
+                                  <div class="form-select grey">
+                                      <select name="thematique_id" class="form-control input-lg">
+                                        @foreach($thematiques as $item)
+                                            <option value="{{ $item->id }}" {{ $item->id == $thematique->thematique_id ? 'selected' : ''}}>
+                                              {{ $->name }}
+                                            </option>
+                                        @endforeach
+                                      </select>
+                                  </div>
+                              </div>
+
+                              <div class="form-group text-right mb-20">
+                                  <button type="submit" class="btn btn-lg btn-primary">
+                                      <i class="ion-checkmark"></i> Enregistrer
+                                  </button>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          {!! Form::close() !!}
+        </div> --}}
       </div>
   </div>
 @endif

@@ -137,7 +137,7 @@
               </div>
           </div>
       </div>
-    </form>
+  {!! Form::close() !!}
 
     @if (sizeOf($site->etudiants))
       <h3 class="_block-title mb-20">Liste des stagiaires</h3>
