@@ -104,7 +104,7 @@
             </div>
           </form>
 
-          @if ($search)
+          {{-- @if ($search)
             <div class="col-sm-12 mt-40">
               <table class="table table-striped">
                   <thead>
@@ -128,7 +128,7 @@
                   </tbody>
               </table>
             </div>
-          @endif
+          @endif --}}
         </div>
     </div>
 </div>
