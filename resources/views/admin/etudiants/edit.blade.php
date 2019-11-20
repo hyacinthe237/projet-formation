@@ -201,9 +201,9 @@
                         <tbody>
                             @foreach($etudiant->formations as $item)
                                 <tr>
-                                    <td class="bold">{{ $item->site->formation->title }}</td>
-                                    <td>{{ $item->site->commune->name }}</td>
-                                    <td>
+                                    <td class="bold td-40">{{ $item->site->formation->title }}</td>
+                                    <td class="td-10">{{ $item->site->commune->name }}</td>
+                                    <td class="td-15">
                                       @foreach ($item->phases as $phase)
                                         @if ($item->phases->contains('id', $phase->id))
                                             <label class="css-input css-checkbox css-checkbox-primary mr-20">
@@ -218,9 +218,9 @@
                                         @endif
                                       @endforeach
                                     </td>
-                                    <td>{{ $item->site->duree }}</td>
-                                    <td>{{ date('d/m/Y H:i', strtotime($item->site->start_date)) }}</td>
-                                    <td>{{ date('d/m/Y H:i', strtotime($item->site->end_date)) }}</td>
+                                    <td class="td-10">{{ $item->site->duree }}</td>
+                                    <td class="td-10">{{ date('d/m/Y H:i', strtotime($item->site->start_date)) }}</td>
+                                    <td class="td-10">{{ date('d/m/Y H:i', strtotime($item->site->end_date)) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

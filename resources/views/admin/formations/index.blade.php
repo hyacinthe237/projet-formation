@@ -70,13 +70,13 @@
                     <tbody>
                         @foreach($formations as $formation)
                             <tr data-href="{{ route('formation.edit', $formation->number) }}">
-                                <td class="bold">{{ $formation->title }}</td>
-                                <td class="text-center">{{ $formation->is_active ? 'Active' : 'Non active' }}</td>
-                                <td class="text-center">{{ count($formation->formateurs) }}</td>
-                                <td class="text-center">{{ count($formation->sites) }}</td>
-                                <td class="text-center">{{ $formation->qte_requis }}</td>
-                                <td class="text-center">{{ count($formation->phases) }}</td>
-                                <td class="text-center">{{ date('d/m/Y H:i', strtotime($formation->created_at)) }}</td>
+                                <td class="bold td-40">{{ $formation->title }}</td>
+                                <td class="td-10">{{ $formation->is_active ? 'Active' : 'Non active' }}</td>
+                                <td class="td-10">{{ count($formation->formateurs) }}</td>
+                                <td class="td-10">{{ count($formation->sites) }}</td>
+                                <td class="td-10">{{ $formation->qte_requis }}</td>
+                                <td class="td-10">{{ count($formation->phases) }}</td>
+                                <td class="td-10">{{ date('d/m/Y H:i', strtotime($formation->created_at)) }}</td>
                             </tr>
                         @endforeach
                     </tbody>

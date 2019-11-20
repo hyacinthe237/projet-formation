@@ -60,12 +60,12 @@
                     <tbody>
                         @foreach($budgets as $budget)
                             <tr data-href="{{ route('budgets.edit', $budget->id) }}">
-                                <td>{{ $budget->site->formation->title }}</td>
-                                <td>{{ $budget->budget_initial }}</td>
-                                <td>{{ $budget->budget_reel }}</td>
-                                <td>{{ $budget->taux }}</td>
-                                <td>{{ date('d/m/Y H:i', strtotime($budget->created_at)) }}</td>
-                                <td>{{ date('d/m/Y H:i', strtotime($budget->updated_at)) }}</td>
+                                <td class="td-40">{{ $budget->site->formation->title }}</td>
+                                <td class="td-10">{{ $budget->budget_initial . ' FCFA' }}</td>
+                                <td class="td-10">{{ $budget->budget_reel . ' FCFA' }}</td>
+                                <td class="td-10">{{ $budget->taux . '%' }}</td>
+                                <td class="td-10">{{ date('d/m/Y H:i', strtotime($budget->created_at)) }}</td>
+                                <td class="td-10">{{ date('d/m/Y H:i', strtotime($budget->updated_at)) }}</td>
                             </tr>
                         @endforeach
                     </tbody>
