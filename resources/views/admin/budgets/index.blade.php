@@ -50,7 +50,7 @@
                         <tr>
                             <th>Formation</th>
                             <th>Budget Initial</th>
-                            <th>Budget Réel</th>
+                            <th>Budget Réalisé</th>
                             <th>Taux de consommation</th>
                             <th>Ajouté le</th>
                             <th>Modifié le</th>
