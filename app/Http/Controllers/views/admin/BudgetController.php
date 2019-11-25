@@ -222,7 +222,13 @@ class BudgetController extends Controller
                   ->withErrors(['validator' => 'Budget initial est obligatoire']);
 
         $existing = Budget::whereBudgetInitial($request->budget_initial)->whereCommuneFormationId($request->commune_formation_id)->first();
-        $taux = ( ( $request->budget_initial - $request->budget_reel ) / $request->budget_initial ) * 100;
+
+        $taux = 0;
+        if ($request->budget_initial !== $request->budget_reel)
+            $taux = 100 + (($request->budget_reel - $request->budget_initial)/$request->budget_initial) * 100;
+
+        if ($request->budget_initial == $request->budget_reel)
+            $taux = 100;
 
         if (!$existing) {
             $budget = Budget::create([
