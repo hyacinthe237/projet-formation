@@ -6,6 +6,8 @@
 /public/assets/js
 /public/storage
 /public/docs
+/public/images
+public/uploads
 /storage/*.key
 /vendor
 .env

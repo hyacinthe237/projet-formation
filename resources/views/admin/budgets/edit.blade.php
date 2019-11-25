@@ -46,8 +46,12 @@
 
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label>Taux de consommation</label>
-
+                            <label>Taux de consommation: {{ $budget->taux .'%'}}</label>
+                            <div class="progress">
+                              <div class="progress-bar input-lg" role="progressbar" aria-valuenow="{{ $budget->taux }}"
+                              aria-valuemin="0" aria-valuemax="100" style="width:{{ $budget->taux .'%'}}">
+                              </div>
+                            </div>
                         </div>
                     </div>
                   </div>

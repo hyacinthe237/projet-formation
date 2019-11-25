@@ -24,13 +24,13 @@
                 <div class="row">
                     <form class="_form" action="" method="get">
                       <div class="col-sm-2">
-                          {{-- <div class="form-select grey">
+                          <div class="form-select grey">
                               <select name="is_active" class="form-control input-lg">
                                   <option value="">Tous les status</option>
-                                  <option value="0" {{ Request::get('is_active') == 0 ? 'selected' : '' }}>Inactivée</option>
-                                  <option value="1" {{ Request::get('is_active') == 1 ? 'selected' : '' }}>Activée</option>
+                                  <option value="0" {{ Request::get('is_active') == false ? 'selected' : '' }}>Inactivée</option>
+                                  <option value="1" {{ Request::get('is_active') == true ? 'selected' : '' }}>Activée</option>
                               </select>
-                          </div> --}}
+                          </div>
                       </div>
                       <div class="col-sm-8">
                           <div class="form-group">

@@ -222,6 +222,7 @@ class BudgetController extends Controller
                   ->withErrors(['validator' => 'Budget initial est obligatoire']);
 
         $existing = Budget::whereBudgetInitial($request->budget_initial)->whereCommuneFormationId($request->commune_formation_id)->first();
+        $taux = ( ( $request->budget_initial - $request->budget_reel ) / $request->budget_initial ) * 100;
 
         if (!$existing) {
             $budget = Budget::create([
@@ -229,7 +230,7 @@ class BudgetController extends Controller
               'user_id'              => Auth::user()->id,
               'budget_initial'       => $request->budget_initial,
               'budget_reel'          => $request->budget_reel,
-              'taux'                 => $request->taux
+              'taux'                 => $taux
             ]);
 
             return redirect()->route('budgets.edit', $budget->id)
@@ -258,16 +259,24 @@ class BudgetController extends Controller
                   ->withErrors(['validator' => 'Budget initial obligatoire']);
 
         $budget = Budget::with('items', 'items.type')->find($id);
+        $taux = 0;
+
         if (!$budget)
             return redirect()->back()->withErrors(['budget' => 'Budget inconnu!']);
+
+        if ($request->budget_initial !== $request->budget_reel)
+            $taux = 100 + (($request->budget_reel - $request->budget_initial)/$request->budget_initial) * 100;
+
+        if ($request->budget_initial == $request->budget_reel)
+            $taux = 100;
 
         $budget->commune_formation_id  = $request->has('commune_formation_id') ? $request->commune_formation_id : $budget->commune_formation_id;
         $budget->budget_initial        = $request->has('budget_initial') ? $request->budget_initial : $budget->budget_initial;
         $budget->budget_reel           = $request->has('budget_reel') ? $request->budget_reel : $budget->budget_reel;
-        $budget->taux                  = $request->has('taux') ? $request->taux : $budget->taux;
+        $budget->taux                  = $taux;
         $budget->update();
 
-        return redirect()->back()->withSuccess("Budget mis à jour avec succès");
+        return redirect()->back()->with('message', "Budget mis à jour avec succès");
     }
 
     public function destroy (Request $request, $id)

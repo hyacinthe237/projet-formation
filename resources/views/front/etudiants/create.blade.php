@@ -9,9 +9,10 @@
 
     <section class="container">
 
-        <div class="mt-20">
+        <div class="mt-20 mb-20">
           @include('errors.list')
         </div>
+        
         {{ csrf_field() }}
 
         <div class="block">
@@ -112,14 +113,14 @@
                       <div class="col-sm-6">
                           <div class="form-group">
                               <label>Description fonction</label>
-                              <textarea name="desc_fonction" rows="4" cols="80" class="form-control input-lg" placeholder="Description fonction"></textarea>
+                              <textarea name="desc_fonction" rows="3" cols="80" class="form-control input-lg" placeholder="Description fonction"></textarea>
                           </div>
                       </div>
 
                       <div class="col-sm-6">
                           <div class="form-group">
                               <label>Formation souhaitée</label>
-                              <textarea name="form_souhaitee" rows="4" cols="80" class="form-control input-lg" placeholder="Formation souhaitée"></textarea>
+                              <textarea name="form_souhaitee" rows="3" cols="80" class="form-control input-lg" placeholder="Formation souhaitée"></textarea>
                           </div>
                       </div>
                   </div>
@@ -127,14 +128,14 @@
                       <div class="col-sm-6">
                           <div class="form-group">
                               <label>Formation complémentire</label>
-                              <textarea name="form_compl" rows="4" cols="80" class="form-control input-lg" placeholder="Formation complémentire"></textarea>
+                              <textarea name="form_compl" rows="3" cols="80" class="form-control input-lg" placeholder="Formation complémentire"></textarea>
                           </div>
                       </div>
 
                       <div class="col-sm-6">
                           <div class="form-group">
                               <label>Diplôme élevée</label>
-                              <textarea name="diplome_elev" rows="4" cols="80" class="form-control input-lg" placeholder="Diplôme élevée"></textarea>
+                              <textarea name="diplome_elev" rows="3" cols="80" class="form-control input-lg" placeholder="Diplôme élevée"></textarea>
                           </div>
                       </div>
                   </div>
@@ -143,7 +144,7 @@
                         <div class="form-group">
                             <label>Upload photo</h4>
 
-                            <input type="file" name="photo" class="form-control">
+                            <input type="file" name="photo" class="form-control input-lg">
                         </div>
                       </div>
 
@@ -162,7 +163,7 @@
                       <div class="col-sm-4">
                           <div class="form-group">
                               <button type="submit" class="btn btn-lg btn-block btn-success bold">
-                                  <i class="ion-checkmark"></i> S'inscrire
+                                  <i class="ion-checkmark"></i> Je valide mon inscription
                               </button>
                           </div>
                       </div>

@@ -73,11 +73,22 @@ class EtudiantController extends Controller
               'form_compl'      => $request->form_compl,
               'an_exp'          => $request->an_exp,
               'is_active'       => $request->is_active,
-              'signature_url'   => $request->signature_url,
               'photo'           => $request->photo,
             ]);
 
             if ($etudiant) {
+                // Driver's signature pad
+                if ($request->signature_url !== null) {
+
+                    $encoded_image = explode(",", $request->signature_url)[1];
+                    $decoded_image = base64_decode($encoded_image);
+                    $fileLocation = public_path('docs/signatures/stagiaire-'.$etudiant->number.'.png');
+                    file_put_contents($fileLocation, $decoded_image);
+
+                    $etudiant->driver_signature_url = '/docs/signatures/stagiaire-'.$etudiant->number.'.png';
+                    $etudiant->save();
+                }
+
                 $form_etud = FormationEtudiant::whereEtudiantId($etudiant->id)
                              ->whereCommuneFormationId($request->commune_formation_id)
                              ->whereEtat('inscris')
