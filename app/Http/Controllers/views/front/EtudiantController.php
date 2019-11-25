@@ -13,6 +13,7 @@ use App\Models\Thematique;
 use App\Models\FormationEtudiant;
 use App\Models\Commune;
 use App\Models\CommuneFormation;
+use App\Helpers\EtudiantHelper;
 use App\Mail\RegistrationMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -72,7 +73,6 @@ class EtudiantController extends Controller
               'diplome_elev'    => $request->diplome_elev,
               'form_compl'      => $request->form_compl,
               'an_exp'          => $request->an_exp,
-              'is_active'       => $request->is_active,
               'photo'           => $request->photo,
             ]);
 
@@ -85,7 +85,7 @@ class EtudiantController extends Controller
                     $fileLocation = public_path('docs/signatures/stagiaire-'.$etudiant->number.'.png');
                     file_put_contents($fileLocation, $decoded_image);
 
-                    $etudiant->driver_signature_url = '/docs/signatures/stagiaire-'.$etudiant->number.'.png';
+                    $etudiant->signature_url = '/docs/signatures/stagiaire-'.$etudiant->number.'.png';
                     $etudiant->save();
                 }
 
