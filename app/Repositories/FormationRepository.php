@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use DB;
+use Carbon\Carbon;
 use App\Models\Etudiant;
 use App\Models\FormationEtudiant;
 use App\Models\CommuneFormation;
@@ -19,5 +20,4 @@ class FormationRepository
 
         return $stagiaires;
     }
-
 }

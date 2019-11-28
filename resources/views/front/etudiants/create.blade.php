@@ -12,7 +12,7 @@
         <div class="mt-20 mb-20">
           @include('errors.list')
         </div>
-        
+
         {{ csrf_field() }}
 
         <div class="block">
@@ -163,7 +163,7 @@
                       <div class="col-sm-4">
                           <div class="form-group">
                               <button type="submit" class="btn btn-lg btn-block btn-success bold">
-                                  <i class="ion-checkmark"></i> Je valide mon inscription
+                                  Je valide mon inscription
                               </button>
                           </div>
                       </div>

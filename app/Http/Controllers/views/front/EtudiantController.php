@@ -73,7 +73,6 @@ class EtudiantController extends Controller
               'diplome_elev'    => $request->diplome_elev,
               'form_compl'      => $request->form_compl,
               'an_exp'          => $request->an_exp,
-              'photo'           => $request->photo,
             ]);
 
             if ($etudiant) {
@@ -88,6 +87,29 @@ class EtudiantController extends Controller
                     $etudiant->signature_url = '/docs/signatures/stagiaire-'.$etudiant->number.'.png';
                     $etudiant->save();
                 }
+
+                // if ($request->photo !== null) {
+                //     $base64String = file_get_contents(base64_encode($request->photo));
+                //     $fileName  = '/uploads/profile/' . $etudiant->number . '_' . time() . '.jpg';
+                //     $thumbName = '/uploads/profile/' . $etudiant->number . '_thumbnail_' . time() . '.jpg';
+                //
+                //     /**
+                //      * Resize image to a maximum of 500px width
+                //      * Prevent upsizing
+                //      * Create a thumbnail of 200 x 200
+                //      */
+                //     Image::make($base64String)->resize(150, null, function ($img) {
+                //         $img->aspectRatio();
+                //         // $img->upsize();
+                //     })
+                //     ->save(public_path() . $fileName)
+                //     ->fit(200)
+                //     ->save(public_path() . $thumbName);
+                //
+                //     $etudiant->photo = $fileName;
+                //     $etudiant->thumbnail = $thumbName;
+                //     $etudiant->save();
+                // }
 
                 $form_etud = FormationEtudiant::whereEtudiantId($etudiant->id)
                              ->whereCommuneFormationId($request->commune_formation_id)
