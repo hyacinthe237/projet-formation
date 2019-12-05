@@ -140,13 +140,13 @@
                       </div>
                   </div>
                 <div class="row">
-                      <div class="col-sm-6">
+                      {{-- <div class="col-sm-6">
                         <div class="form-group">
                             <label>Upload photo</h4>
 
                             <input type="file" name="photo" class="form-control input-lg">
                         </div>
-                      </div>
+                      </div> --}}
 
                       <div class="col-sm-6">
                             <div class="form-group">

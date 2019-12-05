@@ -18,6 +18,6 @@ class FormationRepository
                         ->where('cf.formation_id', $formationId)
                         ->get();
 
-        return $stagiaires;
+        return  array_unique($stagiaires, SORT_REGULAR);
     }
 }
