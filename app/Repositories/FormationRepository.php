@@ -20,7 +20,7 @@ class FormationRepository
 
         $uniques = array();
             foreach($stagiaires as $personne) {
-                $key = $personne->id;
+                $key = $personne->number;
                 $uniques[$key] = $personne;
             }
 
