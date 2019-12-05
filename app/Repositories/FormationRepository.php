@@ -18,6 +18,12 @@ class FormationRepository
                         ->where('cf.formation_id', $formationId)
                         ->get();
 
-        return  array_unique($stagiaires, SORT_REGULAR);
+        $uniques = array();
+            foreach($stagiaires as $personne) {
+                $key = $personne->id;
+                $uniques[$key] = $personne;
+            }
+
+        return  $uniques;
     }
 }
