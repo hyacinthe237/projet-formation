@@ -1,23 +1,25 @@
 @extends('front.templates.default')
 
 @section('head')
-    <title>Formulaire d'inscription</title>
+    <title>Inscription Stagiaire</title>
 @endsection()
 
 @section('body')
-{!! Form::open(['method' => 'POST', 'route' => ['inscriptions.store'], 'class' => '_form bg-white' ]) !!}
+{!! Form::open(['method' => 'POST', 'route' => ['front.stagiaires.store'], 'class' => '_form bg-white' ]) !!}
 
     <section class="container">
 
-        @include('errors.list')
+        <div class="mt-20 mb-20">
+          @include('errors.list')
+        </div>
+
         {{ csrf_field() }}
 
         <div class="block">
-            <h2 class="_block-title mt-20">Formulaire d'inscription</h2>
             <div class="block-content form">
-
                 <div class="row mt-20">
                   <div class="row">
+                      <input type="hidden" name="phase_id" value="{{ $phase->id }}">
                       <div class="col-sm-6">
                           <div class="form-group">
                               <label>Prénom(s)</label>
@@ -78,44 +80,47 @@
                         <div class="form-group">
                             <label>Formation</label>
                             <div class="form-select grey">
-                                <select class="form-control input-lg" name="formation_id">
-                                    @foreach($formations as $formation)
-                                        <option value="{{ $formation->id }}">{{ $formation->title }}</option>
+                                <select class="form-control input-lg" name="commune_formation_id">
+                                    @foreach($formations as $item)
+                                        <option value="{{ $item->id }}">
+                                          {{ $item->formation->title }} de {{ $item->commune->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                       </div>
 
-                      {{-- <div class="col-sm-6">
+                      <div class="col-sm-6">
                         <div class="form-group">
-                            <label>Résidence</label>
-                            <div class="form-select grey">
-                                <select class="form-control input-lg" name="location_id">
-                                  @foreach($locations as $location)
-                                      <option value="{{ $location->id }}">
-                                          {{ 'Région: ' . $location->region }}|
-                                          {{ 'Département: ' . $location->departement }}|
-                                          {{ 'Commune: ' .$location->commune }}
-                                      </option>
-                                  @endforeach
-                                </select>
-                            </div>
-                        </div> --}}
+                          <label>Résidence</label>
+                          <div class="form-select grey">
+                              <select class="form-control input-lg" name="residence_id">
+                                  <option value="">Sélectionnez le lieu de résidence</option>
+                                @foreach($communes as $commune)
+                                    <option value="{{ $commune->id }}">
+                                      {{ 'Région: ' . $commune->departement->region->name }} |
+                                      {{ 'Département: ' . $commune->departement->name }} |
+                                      {{ 'Commune: ' .$commune->name }}
+                                    </option>
+                                @endforeach
+                              </select>
+                          </div>
+                        </div>
                       </div>
                   </div>
                   <div class="row">
                       <div class="col-sm-6">
                           <div class="form-group">
                               <label>Description fonction</label>
-                              <textarea name="desc_fonction" rows="4" cols="80" class="form-control input-lg" placeholder="Description fonction"></textarea>
+                              <textarea name="desc_fonction" rows="3" cols="80" class="form-control input-lg" placeholder="Description fonction"></textarea>
                           </div>
                       </div>
 
                       <div class="col-sm-6">
                           <div class="form-group">
                               <label>Formation souhaitée</label>
-                              <textarea name="form_souhaitee" rows="4" cols="80" class="form-control input-lg" placeholder="Formation souhaitée"></textarea>
+                              <textarea name="form_souhaitee" rows="3" cols="80" class="form-control input-lg" placeholder="Formation souhaitée"></textarea>
                           </div>
                       </div>
                   </div>
@@ -123,25 +128,25 @@
                       <div class="col-sm-6">
                           <div class="form-group">
                               <label>Formation complémentire</label>
-                              <textarea name="form_compl" rows="4" cols="80" class="form-control input-lg" placeholder="Formation complémentire"></textarea>
+                              <textarea name="form_compl" rows="3" cols="80" class="form-control input-lg" placeholder="Formation complémentire"></textarea>
                           </div>
                       </div>
 
                       <div class="col-sm-6">
                           <div class="form-group">
                               <label>Diplôme élevée</label>
-                              <textarea name="diplome_elev" rows="4" cols="80" class="form-control input-lg" placeholder="Diplôme élevée"></textarea>
+                              <textarea name="diplome_elev" rows="3" cols="80" class="form-control input-lg" placeholder="Diplôme élevée"></textarea>
                           </div>
                       </div>
                   </div>
                 <div class="row">
-                      <div class="col-sm-6">
+                      {{-- <div class="col-sm-6">
                         <div class="form-group">
                             <label>Upload photo</h4>
 
-                            <input type="file" name="photo" class="form-control">
+                            <input type="file" name="photo" class="form-control input-lg">
                         </div>
-                      </div>
+                      </div> --}}
 
                       <div class="col-sm-6">
                             <div class="form-group">
@@ -158,7 +163,7 @@
                       <div class="col-sm-4">
                           <div class="form-group">
                               <button type="submit" class="btn btn-lg btn-block btn-success bold">
-                                  <i class="ion-checkmark"></i> S'inscrire
+                                  Je valide mon inscription
                               </button>
                           </div>
                       </div>
@@ -167,7 +172,6 @@
 
 
                 </div>
-
             </div>
         </div>
     </section>

@@ -34,6 +34,7 @@ class CreateEtudiantsTable extends Migration
           $table->boolean('is_active')->default(true);
           $table->string('signature_url')->nullable();
           $table->string('photo')->nullable();
+          $table->string('thumbnail')->nullable();
           $table->timestamps();
           $table->softDeletes();
         });

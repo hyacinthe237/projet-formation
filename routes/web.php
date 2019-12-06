@@ -11,5 +11,8 @@
 |
 */
 
-Route::get('/', 'views\front\EtudiantController@create')->name('inscriptions.create');
-Route::post('/', 'views\front\EtudiantController@store')->name('inscriptions.store');
+Route::get('/', 'views\front\HomeController@home')->name('home');
+Route::get('/stagiaires', 'views\front\EtudiantController@create')->name('front.stagiaires.create');
+Route::post('/stagiaires', 'views\front\EtudiantController@store')->name('front.stagiaires.store');
+Route::get('/formateurs', 'views\front\FormateurController@create')->name('front.formateurs.create');
+Route::post('/formateurs', 'views\front\FormateurController@store')->name('front.formateurs.store');

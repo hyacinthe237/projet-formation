@@ -161,4 +161,123 @@ class FormateurController extends Controller
         return redirect()->back()->with('message', 'Formateur supprimé');
     }
 
+    /**
+     * Store a newly created site formation in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+     public function storeThematique(Request $request, $id) {
+         $validator = Validator::make($request->all(), [
+             'thematique_id' => 'required',
+             'start_date' => 'required',
+             'end_date'   => 'required'
+         ]);
+
+         if ($validator->fails())
+             return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['validator' => 'Les champs Thematique, Date début & Date fin sont obligatoires']);
+
+         $debut = $request->start_date .' '. $request->start_heure.':'.$request->start_minutes;
+         $fin = $request->end_date .' '. $request->end_heure.':'.$request->end_minutes;
+         $start_date = Carbon::parse($debut)->format('Y-m-d H:i');
+         $end_date = Carbon::parse($fin)->format('Y-m-d H:i');
+
+         $formateur = Formateur::find($id);
+         if (!$formateur)
+             return redirect()->back()->withInput($request->all())->withErrors(['validator' => 'Formateur inconnu']);
+
+         $ft = FormateurThematique::whereFormateurId($formateur->id)->whereThematiqueId($request->thematique_id)->first();
+         if (!$ft) {
+           FormateurThematique::create([
+               'formateur_id'   => $formateur->id,
+               'thematique_id'  => $request->thematique_id,
+               'start_date'     => $start_date,
+               'end_date'       => $end_date
+           ]);
+
+           return redirect()->back()->with('message', 'Thématique du formateur ajoutée avec succès');
+         } else {
+
+           $ft->formateur_id  = $formateur->id;
+           $ft->thematique_id = $request->thematique_id;
+           $ft->start_date    = $start_date;
+           $ft->end_date      = $end_date;
+           $ft->update();
+
+           return redirect()->back()->with('message', 'Thématique du formateur modifiée avec succès');
+         }
+     }
+
+    /**
+     * Editer la Thématique d'un formateur
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+     public function editThematique ($id) {
+         $formateur_thematique = FormateurThematique::with('formateur', 'thematique')->find($id);
+         if (!$formateur_thematique)
+             return redirect()->back()->withErrors(['status' => 'Thematique inconnue']);
+
+         $thematiques = Thematique::get();
+
+         return view('admin.formateurs.edit-thematique', compact('formateur_thematique', 'thematiques'));
+     }
+
+     /**
+      * Store a newly created site formation in storage.
+      *
+      * @param  \Illuminate\Http\Request  $request
+      * @return \Illuminate\Http\Response
+      */
+      public function storeFormation(Request $request, $id) {
+          $validator = Validator::make($request->all(), [
+              'formation_id' => 'required',
+          ]);
+
+          if ($validator->fails())
+              return redirect()->back()
+                 ->withInput($request->all())
+                 ->withErrors(['validator' => 'Le champ formation est obligatoire']);
+
+          $formateur = Formateur::find($id);
+          if (!$formateur)
+              return redirect()->back()->withInput($request->all())->withErrors(['validator' => 'Formateur inconnu']);
+
+          $ft = FormateurFormation::whereFormateurId($formateur->id)->whereFormationId($request->formation_id)->first();
+          if (!$ft) {
+            FormateurFormation::create([
+                'formateur_id' => $formateur->id,
+                'formation_id' => $request->formation_id
+            ]);
+
+            return redirect()->back()->with('message', 'Formation du formateur ajoutée avec succès');
+          } else {
+
+            $ft->formateur_id  = $formateur->id;
+            $ft->formation_id = $request->formation_id;
+            $ft->update();
+
+            return redirect()->back()->with('message', 'Formation du formateur modifiée avec succès');
+          }
+      }
+
+     /**
+      * Editer formation d'un formateur
+      *
+      * @param  int  $id
+      * @return \Illuminate\Http\Response
+      */
+      public function editFormation ($id) {
+          $formateur_formation = FormateurFormation::with('formateur', 'formation')->find($id);
+          if (!$formateur_formation)
+              return redirect()->back()->withErrors(['status' => 'Formation inconnue']);
+
+          $formations = Formation::whereIsActive(true)->get();
+
+          return view('admin.formateurs.edit-formation', compact('formateur_formation', 'formations'));
+      }
+
 }

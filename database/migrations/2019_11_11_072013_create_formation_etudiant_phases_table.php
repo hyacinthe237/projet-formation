@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddDescriptionToBudgets extends Migration
+class CreateFormationEtudiantPhasesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddDescriptionToBudgets extends Migration
      */
     public function up()
     {
-        Schema::table('budgets', function (Blueprint $table) {
-            $table->string('description')->nullable()->after('budget_reel');
+        Schema::create('formation_etudiant_phases', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('phase_id');
+            $table->integer('formation_etudiant_id');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AddDescriptionToBudgets extends Migration
      */
     public function down()
     {
-        Schema::table('budgets', function (Blueprint $table) {
-            $table->dropColumn('description');
-        });
+        Schema::dropIfExists('formation_etudiant_phases');
     }
 }

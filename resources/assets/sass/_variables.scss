@@ -30,6 +30,30 @@ $brand-purple:      #6772e5;
 $brand-yellow:      #f9c200;
 $brand-yellow-dark: #dfa405;
 
+$color-primary:         $brand-primary;
+$color-secondary:       $brand-success;
+$color-red:             #f32f55 !default;
+$color-white:           #fff    !default;
+$color-green:           #02a747 !default;
+$color-greener:         #06ca87 !default;
+$color-dark:            #232c32 !default;
+$color-purple:          #6772e5 !default;
+$color-darker:          #181f24 !default;
+$color-darkest:         #0d1215 !default;
+$color-blue-presumi:    #007fff !default;
+$color-blue-paypal:     #0070ba !default;
+$color-blue-facebook:   #3b5998  !default;
+$color-orange:          #fa5b49 !default;
+$color-teal:            #7f8692 !default;
+$color-grey:            #3c475b !default;
+
+
+$user-dark:             #21292f !default;
+$user-darker:           #1b2227 !default;
+$user-darkest:          #1c1f27 !default;
+$user-orange:           #fa5b49 !default;
+
+
 // Typography
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 $font-family-sans-serif: "Raleway", sans-serif;

@@ -8,10 +8,10 @@
             </a>
         </li>
 
-        <li class="{{ Request::is('admin/etudiants*') ? 'active' : '' }}">
-            <a href="/admin/etudiants">
+        <li class="{{ Request::is('admin/stagiaires*') ? 'active' : '' }}">
+            <a href="/admin/stagiaires">
                 <i class="ion-ios-people"></i>
-                Etudiants
+                Stagiaires
             </a>
         </li>
 

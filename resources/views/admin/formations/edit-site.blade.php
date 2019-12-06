@@ -3,7 +3,7 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
-            <a href="{{ route('etudiants.create') }}" class="btn btn-lg btn-primary">
+            <a href="{{ route('stagiaires.create') }}" class="btn btn-lg btn-primary">
                 <i class="ion-plus"></i> Ajouter nouveau etudiant
             </a>
             <a href="{{ route('formation.edit', $site->formation->number) }}" class="btn btn-lg btn-teal">
@@ -137,10 +137,10 @@
               </div>
           </div>
       </div>
-    </form>
+  {!! Form::close() !!}
 
     @if (sizeOf($site->etudiants))
-      <h3 class="_block-title mb-20">Liste d'étudiants</h3>
+      <h3 class="_block-title mb-20">Liste des stagiaires</h3>
       <div class="block">
           <div class="block-content form">
             <div class="mt-10">
@@ -158,7 +158,7 @@
 
                     <tbody>
                         @foreach($site->etudiants as $item)
-                            <tr data-href="{{ route('etudiants.edit', $item->etudiant->number) }}">
+                            <tr data-href="{{ route('stagiaires.edit', $item->etudiant->number) }}">
                                 <td> <img src="{{ $item->etudiant->getImgAttribute() }}" alt="" width="50px" height="50px" class="img-round"> </td>
                                 <td class="bold">{{ $item->etudiant->getNameAttribute() }}</td>
                                 <td>{{ $item->etudiant->structure }}</td>
@@ -174,16 +174,16 @@
       </div>
     @endif
 
-    <div class="col-sm-4 block">
+    <div class="col-sm-6 block">
         <div class="block-content form">
           <div class="mt-10">
-            <h3 class="_block-title mb-20">Inscrire l'étudiant à cette formation</h3>
+            <h3 class="_block-title mb-20">Inscrire un stagiaire</h3>
             {!! Form::model($site->formation, ['method' => 'POST', 'route' => ['ajouter.etudiant.formation', $site->formation->number], 'class' => '_form' ]) !!}
               <div class="row mt-10">
                   <div class="col-sm-12">
                     <input type="hidden" name="commune_formation_id" value="{{ $site->id }}">
                     <div class="form-group">
-                        <label>Sélectionner un étudiant</label>
+                        <label>Sélectionner un stagiare</label>
                         <div class="form-select grey">
                             <select class="form-control input-lg" name="etudiant_id">
                                 @foreach($etudiants as $item)
@@ -195,7 +195,7 @@
 
                     <div class="form-group text-right mb-20">
                         <button type="submit" class="btn btn-lg btn-primary">
-                            <i class="ion-checkmark"></i> Ajouter un étudiant
+                            <i class="ion-checkmark"></i> Ajouter un stagiare
                         </button>
                     </div>
                   </div>

@@ -18,7 +18,8 @@ class CreateBudgetsTable extends Migration
             $table->integer('commune_formation_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('budget_initial');
-            $table->integer('budget_reel')->nullable();
+            $table->integer('budget_reel')->default(0);
+            $table->float('taux')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

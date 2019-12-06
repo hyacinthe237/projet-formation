@@ -6,6 +6,7 @@ use Auth;
 use DB;
 use PDF;
 use Carbon\Carbon;
+use App\Models\Phase;
 use App\Models\Etudiant;
 use App\Models\Formation;
 use App\Models\Thematique;
@@ -35,6 +36,11 @@ class EtudiantController extends Controller
                       ->orWhere('fonction', 'like', '%'.$keywords.'%')
                       ->orWhere('structure', 'like', '%'.$keywords.'%');
       })
+      ->when($request->commune_formation_id, function ($q) use ($request) {
+          return $q->whereHas('formations', function($sql) use ($request) {
+              return $sql->where('commune_formation_id', $request->commune_formation_id);
+          });
+      })
       ->when($request->residence_id, function($query) use ($request) {
           return $query->where('residence_id', $request->residence_id);
       })
@@ -52,12 +58,13 @@ class EtudiantController extends Controller
     {
         $formations = CommuneFormation::with('commune', 'formation')->orderBy('id', 'desc')->get();
         $communes = Commune::with('departement', 'departement.region')->get();
-        return view('admin.etudiants.create', compact('formations', 'communes'));
+        $phase = Phase::whereTitle('Formation')->first();
+        return view('admin.etudiants.create', compact('formations', 'communes', 'phase'));
     }
 
     public function edit ($number)
     {
-        $etudiant  = Etudiant::with('formations', 'formations.site', 'formations.site.commune', 'formations.site.formation')
+        $etudiant  = Etudiant::with('formations', 'formations.phases', 'formations.site', 'formations.site.commune', 'formations.site.formation')
                       ->whereNumber($number)->first();
 
         if (!$etudiant)
@@ -65,15 +72,16 @@ class EtudiantController extends Controller
 
         $formations = CommuneFormation::with('commune', 'formation')->orderBy('id', 'desc')->get();
         $communes = Commune::with('departement', 'departement.region')->get();
+        $phases = Phase::get();
 
-        return view('admin.etudiants.edit', compact('formations', 'communes', 'etudiant'));
+        return view('admin.etudiants.edit', compact('formations', 'communes', 'etudiant', 'phases'));
     }
 
     public function inscrireEtudiant (Request $request, $number) {
        $etudiant  = Etudiant::whereNumber($number)->whereIsActive(true)->first();
 
        if (!$etudiant)
-         return redirect()->back()->withErrors(['existing' => 'Etudiant non actif']);
+         return redirect()->back()->withErrors(['existing' => 'stagiaire non actif']);
 
          $form_etud = FormationEtudiant::whereEtudiantId($etudiant->id)
                       ->whereCommuneFormationId($request->commune_formation_id)
@@ -84,16 +92,22 @@ class EtudiantController extends Controller
          $count = FormationEtudiant::whereCommuneFormationId($request->commune_formation_id)->whereEtat('inscris')->count();
 
          if (!$form_etud && ($count <= $commune_formation->formation->qte_requis)) {
-             FormationEtudiant::create([
+             $form = FormationEtudiant::create([
                  'etudiant_id'          => $etudiant->id,
                  'commune_formation_id' => $request->commune_formation_id,
                  'etat'                 => 'inscris',
                  'created_at'           => Carbon::now()
              ]);
 
-             return redirect()->back()->with('message', 'Etudiant enregistré et ajouté avec succès à la formation');
+             if ($request->phases)
+               $form->phases()->sync($request->phases);
+
+             return redirect()->back()->with('message', 'stagiaire enregistré et ajouté avec succès à la formation');
          } else {
-            return redirect()->back()->withErrors(['existing' => "Nombre requis de la formation est atteind ou Vous voulez inscrire l'étudiant à formation qui suit déjà"]);
+           if ($request->phases)
+             $form_etud->phases()->sync($request->phases);
+
+            return redirect()->back()->with('message', 'Phase modifiée avec avec succès.');
          }
     }
 
@@ -108,14 +122,21 @@ class EtudiantController extends Controller
         $validator = Validator::make($request->all(), [
             'firstname' => 'required',
             'email' => 'required',
-            'formation_id' => 'required',
+            'commune_formation_id' => 'required',
             'residence_id' => 'required'
         ]);
 
-        if ($validator->fails())
-            return redirect()->back()->withInputwithErrors(['validator' => 'Les champs Prénom, residence & Email sont obligatoires']);
+        if ($validator->fails()) {
+          return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['validator' => 'Les champs prénom, formation, résidence et Email sont obligatoires']);
+        }
 
-        $existing = Etudiant::whereFirstname($request->firstname)->whereLastname($request->lastname)->first();
+        $existing = Etudiant::whereResidenceId($request->residence_id)
+                    ->whereFirstname($request->firstname)
+                    ->wherePhone($request->phone)
+                    ->whereEmail($request->email)->first();
+
         if (!$existing) {
             $etudiant = Etudiant::create([
               'residence_id'     => $request->residence_id,
@@ -148,20 +169,27 @@ class EtudiantController extends Controller
                 $count = FormationEtudiant::whereCommuneFormationId($request->commune_formation_id)->whereEtat('inscris')->count();
 
                 if (!$form_etud && ($count <= $commune_formation->formation->qte_requis)) {
-                    FormationEtudiant::create([
+                    $form = FormationEtudiant::create([
                         'etudiant_id'   => $etudiant->id,
                         'commune_formation_id'    => $request->commune_formation_id,
                         'etat'          => 'inscris',
                         'created_at'    => Carbon::now()
                     ]);
 
-                    return redirect()->route('etudiants.index')
-                                    ->withSuccess("Etudiant enregistré et ajouté avec succès à la formation");
+                    $form->phases()->sync($request->phase_id);
+
+                    return redirect()->route('stagiaires.index')
+                                    ->with('message', "stagiaire enregistré et ajouté avec succès à la formation");
                 } else {
                   return redirect()->back()
-                         ->withErrors(['existing' => 'Etudiant enregistré, mais pas lié à la formation car le quota requis est atteint']);
+                         ->withErrors(['existing' => 'stagiaire enregistré, mais pas lié à la formation car le quota requis est atteint']);
                 }
+
             }
+        } else {
+          return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['existing' => 'Ce stagiaire a déjà été enregistré']);
         }
 
     }

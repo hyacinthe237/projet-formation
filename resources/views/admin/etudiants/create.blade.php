@@ -7,17 +7,17 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
-            <a href="{{ route('etudiants.index') }}" class="btn btn-lg btn-teal">
+            <a href="{{ route('stagiaires.index') }}" class="btn btn-lg btn-teal">
                 <i class="ion-reply"></i> Annuler
             </a>
         </div>
 
         <div class="title">
-            Nouveau étudiant
+            Nouveau stagiaire
         </div>
     </div>
 
-{!! Form::open(['method' => 'POST', 'route' => ['etudiants.store'], 'class' => '_form' ]) !!}
+{!! Form::open(['method' => 'POST', 'route' => ['stagiaires.store'], 'class' => '_form' ]) !!}
 
     <section class="container-fluid mt-20">
 
@@ -34,6 +34,7 @@
                                 <div class="form-group">
                                     <label>Prénom(s)</label>
                                     <input type="text" name="firstname" class="form-control input-lg" placeholder="prénom(s)" required>
+                                    <input type="hidden" name="phase_id" value="{{ $phase->id }}">
                                 </div>
                             </div>
 

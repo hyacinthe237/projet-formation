@@ -7,17 +7,17 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
-            <a href="{{ route('etudiants.index') }}" class="btn btn-lg btn-teal">
+            <a href="{{ route('stagiaires.index') }}" class="btn btn-lg btn-teal">
                 <i class="ion-reply"></i> Cancel
             </a>
         </div>
 
         <div class="title">
-            Edit Etudiant
+            Modifier le stagiaire <strong>{{ $etudiant->name }}</strong>
         </div>
     </div>
 <section class="container-fluid mt-20">
-      {!! Form::model($etudiant, ['method' => 'PATCH', 'route' => ['etudiants.update', $etudiant->number], 'class' => '_form' ]) !!}
+      {!! Form::model($etudiant, ['method' => 'PATCH', 'route' => ['stagiaires.update', $etudiant->number], 'class' => '_form' ]) !!}
 
               @include('errors.list')
               {{ csrf_field() }}
@@ -191,6 +191,7 @@
                             <tr>
                                 <th>Titre</th>
                                 <th>Site</th>
+                                <th>Phases</th>
                                 <th>Durée</th>
                                 <th>Début</th>
                                 <th>Fin</th>
@@ -199,12 +200,27 @@
 
                         <tbody>
                             @foreach($etudiant->formations as $item)
-                                <tr data-href="{{ route('formation.edit', $item->site->formation->number) }}">
-                                    <td class="bold">{{ $item->site->formation->title }}</td>
-                                    <td>{{ $item->site->commune->name }}</td>
-                                    <td>{{ $item->site->duree }}</td>
-                                    <td>{{ date('d/m/Y H:i', strtotime($item->site->formation->start_date)) }}</td>
-                                    <td>{{ date('d/m/Y H:i', strtotime($item->site->formation->end_date)) }}</td>
+                                <tr>
+                                    <td class="bold td-40">{{ $item->site->formation->title }}</td>
+                                    <td class="td-10">{{ $item->site->commune->name }}</td>
+                                    <td class="td-15">
+                                      @foreach ($item->phases as $phase)
+                                        @if ($item->phases->contains('id', $phase->id))
+                                            <label class="css-input css-checkbox css-checkbox-primary mr-20">
+                                                <input type="checkbox" name="phases[]" value="{{ $phase->id }}" checked>
+                                                <span class="mr-10"></span> {{ $phase->title }}
+                                            </label>
+                                        @else
+                                            <label class="css-input css-checkbox css-checkbox-primary mr-20">
+                                                <input type="checkbox" name="phases[]" value="{{ $phase->id }}">
+                                                <span class="mr-10"></span> {{ $phase->title }}
+                                            </label>
+                                        @endif
+                                      @endforeach
+                                    </td>
+                                    <td class="td-10">{{ $item->site->duree }}</td>
+                                    <td class="td-10">{{ date('d/m/Y H:i', strtotime($item->site->start_date)) }}</td>
+                                    <td class="td-10">{{ date('d/m/Y H:i', strtotime($item->site->end_date)) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -213,7 +229,7 @@
               </div>
           </div>
         @endif
-        
+
         <div class="block">
             <div class="block-content form">
               <div class="mt-20">
@@ -233,12 +249,27 @@
                                 </select>
                             </div>
                         </div>
+                      </div>
+
+                      <div class="col-sm-6">
+                        {!! Form::label('phases', 'Choix des phases') !!}
+                        <div class="">
+                            <select class="js-example-basic-multiple form-control input-lg" name="phases[]" multiple="multiple">
+                                @foreach ($phases as $phase)
+                                    <option value="{{ $phase->id}}"> {{ $phase->title }} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-12">
                         <div class="form-group text-right mb-20">
                             <button type="submit" class="btn btn-lg btn-primary">
                                 <i class="ion-checkmark"></i> Inscrire l'étudiant
                             </button>
                         </div>
                       </div>
+
                   </div>
                 {!! Form::close() !!}
               </div>
@@ -263,6 +294,10 @@ $(document).ready(function() {
     $('.date').datepicker({
         autoclose: true,
         format: 'dd-mm-yyyy'
+    })
+
+    $('.js-example-basic-multiple').select2({
+        placeholder: 'Choix des phases'
     })
 
     $("body").hover(function() {

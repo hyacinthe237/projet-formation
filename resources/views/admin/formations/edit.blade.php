@@ -86,15 +86,14 @@
         {!! Form::close() !!}
 
         @if ($formation->is_active)
-          {{-- @if (sizeOf($formation->etudiants))
-            <h3 class="_block-title mb-20">Liste d'étudiants</h3>
+          @if (sizeOf($formation->etudiants))
+            <h3 class="_block-title mb-20">Liste des stagiaires</h3>
             <div class="block">
                 <div class="block-content form">
                   <div class="mt-10">
                       <table class="table table-striped">
                           <thead>
                               <tr>
-                                  <th></th>
                                   <th>Nom</th>
                                   <th>Structure</th>
                                   <th>Fonction</th>
@@ -105,9 +104,8 @@
 
                           <tbody>
                               @foreach($formation->etudiants as $item)
-                                  <tr data-href="{{ route('etudiants.edit', $item->number) }}">
-                                      <td> <img src="{{ $item->getImgAttribute() }}" alt="" width="50px" height="50px" class="img-round"> </td>
-                                      <td class="bold">{{ $item->getNameAttribute() }}</td>
+                                  <tr data-href="{{ route('stagiaires.edit', $item->number) }}">
+                                      <td class="bold">{{ $item->firstname . ' ' . $item->lastname }}</td>
                                       <td>{{ $item->structure }}</td>
                                       <td>{{ $item->fonction }}</td>
                                       <td>{{ $item->etat }}</td>
@@ -119,7 +117,7 @@
                   </div>
                 </div>
             </div>
-          @endif --}}
+          @endif
           @if (sizeOf($formation->sites))
             <h3 class="_block-title mb-20">Sites de la formation</h3>
             <div class="block">

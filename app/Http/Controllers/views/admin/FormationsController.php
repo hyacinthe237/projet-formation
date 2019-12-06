@@ -12,12 +12,21 @@ use App\Models\Commune;
 use App\Models\FormationEtudiant;
 use App\Models\CommuneFormation;
 use App\Helpers\FormationHelper;
+use App\Repositories\FormationRepository as formRepo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 
 class FormationsController extends Controller
 {
+    private $formRepo;
+
+    // model args
+    public function __construct(formRepo $formRepo)
+    {
+        $this->formRepo = $formRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -81,6 +90,8 @@ class FormationsController extends Controller
                'qte_requis'  => $request->qte_requis,
                'is_active'   => $request->is_active
              ]);
+
+            $formation->phases()->attach([1,2]);
 
              CommuneFormation::create([
                  'formation_id' => $formation->id,
@@ -172,14 +183,8 @@ class FormationsController extends Controller
 
          $communes   = Commune::with('departement', 'departement.region')->get();
          $formation->commune_formations = CommuneFormation::with('etudiants.etudiant')->whereFormationId($formation->id)->get();
+         $formation->etudiants = $this->formRepo->getStagiaireFormation($formation->id);
 
-         $formation->etudiants = [];
-         foreach ($formation->commune_formations as $item) {
-           foreach ($item->etudiants as $etud) {
-             $formation->etudiants = $etud->etudiant;
-           }
-         }
-         
          return view('admin.formations.edit', compact('formation', 'communes'));
      }
 

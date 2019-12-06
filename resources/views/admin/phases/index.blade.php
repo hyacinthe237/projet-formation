@@ -4,9 +4,9 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
-            <a href="{{ route('phases.create') }}" class="btn btn-lg btn-primary">
+            {{-- <a href="{{ route('phases.create') }}" class="btn btn-lg btn-primary">
                 <i class="ion-plus"></i> Ajouter Phase
-            </a>
+            </a> --}}
         </div>
 
         <div class="title">
