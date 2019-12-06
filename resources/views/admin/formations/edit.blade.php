@@ -87,7 +87,7 @@
 
         @if ($formation->is_active)
           @if (sizeOf($formation->etudiants))
-            <h3 class="_block-title mb-20">Liste d'étudiants</h3>
+            <h3 class="_block-title mb-20">Liste des stagiaires</h3>
             <div class="block">
                 <div class="block-content form">
                   <div class="mt-10">

@@ -174,16 +174,16 @@
       </div>
     @endif
 
-    <div class="col-sm-4 block">
+    <div class="col-sm-6 block">
         <div class="block-content form">
           <div class="mt-10">
-            <h3 class="_block-title mb-20">Inscrire l'étudiant à cette formation</h3>
+            <h3 class="_block-title mb-20">Inscrire un stagiaire</h3>
             {!! Form::model($site->formation, ['method' => 'POST', 'route' => ['ajouter.etudiant.formation', $site->formation->number], 'class' => '_form' ]) !!}
               <div class="row mt-10">
                   <div class="col-sm-12">
                     <input type="hidden" name="commune_formation_id" value="{{ $site->id }}">
                     <div class="form-group">
-                        <label>Sélectionner un étudiant</label>
+                        <label>Sélectionner un stagiare</label>
                         <div class="form-select grey">
                             <select class="form-control input-lg" name="etudiant_id">
                                 @foreach($etudiants as $item)
@@ -195,7 +195,7 @@
 
                     <div class="form-group text-right mb-20">
                         <button type="submit" class="btn btn-lg btn-primary">
-                            <i class="ion-checkmark"></i> Ajouter un étudiant
+                            <i class="ion-checkmark"></i> Ajouter un stagiare
                         </button>
                     </div>
                   </div>
