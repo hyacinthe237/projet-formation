@@ -32,6 +32,7 @@ class AdminController extends Controller
         $user          = User::whereIsActive(true)->whereId(Auth::id())->first();
         $users         = User::whereIsActive(true)->get();
         $etudiants     = Etudiant::get();
+        $communesToucher  = $this->adminRepo->getCommunesToucher();
         $formateurs    = Formateur::get();
         $formations    = CommuneFormation::with('formation', 'commune')->get();
         $communes      = Commune::get();
@@ -46,7 +47,8 @@ class AdminController extends Controller
             $item->formations = $this->adminRepo->getFormation($item->id);
           }
 
-        return view('admin.all.dashboard', compact('users', 'etudiants', 'search',  'user', 'formateurs', 'formations', 'regions', 'departements', 'communes', 'thematiques'));
+        return view('admin.all.dashboard', compact(['users', 'etudiants', 'search',  'user',
+        'formateurs', 'formations', 'regions', 'departements', 'communes', 'thematiques', 'communesToucher']));
     }
 
 

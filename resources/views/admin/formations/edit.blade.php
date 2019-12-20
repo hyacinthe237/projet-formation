@@ -56,11 +56,6 @@
 
                     <div class="col-sm-4">
                           <div class="form-group">
-                              <label>Nombre de stagiaire</label>
-                              <input type="number" name="qte_requis" class="form-control input-lg" value="{{ $formation->qte_requis }}">
-                          </div>
-
-                          <div class="form-group">
                               <label>Status</label>
                               <div class="form-select grey">
                                   <select name="is_active" class="form-control input-lg">
@@ -161,6 +156,12 @@
                     <div class="row mt-20">
                           <div class="col-sm-9">
                               <div class="row">
+                                  <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Nombre de stagiaire requis</label>
+                                        <input type="number" name="qte_requis" class="form-control input-lg" required>
+                                    </div>
+                                  </div>
                                   <div class="col-sm-6">
                                       <div class="form-group">
                                           <label>Date de début</label>

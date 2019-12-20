@@ -87,7 +87,6 @@ class FormationsController extends Controller
                'number'      => FormationHelper::makeFormationNumber(),
                'title'       => $request->title,
                'description' => $request->description,
-               'qte_requis'  => $request->qte_requis,
                'is_active'   => $request->is_active
              ]);
 
@@ -99,6 +98,7 @@ class FormationsController extends Controller
                  'start_date'  => $start_date,
                  'end_date'    => $end_date,
                  'duree'       => $duree > 1 ? $duree . ' jours' : $duree . ' jour',
+                 'qte_requis'  => $request->qte_requis,
                  'type'        => $request->type
              ]);
 
@@ -145,6 +145,7 @@ class FormationsController extends Controller
                'start_date'  => $start_date,
                'end_date'    => $end_date,
                'duree'       => $duree > 1 ? $duree . ' jours' : $duree . ' jour',
+               'qte_requis'  => $request->qte_requis,
                'type'        => $request->type
            ]);
 
@@ -211,27 +212,27 @@ class FormationsController extends Controller
       * @param  int  $number
       * @return \Illuminate\Http\Response
       */
-     public function ajouterEtudiant (Request $request, $number) {
-        $formation  = Formation::whereNumber($number)->whereIsActive(true)->first();
-        $etudiant  = Etudiant::whereIsActive(true)->findOrFail($request->etudiant_id);
+     public function ajouterEtudiant (Request $request, $id) {
+        $commune_formation  = CommuneFormation::find($id);
+        $etudiant  = Etudiant::whereIsActive(true)->find($request->etudiant_id);
 
-        if (!$formation)
+        if (!$commune_formation)
           return redirect()->back()->withErrors(['existing' => 'Formation non active']);
 
         if (!$etudiant)
           return redirect()->back()->withErrors(['existing' => 'Etudiant non actif']);
 
           $form_etud = FormationEtudiant::whereEtudiantId($etudiant->id)
-                       ->whereCommuneFormationId($request->commune_formation_id)
+                       ->whereCommuneFormationId($commune_formation->id)
                        ->whereEtat('inscris')
                        ->first();
 
-          $count = FormationEtudiant::whereCommuneFormationId($request->commune_formation_id)->whereEtat('inscris')->count();
+          $count = FormationEtudiant::whereCommuneFormationId($commune_formation->id)->whereEtat('inscris')->count();
 
           if (!$form_etud && ($count <= $formation->qte_requis)) {
               FormationEtudiant::create([
                   'etudiant_id'          => $etudiant->id,
-                  'commune_formation_id' => $request->commune_formation_id,
+                  'commune_formation_id' => $commune_formation->id,
                   'etat'                 => 'inscris',
                   'created_at'           => Carbon::now()
               ]);
@@ -309,6 +310,7 @@ class FormationsController extends Controller
          $site->end_date     = $request->has('end_date') ? $end_date : $site->end_date;
          $site->duree        = $duree > 1 ? $duree . ' jours' : $duree . ' jour';
          $site->type         = $request->has('type') ? $request->type : $site->type;
+         $site->qte_requis   = $request->has('qte_requis') ? $request->qte_requis : $site->qte_requis;
          $site->update();
 
          return redirect()->route('formation.edit', $formation->number)->with('message', 'Site mit à jour avec succès');

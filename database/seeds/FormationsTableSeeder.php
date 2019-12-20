@@ -18,8 +18,7 @@ class FormationsTableSeeder extends Seeder
         $form_01 = Formation::create([
             'number'      => 1000000,
             'title'       => 'Résilience des collectivités locales aux effets des changements climatiques et développement local',
-            'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            'qte_requis'  => 10
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         ]);
 
         CommuneFormation::create([
@@ -28,6 +27,7 @@ class FormationsTableSeeder extends Seeder
             'start_date'  => '2019-07-15 08:00',
             'end_date'    => '2019-07-19 08:00',
             'duree'       => '5 jours',
+            'qte_requis'  => 10,
             'type'        => 'Effective'
         ]);
 
@@ -36,8 +36,7 @@ class FormationsTableSeeder extends Seeder
         $form_02 = Formation::create([
             'number'      => 1000001,
             'title'       => 'Développement des projets ecojobs',
-            'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            'qte_requis'  => 15
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         ]);
 
         CommuneFormation::create([
@@ -46,6 +45,7 @@ class FormationsTableSeeder extends Seeder
             'start_date'  => '2019-07-15 08:00',
             'end_date'    => '2019-07-19 08:00',
             'duree'       => '5 jours',
+            'qte_requis'  => 9,
             'type'        => 'Effective'
         ]);
 
@@ -54,8 +54,7 @@ class FormationsTableSeeder extends Seeder
         $form_03 = Formation::create([
             'number'      => 1000003,
             'title'       => 'Développement Web',
-            'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            'qte_requis'  => 9
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         ]);
 
         CommuneFormation::create([
@@ -64,6 +63,7 @@ class FormationsTableSeeder extends Seeder
             'start_date'  => '2019-07-15 08:00',
             'end_date'    => '2019-07-19 08:00',
             'duree'       => '5 jours',
+            'qte_requis'  => 9,
             'type'        => 'Effective'
         ]);
 

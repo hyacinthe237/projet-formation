@@ -91,10 +91,10 @@ class EtudiantController extends Controller
          $commune_formation = CommuneFormation::with('formation')->findOrFail($request->commune_formation_id);
          $count = FormationEtudiant::whereCommuneFormationId($request->commune_formation_id)->whereEtat('inscris')->count();
 
-         if (!$form_etud && ($count <= $commune_formation->formation->qte_requis)) {
+         if (!$form_etud && ($count <= $commune_formation->qte_requis)) {
              $form = FormationEtudiant::create([
                  'etudiant_id'          => $etudiant->id,
-                 'commune_formation_id' => $request->commune_formation_id,
+                 'commune_formation_id' => $commune_formation->id,
                  'etat'                 => 'inscris',
                  'created_at'           => Carbon::now()
              ]);
@@ -160,18 +160,18 @@ class EtudiantController extends Controller
             ]);
 
             if ($etudiant) {
+                $commune_formation = CommuneFormation::with('formation')->findOrFail($request->commune_formation_id);
                 $form_etud = FormationEtudiant::whereEtudiantId($etudiant->id)
-                             ->whereCommuneFormationId($request->commune_formation_id)
+                             ->whereCommuneFormationId($commune_formation->id)
                              ->whereEtat('inscris')
                              ->first();
 
-                $commune_formation = CommuneFormation::with('formation')->findOrFail($request->commune_formation_id);
-                $count = FormationEtudiant::whereCommuneFormationId($request->commune_formation_id)->whereEtat('inscris')->count();
+                $count = FormationEtudiant::whereCommuneFormationId($commune_formation->id)->whereEtat('inscris')->count();
 
-                if (!$form_etud && ($count <= $commune_formation->formation->qte_requis)) {
+                if (!$form_etud && ($count <= $commune_formation->qte_requis)) {
                     $form = FormationEtudiant::create([
                         'etudiant_id'   => $etudiant->id,
-                        'commune_formation_id'    => $request->commune_formation_id,
+                        'commune_formation_id'    => $commune_formation->id,
                         'etat'          => 'inscris',
                         'created_at'    => Carbon::now()
                     ]);

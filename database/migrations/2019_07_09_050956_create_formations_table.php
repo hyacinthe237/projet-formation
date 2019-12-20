@@ -18,7 +18,6 @@ class CreateFormationsTable extends Migration
           $table->bigInteger('number')->index();
           $table->string('title')->unique();
           $table->text('description')->nullable();
-          $table->integer('qte_requis')->nullable();
           $table->boolean('is_active')->default(false);
           $table->timestamps();
           $table->softDeletes();

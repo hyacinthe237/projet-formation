@@ -21,7 +21,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], fun
     Route::get('/', 'views\admin\AdminController@dashboard')->name('admin');
     Route::get('logout', 'views\admin\AuthController@logout')->name('admin.logout');
     Route::post('stagiaires/{number}/inscrire', 'views\admin\EtudiantController@inscrireEtudiant')->name('inscrire.etudiant.formation');
-    Route::post('formation/{number}/ajouterEtudiant', 'views\admin\FormationsController@ajouterEtudiant')->name('ajouter.etudiant.formation');
+    Route::post('formation/{id}/ajouterStagiaire', 'views\admin\FormationsController@ajouterEtudiant')->name('ajouter.etudiant.formation');
     Route::post('formations/{id}/updateSite', 'views\admin\FormationsController@updateSite')->name('formation.update.site');
     Route::get('formations/{id}/editSite', 'views\admin\FormationsController@editSite')->name('formation.edit.site');
     Route::post('formations/{number}/addSite', 'views\admin\FormationsController@storeSite')->name('formation.store.site');

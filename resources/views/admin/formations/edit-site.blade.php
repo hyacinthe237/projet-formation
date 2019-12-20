@@ -32,6 +32,12 @@
                     <div class="col-sm-9">
                         <div class="row">
                             <div class="col-sm-6">
+                              <div class="form-group">
+                                  <label>Nombre de stagiaire</label>
+                                  <input type="number" name="qte_requis" class="form-control input-lg" value="{{ $site->qte_requis }}">
+                              </div>
+                            </div>
+                            <div class="col-sm-6">
                                 <input type="hidden" name="formation_id" value="{{ $site->formation_id }}">
                                 <div class="form-group">
                                     <label>Date de début</label>
@@ -178,10 +184,9 @@
         <div class="block-content form">
           <div class="mt-10">
             <h3 class="_block-title mb-20">Inscrire un stagiaire</h3>
-            {!! Form::model($site->formation, ['method' => 'POST', 'route' => ['ajouter.etudiant.formation', $site->formation->number], 'class' => '_form' ]) !!}
+            {!! Form::model($site->formation, ['method' => 'POST', 'route' => ['ajouter.etudiant.formation', $site->id], 'class' => '_form' ]) !!}
               <div class="row mt-10">
                   <div class="col-sm-12">
-                    <input type="hidden" name="commune_formation_id" value="{{ $site->id }}">
                     <div class="form-group">
                         <label>Sélectionner un stagiare</label>
                         <div class="form-select grey">

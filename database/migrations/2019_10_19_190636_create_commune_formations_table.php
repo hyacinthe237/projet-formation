@@ -20,6 +20,7 @@ class CreateCommuneFormationsTable extends Migration
             $table->datetime('start_date')->nullable();
             $table->datetime('end_date')->nullable();
             $table->string('duree')->nullable();
+            $table->integer('qte_requis')->nullable();
             $table->string('type')->nullable();
             $table->timestamps();
         });

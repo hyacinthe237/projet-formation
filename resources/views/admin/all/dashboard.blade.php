@@ -39,27 +39,31 @@
             </div>
         </div>
 
-        <div class="pricings">
-                <div class="row">
-                    @foreach ($regions as $item)
-                        <div class="col-sm-6">
-                          @if (count($item->formations))
-                            <div class="pricing">
-                                <div class="title">{{ $item->name }}</div>
-                                <ul class="list-unstyled options">
-                                    @foreach ($item->formations as $form)
-                                      <li>{{ $search->where('id', $form->formation_id)->first()->title }}
-                                         commune de <strong>{{ $communes->where('id', $form->commune_id)->first()->name }}</strong></li>
-                                    @endforeach
-                                </ul>
-
-                            </div>
-                          @endif
-
-                        </div>
-                    @endforeach
+        <div class="cards row">
+            <div class="col-sm-12">
+                <h4 class="bold">Taux de couverture</h4>
+            </div>
+            <div class="col-sm-4">
+                <div class="card blue">
+                    <h3>{{ count($users) }}</h3>
+                    <h5>Personnes formées</h5>
                 </div>
             </div>
+
+            <div class="col-sm-4">
+                <div class="card red">
+                    <h3>{{ $communesToucher . ' %' }}</h3>
+                    <h5>Communes touchées</h5>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="card dark">
+                    <h3>{{ count($formations) }}</h3>
+                    <h5>Formations exécutées</h5>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>
