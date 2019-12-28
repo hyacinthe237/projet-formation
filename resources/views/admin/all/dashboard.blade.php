@@ -40,12 +40,12 @@
         </div>
 
         <div class="cards row">
-            <div class="col-sm-12">
+            <div class="col-sm-12 mt-40 mb-10">
                 <h4 class="bold">Taux de couverture</h4>
             </div>
             <div class="col-sm-4">
                 <div class="card blue">
-                    <h3>{{ count($users) }}</h3>
+                    <h3>{{ $TotalPersonnePrevuFormer . ' %' }}</h3>
                     <h5>Personnes formées</h5>
                 </div>
             </div>
@@ -59,7 +59,7 @@
 
             <div class="col-sm-4">
                 <div class="card dark">
-                    <h3>{{ count($formations) }}</h3>
+                    <h3>{{ $TotalPersonnePrevuFormer }}</h3>
                     <h5>Formations exécutées</h5>
                 </div>
             </div>

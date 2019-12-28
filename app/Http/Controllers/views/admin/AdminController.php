@@ -33,6 +33,7 @@ class AdminController extends Controller
         $users         = User::whereIsActive(true)->get();
         $etudiants     = Etudiant::get();
         $communesToucher  = $this->adminRepo->getCommunesToucher();
+        $TotalPersonnePrevuFormer  = $this->adminRepo->getTotalPersonnePrevuFormer();
         $formateurs    = Formateur::get();
         $formations    = CommuneFormation::with('formation', 'commune')->get();
         $communes      = Commune::get();
@@ -48,7 +49,7 @@ class AdminController extends Controller
           }
 
         return view('admin.all.dashboard', compact(['users', 'etudiants', 'search',  'user',
-        'formateurs', 'formations', 'regions', 'departements', 'communes', 'thematiques', 'communesToucher']));
+        'formateurs', 'formations', 'regions', 'departements', 'communes', 'thematiques', 'communesToucher', 'TotalPersonnePrevuFormer']));
     }
 
 

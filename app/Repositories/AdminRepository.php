@@ -38,23 +38,6 @@ class AdminRepository
         return  $uniques;
     }
 
-    public function getStagiairesFormer () {
-
-        $stagiaires = DB::table('etudiants as e')
-                        ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')
-                        ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
-                        ->where('cf.formation_id', '=', 'fe.formation_id')
-                        ->get();
-
-        $uniques = array();
-            foreach($stagiaires as $personne) {
-                $key = $personne->number;
-                $uniques[$key] = $personne;
-            }
-
-        return  $uniques;
-    }
-
     public function getCommunesToucher () {
 
         $resultat = 0;
@@ -80,7 +63,7 @@ class AdminRepository
             $nbr_former = count($this->getStagiairesFormer());
 
             foreach ($commune_formations as $item) {
-              $nbr_prevu += $item->qte_requis;
+              $nbr_prevu_former += $item->qte_requis;
             }
         }
 
