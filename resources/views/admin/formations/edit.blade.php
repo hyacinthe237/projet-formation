@@ -126,6 +126,7 @@
                                   <th>Au</th>
                                   <th>Durée</th>
                                   <th>Type</th>
+                                  <th>Nombre Requis</th>
                                   <th>Inscris</th>
                               </tr>
                           </thead>
@@ -138,6 +139,7 @@
                                       <td>{{ date('d/m/Y H:i', strtotime($item->end_date)) }}</td>
                                       <td>{{ $item->duree }}</td>
                                       <td>{{ $item->type }}</td>
+                                      <td>{{ $item->qte_requis }}</td>
                                       <td>{{ count($item->etudiants) }}</td>
                                   </tr>
                               @endforeach

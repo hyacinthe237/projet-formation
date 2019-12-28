@@ -267,7 +267,6 @@ class FormationsController extends Controller
 
          $formation->title        = $request->has('title') ? $request->title : $formation->title;
          $formation->description  = $request->has('description') ? $request->description : $formation->description;
-         $formation->qte_requis   = $request->has('qte_requis') ? $request->qte_requis : $formation->qte_requis;
          $formation->is_active    = $request->has('is_active') ? $request->is_active : $formation->is_active;
          $formation->update();
 

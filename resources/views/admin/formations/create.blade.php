@@ -109,11 +109,6 @@
 
                   <div class="col-sm-3">
                         <div class="form-group">
-                            <label>Nombre de stagiaire</label>
-                            <input type="number" name="qte_requis" class="form-control input-lg" placeholder="Nombre de stagiaire">
-                        </div>
-
-                        <div class="form-group">
                             <label>Site</label>
                             <div class="form-select grey">
                                 <select name="commune_id" class="form-control input-lg">
@@ -147,7 +142,7 @@
                         </div>
 
 
-                        <div class="form-group text-right mb-20">
+                        <div class="form-group text-right mb-20 mt-60">
                             <button type="submit" class="btn btn-lg btn-primary">
                                 <i class="ion-checkmark"></i> Enregistrer
                             </button>
