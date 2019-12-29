@@ -44,7 +44,6 @@ class EtudiantController extends Controller
       ->when($request->residence_id, function($query) use ($request) {
           return $query->where('residence_id', $request->residence_id);
       })
-
       ->orderBy('id', 'desc')
       ->paginate(50);
 

@@ -34,6 +34,7 @@ class FormationsController extends Controller
      */
      public function index(Request $request) {
          $status = $request->is_active;
+         $stagiaires = Etudiant::whereIsActive(true)->count();
          $formations = Formation::with(['sites', 'sites.commune', 'phases'])
              ->when($request->keywords, function($query) use ($request) {
                  return $query->where('title', 'like', '%'.$request->keywords.'%');
@@ -44,7 +45,7 @@ class FormationsController extends Controller
              ->orderBy('id', 'desc')
              ->paginate(50);
 
-         return view('admin.formations.index', compact('formations', 'status'));
+         return view('admin.formations.index', compact('formations', 'stagiaires', 'status'));
      }
 
     /**

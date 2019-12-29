@@ -77,5 +77,21 @@ class AdminRepository
 
     }
 
+    public function getCommunesToucherParPeriode ($request) {
+        $debut = Carbon::parse($request->debut)->format('Y-m-d H:i');
+        $fin = Carbon::parse($request->fin)->format('Y-m-d H:i');
+
+        $com_form = CommuneFormation::with('commune')
+            ->when($debut, function($query) use ($debut) {
+                return $query->where('start_date', '>=', $debut);
+            })
+            ->when($fin, function($query) use ($fin) {
+                return $query->where('end_date', '<=', $fin);
+            })->get();
+
+        return $com_form;
+
+    }
+
 
 }

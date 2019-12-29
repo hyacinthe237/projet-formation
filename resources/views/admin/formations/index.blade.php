@@ -15,6 +15,8 @@
 
         <div class="title">
             Formations
+
+
         </div>
     </div>
 
@@ -52,6 +54,18 @@
             </div>
 
             @include('errors.list')
+
+            <div class="row">
+                <div class="col-sm-4 text-center">
+                    <p>{{ count($formations) > 1 ? count($formations) . ' Formations' : count($formations) . ' Formation' }} </p>
+
+                </div>
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4 text-center">
+
+                    <p>{{ $stagiaires > 1 ? $stagiaires . ' Stagiares' : $stagiaires . ' Stagiare' }} </p>
+                </div>
+            </div>
 
             <div class="mt-10">
                 <table class="table table-striped">

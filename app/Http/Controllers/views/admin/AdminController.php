@@ -35,22 +35,15 @@ class AdminController extends Controller
         $communesToucher  = $this->adminRepo->getCommunesToucher();
         $TotalPersonnePrevuFormer  = $this->adminRepo->getTotalPersonnePrevuFormer();
         $FormationExecuter  = $this->adminRepo->getFormationExecuter();
+        $communeParPeriode  = $this->adminRepo->getCommunesToucherParPeriode($request);
         $formateurs    = Formateur::get();
         $formations    = CommuneFormation::with('formation', 'commune')->get();
         $communes      = Commune::get();
         $departements  = Departement::get();
         $regions       = Region::get();
-        $thematiques   = Thematique::get();
 
-        $search = Formation::with(['sites', 'sites.formation', 'sites.commune', 'sites.commune.departement', 'sites.commune.departement', 'phases', 'phases.thematiques'])
-                      ->get();
-
-          foreach ($regions as $item) {
-            $item->formations = $this->adminRepo->getFormation($item->id);
-          }
-
-        return view('admin.all.dashboard', compact(['users', 'etudiants', 'search',  'user', 'FormationExecuter',
-        'formateurs', 'formations', 'regions', 'departements', 'communes', 'thematiques', 'communesToucher', 'TotalPersonnePrevuFormer']));
+        return view('admin.all.dashboard', compact(['users', 'etudiants',  'user', 'FormationExecuter',
+        'formateurs', 'formations', 'regions', 'departements', 'communes', 'communesToucher', 'TotalPersonnePrevuFormer']));
     }
 
 

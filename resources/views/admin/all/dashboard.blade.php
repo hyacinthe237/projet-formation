@@ -40,7 +40,11 @@
         </div>
 
         <div class="cards row">
-            <div class="col-sm-12 mt-40 mb-10">
+
+        </div>
+
+        <div class="cards row mt-40">
+            <div class="col-sm-12 mb-10">
                 <h4 class="bold">Taux de couverture</h4>
             </div>
             <div class="col-sm-4">
