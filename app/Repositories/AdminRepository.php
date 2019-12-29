@@ -48,7 +48,7 @@ class AdminRepository
         if (count($commune_formations))
            $resultat = (count($commune_formations)/360) * 100;
 
-        return  $resultat;
+        return  number_format($resultat, 2);
     }
 
     public function getTotalPersonnePrevuFormer () {
@@ -62,7 +62,7 @@ class AdminRepository
             }
         }
 
-        return ($nbr_former/$nbr_prevu_former) * 100;
+        return number_format(($nbr_former/$nbr_prevu_former) * 100, 2);
     }
 
     public function getFormationExecuter () {
@@ -73,7 +73,7 @@ class AdminRepository
           return 0;
         }
 
-        return ($formation_exec/$formation_prevu) * 100;
+        return number_format(($formation_exec/$formation_prevu) * 100, 2);
 
     }
 
