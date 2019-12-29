@@ -46,7 +46,7 @@
             font-size: 11px;
             font-weight: 400;
         }
-        
+
         .bold { font-weight: bold }
         .list-unstyled { list-style: none; color: #636d7e; }
         .mt-5 { margin-top: 5px }
@@ -58,6 +58,7 @@
         .card { background-color: #efefef; border-radius: 2px }
         .accent { background-color: #efefef; font-weight: bold }
         .teal { color: #636d7e }
+        .red { color: #f32f55 }
         .bg-teal { background-color: #ccc }
         table {  }
         table > thead { border-top: 2px solid #ccc; border-bottom: 2px solid #ccc }
