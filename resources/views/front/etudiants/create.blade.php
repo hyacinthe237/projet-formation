@@ -81,6 +81,7 @@
                             <label>Formation</label>
                             <div class="form-select grey">
                                 <select class="form-control input-lg" name="commune_formation_id">
+                                    <option value="">Sélectionnez une formation</option>
                                     @foreach($formations as $item)
                                         <option value="{{ $item->id }}">
                                           {{ $item->formation->title }} de {{ $item->commune->name }}
