@@ -253,7 +253,7 @@
                                   <div class="form-select grey">
                                       <select name="type" class="form-control input-lg">
                                           <option value="Effective">Effective</option>
-                                          <option value="Besoin">Besoins</option>
+                                          <option value="Demande">Demande</option>
                                       </select>
                                   </div>
                               </div>

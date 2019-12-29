@@ -5,6 +5,7 @@ namespace App\Repositories;
 use DB;
 use Carbon\Carbon;
 use App\Models\Etudiant;
+use App\Models\Formation;
 use App\Models\FormationEtudiant;
 use App\Models\CommuneFormation;
 
@@ -51,23 +52,29 @@ class AdminRepository
     }
 
     public function getTotalPersonnePrevuFormer () {
-
         $nbr_prevu_former = 0;
-        $nbr_former = 0;
-
+        $nbr_former = count(FormationEtudiant::get());
         $commune_formations = CommuneFormation::get();
 
-        if (!$commune_formations) $nbr_former = 0;
-
         if ($commune_formations) {
-            $nbr_former = count($this->getStagiairesFormer());
-
             foreach ($commune_formations as $item) {
               $nbr_prevu_former += $item->qte_requis;
             }
         }
 
-        return  ($nbr_former/$nbr_prevu_former) * 100;
+        return ($nbr_former/$nbr_prevu_former) * 100;
+    }
+
+    public function getFormationExecuter () {
+        $formation_exec = CommuneFormation::whereType('Effective')->count();
+        $formation_prevu = CommuneFormation::count();
+
+        if ($formation_prevu == 0) {
+          return 0;
+        }
+
+        return ($formation_exec/$formation_prevu) * 100;
+
     }
 
 

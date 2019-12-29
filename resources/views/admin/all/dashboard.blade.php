@@ -51,7 +51,7 @@
             </div>
 
             <div class="col-sm-4">
-                <div class="card red">
+                <div class="card green">
                     <h3>{{ $communesToucher . ' %' }}</h3>
                     <h5>Communes touchées</h5>
                 </div>
@@ -59,7 +59,7 @@
 
             <div class="col-sm-4">
                 <div class="card dark">
-                    <h3>{{ $TotalPersonnePrevuFormer }}</h3>
+                    <h3>{{ $FormationExecuter . ' %' }}</h3>
                     <h5>Formations exécutées</h5>
                 </div>
             </div>
