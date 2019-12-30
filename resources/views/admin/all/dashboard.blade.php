@@ -3,7 +3,7 @@
 @section('body')
 <div class="page-heading">
     <div class="buttons">
-        <a href="#" class="btn btn-lg btn-success" target="_blank">
+        <a href="{{ route('dashboard.statistiques') }}" class="btn btn-lg btn-success" target="_blank">
             <i class="ion-document"></i> Télécharger PDF
         </a>
     </div>

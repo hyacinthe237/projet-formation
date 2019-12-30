@@ -94,6 +94,7 @@
         .td-15 { width:15% }
         .td-10 { width:10% }
         .td-5 { width:5% }
+        .mt-10 { margin-top: 10px }
 
         .grey { background-color: #eaeaea }
         .greyer { background-color: #d4d4d4 }
