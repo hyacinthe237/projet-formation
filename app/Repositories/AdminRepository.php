@@ -11,15 +11,25 @@ use App\Models\CommuneFormation;
 
 class AdminRepository
 {
-    public function getFormation ($regionId) {
+    public function getCommunesToucherParRegion ($regionId) {
 
-        $formations = DB::table('commune_formations as cf')
+        $communes = DB::table('commune_formations as cf')
                         ->join('communes as c', 'cf.commune_id', '=', 'c.id')
                         ->join('departements as d', 'd.id', '=', 'c.departement_id')
                         ->where('d.region_id', $regionId)
                         ->get();
 
-        return $formations;
+        return $communes;
+    }
+
+    public function getCommunesToucherParDepartement ($departementId) {
+
+        $communes = DB::table('commune_formations as cf')
+                        ->join('communes as c', 'cf.commune_id', '=', 'c.id')
+                        ->where('c.departement_id', $departementId)
+                        ->get();
+
+        return $communes;
     }
 
     public function getStagiairesFormer () {
@@ -77,10 +87,7 @@ class AdminRepository
 
     }
 
-    public function getCommunesToucherParPeriode ($request) {
-        $debut = Carbon::parse($request->debut)->format('Y-m-d H:i');
-        $fin = Carbon::parse($request->fin)->format('Y-m-d H:i');
-
+    public function getCommunesToucherParPeriode ($debut, $fin) {
         $com_form = CommuneFormation::with('commune')
             ->when($debut, function($query) use ($debut) {
                 return $query->where('start_date', '>=', $debut);

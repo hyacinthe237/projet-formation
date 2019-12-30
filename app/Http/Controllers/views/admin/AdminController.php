@@ -35,12 +35,28 @@ class AdminController extends Controller
         $communesToucher  = $this->adminRepo->getCommunesToucher();
         $TotalPersonnePrevuFormer  = $this->adminRepo->getTotalPersonnePrevuFormer();
         $FormationExecuter  = $this->adminRepo->getFormationExecuter();
-        $communeParPeriode  = $this->adminRepo->getCommunesToucherParPeriode($request);
         $formateurs    = Formateur::get();
         $formations    = CommuneFormation::with('formation', 'commune')->get();
         $communes      = Commune::get();
         $departements  = Departement::get();
         $regions       = Region::get();
+
+        if ($request->start_date) {
+            $debut = $request->start_date .' '. $request->start_heure.':'.$request->start_minutes;
+            $fin = $request->end_date .' '. $request->end_heure.':'.$request->end_minutes;
+            $start_date = Carbon::parse($debut)->format('Y-m-d H:i');
+            $end_date = Carbon::parse($fin)->format('Y-m-d H:i');
+
+            $communeParPeriode  = $this->adminRepo->getCommunesToucherParPeriode($start_date, $end_date);
+        }
+
+        foreach ($regions as $region) {
+            $region->commune_touchees = $this->adminRepo->getCommunesToucherParRegion($region->id);
+        }
+
+        foreach ($departements as $item) {
+            $item->commune_touchees = $this->adminRepo->getCommunesToucherParDepartement($item->id);
+        }
 
         return view('admin.all.dashboard', compact(['users', 'etudiants',  'user', 'FormationExecuter',
         'formateurs', 'formations', 'regions', 'departements', 'communes', 'communesToucher', 'TotalPersonnePrevuFormer']));

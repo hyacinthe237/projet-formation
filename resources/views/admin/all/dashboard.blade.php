@@ -37,14 +37,8 @@
                     <h5>Formations</h5>
                 </div>
             </div>
-        </div>
 
-        <div class="cards row">
-
-        </div>
-
-        <div class="cards row mt-40">
-            <div class="col-sm-12 mb-10">
+            <div class="col-sm-12 mt-40">
                 <h4 class="bold">Taux de couverture</h4>
             </div>
             <div class="col-sm-4">
@@ -66,6 +60,54 @@
                     <h3>{{ $FormationExecuter . ' %' }}</h3>
                     <h5>Formations exécutées</h5>
                 </div>
+            </div>
+        </div>
+
+        
+
+        <div class="cards row bg-white mt-40">
+            <div class="col-sm-6 mt-20">
+              <table class="table table-striped">
+                  <thead>
+                      <tr>
+                          <th>Nom de la région</th>
+                          <th>Communes touchées</th>
+                      </tr>
+                  </thead>
+
+                  <tbody>
+                      @foreach($regions as $region)
+                          @if (count($region->commune_touchees))
+                            <tr>
+                                <td class="bold">{{ $region->name }}</td>
+                                <td title="@foreach ($region->commune_touchees as $item){{ $communes->where('id', $item->commune_id)->first()->name . ', ' }}@endforeach">{{ count($region->commune_touchees)}}</td>
+                            </tr>
+                          @endif
+                      @endforeach
+                  </tbody>
+              </table>
+            </div>
+
+            <div class="col-sm-6 mt-20">
+              <table class="table table-striped">
+                  <thead>
+                      <tr>
+                          <th>Nom du département</th>
+                          <th>Communes touchées</th>
+                      </tr>
+                  </thead>
+
+                  <tbody>
+                      @foreach($departements as $item)
+                          @if (count($item->commune_touchees))
+                            <tr>
+                                <td class="bold">{{ $item->name }}</td>
+                                <td title="@foreach ($item->commune_touchees as $itm){{ $communes->where('id', $itm->commune_id)->first()->name . ', ' }}@endforeach">{{ count($item->commune_touchees)}}</td>
+                            </tr>
+                          @endif
+                      @endforeach
+                  </tbody>
+              </table>
             </div>
         </div>
 
