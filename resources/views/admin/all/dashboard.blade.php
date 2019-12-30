@@ -1,10 +1,17 @@
 @extends('admin.body')
 
-
-
 @section('body')
-<div class="page-title">
-    <h3>Dashboard</h3>
+<div class="page-heading">
+    <div class="buttons">
+        <a href="#" class="btn btn-lg btn-success" target="_blank">
+            <i class="ion-document"></i> Télécharger PDF
+        </a>
+    </div>
+
+    <div class="title">
+        Dashboard
+
+    </div>
 </div>
 
 <div class="dashboard">
@@ -19,21 +26,21 @@
 
             <div class="col-sm-3">
                 <div class="card red">
-                    <h3>{{ count($etudiants) }}</h3>
+                    <h3>{{ count($data['etudiants']) }}</h3>
                     <h5>Stagiaires</h5>
                 </div>
             </div>
 
             <div class="col-sm-3">
                 <div class="card green">
-                    <h3>{{ count($formateurs) }}</h3>
+                    <h3>{{ count($data['formateurs']) }}</h3>
                     <h5>Formateurs</h5>
                 </div>
             </div>
 
             <div class="col-sm-3">
                 <div class="card dark">
-                    <h3>{{ count($formations) }}</h3>
+                    <h3>{{ count($data['formations']) }}</h3>
                     <h5>Formations</h5>
                 </div>
             </div>
@@ -43,27 +50,27 @@
             </div>
             <div class="col-sm-4">
                 <div class="card blue">
-                    <h3>{{ $TotalPersonnePrevuFormer . ' %' }}</h3>
+                    <h3>{{ $data['totalPersonnePrevuFormer'] . ' %' }}</h3>
                     <h5>Personnes formées</h5>
                 </div>
             </div>
 
             <div class="col-sm-4">
                 <div class="card green">
-                    <h3>{{ $communesToucher . ' %' }}</h3>
+                    <h3>{{ $data['communesToucher'] . ' %' }}</h3>
                     <h5>Communes touchées</h5>
                 </div>
             </div>
 
             <div class="col-sm-4">
                 <div class="card dark">
-                    <h3>{{ $FormationExecuter . ' %' }}</h3>
+                    <h3>{{ $data['formationExecuter'] . ' %' }}</h3>
                     <h5>Formations exécutées</h5>
                 </div>
             </div>
         </div>
 
-        
+
 
         <div class="cards row bg-white mt-40">
             <div class="col-sm-6 mt-20">
@@ -76,11 +83,11 @@
                   </thead>
 
                   <tbody>
-                      @foreach($regions as $region)
+                      @foreach($data['regions'] as $region)
                           @if (count($region->commune_touchees))
                             <tr>
                                 <td class="bold">{{ $region->name }}</td>
-                                <td title="@foreach ($region->commune_touchees as $item){{ $communes->where('id', $item->commune_id)->first()->name . ', ' }}@endforeach">{{ count($region->commune_touchees)}}</td>
+                                <td title="@foreach ($region->commune_touchees as $item){{ $data['communes']->where('id', $item->commune_id)->first()->name . ', ' }}@endforeach">{{ count($region->commune_touchees)}}</td>
                             </tr>
                           @endif
                       @endforeach
@@ -98,11 +105,11 @@
                   </thead>
 
                   <tbody>
-                      @foreach($departements as $item)
+                      @foreach($data['departements'] as $item)
                           @if (count($item->commune_touchees))
                             <tr>
                                 <td class="bold">{{ $item->name }}</td>
-                                <td title="@foreach ($item->commune_touchees as $itm){{ $communes->where('id', $itm->commune_id)->first()->name . ', ' }}@endforeach">{{ count($item->commune_touchees)}}</td>
+                                <td title="@foreach ($item->commune_touchees as $itm){{ $data['communes']->where('id', $itm->commune_id)->first()->name . ', ' }}@endforeach">{{ count($item->commune_touchees)}}</td>
                             </tr>
                           @endif
                       @endforeach

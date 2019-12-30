@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\views\admin;
 
 use Auth;
+use PDF;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Etudiant;
@@ -31,15 +32,8 @@ class AdminController extends Controller
     {
         $user          = User::whereIsActive(true)->whereId(Auth::id())->first();
         $users         = User::whereIsActive(true)->get();
-        $etudiants     = Etudiant::get();
-        $communesToucher  = $this->adminRepo->getCommunesToucher();
-        $TotalPersonnePrevuFormer  = $this->adminRepo->getTotalPersonnePrevuFormer();
-        $FormationExecuter  = $this->adminRepo->getFormationExecuter();
-        $formateurs    = Formateur::get();
-        $formations    = CommuneFormation::with('formation', 'commune')->get();
-        $communes      = Commune::get();
-        $departements  = Departement::get();
-        $regions       = Region::get();
+        $data     = self::takeInfos($this->adminRepo);
+
 
         if ($request->start_date) {
             $debut = $request->start_date .' '. $request->start_heure.':'.$request->start_minutes;
@@ -50,16 +44,61 @@ class AdminController extends Controller
             $communeParPeriode  = $this->adminRepo->getCommunesToucherParPeriode($start_date, $end_date);
         }
 
+        return view('admin.all.dashboard', compact(['data', 'users',  'user']));
+    }
+
+    /**
+     * Download PDF Formation
+     * @param  [type] $id [description]
+     * @return [type]         [description]
+     */
+    public function download (adminRepo $adminRepo)
+    {
+        $data = self::takeInfos($adminRepo);
+
+        $pdf = PDF::loadView('pdfs.dashboard', $data);
+        return $pdf->stream();
+    }
+
+    /**
+     * Recup Formation Information
+     * @param  [type] $id [description]
+     * @return [type]         [description]
+     */
+    private static function takeInfos ($adminRepo)
+    {
+        $formations = Formation::with('sites', 'sites.commune')->whereIsActive(true)->get();
+        $communes      = Commune::get();
+        $departements  = Departement::get();
+        $regions       = Region::get();
+        $communesToucher  = $adminRepo->getCommunesToucher();
+        $totalPersonnePrevuFormer  = $adminRepo->getTotalPersonnePrevuFormer();
+        $formationExecuter  = $adminRepo->getFormationExecuter();
+        $etudiants     = Etudiant::get();
+        $formateurs    = Formateur::get();
+        $formations    = CommuneFormation::with('formation', 'commune')->get();
+
         foreach ($regions as $region) {
-            $region->commune_touchees = $this->adminRepo->getCommunesToucherParRegion($region->id);
+            $region->commune_touchees = $adminRepo->getCommunesToucherParRegion($region->id);
         }
 
         foreach ($departements as $item) {
-            $item->commune_touchees = $this->adminRepo->getCommunesToucherParDepartement($item->id);
+            $item->commune_touchees = $adminRepo->getCommunesToucherParDepartement($item->id);
         }
 
-        return view('admin.all.dashboard', compact(['users', 'etudiants',  'user', 'FormationExecuter',
-        'formateurs', 'formations', 'regions', 'departements', 'communes', 'communesToucher', 'TotalPersonnePrevuFormer']));
+        $data = [
+            'regions' => $regions,
+            'departements' => $departements,
+            'communes' => $communes,
+            'communesToucher' => $communesToucher,
+            'totalPersonnePrevuFormer' => $totalPersonnePrevuFormer,
+            'formationExecuter' => $formationExecuter,
+            'etudiants' => $etudiants,
+            'formateurs' => $formateurs,
+            'formations' => $formations,
+        ];
+
+        return $data;
     }
 
 

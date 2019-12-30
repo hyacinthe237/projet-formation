@@ -55,7 +55,7 @@
 
             @include('errors.list')
 
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-sm-4 text-center">
                     <p>{{ count($formations) > 1 ? count($formations) . ' Formations' : count($formations) . ' Formation' }} </p>
 
@@ -65,7 +65,7 @@
 
                     <p>{{ $stagiaires > 1 ? $stagiaires . ' Stagiares' : $stagiaires . ' Stagiare' }} </p>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="mt-10">
                 <table class="table table-striped">
