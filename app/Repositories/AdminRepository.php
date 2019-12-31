@@ -22,6 +22,14 @@ class AdminRepository
         return $communes;
     }
 
+    public function getCommunesParFormation ($formationId) {
+        $communes = DB::table('communes as c')
+                    ->join('commune_formations as cf', 'cf.commune_id', '=', 'c.id')
+                    ->where('cf.formation_id', '=', $formationId)->get();
+
+        return $communes;
+    }
+
     public function getCommunesToucherParDepartement ($departementId) {
 
         $communes = DB::table('commune_formations as cf')
@@ -47,6 +55,60 @@ class AdminRepository
             }
 
         return  $uniques;
+    }
+
+    public function getPersonnesInscriteParRegion ($regionId) {
+
+        $personnes =  DB::table('etudiants as e')
+                        ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')
+                        ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
+                        ->join('communes as c', 'c.id', '=', 'cf.commune_id')
+                        ->join('departements as d', 'd.id', '=', 'c.departement_id')
+                        ->where('d.region_id', '=', $regionId)
+                        ->where('fe.etat', '=', 'inscris')
+                        ->get();
+
+        return $personnes;
+    }
+
+    public function getPersonnesFormeeParRegion ($regionId) {
+
+        $personnes =  DB::table('etudiants as e')
+                        ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')
+                        ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
+                        ->join('communes as c', 'c.id', '=', 'cf.commune_id')
+                        ->join('departements as d', 'd.id', '=', 'c.departement_id')
+                        ->where('d.region_id', '=', $regionId)
+                        ->where('fe.etat', '=', 'formee')
+                        ->get();
+
+        return $personnes;
+    }
+
+    public function getPersonnesInscriteParDepartement ($departementId) {
+
+        $personnes =  DB::table('etudiants as e')
+                        ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')
+                        ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
+                        ->join('communes as c', 'c.id', '=', 'cf.commune_id')
+                        ->where('c.departement_id', '=', $departementId)
+                        ->where('fe.etat', '=', 'inscris')
+                        ->get();
+
+        return $personnes;
+    }
+
+    public function getPersonnesFormeeParDepartement ($departementId) {
+
+        $personnes =  DB::table('etudiants as e')
+                        ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')
+                        ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
+                        ->join('communes as c', 'c.id', '=', 'cf.commune_id')
+                        ->where('c.departement_id', '=', $departementId)
+                        ->where('fe.etat', '=', 'formee')
+                        ->get();
+
+        return $personnes;
     }
 
     public function getCommunesToucher () {

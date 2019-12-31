@@ -15,24 +15,27 @@ use App\Models\Departement;
 use App\Models\Commune;
 use App\Models\Thematique;
 use App\Repositories\AdminRepository as adminRepo;
+use App\Repositories\FormationRepository as formRepo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
     private $adminRepo;
+    private $formRepo;
 
     // model args
-    public function __construct(adminRepo $adminRepo)
+    public function __construct(adminRepo $adminRepo, formRepo $formRepo)
     {
         $this->adminRepo = $adminRepo;
+        $this->formRepo = $formRepo;
     }
 
     public function dashboard (Request $request)
     {
         $user          = User::whereIsActive(true)->whereId(Auth::id())->first();
         $users         = User::whereIsActive(true)->get();
-        $data     = self::takeInfos($this->adminRepo);
+        $data     = self::takeInfos($this->adminRepo, $this->formRepo);
 
 
         if ($request->start_date) {
@@ -52,9 +55,9 @@ class AdminController extends Controller
      * @param  [type] $id [description]
      * @return [type]         [description]
      */
-    public function download (adminRepo $adminRepo)
+    public function download (adminRepo $adminRepo, formRepo $formRepo)
     {
-        $data = self::takeInfos($adminRepo);
+        $data = self::takeInfos($adminRepo, $formRepo);
 
         $pdf = PDF::loadView('pdfs.dashboard', $data);
         return $pdf->stream();
@@ -65,9 +68,9 @@ class AdminController extends Controller
      * @param  [type] $id [description]
      * @return [type]         [description]
      */
-    private static function takeInfos ($adminRepo)
+    private static function takeInfos ($adminRepo, $formRepo)
     {
-        $formations = Formation::with('sites', 'sites.commune')->whereIsActive(true)->get();
+        $allFormations = Formation::whereIsActive(true)->get();
         $communes      = Commune::get();
         $departements  = Departement::get();
         $regions       = Region::get();
@@ -80,10 +83,19 @@ class AdminController extends Controller
 
         foreach ($regions as $region) {
             $region->commune_touchees = $adminRepo->getCommunesToucherParRegion($region->id);
+            $region->personnes_inscrite = $adminRepo->getPersonnesInscriteParRegion($region->id);
+            $region->personnes_formee = $adminRepo->getPersonnesFormeeParRegion($region->id);
         }
 
         foreach ($departements as $item) {
             $item->commune_touchees = $adminRepo->getCommunesToucherParDepartement($item->id);
+            $item->personnes_inscrite = $adminRepo->getPersonnesInscriteParDepartement($item->id);
+            $item->personnes_formee = $adminRepo->getPersonnesFormeeParDepartement($item->id);
+        }
+
+        foreach ($allFormations as $item) {
+            $item->communes = $adminRepo->getCommunesParFormation($item->id);
+            $item->personnes_formee = $formRepo->getStagiaireFormees($item->id);
         }
 
         $data = [
@@ -96,6 +108,7 @@ class AdminController extends Controller
             'etudiants' => $etudiants,
             'formateurs' => $formateurs,
             'formations' => $formations,
+            'allFormations' => $allFormations,
         ];
 
         return $data;
