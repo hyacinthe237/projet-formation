@@ -58,6 +58,13 @@
             </li>
         @endif
 
+        <li class="{{ Request::is('admin/sessions*') ? 'active' : '' }}">
+            <a href="/admin/sessions">
+                <i class="ion-ios-person"></i>
+                Sessions
+            </a>
+        </li>
+
         <li class="separer"></li>
 
         <li>
