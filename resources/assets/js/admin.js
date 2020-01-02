@@ -17,7 +17,7 @@ require('./ui')
 Vue.use(swal)
 Vue.use(toastr)
 // Vue.use(VeeValidate)
-Vue.use(VueFlashMessage);
+// Vue.use(VueFlashMessage);
 
 
 // Vue.component('admin-add-formation', require('./components/backend/formations/add-formation'))
