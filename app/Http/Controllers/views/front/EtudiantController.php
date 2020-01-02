@@ -13,6 +13,7 @@ use App\Models\Thematique;
 use App\Models\FormationEtudiant;
 use App\Models\Commune;
 use App\Models\CommuneFormation;
+use App\Models\Session;
 use App\Helpers\EtudiantHelper;
 use App\Mail\RegistrationMail;
 use Illuminate\Http\Request;
@@ -24,7 +25,8 @@ class EtudiantController extends Controller
 
     public function create ()
     {
-        $formations = CommuneFormation::with('commune', 'formation')->orderBy('id', 'desc')->get();
+        $session = Session::whereStatus('pending')->first();
+        $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();
         $communes = Commune::with('departement', 'departement.region')->get();
         $phase = Phase::whereTitle('Formation')->first();
 
@@ -52,6 +54,7 @@ class EtudiantController extends Controller
                 ->withErrors(['validator' => 'Les champs prénom, formation, résidence et téléphone sont obligatoires']);
         }
 
+        $session = Session::whereStatus('pending')->first();
         $existing = Etudiant::whereResidenceId($request->residence_id)
                     ->whereFirstname($request->firstname)
                     ->wherePhone($request->phone)->first();
@@ -111,16 +114,17 @@ class EtudiantController extends Controller
                 //     $etudiant->save();
                 // }
 
-                $form_etud = FormationEtudiant::whereEtudiantId($etudiant->id)
+                $form_etud = FormationEtudiant::whereSessionId($session->id)->whereEtudiantId($etudiant->id)
                              ->whereCommuneFormationId($request->commune_formation_id)
                              ->whereEtat('inscris')
                              ->first();
 
-                $commune_formation = CommuneFormation::with('formation')->findOrFail($request->commune_formation_id);
-                $count = FormationEtudiant::whereCommuneFormationId($request->commune_formation_id)->whereEtat('inscris')->count();
+                $commune_formation = CommuneFormation::whereSessionId($session->id)->with('formation')->findOrFail($request->commune_formation_id);
+                $count = FormationEtudiant::whereSessionId($session->id)->whereCommuneFormationId($request->commune_formation_id)->whereEtat('inscris')->count();
 
                 if (!$form_etud && ($count <= $commune_formation->formation->qte_requis)) {
                     $form = FormationEtudiant::create([
+                        'session_id'   => $session->id,
                         'etudiant_id'   => $etudiant->id,
                         'commune_formation_id'    => $request->commune_formation_id,
                         'etat'          => 'inscris',
