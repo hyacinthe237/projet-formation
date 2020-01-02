@@ -17,28 +17,28 @@
 <div class="dashboard">
     <div class="container-fluid">
         <div class="cards row mt-20">
-            <div class="col-sm-3">
+            {{-- <div class="col-sm-3">
                 <div class="card blue">
                     <h3>{{ count($users) }}</h3>
                     <h5>Utilisateurs</h5>
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 <div class="card red">
                     <h3>{{ count($data['etudiants']) }}</h3>
                     <h5>Stagiaires</h5>
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 <div class="card green">
                     <h3>{{ count($data['formateurs']) }}</h3>
                     <h5>Formateurs</h5>
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 <div class="card dark">
                     <h3>{{ count($data['formations']) }}</h3>
                     <h5>Formations</h5>
