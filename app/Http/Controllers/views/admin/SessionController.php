@@ -92,15 +92,19 @@ class SessionController extends Controller
               ->withErrors(['validator' => 'Tous les champs sont obligatoires']);
 
         $session = Session::find($id);
-        if (!$session) {
-            return redirect()->back()->withErrors(['Session' => 'Session inconnue!']);
-        }
+        if (!$session) return redirect()->back()->withErrors(['Session' => 'Session inconnue!']);
 
         $session->name   = $request->has('name') ? $request->name : $phase->name;
         $session->status   = $request->has('status') ? $request->status : $phase->status;
         $session->update();
 
-        return redirect()->back()->with('message', 'session mise à jour avec succès');
+        $sessions = Session::where('id', '!=', $session->id)->get();
+        foreach ($sessions as $se) {
+            $se->status = 'passed';
+            $se->update();
+        }
+
+        return redirect()->route('sessions.index')->with('message', 'session mise à jour avec succès');
     }
 
 }
