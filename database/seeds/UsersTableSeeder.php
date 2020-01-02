@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Session;
 
 
 class UsersTableSeeder extends Seeder
@@ -13,6 +14,8 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        Session::create(['name' => '2019', 'status' => 'pending' ]);
+        
         User::create([
             'role_id'        => 1,
             'number'         => 1000000,

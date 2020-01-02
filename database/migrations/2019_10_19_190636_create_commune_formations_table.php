@@ -15,6 +15,7 @@ class CreateCommuneFormationsTable extends Migration
     {
         Schema::create('commune_formations', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('session_id');
             $table->integer('formation_id');
             $table->integer('commune_id');
             $table->datetime('start_date')->nullable();

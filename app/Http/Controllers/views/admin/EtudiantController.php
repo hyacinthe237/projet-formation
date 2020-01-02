@@ -13,6 +13,7 @@ use App\Models\Thematique;
 use App\Models\FormationEtudiant;
 use App\Models\Commune;
 use App\Models\CommuneFormation;
+use App\Models\Session;
 use App\Helpers\EtudiantHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -47,7 +48,8 @@ class EtudiantController extends Controller
       ->orderBy('id', 'desc')
       ->paginate(50);
 
-      $formations = CommuneFormation::with('commune', 'formation')->orderBy('id', 'desc')->get();
+      $session = Session::whereStatus('pending')->first();
+      $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();
       $communes = Commune::orderBy('name', 'asc')->get();
 
       return view('admin.etudiants.index', compact('etudiants', 'formations', 'communes'));
@@ -55,7 +57,8 @@ class EtudiantController extends Controller
 
     public function create ()
     {
-        $formations = CommuneFormation::with('commune', 'formation')->orderBy('id', 'desc')->get();
+        $session = Session::whereStatus('pending')->first();
+        $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();
         $communes = Commune::with('departement', 'departement.region')->get();
         $phase = Phase::whereTitle('Formation')->first();
         return view('admin.etudiants.create', compact('formations', 'communes', 'phase'));
@@ -63,13 +66,14 @@ class EtudiantController extends Controller
 
     public function edit ($number)
     {
+        $session = Session::whereStatus('pending')->first();
         $etudiant  = Etudiant::with('formations', 'formations.phases', 'formations.site', 'formations.site.commune', 'formations.site.formation')
                       ->whereNumber($number)->first();
 
         if (!$etudiant)
             return redirect()->route('etudiants.index');
 
-        $formations = CommuneFormation::with('commune', 'formation')->orderBy('id', 'desc')->get();
+        $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();
         $communes = Commune::with('departement', 'departement.region')->get();
         $phases = Phase::get();
 
@@ -78,20 +82,22 @@ class EtudiantController extends Controller
 
     public function inscrireEtudiant (Request $request, $number) {
        $etudiant  = Etudiant::whereNumber($number)->whereIsActive(true)->first();
+       $session = Session::whereStatus('pending')->first();
 
        if (!$etudiant)
          return redirect()->back()->withErrors(['existing' => 'stagiaire non actif']);
 
-         $form_etud = FormationEtudiant::whereEtudiantId($etudiant->id)
+         $form_etud = FormationEtudiant::whereSessionId($session->id)->whereEtudiantId($etudiant->id)
                       ->whereCommuneFormationId($request->commune_formation_id)
                       ->whereEtat('inscris')
                       ->first();
 
-         $commune_formation = CommuneFormation::with('formation')->findOrFail($request->commune_formation_id);
-         $count = FormationEtudiant::whereCommuneFormationId($request->commune_formation_id)->whereEtat('inscris')->count();
+         $commune_formation = CommuneFormation::whereSessionId($session->id)->with('formation')->findOrFail($request->commune_formation_id);
+         $count = FormationEtudiant::whereSessionId($session->id)->whereCommuneFormationId($request->commune_formation_id)->whereEtat('inscris')->count();
 
          if (!$form_etud && ($count <= $commune_formation->qte_requis)) {
              $form = FormationEtudiant::create([
+                 'session_id'           => $session->id,
                  'etudiant_id'          => $etudiant->id,
                  'commune_formation_id' => $commune_formation->id,
                  'etat'                 => 'inscris',
@@ -131,6 +137,7 @@ class EtudiantController extends Controller
                 ->withErrors(['validator' => 'Les champs prénom, formation, résidence et Email sont obligatoires']);
         }
 
+        $session = Session::whereStatus('pending')->first();
         $existing = Etudiant::whereResidenceId($request->residence_id)
                     ->whereFirstname($request->firstname)
                     ->wherePhone($request->phone)
@@ -159,16 +166,17 @@ class EtudiantController extends Controller
             ]);
 
             if ($etudiant) {
-                $commune_formation = CommuneFormation::with('formation')->findOrFail($request->commune_formation_id);
-                $form_etud = FormationEtudiant::whereEtudiantId($etudiant->id)
+                $commune_formation = CommuneFormation::whereSessionId($session->id)->with('formation')->findOrFail($request->commune_formation_id);
+                $form_etud = FormationEtudiant::whereSessionId($session->id)->whereEtudiantId($etudiant->id)
                              ->whereCommuneFormationId($commune_formation->id)
                              ->whereEtat('inscris')
                              ->first();
 
-                $count = FormationEtudiant::whereCommuneFormationId($commune_formation->id)->whereEtat('inscris')->count();
+                $count = FormationEtudiant::whereSessionId($session->id)->whereCommuneFormationId($commune_formation->id)->whereEtat('inscris')->count();
 
                 if (!$form_etud && ($count <= $commune_formation->qte_requis)) {
                     $form = FormationEtudiant::create([
+                        'session_id'   => $session->id,
                         'etudiant_id'   => $etudiant->id,
                         'commune_formation_id'    => $commune_formation->id,
                         'etat'          => 'inscris',

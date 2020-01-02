@@ -11,6 +11,7 @@ use App\Models\Formation;
 use App\Models\Commune;
 use App\Models\FormationEtudiant;
 use App\Models\CommuneFormation;
+use App\Models\Session;
 use App\Helpers\FormationHelper;
 use App\Repositories\FormationRepository as formRepo;
 use Illuminate\Http\Request;
@@ -33,6 +34,7 @@ class FormationsController extends Controller
      * @return \Illuminate\Http\Response
      */
      public function index(Request $request) {
+         $session = Session::whereStatus('pending')->first();
          $status = $request->is_active;
          $stagiaires = Etudiant::whereIsActive(true)->count();
          $formations = Formation::with(['sites', 'sites.commune', 'phases'])
@@ -42,6 +44,7 @@ class FormationsController extends Controller
              ->when($status, function($query) use ($status) {
                  return $query->where('is_active', $status);
              })
+             ->whereSessionId($session->id)
              ->orderBy('id', 'desc')
              ->paginate(50);
 
@@ -75,6 +78,7 @@ class FormationsController extends Controller
                 ->withInput($request->all())
                 ->withErrors(['validator' => 'Le champ Titre est obligatoire']);
 
+         $session = Session::whereStatus('pending')->first();
          $existing = Formation::whereTitle($request->title)->first();
 
          $debut = $request->start_date .' '. $request->start_heure.':'.$request->start_minutes;
@@ -86,6 +90,7 @@ class FormationsController extends Controller
          if (!$existing) {
              $formation = Formation::create([
                'number'      => FormationHelper::makeFormationNumber(),
+               'session_id'  => $session->id,
                'title'       => $request->title,
                'description' => $request->description,
                'is_active'   => $request->is_active
@@ -94,6 +99,7 @@ class FormationsController extends Controller
             $formation->phases()->attach([1,2]);
 
              CommuneFormation::create([
+                 'session_id' => $session->id,
                  'formation_id' => $formation->id,
                  'commune_id'  => $request->commune_id,
                  'start_date'  => $start_date,
@@ -133,6 +139,7 @@ class FormationsController extends Controller
          $start_date = Carbon::parse($debut)->format('Y-m-d H:i');
          $end_date = Carbon::parse($fin)->format('Y-m-d H:i');
          $duree = FormationHelper::dateDifference($start_date, $end_date, '%a');
+         $session = Session::whereStatus('pending')->first();
 
          $formation = Formation::whereNumber($number)->whereIsActive(true)->first();
          if (!$formation)
@@ -141,6 +148,7 @@ class FormationsController extends Controller
          $site = CommuneFormation::whereFormationId($formation->id)->whereCommuneId($request->commune_id)->first();
          if (!$site) {
            CommuneFormation::create([
+               'session_id' => $session->id,
                'formation_id' => $formation->id,
                'commune_id'  => $request->commune_id,
                'start_date'  => $start_date,
@@ -184,7 +192,8 @@ class FormationsController extends Controller
              return redirect()->route('formation.edit', $formation->number);
 
          $communes   = Commune::with('departement', 'departement.region')->get();
-         $formation->commune_formations = CommuneFormation::with('etudiants.etudiant')->whereFormationId($formation->id)->get();
+         $session = Session::whereStatus('pending')->first();
+         $formation->commune_formations = CommuneFormation::whereSessionId($session->id)->with('etudiants.etudiant')->whereFormationId($formation->id)->get();
          $formation->etudiants = $this->formRepo->getStagiaireFormation($formation->id);
 
          return view('admin.formations.edit', compact('formation', 'communes'));
@@ -197,7 +206,8 @@ class FormationsController extends Controller
      * @return \Illuminate\Http\Response
      */
      public function editSite ($id) {
-         $site = CommuneFormation::with('formation', 'commune', 'etudiants')->find($id);
+         $session = Session::whereStatus('pending')->first();
+         $site = CommuneFormation::whereSessionId($session->id)->with('formation', 'commune', 'etudiants')->find($id);
          if (!$site)
              return redirect()->back()->withErrors(['status' => 'Site inconnu']);
 
@@ -214,7 +224,8 @@ class FormationsController extends Controller
       * @return \Illuminate\Http\Response
       */
      public function ajouterEtudiant (Request $request, $id) {
-        $commune_formation  = CommuneFormation::find($id);
+        $session = Session::whereStatus('pending')->first();
+        $commune_formation  = CommuneFormation::whereSessionId($session->id)->find($id);
         $etudiant  = Etudiant::whereIsActive(true)->find($request->etudiant_id);
 
         if (!$commune_formation)
@@ -223,15 +234,16 @@ class FormationsController extends Controller
         if (!$etudiant)
           return redirect()->back()->withErrors(['existing' => 'Etudiant non actif']);
 
-          $form_etud = FormationEtudiant::whereEtudiantId($etudiant->id)
+          $form_etud = FormationEtudiant::whereSessionId($session->id)->whereEtudiantId($etudiant->id)
                        ->whereCommuneFormationId($commune_formation->id)
                        ->whereEtat('inscris')
                        ->first();
 
-          $count = FormationEtudiant::whereCommuneFormationId($commune_formation->id)->whereEtat('inscris')->count();
+          $count = FormationEtudiant::whereSessionId($session->id)->whereCommuneFormationId($commune_formation->id)->whereEtat('inscris')->count();
 
           if (!$form_etud && ($count <= $formation->qte_requis)) {
               FormationEtudiant::create([
+                  'session_id'          => $session->id,
                   'etudiant_id'          => $etudiant->id,
                   'commune_formation_id' => $commune_formation->id,
                   'etat'                 => 'inscris',
@@ -295,7 +307,8 @@ class FormationsController extends Controller
                 ->withErrors(['validator' => 'Les champs Site, Date début & Date fin sont obligatoires']);
 
          $formation = Formation::whereId($request->formation_id)->first();
-         $site = CommuneFormation::whereId($id)->first();
+         $session = Session::whereStatus('pending')->first();
+         $site = CommuneFormation::whereSessionId($session->id)->whereId($id)->first();
          if (!$site)
              return redirect()->back()->withErrors(['user' => 'Site inconnu']);
 

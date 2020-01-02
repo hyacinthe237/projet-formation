@@ -9,7 +9,7 @@
     </div>
 
     <div class="title">
-        Dashboard
+        Dashboard - Session {{ $data['session']->name }}
 
     </div>
 </div>
@@ -77,7 +77,7 @@
 
         <div class="cards row mt-40">
             <div class="col-sm-12 bg-white">
-              <h4 class="mt-20">Participation des communes par formations</h4>
+              <h4 class="mt-20">Participation des communes par formations </h4>
 
               <table class="table table-striped">
                   <thead>

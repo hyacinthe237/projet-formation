@@ -32,6 +32,7 @@ class EtudiantsTableSeeder extends Seeder
         ]);
 
         $fe1 = FormationEtudiant::create([
+            'session_id'  => 1,
             'etudiant_id'   => $etudiant_01->id,
             'commune_formation_id'  => 1,
             'etat'          => 'inscris',
@@ -59,6 +60,7 @@ class EtudiantsTableSeeder extends Seeder
         ]);
 
         $fe2 = FormationEtudiant::create([
+            'session_id'  => 1,
             'etudiant_id'  => $etudiant_02->id,
             'commune_formation_id'  => 1,
             'etat'          => 'inscris',

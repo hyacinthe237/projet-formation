@@ -10,6 +10,7 @@ use App\Models\Budget;
 use App\Models\BudgetItem;
 use App\Models\CommuneFormation;
 use App\Models\TypeItem;
+use App\Models\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
@@ -24,11 +25,13 @@ class BudgetController extends Controller
    */
   public function index(Request $request)
   {
+      $session = Session::whereStatus('pending')->first();
       $keywords = $request->keywords;
       $budgets = Budget::when($keywords, function($query) use ($keywords) {
           return $query->where('budget_initial', 'like', '%'.$keywords.'%')
           ->orWhere('budget_reel', 'like', '%'.$keywords.'%');
       })
+      ->whereSessionId($session->id)
       ->with('site')
       ->orderBy('id', 'desc')
       ->paginate(50);
@@ -38,14 +41,16 @@ class BudgetController extends Controller
 
     public function create ()
     {
-        $formations = CommuneFormation::with('formation', 'commune')->get();
+        $session = Session::whereStatus('pending')->first();
+        $formations = CommuneFormation::whereSessionId($session->id)->with('formation', 'commune')->get();
         return view('admin.budgets.create', compact('formations'));
     }
 
     public function edit ($id)
     {
+        $session = Session::whereStatus('pending')->first();
         $budget  = Budget::with('items', 'items.type')->find($id);
-        $formations = CommuneFormation::with('formation', 'commune')->orderBy('id', 'desc')->get();
+        $formations = CommuneFormation::whereSessionId($session->id)->with('formation', 'commune')->orderBy('id', 'desc')->get();
         $types = TypeItem::get();
         if (!$budget)
             return redirect()->route('budgets.index');
@@ -127,7 +132,8 @@ class BudgetController extends Controller
      */
     public function downloadBudget ($id)
     {
-        $data = self::takeBudgetInfos($id);
+        $session = Session::whereStatus('pending')->first();
+        $data = self::takeBudgetInfos($id, $session->id);
 
         $pdf = PDF::loadView('pdfs.budget', $data);
         return $pdf->stream();
@@ -138,9 +144,9 @@ class BudgetController extends Controller
      * @param  [type] $id [description]
      * @return [type]         [description]
      */
-    private static function takeBudgetInfos ($id)
+    private static function takeBudgetInfos ($id, $session)
     {
-        $budget = Budget::whereId($id)
+        $budget = Budget::whereId($id)->whereSessionId($session->id)
                     ->with('items', 'items.type', 'site', 'site.etudiants', 'site.formation',  'site.formation.formateurs', 'site.commune')
                     ->firstOrFail();
 
@@ -195,6 +201,7 @@ class BudgetController extends Controller
             'totalCommunications' => $totalCommunications,
             'totalPersonnels' => $totalPersonnels,
             'site' => $site,
+            'session' => $session,
             'etudiants' => $site->etudiants,
             'budget' => $budget
         ];
@@ -230,8 +237,10 @@ class BudgetController extends Controller
         if ($request->budget_initial == $request->budget_reel)
             $taux = 100;
 
+        $session = Session::whereStatus('pending')->first();
         if (!$existing) {
             $budget = Budget::create([
+              'session_id' => $session->id,
               'commune_formation_id' => $request->commune_formation_id,
               'user_id'              => Auth::user()->id,
               'budget_initial'       => $request->budget_initial,
