@@ -7,7 +7,7 @@
               <tbody>
                 <tr>
                   <td class="td-100 text-center bold" style="text-transform:uppercase;">
-                      Liste des etudiants du pnfmv
+                      Liste des Stagiaires du pnfmv
                   </td>
                 </tr>
               </tbody>

@@ -94,8 +94,8 @@
 
                     <tbody>
                         @foreach($sessions as $session)
-                            <tr data-href="{{ route('sessions.edit', $session->id) }}">
-                                <td>{{ $session->name }}</td>
+                            <tr>
+                                <td> <a href="{{ route('sessions.edit', $session->id) }}">{{ $session->name }}</a></td>
                                 <td>
                                   @if ($session->status == 'pending')
                                     En cours
@@ -103,7 +103,11 @@
                                     Passée
                                   @endif
                                 </td>
-                                <td>{{ date('d/m/Y H:i', strtotime($session->created_at)) }}</td>
+                                <td>
+                                    @if ($session->status == 'passed')
+                                       <a href="{{ route('sessions.pending', $session->id) }}" class="btn btn-success">Activer la session</a>
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

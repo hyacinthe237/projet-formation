@@ -107,4 +107,28 @@ class SessionController extends Controller
         return redirect()->route('sessions.index')->with('message', 'session mise à jour avec succès');
     }
 
+    /**
+     *
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function pending($id)
+    {
+        $session = Session::find($id);
+        if (!$session) return redirect()->back()->withErrors(['Session' => 'Session inconnue!']);
+
+        $session->status   = 'pending';
+        $session->update();
+
+        $sessions = Session::where('id', '!=', $session->id)->get();
+        foreach ($sessions as $se) {
+            $se->status = 'passed';
+            $se->update();
+        }
+
+        return redirect()->route('sessions.index')->with('message', 'Session activée');
+    }
+
 }

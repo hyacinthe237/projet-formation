@@ -25,6 +25,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], fun
     Route::post('formations/{id}/updateSite', 'views\admin\FormationsController@updateSite')->name('formation.update.site');
     Route::get('formations/{id}/editSite', 'views\admin\FormationsController@editSite')->name('formation.edit.site');
     Route::post('formations/{number}/addSite', 'views\admin\FormationsController@storeSite')->name('formation.store.site');
+    Route::get('sessions/{id}/pending', 'views\admin\SessionController@pending')->name('sessions.pending');
 
     Route::get('formateurs/{id}/edit-thematique', 'views\admin\FormateurController@editThematique')->name('formateur.edit.thematique');
     Route::post('formateurs/{id}/add-thematique', 'views\admin\FormateurController@storeThematique')->name('formateur.store.thematique');
