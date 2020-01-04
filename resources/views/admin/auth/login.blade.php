@@ -8,7 +8,7 @@
     <meta name="robots" content="noindex,nofollow">
     <meta name="name" content="{{ config('app.name') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/backend/css/admin.css') }}">    
+    <link rel="stylesheet" type="text/css" href="{{ asset('/backend/css/admin.css') }}">
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
     <script>
         var _auth = undefined;
@@ -49,7 +49,7 @@
         </form>
 
         <div class="mt-20 pb-10 fs-16">
-            <a href="/password/forgot">Mot de passe oublié ?</a>
+            {{-- <a href="/password/forgot">Mot de passe oublié ?</a> --}}
         </div>
     </section>
 

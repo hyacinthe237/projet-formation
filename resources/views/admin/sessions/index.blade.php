@@ -88,7 +88,7 @@
                         <tr>
                             <th>Nom</th>
                             <th>Status</th>
-                            <th>Created</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
 
@@ -98,7 +98,7 @@
                                 <td> <a href="{{ route('sessions.edit', $session->id) }}">{{ $session->name }}</a></td>
                                 <td>
                                   @if ($session->status == 'pending')
-                                    En cours
+                                    Session active
                                   @else
                                     Passée
                                   @endif
