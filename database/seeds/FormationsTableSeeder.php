@@ -73,7 +73,7 @@ class FormationsTableSeeder extends Seeder
             'type'        => 'Effective'
         ]);
 
-        $form_02->phases()->attach([1,2]);
+        $form_03->phases()->attach([1,2]);
 
     }
 }

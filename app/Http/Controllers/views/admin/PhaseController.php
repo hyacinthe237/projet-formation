@@ -6,6 +6,7 @@ use Auth;
 use DB;
 use Carbon\Carbon;
 use App\Models\Phase;
+use App\Models\Thematique;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
@@ -107,8 +108,9 @@ class PhaseController extends Controller
         if (!$phase)
             return redirect()->back()->withErrors(['message' => 'phase non existante']);
 
+        Thematique::wherePhaseId($phase->id)->delete();
         $phase->delete();
-        return redirect()->back()->with('message', 'phase supprimé');
+        return redirect()->route('phases.index')->with('message', 'phase supprimé');
     }
 
 }

@@ -371,6 +371,24 @@ class FormationsController extends Controller
          return redirect()->route('formation.index')->with('message', 'Formation supprimée');
      }
 
+    /**
+     * Remove commune formation
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+     public function removeSite ($id) {
+         $com_form = CommuneFormation::find($id);
+         if (!$com_form)
+             return redirect()->back()->withErrors(['message' => 'Site non existant']);
+
+         $formation = Formation::find($com_form->formation_id);
+         FormationEtudiant::whereCommuneFormationId($com_form->id)->delete();
+         $com_form->delete();
+
+         return redirect()->route('formation.edit', $formation->number)->with('message', 'Site supprimé');
+     }
+
      /**
       * Download PDF Formation
       * @param  [type] $id [description]

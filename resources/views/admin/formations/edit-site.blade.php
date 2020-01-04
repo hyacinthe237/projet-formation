@@ -183,7 +183,7 @@
       </div>
     @endif
 
-    <div class="col-sm-6 block">
+    <div class="col-sm-12 block">
         <div class="block-content form">
           <div class="mt-10">
             <h3 class="_block-title mb-20">Inscrire un stagiaire</h3>
@@ -212,9 +212,26 @@
           </div>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-sm-6 mb-20">
+            <div class="row">
+                <div class="col-sm-6 text-left">
+                    <button class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">
+                        Supprimer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
+@include('admin.modals.confirm', [
+    'route'    => 'remove.site',
+    'method'   => 'delete',
+    'resource' => $site,
+    'confirm'  => 'Oui, je supprimer',
+    'message'  => 'Voulez-vous de façon permanente supprimer ce site ?'
+])
 @endsection
 
 @section('js')

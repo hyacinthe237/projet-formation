@@ -124,7 +124,7 @@ class ThematiqueController extends Controller
             return redirect()->back()->withErrors(['message' => 'Cette thématique est dispensée par un formateur. impossible de la supprimer !']);
 
         $thematique->delete();
-        return redirect()->back()->with('message', 'Thématique supprimée');
+        return redirect()->route('thematiques.index')->with('message', 'Thématique supprimée');
     }
 
 }

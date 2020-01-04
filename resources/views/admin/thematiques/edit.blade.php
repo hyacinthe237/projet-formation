@@ -85,6 +85,6 @@
     'method'   => 'delete',
     'resource' => $thematique,
     'confirm'  => 'Oui, je supprimer',
-    'message'  => 'Voulez-vous de façon permanente supprimer cette Thématique ?'
+    'message'  => 'Voulez-vous de façon permanente supprimer la thematique "'. $thematique->name .'" ?'
 ])
 @endsection
