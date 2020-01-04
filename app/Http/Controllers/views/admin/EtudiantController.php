@@ -29,30 +29,9 @@ class EtudiantController extends Controller
    */
   public function index(Request $request)
   {
-      $keywords = $request->keywords;
-      $etudiants = Etudiant::with('residence', 'formations', 'formations.site', 'formations.site.commune', 'formations.site.formation')
-      ->when($keywords, function($query) use ($keywords) {
-          return $query->where('firstname', 'like', '%'.$keywords.'%')
-                      ->orWhere('lastname', 'like', '%'.$keywords.'%')
-                      ->orWhere('fonction', 'like', '%'.$keywords.'%')
-                      ->orWhere('structure', 'like', '%'.$keywords.'%');
-      })
-      ->when($request->commune_formation_id, function ($q) use ($request) {
-          return $q->whereHas('formations', function($sql) use ($request) {
-              return $sql->where('commune_formation_id', $request->commune_formation_id);
-          });
-      })
-      ->when($request->residence_id, function($query) use ($request) {
-          return $query->where('residence_id', $request->residence_id);
-      })
-      ->orderBy('id', 'desc')
-      ->paginate(50);
+      $data = self::takeEtudiantInfos($request);
 
-      $session = Session::whereStatus('pending')->first();
-      $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();
-      $communes = Commune::orderBy('name', 'asc')->get();
-
-      return view('admin.etudiants.index', compact('etudiants', 'formations', 'communes'));
+      return view('admin.etudiants.index', compact('data'));
   }
 
     public function create ()
@@ -221,7 +200,7 @@ class EtudiantController extends Controller
 
         $etudiant = Etudiant::whereNumber($number)->first();
         if (!$etudiant)
-            return redirect()->back()->withErrors(['user' => 'Etudiant inconnu!']);
+            return redirect()->back()->withErrors(['user' => 'Stagiaire inconnu!']);
 
         $etudiant->residence_id      = $request->has('residence_id') ? $request->residence_id : $etudiant->residence_id;
         $etudiant->firstname         = $request->has('firstname') ? $request->firstname : $etudiant->firstname;
@@ -242,7 +221,7 @@ class EtudiantController extends Controller
         $etudiant->photo             = $request->has('photo') ? $request->photo : $etudiant->photo;
         $etudiant->update();
 
-        return redirect()->back()->with('message', 'Etudiant mis à jour avec succès');
+        return redirect()->back()->with('message', 'Stagiaire mis à jour avec succès');
     }
 
     public function desactivateOrActivate (Request $request, $number)
@@ -250,20 +229,20 @@ class EtudiantController extends Controller
         $etudiant = Etudiant::whereNumber($numer)->first();
 
         if (!$etudiant)
-            return redirect()->back()->withErrors(['message' => 'Etudiant non existant']);
+            return redirect()->back()->withErrors(['message' => 'Stagiaire non existant']);
 
         if ($etudiant->is_active === 1) {
             $etudiant->is_active = false;
             $etudiant->save();
 
-            return redirect()->back()->with('message', 'Etudiant désactivé');
+            return redirect()->back()->with('message', 'Stagiaire désactivé');
         }
 
         if ($etudiant->is_active === 0) {
             $etudiant->is_active = true;
             $etudiant->save();
 
-            return redirect()->back()->with('message', 'Etudiant activé');
+            return redirect()->back()->with('message', 'Stagiaire activé');
         }
     }
 
@@ -271,10 +250,21 @@ class EtudiantController extends Controller
     {
         $etudiant = Etudiant::whereIsActive(true)->whereId($id)->first();
         if (!$etudiant)
-            return redirect()->back()->withErrors(['message' => 'Etudiant non existant']);
+            return redirect()->back()->withErrors(['message' => 'Stagiaire non existant']);
 
+        FormationEtudiant::whereEtudiantId($etudiant->id)->delete();
         $etudiant->delete();
-        return redirect()->back()->with('message', 'Etudiant supprimé');
+
+        return redirect()->route('stagiaires.index')->with('message', 'Stagiaire supprimé');
+    }
+
+    public function desincrire ($id) {
+      $form_etud = FormationEtudiant::find($id);
+      if (!$form_etud)
+          return redirect()->back()->withErrors(['message' => 'Enregistrement non existant']);
+
+      $form_etud->delete();
+      return redirect()->back()->with('message', 'Stagiaire desincris avec succès');
     }
 
     /**
@@ -282,9 +272,9 @@ class EtudiantController extends Controller
      * @param  [type] $id [description]
      * @return [type]         [description]
      */
-    public function downloadEtudiant ()
+    public function downloadEtudiant (Request $request)
     {
-        $data = self::takeEtudiantInfos();
+        $data = self::takeEtudiantInfos($request);
 
         $pdf = PDF::loadView('pdfs.etudiant', $data);
         return $pdf->stream();
@@ -295,12 +285,35 @@ class EtudiantController extends Controller
      * @param  [type] $id [description]
      * @return [type]         [description]
      */
-    private static function takeEtudiantInfos ()
+    private static function takeEtudiantInfos (Request $request)
     {
-        $etudiants = Etudiant::with('residence', 'formations')->whereIsActive(true)->get();
+        $keywords = $request->keywords;
+        $etudiants = Etudiant::with('residence', 'formations', 'formations.site', 'formations.site.commune', 'formations.site.formation')
+        ->when($keywords, function($query) use ($keywords) {
+            return $query->where('firstname', 'like', '%'.$keywords.'%')
+                        ->orWhere('lastname', 'like', '%'.$keywords.'%')
+                        ->orWhere('fonction', 'like', '%'.$keywords.'%')
+                        ->orWhere('structure', 'like', '%'.$keywords.'%');
+        })
+        ->when($request->commune_formation_id, function ($q) use ($request) {
+            return $q->whereHas('formations', function($sql) use ($request) {
+                return $sql->where('commune_formation_id', $request->commune_formation_id);
+            });
+        })
+        ->when($request->residence_id, function($query) use ($request) {
+            return $query->where('residence_id', $request->residence_id);
+        })
+        ->orderBy('id', 'desc')
+        ->paginate(50);
+
+        $session = Session::whereStatus('pending')->first();
+        $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();
+        $communes = Commune::orderBy('name', 'asc')->get();
 
         $data = [
-            'etudiants' => $etudiants
+            'etudiants' => $etudiants,
+            'formations' => $formations,
+            'communes' => $communes
         ];
 
         return $data;

@@ -241,7 +241,7 @@ class FormationsController extends Controller
 
           $count = FormationEtudiant::whereSessionId($session->id)->whereCommuneFormationId($commune_formation->id)->whereEtat('inscris')->count();
 
-          if (!$form_etud && ($count <= $formation->qte_requis)) {
+          if (!$form_etud && ($count <= $commune_formation->qte_requis)) {
               FormationEtudiant::create([
                   'session_id'          => $session->id,
                   'etudiant_id'          => $etudiant->id,
@@ -357,12 +357,18 @@ class FormationsController extends Controller
      * @return \Illuminate\Http\Response
      */
      public function destroy ($id) {
-         $formation = Formation::whereIsActive(true)->whereId($id)->first();
+         $formation = Formation::find($id);
          if (!$formation)
              return redirect()->back()->withErrors(['message' => 'Formation non existante']);
 
+         $commune_formations = CommuneFormation::whereFormationId($formation->id)->get();
+         foreach ($commune_formations as $item) {
+           $item->delete();
+           FormationEtudiant::whereCommuneFormationId($item->id)->delete();
+         }
+
          $formation->delete();
-         return redirect()->back()->with('message', 'Formation supprimée');
+         return redirect()->route('formation.index')->with('message', 'Formation supprimée');
      }
 
      /**

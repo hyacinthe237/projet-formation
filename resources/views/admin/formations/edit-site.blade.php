@@ -158,19 +158,22 @@
                             <th>Structure</th>
                             <th>Fonction</th>
                             <th>Etat</th>
-                            <th>Crée le</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         @foreach($site->etudiants as $item)
-                            <tr data-href="{{ route('stagiaires.edit', $item->etudiant->number) }}">
+                            <tr>
                                 <td> <img src="{{ $item->etudiant->getImgAttribute() }}" alt="" width="50px" height="50px" class="img-round"> </td>
                                 <td class="bold">{{ $item->etudiant->getNameAttribute() }}</td>
                                 <td>{{ $item->etudiant->structure }}</td>
                                 <td>{{ $item->etudiant->fonction }}</td>
                                 <td>{{ $item->etat }}</td>
-                                <td>{{ date('d/m/Y H:i', strtotime($item->etudiant->created_at)) }}</td>
+                                <td>
+                                  <a href="{{ route('stagiaires.desincrire', $item->id) }}" class="btn btn-warning">Désinscrire</a>
+                                  {{-- <a href="" class="btn btn-success">Formé</a> --}}
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

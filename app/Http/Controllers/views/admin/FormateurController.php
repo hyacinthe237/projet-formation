@@ -157,7 +157,10 @@ class FormateurController extends Controller
         if (!$formateur)
             return redirect()->back()->withErrors(['message' => 'formateur non existant']);
 
+        FormateurFormation::whereFormateurId($formateur->id)->delete();
+        FormateurThematique::whereFormateurId($formateur->id)->delete();
         $formateur->delete();
+        
         return redirect()->back()->with('message', 'Formateur supprimé');
     }
 

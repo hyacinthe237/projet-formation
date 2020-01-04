@@ -35,6 +35,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], fun
     Route::get('formations/liste-des-formations-pnfmv', 'views\admin\FormationsController@downloadFormation')->name('formations.download');
     Route::get('stagiaires/liste-des-etudiants-pnfmv', 'views\admin\EtudiantController@downloadEtudiant')->name('stagiaires.download');
     Route::get('dashboard/statistiques', 'views\admin\AdminController@download')->name('dashboard.statistiques');
+    Route::get('stagiaires/{id}/desincrire', 'views\admin\EtudiantController@desincrire')->name('stagiaires.desincrire');
 
     Route::resource('users', 'views\admin\UserController');
     Route::resource('roles', 'views\admin\RoleController');

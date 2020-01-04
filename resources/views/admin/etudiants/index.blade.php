@@ -35,7 +35,7 @@
                             <div class="form-select grey">
                                 <select class="form-control input-lg" name="residence_id">
                                     <option value="">Lieux de résidence</option>
-                                    @foreach($communes as $item)
+                                    @foreach($data['communes'] as $item)
                                         <option value="{{ $item->id }}"
                                           {{ Request::get('residence_id') == $item->id ? 'selected' : '' }}>
                                             {{ $item->name }}
@@ -48,7 +48,7 @@
                             <div class="form-select grey">
                                 <select class="form-control input-lg" name="commune_formation_id">
                                     <option value="">Toutes les formations</option>
-                                    @foreach($formations as $item)
+                                    @foreach($data['formations'] as $item)
                                         <option value="{{ $item->id }}"
                                           {{ Request::get('commune_formation_id') == $item->id ? 'selected' : '' }}>
                                             {{ $item->formation->title }} de {{ $item->commune->name }}
@@ -100,7 +100,7 @@
                     </thead>
 
                     <tbody>
-                        @foreach($etudiants as $etudiant)
+                        @foreach($data['etudiants'] as $etudiant)
                             <tr data-href="{{ route('stagiaires.edit', $etudiant->number) }}">
                                 <td> <img src="{{ $etudiant->getImgAttribute() }}" alt="" width="70px" height="70px" class="img-round"> </td>
                                 <td class="bold">{{ $etudiant->getNameAttribute() }}</td>

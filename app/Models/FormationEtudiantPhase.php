@@ -14,7 +14,7 @@ class FormationEtudiantPhase extends Model
      */
     protected $table = 'formation_etudiant_phases';
 
-    public function phhase () {
+    public function phase () {
         return $this->belongsTo(Phase::class, 'phase_id');
     }
 

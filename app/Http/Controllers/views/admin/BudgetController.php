@@ -133,7 +133,7 @@ class BudgetController extends Controller
     public function downloadBudget ($id)
     {
         $session = Session::whereStatus('pending')->first();
-        $data = self::takeBudgetInfos($id, $session->id);
+        $data = self::takeBudgetInfos($id, $session);
 
         $pdf = PDF::loadView('pdfs.budget', $data);
         return $pdf->stream();
@@ -300,8 +300,13 @@ class BudgetController extends Controller
         if (!$budget)
             return redirect()->back()->withErrors(['message' => 'Budget non existant']);
 
+        $items = BudgetItem::whereBudgetId($budget->id)->get();
+        foreach ($items as $item) {
+          $item->delete();
+        }
         $budget->delete();
-        return redirect()->back()->with('message', 'Budget supprimé');
+        
+        return redirect()->route('budgets.index')->with('message', 'Budget supprimé');
     }
 
 }

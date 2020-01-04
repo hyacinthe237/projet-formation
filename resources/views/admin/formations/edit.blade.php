@@ -334,8 +334,27 @@
               </div>
           </div>
         @endif
+
+        <div class="row">
+            <div class="col-sm-6 mb-20">
+                <div class="row">
+                    <div class="col-sm-6 text-left">
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">
+                            Supprimer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
+    @include('admin.modals.confirm', [
+        'route'    => 'formation.delete',
+        'method'   => 'delete',
+        'resource' => $formation,
+        'confirm'  => 'Oui, je supprimer',
+        'message'  => 'Voulez-vous de façon permanente supprimer cette formation ?'
+    ])
 @endsection
 
 @section('js')
