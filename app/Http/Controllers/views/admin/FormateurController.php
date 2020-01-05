@@ -160,8 +160,21 @@ class FormateurController extends Controller
         FormateurFormation::whereFormateurId($formateur->id)->delete();
         FormateurThematique::whereFormateurId($formateur->id)->delete();
         $formateur->delete();
-        
+
         return redirect()->back()->with('message', 'Formateur supprimé');
+    }
+
+    public function removeThematique ($id)
+    {
+        $ft = FormateurThematique::find($id);
+        if (!$ft)
+            return redirect()->back()->withErrors(['message' => 'Thématique non existante']);
+
+
+        $formateur = Formateur::find($ft->formateur_id);
+        $ft->delete();
+
+        return redirect()->route('formateurs.edit', $formateur->id)->with('message', 'Thématique supprimée');
     }
 
     /**

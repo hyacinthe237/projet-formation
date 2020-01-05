@@ -32,6 +32,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], fun
     Route::post('formateurs/{id}/add-thematique', 'views\admin\FormateurController@storeThematique')->name('formateur.store.thematique');
     Route::get('formateurs/{id}/edit-formation', 'views\admin\FormateurController@editFormation')->name('formateur.edit.formation');
     Route::post('formateurs/{id}/add-formation', 'views\admin\FormateurController@storeFormation')->name('formateur.store.formation');
+    Route::delete('formateurs/{id}/remove', 'views\admin\FormateurController@removeThematique')->name('formateur.delete.thematique');
 
     Route::get('formations/liste-des-formations-pnfmv', 'views\admin\FormationsController@downloadFormation')->name('formations.download');
     Route::get('stagiaires/liste-des-etudiants-pnfmv', 'views\admin\EtudiantController@downloadEtudiant')->name('stagiaires.download');

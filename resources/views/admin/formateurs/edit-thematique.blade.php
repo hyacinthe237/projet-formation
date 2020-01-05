@@ -124,8 +124,27 @@
       </div>
     {!! Form::close() !!}
 
+    <div class="row">
+        <div class="col-sm-6 mb-40">
+            <div class="row">
+                <div class="col-sm-6 text-left">
+                    <button class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">
+                        Supprimer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </section>
 
+@include('admin.modals.confirm', [
+    'route'    => 'formateur.delete.thematique',
+    'method'   => 'delete',
+    'resource' => $formateur_thematique,
+    'confirm'  => 'Oui, je supprimer',
+    'message'  => 'Voulez-vous de façon permanente supprimer thématique ?'
+])
 @endsection
 
 @section('js')

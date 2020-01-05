@@ -78,7 +78,6 @@
                 <thead>
                     <tr>
                         <th>Titre</th>
-                        <th>Nbre de Places</th>
                         <th>Etat</th>
                     </tr>
                 </thead>
@@ -87,7 +86,6 @@
                     @foreach($formateur->formations as $item)
                         <tr data-href="{{ route('formateur.edit.formation', $item->id) }}">
                             <td class="bold">{{ $item->formation->title }}</td>
-                            <td>{{ $item->formation->qte_requis }}</td>
                             <td>{{ $item->formation->is_active ? 'Active' : 'Non active' }}</td>
                         </tr>
                     @endforeach
