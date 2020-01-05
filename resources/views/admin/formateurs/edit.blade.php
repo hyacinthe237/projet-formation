@@ -22,28 +22,28 @@
             <div class="block">
                 <div class="block-content form">
                       <div class="row mt-20">
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Prénom(s)</label>
                                 <input type="text" name="firstname" class="form-control input-lg" value="{{ $formateur->firstname }}" required>
                             </div>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Nom(s)</label>
                                 <input type="text" name="lastname" class="form-control input-lg" value="{{ $formateur->lastname }}" required>
                             </div>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Qualification</label>
                                 <input type="text" name="qualification" class="form-control input-lg" value="{{ $formateur->qualification }}" required>
                             </div>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Type</label>
                                 <div class="form-select grey">

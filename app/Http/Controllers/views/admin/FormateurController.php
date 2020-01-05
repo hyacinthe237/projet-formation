@@ -177,6 +177,19 @@ class FormateurController extends Controller
         return redirect()->route('formateurs.edit', $formateur->id)->with('message', 'Thématique supprimée');
     }
 
+    public function removeFormation ($id)
+    {
+        $ft = FormateurFormation::find($id);
+        if (!$ft)
+            return redirect()->back()->withErrors(['message' => 'Formation non existante']);
+
+
+        $formateur = Formateur::find($ft->formateur_id);
+        $ft->delete();
+
+        return redirect()->route('formateurs.edit', $formateur->id)->with('message', 'Formation supprimée');
+    }
+
     /**
      * Store a newly created site formation in storage.
      *

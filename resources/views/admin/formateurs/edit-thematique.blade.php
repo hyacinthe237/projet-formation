@@ -143,7 +143,7 @@
     'method'   => 'delete',
     'resource' => $formateur_thematique,
     'confirm'  => 'Oui, je supprimer',
-    'message'  => 'Voulez-vous de façon permanente supprimer thématique ?'
+    'message'  => 'Voulez-vous de façon permanente supprimer cette thématique ?'
 ])
 @endsection
 
