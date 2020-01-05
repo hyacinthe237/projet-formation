@@ -47,7 +47,7 @@
                             <th>Name</th>
                             <th>Qualification</th>
                             <th>Type</th>
-                            <th>Created</th>
+                            <th>Ajouté le</th>
                         </tr>
                     </thead>
 
