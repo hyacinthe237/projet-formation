@@ -157,7 +157,7 @@ class UserController extends Controller
             return redirect()->back()->withErrors(['message' => 'Utilisateur non existant']);
 
         $user->delete();
-        return redirect()->back()->with('message', 'Utilisateur supprimé');
+        return redirect()->route('users.index')->with('message', 'Utilisateur supprimé');
     }
 
 }

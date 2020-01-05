@@ -253,9 +253,9 @@
                                   </div>
                               </div>
 
-                              <div class="form-group text-right mb-20">
+                              <div class="form-group text-right mb-20 mt-40">
                                   <button type="submit" class="btn btn-lg btn-primary">
-                                      <i class="ion-checkmark"></i> Enregistrer
+                                      <i class="ion-checkmark"></i> Ajouter la thematique
                                   </button>
                               </div>
                         </div>

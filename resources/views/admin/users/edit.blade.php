@@ -13,10 +13,10 @@
         </div>
     </div>
 
-{!! Form::model($user, ['method' => 'PATCH', 'route' => ['users.update', $user->id], 'class' => '_form' ]) !!}
+
 
     <section class="container-fluid mt-20">
-
+      {!! Form::model($user, ['method' => 'PATCH', 'route' => ['users.update', $user->id], 'class' => '_form' ]) !!}
         @include('errors.list')
         {{ csrf_field() }}
 
@@ -56,7 +56,6 @@
                     </div>
                 </div>
 
-
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -88,20 +87,42 @@
 
                 </div>
 
+                <div class="text-right mr-20">
+                    <button type="submit" class="btn btn-lg btn-primary">
+                        <i class="ion-checkmark"></i> Enregistrer
+                    </button>
+                </div>
             </div>
         </div>
+      {!! Form::close() !!}
+
+      <div class="row">
+          <div class="col-sm-6 mb-40">
+              <div class="row">
+                  <div class="col-sm-6 text-left">
+                      <button class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">
+                          Supprimer
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </div>
     </section>
 
 
 
 
-    <div class="text-right mr-20">
-        <button type="submit" class="btn btn-lg btn-primary">
-            <i class="ion-checkmark"></i> Enregistrer
-        </button>
-    </div>
 
-{!! Form::close() !!}
+    @include('admin.modals.confirm', [
+        'route'    => 'users.destroy',
+        'method'   => 'delete',
+        'resource' => $user,
+        'confirm'  => 'Oui, je supprimer',
+        'message'  => 'Voulez-vous de façon permanente supprimer cet utilisateur ?'
+    ])
+
+
+
 
 
 {{-- <section class="mt-40">
