@@ -148,9 +148,10 @@ class AdminRepository
     }
 
     public function getFormationExecuter ($sessionId) {
-        $formation_exec = CommuneFormation::whereSessionId($sessionId)->whereType('Effective')->count();
+        $today = Carbon::parse(Carbon::now())->format('Y-m-d H:i');
+        $formation_exec = CommuneFormation::where('end_date', '<=', $today)->count();
         $formation_prevu = CommuneFormation::whereSessionId($sessionId)->count();
-
+        
         if ($formation_prevu == 0) {
           return 0;
         }
