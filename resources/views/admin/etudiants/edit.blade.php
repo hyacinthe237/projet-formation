@@ -236,7 +236,7 @@
                 <h3 class="_block-title mb-20">Inscrire l'étudiant à une autre formation</h3>
                 {!! Form::model($etudiant, ['method' => 'POST', 'route' => ['inscrire.etudiant.formation', $etudiant->number], 'class' => '_form' ]) !!}
                   <div class="row mt-10">
-                      <div class="col-sm-12">
+                      <div class="col-sm-9">
                         <div class="form-group">
                             <label>Sélectionner une formation</label>
                             <div class="form-select grey">
@@ -251,19 +251,19 @@
                         </div>
                       </div>
 
-                      <div class="col-sm-6">
+                      <div class="col-sm-3">
                         {!! Form::label('phases', 'Choix des phases') !!}
                         <div class="">
                             <select class="js-example-basic-multiple form-control input-lg" name="phases[]" multiple="multiple">
                                 @foreach ($phases as $phase)
-                                    <option value="{{ $phase->id}}"> {{ $phase->title }} </option>
+                                    <option value="{{ $phase->id }}">{{ $phase->title }}</option>
                                 @endforeach
                             </select>
                         </div>
                       </div>
 
                       <div class="col-sm-12">
-                        <div class="form-group text-right mb-20">
+                        <div class="form-group text-right mb-20 mt-20">
                             <button type="submit" class="btn btn-lg btn-primary">
                                 <i class="ion-checkmark"></i> Inscrire l'étudiant
                             </button>

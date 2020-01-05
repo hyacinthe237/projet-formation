@@ -83,9 +83,10 @@ class AdminRepository
                         ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
                         ->join('communes as c', 'c.id', '=', 'cf.commune_id')
                         ->join('departements as d', 'd.id', '=', 'c.departement_id')
+                        ->join('formation_etudiant_phases as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
                         ->where('d.region_id', '=', $regionId)
                         ->where('cf.session_id', '=', $sessionId)
-                        ->where('fe.etat', '=', 'formee')
+                        ->whereIn('fep.phase_id', [1, 2])
                         ->get();
 
         return $personnes;
@@ -111,9 +112,10 @@ class AdminRepository
                         ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')
                         ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
                         ->join('communes as c', 'c.id', '=', 'cf.commune_id')
+                        ->join('formation_etudiant_phases as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
                         ->where('c.departement_id', '=', $departementId)
                         ->where('cf.session_id', '=', $sessionId)
-                        ->where('fe.etat', '=', 'formee')
+                        ->whereIn('fep.phase_id', [1, 2])
                         ->get();
 
         return $personnes;
@@ -151,7 +153,7 @@ class AdminRepository
         $today = Carbon::parse(Carbon::now())->format('Y-m-d H:i');
         $formation_exec = CommuneFormation::where('end_date', '<=', $today)->count();
         $formation_prevu = CommuneFormation::whereSessionId($sessionId)->count();
-        
+
         if ($formation_prevu == 0) {
           return 0;
         }
