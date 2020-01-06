@@ -82,7 +82,7 @@ class AdminController extends Controller
         $communesToucher  = $adminRepo->getCommunesToucher($session->id);
         $totalPersonnePrevuFormer  = $adminRepo->getTotalPersonnePrevuFormer($session->id);
         $formationExecuter  = $adminRepo->getFormationExecuter($session->id);
-        $etudiants     = FormationEtudiant::whereSessionId($session->id)->get();
+        $etudiants     = $adminRepo->getStagiaires($session->id);
         $formateurs    = Formateur::get();
         $formations    = CommuneFormation::whereSessionId($session->id)->with('formation', 'commune')->get();
 

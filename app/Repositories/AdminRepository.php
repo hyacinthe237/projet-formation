@@ -44,12 +44,11 @@ class AdminRepository
         return $communes;
     }
 
-    public function getStagiairesFormer () {
+    public function getStagiaires ($sessionId) {
 
         $stagiaires = DB::table('etudiants as e')
                         ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')
-                        ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
-                        ->where('cf.formation_id', '=', 'fe.formation_id')
+                        ->where('fe.session_id', '=', $sessionId)
                         ->get();
 
         $uniques = array();
