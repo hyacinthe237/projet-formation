@@ -23,7 +23,7 @@
           <div class="block-content form">
 
               <div class="row mt-20">
-                  <div class="col-sm-12">
+                  <div class="col-sm-8">
                         <div class="form-group">
                             <label>Choisissez une formation</label>
                             <div class="form-select grey">
@@ -38,12 +38,6 @@
                         </div>
                   </div>
                   <div class="col-sm-4">
-                    <div class="form-group">
-                      <label for="etat">Etat</label>
-                      <input type="text" name="etat" class="form-control input-lg" value="{{ $form_etud->etat }}" readonly>
-                    </div>
-                  </div>
-                  <div class="col-sm-8">
                     <label for="phases">Phases</label>
                     <div class="form-group">
                       @foreach ($phases as $phase)
@@ -60,7 +54,9 @@
                         @endif
                       @endforeach
                     </div>
+                  </div>
 
+                  <div class="col-sm-12">
                     <div class="form-group text-right mb-20">
                         <button type="submit" class="btn btn-lg btn-primary">
                             <i class="ion-checkmark"></i> Modifier
