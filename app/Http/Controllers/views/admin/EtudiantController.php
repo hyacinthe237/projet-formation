@@ -50,13 +50,26 @@ class EtudiantController extends Controller
                       ->whereNumber($number)->first();
 
         if (!$etudiant)
-            return redirect()->route('etudiants.index');
+            return redirect()->route('stagiaires.index');
 
         $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();
         $communes = Commune::with('departement', 'departement.region')->get();
         $phases = Phase::get();
 
         return view('admin.etudiants.edit', compact('formations', 'communes', 'etudiant', 'phases'));
+    }
+
+    public function editEtudiantFormation ($id)
+    {
+        $session = Session::whereStatus('pending')->first();
+        $phases = Phase::get();
+        $form_etud  = FormationEtudiant::with('phases', 'etudiant')->find($id);
+        if (!$form_etud)
+            return redirect()->route('stagiaires.index');
+
+        $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();
+
+        return view('admin.etudiants.edit-formation', compact('form_etud', 'formations', 'phases'));
     }
 
     public function inscrireEtudiant (Request $request, $number) {
@@ -187,8 +200,33 @@ class EtudiantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $number)
-    {
+    public function updateEtudiantFormation (Request $request, $id) {
+        $validator = Validator::make($request->all(), [
+            'phases' => 'required'
+        ]);
+
+        if ($validator->fails())
+            return redirect()->back()->withErrors(['validator' => 'Phase obligatoire']);
+
+        $form_etud = FormationEtudiant::find($id);
+        if (!$form_etud)
+            return redirect()->back()->withErrors(['user' => 'Formation non existante']);
+
+        $form_etud->commune_formation_id = $request->has('commune_formation_id') ? $request->commune_formation_id : $form_etud->commune_formation_id;
+        $form_etud->save();
+        $form_etud->phases()->sync($request->phases);
+
+        return redirect()->back()->with('message', 'Mise à jour effectuée succès');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $number) {
         $validator = Validator::make($request->all(), [
             'residence_id' => 'required',
             'firstname' => 'required',
@@ -265,6 +303,17 @@ class EtudiantController extends Controller
 
       $form_etud->delete();
       return redirect()->back()->with('message', 'Stagiaire desincris avec succès');
+    }
+
+    public function removeEtudiantFormation ($id) {
+      $form_etud = FormationEtudiant::with('etudiant')->find($id);
+      if (!$form_etud)
+          return redirect()->back()->withErrors(['message' => 'Enregistrement non existant']);
+
+      $etud = Etudiant::find($form_etud->etudiant_id);
+      $form_etud->delete();
+      
+      return redirect()->route('stagiaires.edit', $etud->number)->with('message', 'Stagiaire desincris avec succès');
     }
 
     /**

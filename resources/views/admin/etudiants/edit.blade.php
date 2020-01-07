@@ -200,7 +200,7 @@
 
                         <tbody>
                             @foreach($etudiant->formations as $item)
-                                <tr>
+                                <tr data-href="{{ route('edit.etudiant.formation', $item->id) }}">
                                     <td class="bold td-40">{{ $item->site->formation->title }}</td>
                                     <td class="td-10">{{ $item->site->commune->name }}</td>
                                     <td class="td-15">
