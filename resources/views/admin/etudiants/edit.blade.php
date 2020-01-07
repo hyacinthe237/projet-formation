@@ -233,7 +233,7 @@
         <div class="block">
             <div class="block-content form">
               <div class="mt-20">
-                <h3 class="_block-title mb-20">Inscrire l'étudiant à une autre formation</h3>
+                <h3 class="_block-title mb-20">Inscrire le stagiaire à une autre formation</h3>
                 {!! Form::model($etudiant, ['method' => 'POST', 'route' => ['inscrire.etudiant.formation', $etudiant->number], 'class' => '_form' ]) !!}
                   <div class="row mt-10">
                       <div class="col-sm-9">
@@ -265,7 +265,7 @@
                       <div class="col-sm-12">
                         <div class="form-group text-right mb-20 mt-20">
                             <button type="submit" class="btn btn-lg btn-primary">
-                                <i class="ion-checkmark"></i> Inscrire l'étudiant
+                                <i class="ion-checkmark"></i> Inscrire le stagiaire
                             </button>
                         </div>
                       </div>
