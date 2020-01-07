@@ -204,19 +204,11 @@
                                     <td class="bold td-40">{{ $item->site->formation->title }}</td>
                                     <td class="td-10">{{ $item->site->commune->name }}</td>
                                     <td class="td-15">
-                                      @foreach ($item->phases as $phase)
-                                        @if ($item->phases->contains('id', $phase->id))
-                                            <label class="css-input css-checkbox css-checkbox-primary mr-20">
-                                                <input type="checkbox" name="phases[]" value="{{ $phase->id }}" checked>
-                                                <span class="mr-10"></span> {{ $phase->title }}
-                                            </label>
-                                        @else
-                                            <label class="css-input css-checkbox css-checkbox-primary mr-20">
-                                                <input type="checkbox" name="phases[]" value="{{ $phase->id }}">
-                                                <span class="mr-10"></span> {{ $phase->title }}
-                                            </label>
-                                        @endif
-                                      @endforeach
+                                      <ol>
+                                        @foreach ($item->phases as $phase)
+                                          <li>{{ $phase->title }}</li>
+                                        @endforeach
+                                      </ol>
                                     </td>
                                     <td class="td-10">{{ $item->site->duree }}</td>
                                     <td class="td-10">{{ date('d/m/Y H:i', strtotime($item->site->start_date)) }}</td>
