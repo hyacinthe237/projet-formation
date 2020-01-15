@@ -44,7 +44,7 @@
                       <div class="col-sm-6">
                           <div class="form-group">
                               <label>Téléphone</label>
-                              <input type="text" name="phone" class="form-control input-lg" placeholder="Téléphone">
+                              <input type="text" name="phone" class="form-control input-lg" placeholder="Téléphone" required>
                           </div>
                       </div>
 
@@ -80,7 +80,7 @@
                         <div class="form-group">
                             <label>Formation</label>
                             <div class="form-select grey">
-                                <select class="form-control input-lg" name="commune_formation_id">
+                                <select class="form-control input-lg" name="commune_formation_id" required>
                                     <option value="">Sélectionnez une formation</option>
                                     @foreach($formations as $item)
                                         <option value="{{ $item->id }}">
@@ -96,7 +96,7 @@
                         <div class="form-group">
                           <label>Résidence</label>
                           <div class="form-select grey">
-                              <select class="form-control input-lg" name="residence_id">
+                              <select class="form-control input-lg" name="residence_id" required>
                                   <option value="">Sélectionnez le lieu de résidence</option>
                                 @foreach($communes as $commune)
                                     <option value="{{ $commune->id }}">

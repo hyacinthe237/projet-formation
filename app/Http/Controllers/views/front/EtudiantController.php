@@ -51,7 +51,7 @@ class EtudiantController extends Controller
         if ($validator->fails()) {
           return redirect()->back()
                 ->withInput($request->all())
-                ->withErrors(['validator' => 'Les champs prénom, formation, résidence et téléphone sont obligatoires']);
+                ->withErrors(['validator' => 'Les champs prénom, email, formation, résidence et téléphone sont obligatoires']);
         }
 
         $session = Session::whereStatus('pending')->first();
