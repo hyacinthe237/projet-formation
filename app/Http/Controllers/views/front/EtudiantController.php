@@ -7,6 +7,7 @@ use DB;
 use Mail;
 use Carbon\Carbon;
 use App\Models\Phase;
+use App\Models\Etat;
 use App\Models\Etudiant;
 use App\Models\Formation;
 use App\Models\Thematique;
@@ -29,8 +30,9 @@ class EtudiantController extends Controller
         $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();
         $communes = Commune::with('departement', 'departement.region')->get();
         $phase = Phase::whereTitle('Formation')->first();
+        $etat = Etat::whereName('inscris')->first();
 
-        return view('front.etudiants.create', compact('formations', 'communes', 'phase'));
+        return view('front.etudiants.create', compact('formations', 'communes', 'phase', 'etat'));
     }
 
     /**
@@ -116,22 +118,21 @@ class EtudiantController extends Controller
 
                 $form_etud = FormationEtudiant::whereSessionId($session->id)->whereEtudiantId($etudiant->id)
                              ->whereCommuneFormationId($request->commune_formation_id)
-                             ->whereEtat('inscris')
                              ->first();
 
                 $commune_formation = CommuneFormation::whereSessionId($session->id)->with('formation')->findOrFail($request->commune_formation_id);
-                $count = FormationEtudiant::whereSessionId($session->id)->whereCommuneFormationId($request->commune_formation_id)->whereEtat('inscris')->count();
+                $count = FormationEtudiant::whereSessionId($session->id)->whereCommuneFormationId($request->commune_formation_id)->count();
 
                 if (!$form_etud && ($count <= $commune_formation->formation->qte_requis)) {
                     $form = FormationEtudiant::create([
                         'session_id'   => $session->id,
                         'etudiant_id'   => $etudiant->id,
                         'commune_formation_id'    => $request->commune_formation_id,
-                        'etat'          => 'inscris',
                         'created_at'    => Carbon::now()
                     ]);
 
                     $form->phases()->sync($request->phase_id);
+                    $form->etats()->sync($request->etat_id);
 
                     return redirect()->back()->with('message', "stagiaire enregistré et ajouté avec succès à la formation");
                 } else {

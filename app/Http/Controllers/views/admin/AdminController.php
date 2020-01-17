@@ -40,7 +40,6 @@ class AdminController extends Controller
         $session = Session::whereStatus('pending')->first();
         $data    = self::takeInfos($this->adminRepo, $this->formRepo, $session);
 
-
         if ($request->start_date) {
             $debut = $request->start_date .' '. $request->start_heure.':'.$request->start_minutes;
             $fin = $request->end_date .' '. $request->end_heure.':'.$request->end_minutes;

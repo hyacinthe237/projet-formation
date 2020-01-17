@@ -31,10 +31,10 @@ class FormationRepository
 
         $stagiaires = DB::table('etudiants as e')
                         ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')
+                        // ->join('formation_etudiant_etats as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
                         ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
-                        ->join('formation_etudiant_phases as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
                         ->where('cf.formation_id', $formationId)
-                        ->whereIn('fep.phase_id', [1, 2])
+                        // ->where('fep.etat_id', '=', 2)
                         ->get();
 
         $uniques = array();

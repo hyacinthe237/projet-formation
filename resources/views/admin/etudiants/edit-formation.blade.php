@@ -54,6 +54,23 @@
                         @endif
                       @endforeach
                     </div>
+
+                    <label for="etats">Etats</label>
+                    <div class="form-group">
+                      @foreach ($etats as $etat)
+                        @if ($form_etud->etats->contains('id', $etat->id))
+                          <label class="css-input css-checkbox css-checkbox-primary mr-20">
+                              <input type="checkbox" name="etats[]" value="{{ $etat->id }}" checked>
+                              <span class="mr-10"></span> @if ($etat->name == 'formee') Formé @else Incris @endif
+                          </label>
+                        @else
+                            <label class="css-input css-checkbox css-checkbox-primary mr-20">
+                                <input type="checkbox" name="etats[]" value="{{ $etat->id }}">
+                                <span class="mr-10"></span> @if ($etat->name == 'formee') Formé @else Incris @endif
+                            </label>
+                        @endif
+                      @endforeach
+                    </div>
                   </div>
 
                   <div class="col-sm-12">

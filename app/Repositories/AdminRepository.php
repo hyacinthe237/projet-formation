@@ -12,7 +12,6 @@ use App\Models\CommuneFormation;
 class AdminRepository
 {
     public function getCommunesToucherParRegion ($regionId, $sessionId) {
-
         $communes = DB::table('commune_formations as cf')
                         ->join('communes as c', 'cf.commune_id', '=', 'c.id')
                         ->join('departements as d', 'd.id', '=', 'c.departement_id')
@@ -34,7 +33,6 @@ class AdminRepository
     }
 
     public function getCommunesToucherParDepartement ($departementId, $sessionId) {
-
         $communes = DB::table('commune_formations as cf')
                         ->join('communes as c', 'cf.commune_id', '=', 'c.id')
                         ->where('c.departement_id', $departementId)
@@ -45,7 +43,6 @@ class AdminRepository
     }
 
     public function getStagiaires ($sessionId) {
-
         $stagiaires = DB::table('etudiants as e')
                         ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')
                         ->where('fe.session_id', '=', $sessionId)
@@ -61,69 +58,89 @@ class AdminRepository
     }
 
     public function getPersonnesInscriteParRegion ($regionId, $sessionId) {
-
         $personnes =  DB::table('etudiants as e')
                         ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')
                         ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
                         ->join('communes as c', 'c.id', '=', 'cf.commune_id')
                         ->join('departements as d', 'd.id', '=', 'c.departement_id')
+                        // ->join('formation_etudiant_etats as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
                         ->where('d.region_id', '=', $regionId)
                         ->where('cf.session_id', '=', $sessionId)
-                        ->where('fe.etat', '=', 'inscris')
+                        // ->where('fep.etat_id', '=', 1)
                         ->get();
 
-        return $personnes;
+        $uniques = array();
+            foreach($personnes as $personne) {
+                $key = $personne->number;
+                $uniques[$key] = $personne;
+            }
+
+        return  $uniques;
     }
 
     public function getPersonnesFormeeParRegion ($regionId, $sessionId) {
-
         $personnes =  DB::table('etudiants as e')
                         ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')
                         ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
                         ->join('communes as c', 'c.id', '=', 'cf.commune_id')
                         ->join('departements as d', 'd.id', '=', 'c.departement_id')
-                        ->join('formation_etudiant_phases as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
+                        // ->join('formation_etudiant_etats as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
                         ->where('d.region_id', '=', $regionId)
                         ->where('cf.session_id', '=', $sessionId)
-                        ->whereIn('fep.phase_id', [1, 2])
+                        // ->where('fep.etat_id', '=', 2)
                         ->get();
 
-        return $personnes;
+        $uniques = array();
+            foreach($personnes as $personne) {
+                $key = $personne->number;
+                $uniques[$key] = $personne;
+            }
+
+        return  $uniques;
     }
 
     public function getPersonnesInscriteParDepartement ($departementId, $sessionId) {
-
         $personnes =  DB::table('etudiants as e')
                         ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')
                         ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
                         ->join('communes as c', 'c.id', '=', 'cf.commune_id')
+                        // ->join('formation_etudiant_etats as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
                         ->where('c.departement_id', '=', $departementId)
                         ->where('cf.session_id', '=', $sessionId)
-                        ->where('fe.etat', '=', 'inscris')
+                        // ->where('fep.etat_id', '=', 1)
                         ->get();
 
-        return $personnes;
+        $uniques = array();
+            foreach($personnes as $personne) {
+                $key = $personne->number;
+                $uniques[$key] = $personne;
+            }
+
+        return  $uniques;
     }
 
     public function getPersonnesFormeeParDepartement ($departementId, $sessionId) {
-
         $personnes =  DB::table('etudiants as e')
                         ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')
                         ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
                         ->join('communes as c', 'c.id', '=', 'cf.commune_id')
-                        ->join('formation_etudiant_phases as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
+                        // ->join('formation_etudiant_etats as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
                         ->where('c.departement_id', '=', $departementId)
                         ->where('cf.session_id', '=', $sessionId)
-                        ->whereIn('fep.phase_id', [1, 2])
+                        // ->where('fep.etat_id', '=', 2)
                         ->get();
 
-        return $personnes;
+        $uniques = array();
+            foreach($personnes as $personne) {
+                $key = $personne->number;
+                $uniques[$key] = $personne;
+            }
+
+        return  $uniques;
     }
 
     public function getCommunesToucher ($sessionId) {
-
         $resultat = 0;
-
         $commune_formations = CommuneFormation::whereSessionId($sessionId)->get();
 
         if (count($commune_formations))
@@ -153,12 +170,9 @@ class AdminRepository
         $formation_exec = CommuneFormation::where('end_date', '<=', $today)->count();
         $formation_prevu = CommuneFormation::whereSessionId($sessionId)->count();
 
-        if ($formation_prevu == 0) {
-          return 0;
-        }
+        if ($formation_prevu == 0) return 0;
 
         return number_format(($formation_exec/$formation_prevu) * 100, 2);
-
     }
 
     public function getCommunesToucherParPeriode ($debut, $fin) {
@@ -171,7 +185,6 @@ class AdminRepository
             })->get();
 
         return $com_form;
-
     }
 
 

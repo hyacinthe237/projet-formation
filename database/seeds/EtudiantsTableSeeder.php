@@ -35,12 +35,12 @@ class EtudiantsTableSeeder extends Seeder
             'session_id'  => 1,
             'etudiant_id'   => $etudiant_01->id,
             'commune_formation_id'  => 1,
-            'etat'          => 'inscris',
             'created_at'    => Carbon::now(),
             'updated_at'    => Carbon::now()
         ]);
 
         $fe1->phases()->sync([1]);
+        $fe1->etats()->sync([1]);
 
         $etudiant_02 = Etudiant::create([
             'number'          => 1000001,
@@ -63,11 +63,11 @@ class EtudiantsTableSeeder extends Seeder
             'session_id'  => 1,
             'etudiant_id'  => $etudiant_02->id,
             'commune_formation_id'  => 1,
-            'etat'          => 'inscris',
             'created_at'    => Carbon::now(),
             'updated_at'    => Carbon::now()
         ]);
 
         $fe2->phases()->sync([1,2]);
+        $fe2->etats()->sync([1,2]);
     }
 }

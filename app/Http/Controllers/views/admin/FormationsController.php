@@ -236,19 +236,19 @@ class FormationsController extends Controller
 
           $form_etud = FormationEtudiant::whereSessionId($session->id)->whereEtudiantId($etudiant->id)
                        ->whereCommuneFormationId($commune_formation->id)
-                       ->whereEtat('inscris')
                        ->first();
 
-          $count = FormationEtudiant::whereSessionId($session->id)->whereCommuneFormationId($commune_formation->id)->whereEtat('inscris')->count();
+          $count = FormationEtudiant::whereSessionId($session->id)->whereCommuneFormationId($commune_formation->id)->count();
 
           if (!$form_etud && ($count <= $commune_formation->qte_requis)) {
-              FormationEtudiant::create([
+              $form_create = FormationEtudiant::create([
                   'session_id'          => $session->id,
                   'etudiant_id'          => $etudiant->id,
                   'commune_formation_id' => $commune_formation->id,
-                  'etat'                 => 'inscris',
                   'created_at'           => Carbon::now()
               ]);
+
+              $form_create->etats()->sync($request->etat_id);
 
               return redirect()->back()->with('message', 'Etudiant ajouté avec succès à la formation');
           } else {

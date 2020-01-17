@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFormationEtudiantsTable extends Migration
+class CreateFormationEtudiantEtatsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateFormationEtudiantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('formation_etudiants', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('session_id');
-            $table->integer('etudiant_id');
-            $table->integer('commune_formation_id');
+        Schema::create('formation_etudiant_etats', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('etat_id');
+            $table->integer('formation_etudiant_id');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateFormationEtudiantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('formation_etudiants');
+        Schema::dropIfExists('formation_etudiant_etats');
     }
 }

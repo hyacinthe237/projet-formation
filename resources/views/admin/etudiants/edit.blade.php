@@ -192,6 +192,7 @@
                                 <th>Titre</th>
                                 <th>Site</th>
                                 <th>Phases</th>
+                                <th>Etats</th>
                                 <th>Durée</th>
                                 <th>Début</th>
                                 <th>Fin</th>
@@ -207,6 +208,17 @@
                                       <ol>
                                         @foreach ($item->phases as $phase)
                                           <li>{{ $phase->title }}</li>
+                                        @endforeach
+                                      </ol>
+                                    </td>
+                                    <td class="td-15">
+                                      <ol>
+                                        @foreach ($item->etats as $etat)
+                                          @if ($etat->name == 'formee')
+                                            <li>Formé</li>
+                                          @else
+                                            <li>Incris</li>
+                                          @endif
                                         @endforeach
                                       </ol>
                                     </td>
@@ -228,7 +240,7 @@
                 <h3 class="_block-title mb-20">Inscrire le stagiaire à une autre formation</h3>
                 {!! Form::model($etudiant, ['method' => 'POST', 'route' => ['inscrire.etudiant.formation', $etudiant->number], 'class' => '_form' ]) !!}
                   <div class="row mt-10">
-                      <div class="col-sm-9">
+                      <div class="col-sm-6">
                         <div class="form-group">
                             <label>Sélectionner une formation</label>
                             <div class="form-select grey">
@@ -249,6 +261,17 @@
                             <select class="js-example-basic-multiple form-control input-lg" name="phases[]" multiple="multiple">
                                 @foreach ($phases as $phase)
                                     <option value="{{ $phase->id }}">{{ $phase->title }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-3">
+                        {!! Form::label('etats', 'Choix des états') !!}
+                        <div class="">
+                            <select class="js-example-basic-multiple form-control input-lg" name="etats[]" multiple="multiple">
+                                @foreach ($etats as $etat)
+                                    <option value="{{ $etat->id }}">@if ($etat->name == 'formee') Formé @else Incris @endif</option>
                                 @endforeach
                             </select>
                         </div>

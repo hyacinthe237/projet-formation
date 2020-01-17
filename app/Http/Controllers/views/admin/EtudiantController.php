@@ -7,10 +7,13 @@ use DB;
 use PDF;
 use Carbon\Carbon;
 use App\Models\Phase;
+use App\Models\Etat;
 use App\Models\Etudiant;
 use App\Models\Formation;
 use App\Models\Thematique;
 use App\Models\FormationEtudiant;
+use App\Models\FormationEtudiantEtat;
+use App\Models\FormationEtudiantPhase;
 use App\Models\Commune;
 use App\Models\CommuneFormation;
 use App\Models\Session;
@@ -40,7 +43,8 @@ class EtudiantController extends Controller
         $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();
         $communes = Commune::with('departement', 'departement.region')->get();
         $phase = Phase::whereTitle('Formation')->first();
-        return view('admin.etudiants.create', compact('formations', 'communes', 'phase'));
+        $etat = Etat::whereName('inscris')->first();
+        return view('admin.etudiants.create', compact('formations', 'communes', 'phase', 'etat'));
     }
 
     public function edit ($number)
@@ -55,21 +59,23 @@ class EtudiantController extends Controller
         $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();
         $communes = Commune::with('departement', 'departement.region')->get();
         $phases = Phase::get();
+        $etats = Etat::get();
 
-        return view('admin.etudiants.edit', compact('formations', 'communes', 'etudiant', 'phases'));
+        return view('admin.etudiants.edit', compact('formations', 'communes', 'etudiant', 'phases', 'etats'));
     }
 
     public function editEtudiantFormation ($id)
     {
         $session = Session::whereStatus('pending')->first();
         $phases = Phase::get();
-        $form_etud  = FormationEtudiant::with('phases', 'etudiant')->find($id);
+        $etats = Etat::get();
+        $form_etud  = FormationEtudiant::with('phases', 'etats', 'etudiant')->find($id);
         if (!$form_etud)
             return redirect()->route('stagiaires.index');
 
         $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();
 
-        return view('admin.etudiants.edit-formation', compact('form_etud', 'formations', 'phases'));
+        return view('admin.etudiants.edit-formation', compact('form_etud', 'formations', 'phases', 'etats'));
     }
 
     public function inscrireEtudiant (Request $request, $number) {
@@ -81,28 +87,32 @@ class EtudiantController extends Controller
 
          $form_etud = FormationEtudiant::whereSessionId($session->id)->whereEtudiantId($etudiant->id)
                       ->whereCommuneFormationId($request->commune_formation_id)
-                      ->whereEtat('inscris')
                       ->first();
 
          $commune_formation = CommuneFormation::whereSessionId($session->id)->with('formation')->findOrFail($request->commune_formation_id);
-         $count = FormationEtudiant::whereSessionId($session->id)->whereCommuneFormationId($request->commune_formation_id)->whereEtat('inscris')->count();
+         $count = FormationEtudiant::whereSessionId($session->id)->whereCommuneFormationId($request->commune_formation_id)->count();
 
          if (!$form_etud && ($count <= $commune_formation->qte_requis)) {
              $form = FormationEtudiant::create([
                  'session_id'           => $session->id,
                  'etudiant_id'          => $etudiant->id,
                  'commune_formation_id' => $commune_formation->id,
-                 'etat'                 => 'inscris',
                  'created_at'           => Carbon::now()
              ]);
 
              if ($request->phases)
-               $form->phases()->sync($request->phases);
+                $form->phases()->sync($request->phases);
+
+             if ($request->etats)
+                $form->etats()->sync($request->etats);
 
              return redirect()->back()->with('message', 'stagiaire enregistré et ajouté avec succès à la formation');
          } else {
            if ($request->phases)
              $form_etud->phases()->sync($request->phases);
+
+           if ($request->etats)
+             $form_etud->etats()->sync($request->etats);
 
             return redirect()->back()->with('message', 'Phase modifiée avec avec succès.');
          }
@@ -160,22 +170,20 @@ class EtudiantController extends Controller
             if ($etudiant) {
                 $commune_formation = CommuneFormation::whereSessionId($session->id)->with('formation')->findOrFail($request->commune_formation_id);
                 $form_etud = FormationEtudiant::whereSessionId($session->id)->whereEtudiantId($etudiant->id)
-                             ->whereCommuneFormationId($commune_formation->id)
-                             ->whereEtat('inscris')
-                             ->first();
+                             ->whereCommuneFormationId($commune_formation->id)->first();
 
-                $count = FormationEtudiant::whereSessionId($session->id)->whereCommuneFormationId($commune_formation->id)->whereEtat('inscris')->count();
+                $count = FormationEtudiant::whereSessionId($session->id)->whereCommuneFormationId($commune_formation->id)->count();
 
                 if (!$form_etud && ($count <= $commune_formation->qte_requis)) {
                     $form = FormationEtudiant::create([
                         'session_id'   => $session->id,
                         'etudiant_id'   => $etudiant->id,
                         'commune_formation_id'    => $commune_formation->id,
-                        'etat'          => 'inscris',
                         'created_at'    => Carbon::now()
                     ]);
 
                     $form->phases()->sync($request->phase_id);
+                    $form->etats()->sync($request->etat_id);
 
                     return redirect()->route('stagiaires.index')
                                     ->with('message', "stagiaire enregistré et ajouté avec succès à la formation");
@@ -215,6 +223,7 @@ class EtudiantController extends Controller
         $form_etud->commune_formation_id = $request->has('commune_formation_id') ? $request->commune_formation_id : $form_etud->commune_formation_id;
         $form_etud->save();
         $form_etud->phases()->sync($request->phases);
+        $form_etud->etats()->sync($request->etats);
 
         return redirect()->back()->with('message', 'Mise à jour effectuée succès');
     }
@@ -290,7 +299,9 @@ class EtudiantController extends Controller
         if (!$etudiant)
             return redirect()->back()->withErrors(['message' => 'Stagiaire non existant']);
 
-        FormationEtudiant::whereEtudiantId($etudiant->id)->delete();
+        $form_etud = FormationEtudiant::whereEtudiantId($etudiant->id)->delete();
+        FormationEtudiantPhase::whereFormationEtudiantId($form_etud->id)->delete();
+        FormationEtudiantEtat::whereFormationEtudiantId($form_etud->id)->delete();
         $etudiant->delete();
 
         return redirect()->route('stagiaires.index')->with('message', 'Stagiaire supprimé');
@@ -301,6 +312,8 @@ class EtudiantController extends Controller
       if (!$form_etud)
           return redirect()->back()->withErrors(['message' => 'Enregistrement non existant']);
 
+      FormationEtudiantPhase::whereFormationEtudiantId($form_etud->id)->delete();
+      FormationEtudiantEtat::whereFormationEtudiantId($form_etud->id)->delete();
       $form_etud->delete();
       return redirect()->back()->with('message', 'Stagiaire desincris avec succès');
     }
@@ -312,7 +325,7 @@ class EtudiantController extends Controller
 
       $etud = Etudiant::find($form_etud->etudiant_id);
       $form_etud->delete();
-      
+
       return redirect()->route('stagiaires.edit', $etud->number)->with('message', 'Stagiaire desincris avec succès');
     }
 
