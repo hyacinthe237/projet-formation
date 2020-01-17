@@ -42,17 +42,19 @@
 
 {!! Form::close() !!}
 
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="row">
-                <div class="col-sm-6 text-left">
-                    <button class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">
-                        Delete permission
-                    </button>
-                </div>
+@if (Auth::user()->role->name === 'admin')
+<div class="row">
+    <div class="col-sm-6 mb-40">
+        <div class="row">
+            <div class="col-sm-6 text-left">
+                <button class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">
+                    Supprimer
+                </button>
             </div>
         </div>
     </div>
+</div>
+@endif
 </section>
 
     @include('admin.modals.confirm', [

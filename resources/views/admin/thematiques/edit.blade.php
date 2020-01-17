@@ -66,17 +66,19 @@
         </div>
    {!! Form::close() !!}
 
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="row">
-                    <div class="col-sm-6 text-left">
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">
-                            Supprimer
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+   @if (Auth::user()->role->name === 'admin')
+   <div class="row">
+       <div class="col-sm-6 mb-40">
+           <div class="row">
+               <div class="col-sm-6 text-left">
+                   <button class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">
+                       Supprimer
+                   </button>
+               </div>
+           </div>
+       </div>
+   </div>
+   @endif
     </section>
 
 
@@ -84,7 +86,7 @@
     'route'    => 'thematiques.destroy',
     'method'   => 'delete',
     'resource' => $thematique,
-    'confirm'  => 'Oui, je supprimer',
+    'confirm'  => 'Oui, je supprime',
     'message'  => 'Voulez-vous de façon permanente supprimer la thematique "'. $thematique->name .'" ?'
 ])
 @endsection

@@ -92,7 +92,6 @@
                                   <th>Nom</th>
                                   <th>Structure</th>
                                   <th>Fonction</th>
-                                  <th>Etat</th>
                                   <th>Crée le</th>
                               </tr>
                           </thead>
@@ -103,7 +102,6 @@
                                       <td class="bold">{{ $item->firstname . ' ' . $item->lastname }}</td>
                                       <td>{{ $item->structure }}</td>
                                       <td>{{ $item->fonction }}</td>
-                                      <td>{{ $item->etat }}</td>
                                       <td>{{ date('d/m/Y H:i', strtotime($item->created_at)) }}</td>
                                   </tr>
                               @endforeach
@@ -335,8 +333,9 @@
           </div>
         @endif
 
+        @if (Auth::user()->role->name === 'admin')
         <div class="row">
-            <div class="col-sm-6 mb-20">
+            <div class="col-sm-6 mb-40">
                 <div class="row">
                     <div class="col-sm-6 text-left">
                         <button class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">
@@ -346,13 +345,14 @@
                 </div>
             </div>
         </div>
+        @endif
     </section>
 
     @include('admin.modals.confirm', [
         'route'    => 'formation.delete',
         'method'   => 'delete',
         'resource' => $formation,
-        'confirm'  => 'Oui, je supprimer',
+        'confirm'  => 'Oui, je supprime',
         'message'  => 'Voulez-vous de façon permanente supprimer cette formation ?'
     ])
 @endsection

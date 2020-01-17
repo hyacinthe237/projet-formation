@@ -87,6 +87,7 @@
       </div>
     {!! Form::close() !!}
 
+    @if (Auth::user()->role->name === 'admin')
     <div class="row">
         <div class="col-sm-6 mb-40">
             <div class="row">
@@ -98,13 +99,14 @@
             </div>
         </div>
     </div>
+    @endif
 </section>
 
 @include('admin.modals.confirm', [
     'route'    => 'remove.etudiant.formation',
     'method'   => 'delete',
     'resource' => $form_etud,
-    'confirm'  => 'Oui, je supprimer',
+    'confirm'  => 'Oui, je supprime',
     'message'  => 'Voulez-vous de façon permanente supprimer cette formation ?'
 ])
 @endsection

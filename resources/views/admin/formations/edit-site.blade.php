@@ -212,8 +212,9 @@
           </div>
         </div>
     </div>
+    @if (Auth::user()->role->name === 'admin')
     <div class="row">
-        <div class="col-sm-6 mb-20">
+        <div class="col-sm-6 mb-40">
             <div class="row">
                 <div class="col-sm-6 text-left">
                     <button class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">
@@ -223,13 +224,14 @@
             </div>
         </div>
     </div>
+    @endif
 </section>
 
 @include('admin.modals.confirm', [
     'route'    => 'remove.site',
     'method'   => 'delete',
     'resource' => $site,
-    'confirm'  => 'Oui, je supprimer',
+    'confirm'  => 'Oui, je supprime',
     'message'  => 'Voulez-vous de façon permanente supprimer ce site ?'
 ])
 @endsection

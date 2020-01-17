@@ -46,24 +46,26 @@
         </div>
 
       {!! Form::close() !!}
-        <div class="row">
-            <div class="col-sm-6 mb-40">
-                <div class="row">
-                    <div class="col-sm-6 text-left">
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">
-                            Supprimer
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+      @if (Auth::user()->role->name === 'admin')
+      <div class="row">
+          <div class="col-sm-6 mb-40">
+              <div class="row">
+                  <div class="col-sm-6 text-left">
+                      <button class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">
+                          Supprimer
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      @endif
     </section>
 
     @include('admin.modals.confirm', [
         'route'    => 'phases.destroy',
         'method'   => 'delete',
         'resource' => $phase,
-        'confirm'  => 'Oui, je supprimer',
+        'confirm'  => 'Oui, je supprime',
         'message'  => 'Voulez-vous de façon permanente supprimer la phase de "'. $phase->title .'" ?'
     ])
 @endsection

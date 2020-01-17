@@ -292,6 +292,7 @@
               </div>
             </div>
         </div>
+        @if (Auth::user()->role->name === 'admin')
         <div class="row">
             <div class="col-sm-6 mb-40">
                 <div class="row">
@@ -303,13 +304,14 @@
                 </div>
             </div>
         </div>
+        @endif
    </section>
 
    @include('admin.modals.confirm', [
        'route'    => 'stagiaires.destroy',
        'method'   => 'delete',
        'resource' => $etudiant,
-       'confirm'  => 'Oui, je supprimer',
+       'confirm'  => 'Oui, je supprime',
        'message'  => 'Voulez-vous de façon permanente supprimer '. $etudiant->name .' ?'
    ])
 @endsection

@@ -96,6 +96,7 @@
         </div>
       {!! Form::close() !!}
 
+      @if (Auth::user()->role->name === 'admin')
       <div class="row">
           <div class="col-sm-6 mb-40">
               <div class="row">
@@ -107,6 +108,7 @@
               </div>
           </div>
       </div>
+      @endif
     </section>
 
 
@@ -117,7 +119,7 @@
         'route'    => 'users.destroy',
         'method'   => 'delete',
         'resource' => $user,
-        'confirm'  => 'Oui, je supprimer',
+        'confirm'  => 'Oui, je supprime',
         'message'  => 'Voulez-vous de façon permanente supprimer cet utilisateur ?'
     ])
 

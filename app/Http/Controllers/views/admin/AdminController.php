@@ -35,7 +35,7 @@ class AdminController extends Controller
 
     public function dashboard (Request $request)
     {
-        $user    = User::whereIsActive(true)->whereId(Auth::id())->first();
+        $user    = User::find(Auth::id());
         $users   = User::whereIsActive(true)->get();
         $session = Session::whereStatus('pending')->first();
         $data    = self::takeInfos($this->adminRepo, $this->formRepo, $session);
