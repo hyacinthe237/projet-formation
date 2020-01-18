@@ -47,6 +47,7 @@ class SessionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name'    => 'required',
+            'period'  => 'required',
             'status'  => 'required'
         ]);
 
@@ -60,8 +61,17 @@ class SessionController extends Controller
         if (!$existing) {
             $session = Session::create([
               'name'    => $request->name,
+              'period'  => $request->period,
               'status'  => $request->status
             ]);
+
+            if ($session->status == 'pending') {
+              $sessions = Session::where('id', '!=', $session->id)->get();
+              foreach ($sessions as $se) {
+                  $se->status = 'passed';
+                  $se->update();
+              }
+            }
 
             return redirect()->back()->with('message', 'Session ajoutée avec succès');
         }
@@ -83,6 +93,7 @@ class SessionController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name'    => 'required',
+            'period'  => 'required',
             'status'  => 'required'
         ]);
 
@@ -95,7 +106,8 @@ class SessionController extends Controller
         if (!$session) return redirect()->back()->withErrors(['Session' => 'Session inconnue!']);
 
         $session->name   = $request->has('name') ? $request->name : $phase->name;
-        $session->status   = $request->has('status') ? $request->status : $phase->status;
+        $session->period = $request->has('period') ? $request->period : $phase->period;
+        $session->status = $request->has('status') ? $request->status : $phase->status;
         $session->update();
 
         $sessions = Session::where('id', '!=', $session->id)->get();

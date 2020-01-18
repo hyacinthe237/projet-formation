@@ -24,10 +24,23 @@
         <div class="block">
             <div class="block-content form">
                   <div class="row mt-20">
-                    <div class="col-sm-8">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label>Titre</label>
                             <input type="text" name="name" class="form-control input-lg" value="{{ $session->name }}" required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Période</label>
+                            <div class="form-select grey">
+                                <select name="period" class="form-control input-lg">
+                                    <option value="trimestre" {{ $session->period == 'trimestre' ? 'selected' : '' }}>Trimestre</option>
+                                    <option value="semestre" {{ $session->period == 'semestre' ? 'selected' : '' }}>Semestre</option>
+                                    <option value="annuelle" {{ $session->period == 'annuelle' ? 'selected' : '' }}>Annuelle</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 

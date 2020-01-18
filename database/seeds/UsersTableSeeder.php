@@ -14,8 +14,8 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        Session::create(['name' => '2019', 'status' => 'pending' ]);
-        
+        Session::create(['name' => '2019', 'period' => 'trimestre', 'status' => 'pending' ]);
+
         User::create([
             'role_id'        => 1,
             'number'         => 1000000,

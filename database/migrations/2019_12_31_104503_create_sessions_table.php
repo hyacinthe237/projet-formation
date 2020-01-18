@@ -16,6 +16,7 @@ class CreateSessionsTable extends Migration
         Schema::create('sessions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('name');
+            $table->enum('period', ['trimestre', 'semestre', 'annuelle'])->default('trimestre');
             $table->enum('status', ['pending', 'passed'])->nullable();
             $table->timestamps();
         });
