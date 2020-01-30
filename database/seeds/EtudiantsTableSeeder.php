@@ -62,7 +62,7 @@ class EtudiantsTableSeeder extends Seeder
         $fe2 = FormationEtudiant::create([
             'session_id'  => 1,
             'etudiant_id'  => $etudiant_02->id,
-            'commune_formation_id'  => 1,
+            'commune_formation_id'  => 2,
             'created_at'    => Carbon::now(),
             'updated_at'    => Carbon::now()
         ]);

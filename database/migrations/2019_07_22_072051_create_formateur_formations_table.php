@@ -17,6 +17,7 @@ class CreateFormateurFormationsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('formateur_id');
             $table->integer('formation_id');
+            $table->boolean('is_validated')->default(false);
             $table->timestamps();
         });
     }

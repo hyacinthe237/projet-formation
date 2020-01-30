@@ -208,7 +208,7 @@
     'route'    => 'budgets.destroy',
     'method'   => 'delete',
     'resource' => $budget,
-    'confirm'  => 'Oui, je supprimer',
+    'confirm'  => 'Oui, je supprime',
     'message'  => 'Voulez-vous de façon permanente supprimer ce budget ?'
 ])
 @endsection

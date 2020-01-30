@@ -71,13 +71,14 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Titre</th>
-                            <th>Status</th>
-                            <th>Nbre formateurs</th>
-                            <th>Nbre sites</th>
-                            <th>Nbre places</th>
-                            <th>Nbre phases</th>
-                            <th>Cree le</th>
+                            <th class="bold td-40">Titre</th>
+                            <th class="td-5">Status</th>
+                            <th class="td-10">Nbre. formateurs</th>
+                            <th class="td-10">Nbre. sites</th>
+                            <th class="td-10">Nbre. Stagiares</th>
+                            <th class="td-10">Nbre. Inscris</th>
+                            <th class="td-10">Nbre. Formés</th>
+                            <th class="td-15">Crée le</th>
                         </tr>
                     </thead>
 
@@ -85,12 +86,13 @@
                         @foreach($formations as $formation)
                             <tr data-href="{{ route('formation.edit', $formation->number) }}">
                                 <td class="bold td-40">{{ $formation->title }}</td>
-                                <td class="td-10">{{ $formation->is_active ? 'Active' : 'Non active' }}</td>
+                                <td class="td-5">{{ $formation->is_active ? 'Actif' : 'Non actif' }}</td>
                                 <td class="td-10">{{ count($formation->formateurs) }}</td>
                                 <td class="td-10">{{ count($formation->sites) }}</td>
-                                <td class="td-10">{{ $formation->qte_requis }}</td>
-                                <td class="td-10">{{ count($formation->phases) }}</td>
-                                <td class="td-10">{{ date('d/m/Y H:i', strtotime($formation->created_at)) }}</td>
+                                <td class="td-10">{{ count($formation->etudiants) }}</td>
+                                <td class="td-10">{{ count($formation->etudiants) }}</td>
+                                <td class="td-10">{{ count($formation->formes) }}</td>
+                                <td class="td-15">{{ date('d/m/Y H:i', strtotime($formation->created_at)) }}</td>
                             </tr>
                         @endforeach
                     </tbody>

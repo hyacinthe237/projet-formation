@@ -18,6 +18,7 @@ class CreateFormationEtudiantsTable extends Migration
             $table->integer('session_id');
             $table->integer('etudiant_id');
             $table->integer('commune_formation_id');
+            $table->boolean('is_validated')->default(false);
             $table->timestamps();
         });
     }

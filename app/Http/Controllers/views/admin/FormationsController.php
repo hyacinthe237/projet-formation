@@ -48,6 +48,11 @@ class FormationsController extends Controller
              ->orderBy('id', 'desc')
              ->paginate(50);
 
+             foreach ($formations as $item) {
+                $item->etudiants = $this->formRepo->getStagiaireFormation($item->id);
+                $item->formes = $this->formRepo->getStagiaireFormees($item->id);
+             }
+
          return view('admin.formations.index', compact('formations', 'stagiaires', 'status'));
      }
 

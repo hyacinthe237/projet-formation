@@ -43,18 +43,18 @@ class AdminRepository
     }
 
     public function getStagiaires ($sessionId) {
-        $stagiaires = DB::table('etudiants as e')
+        $personnes = DB::table('etudiants as e')
                         ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')
                         ->where('fe.session_id', '=', $sessionId)
                         ->get();
 
-        $uniques = array();
-            foreach($stagiaires as $personne) {
-                $key = $personne->number;
-                $uniques[$key] = $personne;
-            }
+        // $uniques = array();
+        //     foreach($stagiaires as $personne) {
+        //         $key = $personne->number;
+        //         $uniques[$key] = $personne;
+        //     }
 
-        return  $uniques;
+        return  $personnes;
     }
 
     public function getPersonnesInscriteParRegion ($regionId, $sessionId) {
@@ -63,19 +63,19 @@ class AdminRepository
                         ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
                         ->join('communes as c', 'c.id', '=', 'cf.commune_id')
                         ->join('departements as d', 'd.id', '=', 'c.departement_id')
-                        // ->join('formation_etudiant_etats as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
+                        ->join('formation_etudiant_etats as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
                         ->where('d.region_id', '=', $regionId)
                         ->where('cf.session_id', '=', $sessionId)
-                        // ->where('fep.etat_id', '=', 1)
+                        ->where('fep.etat_id', '=', 1)
                         ->get();
 
-        $uniques = array();
-            foreach($personnes as $personne) {
-                $key = $personne->number;
-                $uniques[$key] = $personne;
-            }
+        // $uniques = array();
+        //     foreach($personnes as $personne) {
+        //         $key = $personne->number;
+        //         $uniques[$key] = $personne;
+        //     }
 
-        return  $uniques;
+        return  $personnes;
     }
 
     public function getPersonnesFormeeParRegion ($regionId, $sessionId) {
@@ -84,19 +84,19 @@ class AdminRepository
                         ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
                         ->join('communes as c', 'c.id', '=', 'cf.commune_id')
                         ->join('departements as d', 'd.id', '=', 'c.departement_id')
-                        // ->join('formation_etudiant_etats as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
+                        ->join('formation_etudiant_etats as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
                         ->where('d.region_id', '=', $regionId)
                         ->where('cf.session_id', '=', $sessionId)
-                        // ->where('fep.etat_id', '=', 2)
+                        ->where('fep.etat_id', '=', 2)
                         ->get();
 
-        $uniques = array();
-            foreach($personnes as $personne) {
-                $key = $personne->number;
-                $uniques[$key] = $personne;
-            }
+        // $uniques = array();
+        //     foreach($personnes as $personne) {
+        //         $key = $personne->number;
+        //         $uniques[$key] = $personne;
+        //     }
 
-        return  $uniques;
+        return  $personnes;
     }
 
     public function getPersonnesInscriteParDepartement ($departementId, $sessionId) {
@@ -104,19 +104,19 @@ class AdminRepository
                         ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')
                         ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
                         ->join('communes as c', 'c.id', '=', 'cf.commune_id')
-                        // ->join('formation_etudiant_etats as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
+                        ->join('formation_etudiant_etats as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
                         ->where('c.departement_id', '=', $departementId)
                         ->where('cf.session_id', '=', $sessionId)
-                        // ->where('fep.etat_id', '=', 1)
+                        ->where('fep.etat_id', '=', 1)
                         ->get();
 
-        $uniques = array();
-            foreach($personnes as $personne) {
-                $key = $personne->number;
-                $uniques[$key] = $personne;
-            }
+        // $uniques = array();
+        //     foreach($personnes as $personne) {
+        //         $key = $personne->number;
+        //         $uniques[$key] = $personne;
+        //     }
 
-        return  $uniques;
+        return  $personnes;
     }
 
     public function getPersonnesFormeeParDepartement ($departementId, $sessionId) {
@@ -124,19 +124,19 @@ class AdminRepository
                         ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')
                         ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
                         ->join('communes as c', 'c.id', '=', 'cf.commune_id')
-                        // ->join('formation_etudiant_etats as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
+                        ->join('formation_etudiant_etats as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
                         ->where('c.departement_id', '=', $departementId)
                         ->where('cf.session_id', '=', $sessionId)
-                        // ->where('fep.etat_id', '=', 2)
+                        ->where('fep.etat_id', '=', 2)
                         ->get();
 
-        $uniques = array();
-            foreach($personnes as $personne) {
-                $key = $personne->number;
-                $uniques[$key] = $personne;
-            }
+        // $uniques = array();
+        //     foreach($personnes as $personne) {
+        //         $key = $personne->number;
+        //         $uniques[$key] = $personne;
+        //     }
 
-        return  $uniques;
+        return  $personnes;
     }
 
     public function getCommunesToucher ($sessionId) {

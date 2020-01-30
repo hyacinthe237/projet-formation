@@ -14,8 +14,12 @@ class FormationEtudiantEtat extends Model
      */
     protected $table = 'formation_etudiant_etats';
 
-    public function etat () {
-        return $this->belongsTo(Etat::class, 'etat_id');
+    public function etats () {
+        return $this->hasMany(Etat::class, 'etat_id');
+    }
+
+    public function formation_etudiant () {
+        return $this->belongsTo(FormationEtudiant::class, 'formation_etudiant_id');
     }
 
 }
