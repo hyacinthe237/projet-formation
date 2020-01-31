@@ -300,8 +300,11 @@ class EtudiantController extends Controller
             return redirect()->back()->withErrors(['message' => 'Stagiaire non existant']);
 
         $form_etud = FormationEtudiant::whereEtudiantId($etudiant->id)->delete();
-        FormationEtudiantPhase::whereFormationEtudiantId($form_etud->id)->delete();
-        FormationEtudiantEtat::whereFormationEtudiantId($form_etud->id)->delete();
+        if ($form_etud) {
+            FormationEtudiantPhase::whereFormationEtudiantId($form_etud->id)->delete();
+            FormationEtudiantEtat::whereFormationEtudiantId($form_etud->id)->delete();
+        }
+
         $etudiant->delete();
 
         return redirect()->route('stagiaires.index')->with('message', 'Stagiaire supprimé');
