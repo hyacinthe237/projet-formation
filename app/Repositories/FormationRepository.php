@@ -16,6 +16,7 @@ class FormationRepository
                         ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')
                         ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
                         ->where('cf.formation_id', $formationId)
+                        ->where('e.deleted_at', '=', null)
                         ->get();
 
         $uniques = array();
@@ -35,6 +36,7 @@ class FormationRepository
                         ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
                         ->where('cf.formation_id', $formationId)
                         ->where('fep.etat_id', '=', 2)
+                        ->where('e.deleted_at', '=', null)
                         ->get();
 
         $uniques = array();

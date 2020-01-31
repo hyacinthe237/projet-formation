@@ -299,10 +299,12 @@ class EtudiantController extends Controller
         if (!$etudiant)
             return redirect()->back()->withErrors(['message' => 'Stagiaire non existant']);
 
-        $form_etud = FormationEtudiant::whereEtudiantId($etudiant->id)->delete();
+        $form_etud = FormationEtudiant::whereEtudiantId($etudiant->id)->get();
         if ($form_etud) {
-            FormationEtudiantPhase::whereFormationEtudiantId($form_etud->id)->delete();
-            FormationEtudiantEtat::whereFormationEtudiantId($form_etud->id)->delete();
+            foreach ($form_etud as $item) {
+                FormationEtudiantPhase::whereFormationEtudiantId($item->id)->delete();
+                FormationEtudiantEtat::whereFormationEtudiantId($item->id)->delete();
+            }
         }
 
         $etudiant->delete();
@@ -368,6 +370,7 @@ class EtudiantController extends Controller
         ->when($request->residence_id, function($query) use ($request) {
             return $query->where('residence_id', $request->residence_id);
         })
+        ->where('deleted_at', null)
         ->orderBy('id', 'desc')
         ->paginate(50);
 

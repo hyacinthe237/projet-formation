@@ -16,17 +16,17 @@ class EtudiantsTableSeeder extends Seeder
     {
         $etudiant_01 = Etudiant::create([
             'number'          => 1000000,
-            'firstname'       => 'Jean Jacques',
-            'lastname'        => 'ABEGA',
+            'firstname'       => 'Prenom Stagiaire 1',
+            'lastname'        => 'Nom Stagiaire 1',
             'phone'           => '691636304',
-            'email'           => 'jean.jacques@email.com',
+            'email'           => 'stagiaire1@email.com',
             'sex'             => 'Male',
             'dob'             => '1991-06-24',
-            'structure'       => 'Izy Tech Group Sarl',
-            'fonction'        => 'Développeur Web Junior',
-            'desc_fonction'   => 'Ma tâche consiste à produire des applications web, mobiles et des sites internet',
-            'form_souhaitee'  => 'Intelligence Artificielle',
-            'diplome_elev'    => 'Diplôme d\'Ingénieur des Travaux Informatiques Option Génie Logicielle',
+            'structure'       => 'FEICOM',
+            'fonction'        => 'RH',
+            'desc_fonction'   => 'gérer les ressources humaines du FEICOM',
+            'form_souhaitee'  => 'Developpement communautaire',
+            'diplome_elev'    => 'Licence',
             'form_compl'      => 'Aucune formation complémentaire',
             'an_exp'          => '4 ans'
         ]);
@@ -44,30 +44,32 @@ class EtudiantsTableSeeder extends Seeder
 
         $etudiant_02 = Etudiant::create([
             'number'          => 1000001,
-            'firstname'       => 'Marceline',
-            'lastname'        => 'MINFOUMOU',
-            'phone'           => '691604363',
-            'email'           => 'marceline@email.com',
+            'firstname'       => 'Prenom Stagiaire 2',
+            'lastname'        => 'Nom Stagiaire 2',
+            'phone'           => '693630164',
+            'email'           => 'stagiaire2@email.com',
             'sex'             => 'Female',
             'dob'             => '1989-06-24',
-            'structure'       => 'Commune de Yaoundé 3',
-            'fonction'        => 'Chef du personnel',
-            'desc_fonction'   => 'Technique de recrutement du personnel',
-            'form_souhaitee'  => 'Management d\'équipe',
-            'diplome_elev'    => 'Diplôme en DRH',
+            'structure'       => 'Commune Douala 1',
+            'fonction'        => 'Service Technique',
+            'desc_fonction'   => 'chargé des projets',
+            'form_souhaitee'  => 'Technique HIMO',
+            'diplome_elev'    => 'Licence',
             'form_compl'      => 'Aucune formation complémentaire',
-            'an_exp'          => '6 ans'
+            'an_exp'          => '3 ans'
         ]);
 
-        $fe2 = FormationEtudiant::create([
+        $fe1 = FormationEtudiant::create([
             'session_id'  => 1,
-            'etudiant_id'  => $etudiant_02->id,
-            'commune_formation_id'  => 2,
+            'etudiant_id'   => $etudiant_02->id,
+            'commune_formation_id'  => 1,
             'created_at'    => Carbon::now(),
             'updated_at'    => Carbon::now()
         ]);
 
-        $fe2->phases()->sync([1,2]);
-        $fe2->etats()->sync([1,2]);
+        $fe1->phases()->sync([1]);
+        $fe1->etats()->sync([1]);
+
+
     }
 }

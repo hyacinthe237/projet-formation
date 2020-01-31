@@ -42,18 +42,18 @@ class UsersTableSeeder extends Seeder
             'api_token' => str_random(100)
         ]);
 
-        User::create([
-            'role_id'        => 3,
-            'number'         => 1000003,
-            'firstname'      => 'Hyacinthe',
-            'lastname'       => 'Member',
-            'phone'          => '694694694',
-            'email'          => 'member@email.com',
-            'password'       => bcrypt('pass'),
-            'sex'            => 'Male',
-            'is_active'      => 1,
-            'api_token' => str_random(100)
-        ]);
+        // User::create([
+        //     'role_id'        => 3,
+        //     'number'         => 1000003,
+        //     'firstname'      => 'Hyacinthe',
+        //     'lastname'       => 'Member',
+        //     'phone'          => '694694694',
+        //     'email'          => 'member@email.com',
+        //     'password'       => bcrypt('pass'),
+        //     'sex'            => 'Male',
+        //     'is_active'      => 1,
+        //     'api_token' => str_random(100)
+        // ]);
 
 
         // factory(App\Models\User::class, 30)->create();
