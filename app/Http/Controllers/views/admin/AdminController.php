@@ -49,7 +49,7 @@ class AdminController extends Controller
             $communeParPeriode  = $this->adminRepo->getCommunesToucherParPeriode($start_date, $end_date);
         }
 
-        return view('admin.all.dashboard', compact(['data', 'users', 'user', 'requetes']));
+        return view('admin.all.dashboard', compact(['data', 'users', 'user', 'requetes', 'session']));
     }
 
     /**
