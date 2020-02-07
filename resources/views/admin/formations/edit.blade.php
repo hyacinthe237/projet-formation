@@ -45,6 +45,14 @@
                             </div>
 
                             <div class="col-sm-12">
+                              <div class="form-group">
+                                <label>Description</label>
+                                <textarea name="description"
+                                    class="form-control input-lg" rows="5" cols="80">{{ $formation->description }}</textarea>
+                              </div>
+                            </div>
+
+                            <div class="col-sm-12">
                                 <label>Sélectionnez un ou plusieurs financeurs</label>
                                 <div class="row">
                                     @foreach ($financeurs as $financeur)
@@ -66,14 +74,6 @@
                                     @endforeach
                                 </div>
                             </div>
-
-                            <div class="col-sm-12">
-                              <div class="form-group">
-                                <label>Description</label>
-                                <textarea name="description"
-                                    class="form-control input-lg" rows="5" cols="80">{{ $formation->description }}</textarea>
-                              </div>
-                            </div>
                         </div>
                     </div>
 
@@ -84,6 +84,20 @@
                                   <select name="is_active" class="form-control input-lg">
                                       <option value="0" {{ $formation->is_active == 0 ? 'selected' : '' }}>Inactivée</option>
                                       <option value="1" {{ $formation->is_active == 1 ? 'selected' : '' }}>Activée</option>
+                                  </select>
+                              </div>
+                          </div>
+
+                          <div class="form-group">
+                              <label>Catégories</label>
+                              <div class="form-select grey">
+                                  <select name="category_id" class="form-control input-lg">
+                                      <option value="">Sélectionnez une catégorie</option>
+                                    @foreach($categories as $item)
+                                        <option value="{{ $item->id }}" {{ $formation->category_id == $item->id ? 'selected' : '' }}>
+                                          {{ $item->name }}
+                                        </option>
+                                    @endforeach
                                   </select>
                               </div>
                           </div>

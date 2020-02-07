@@ -99,6 +99,13 @@
                             </div>
 
                             <div class="col-sm-12">
+                              <div class="form-group">
+                                <label>Description</label>
+                                <textarea name="description" class="form-control input-lg" rows="5" cols="80"></textarea>
+                              </div>
+                            </div>
+
+                            <div class="col-sm-12">
                                 <label>Sélectionnez un ou plusieurs financeurs</label>
                                 <div class="row">
                                     @foreach ($financeurs as $financeur)
@@ -112,13 +119,6 @@
                                         </div>
                                     @endforeach
                                 </div>
-                            </div>
-
-                            <div class="col-sm-12">
-                              <div class="form-group">
-                                <label>Description</label>
-                                <textarea name="description" class="form-control input-lg" rows="5" cols="80"></textarea>
-                              </div>
                             </div>
                         </div>
                   </div>
@@ -141,11 +141,12 @@
                             <label>Catégories</label>
                             <div class="form-select grey">
                                 <select name="category_id" class="form-control input-lg">
-                                  @foreach($categories as $item)
-                                      <option value="{{ $item->id }}">
-                                        {{ $item->name }}
-                                      </option>
-                                  @endforeach
+                                      <option value="">Sélectionnez une catégorie</option>
+                                      @foreach($categories as $item)
+                                          <option value="{{ $item->id }}">
+                                            {{ $item->name }}
+                                          </option>
+                                      @endforeach
                                 </select>
                             </div>
                         </div>

@@ -34,7 +34,27 @@
                               </select>
                           </div>
                       </div>
-                      <div class="col-sm-8">
+                      <div class="col-sm-3">
+                          <div class="form-select grey">
+                              <select name="financeur" class="form-control input-lg">
+                                  <option value="">Tous les Financeurs</option>
+                                  @foreach ($financeurs as $item)
+                                    <option value="{{ $item->id }}" {{ Request::get('financeur') == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                  @endforeach
+                              </select>
+                          </div>
+                      </div>
+                      <div class="col-sm-3">
+                          <div class="form-select grey">
+                              <select name="category" class="form-control input-lg">
+                                  <option value="">Toutes les catégories</option>
+                                  @foreach ($categories as $item)
+                                    <option value="{{ $item->id }}" {{ Request::get('category') == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                  @endforeach
+                              </select>
+                          </div>
+                      </div>
+                      <div class="col-sm-10 mt-10">
                           <div class="form-group">
                               <input type="text"
                               name="keywords"
@@ -44,7 +64,7 @@
                           </div>
                       </div>
 
-                      <div class="col-sm-2">
+                      <div class="col-sm-2 mt-10">
                           <button type="submit" class="btn btn-lg btn-primary btn-block">
                               Filtrer
                           </button>
@@ -55,18 +75,6 @@
 
             @include('errors.list')
 
-            {{-- <div class="row">
-                <div class="col-sm-4 text-center">
-                    <p>{{ count($formations) > 1 ? count($formations) . ' Formations' : count($formations) . ' Formation' }} </p>
-
-                </div>
-                <div class="col-sm-4"></div>
-                <div class="col-sm-4 text-center">
-
-                    <p>{{ $stagiaires > 1 ? $stagiaires . ' Stagiares' : $stagiaires . ' Stagiare' }} </p>
-                </div>
-            </div> --}}
-
             <div class="mt-10">
                 <table class="table table-striped">
                     <thead>
@@ -74,6 +82,7 @@
                             <th class="bold td-40">Titre</th>
                             <th class="td-5">Status</th>
                             <th class="td-10">Financeur(s)</th>
+                            <th class="td-10">Catégorie</th>
                             <th class="td-10">Nbre. formateurs</th>
                             <th class="td-10">Nbre. sites</th>
                             <th class="td-10">Nbre. Stagiares</th>
@@ -89,6 +98,7 @@
                                 <td class="bold td-40">{{ $formation->title }}</td>
                                 <td class="td-5">{{ $formation->is_active ? 'Actif' : 'Non actif' }}</td>
                                 <td class="td-10">@if (count($formation->financeurs)) @foreach ($formation->financeurs as $item) {{ $item->name }} @endforeach @endif</td>
+                                <td class="td-10">{{ $formation->category ? $formation->category->name : '---' }}</td>
                                 <td class="td-10">{{ count($formation->formateurs) }}</td>
                                 <td class="td-10">{{ count($formation->sites) }}</td>
                                 <td class="td-10">{{ count($formation->etudiants) }}</td>
