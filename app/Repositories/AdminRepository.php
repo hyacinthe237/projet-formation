@@ -70,12 +70,6 @@ class AdminRepository
                         ->where('fep.etat_id', '=', 1)
                         ->get();
 
-        // $uniques = array();
-        //     foreach($personnes as $personne) {
-        //         $key = $personne->number;
-        //         $uniques[$key] = $personne;
-        //     }
-
         return  $personnes;
     }
 
@@ -91,12 +85,6 @@ class AdminRepository
                         ->where('fep.etat_id', '=', 2)
                         ->get();
 
-        // $uniques = array();
-        //     foreach($personnes as $personne) {
-        //         $key = $personne->number;
-        //         $uniques[$key] = $personne;
-        //     }
-
         return  $personnes;
     }
 
@@ -111,12 +99,6 @@ class AdminRepository
                         ->where('fep.etat_id', '=', 1)
                         ->get();
 
-        // $uniques = array();
-        //     foreach($personnes as $personne) {
-        //         $key = $personne->number;
-        //         $uniques[$key] = $personne;
-        //     }
-
         return  $personnes;
     }
 
@@ -130,12 +112,6 @@ class AdminRepository
                         ->where('cf.session_id', '=', $sessionId)
                         ->where('fep.etat_id', '=', 2)
                         ->get();
-
-        // $uniques = array();
-        //     foreach($personnes as $personne) {
-        //         $key = $personne->number;
-        //         $uniques[$key] = $personne;
-        //     }
 
         return  $personnes;
     }

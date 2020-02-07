@@ -84,18 +84,34 @@ class AdminController extends Controller
         $etudiants     = $adminRepo->getStagiaires($session->id);
         $formateurs    = Formateur::get();
         $formations    = CommuneFormation::whereSessionId($session->id)->with('formation', 'commune')->get();
+        $totalCommunesToucher = 0;
+        $totalPersonnesIncrites = 0;
+        $totalPersonnesFormees = 0;
+        $totalPersonnesCU = 0;
+        $totalPersonnesMairie = 0;
+        $totalPersonnesSG = 0;
+        $totalPersonnesCadreComTech = 0;
+        $totalPersonnesSDE = 0;
+        $totalPersonnesScteCivil = 0;
+        $totalPersonnesFEICOM = 0;
+        $totalPersonnesAutresProjProg = 0;
+        $totalPersonnesAssocCom = 0;
+        $totalPersonnesC2D = 0;
 
         foreach ($regions as $region) {
             $region->commune_touchees = $adminRepo->getCommunesToucherParRegion($region->id, $session->id);
             $region->personnes_inscrite = $adminRepo->getPersonnesInscriteParRegion($region->id, $session->id);
             $region->personnes_formee = $adminRepo->getPersonnesFormeeParRegion($region->id, $session->id);
+            $totalCommunesToucher += count($region->commune_touchees);
+            $totalPersonnesIncrites += count($region->personnes_inscrite);
+            $totalPersonnesFormees += count($region->personnes_formee);
         }
 
-        foreach ($departements as $item) {
-            $item->commune_touchees = $adminRepo->getCommunesToucherParDepartement($item->id, $session->id);
-            $item->personnes_inscrite = $adminRepo->getPersonnesInscriteParDepartement($item->id, $session->id);
-            $item->personnes_formee = $adminRepo->getPersonnesFormeeParDepartement($item->id, $session->id);
-        }
+        // foreach ($departements as $item) {
+        //     $item->commune_touchees = $adminRepo->getCommunesToucherParDepartement($item->id, $session->id);
+        //     $item->personnes_inscrite = $adminRepo->getPersonnesInscriteParDepartement($item->id, $session->id);
+        //     $item->personnes_formee = $adminRepo->getPersonnesFormeeParDepartement($item->id, $session->id);
+        // }
 
         foreach ($allFormations as $item) {
             $item->communes = $adminRepo->getCommunesParFormation($item->id, $session->id);
@@ -104,7 +120,7 @@ class AdminController extends Controller
 
         $data = [
             'regions' => $regions,
-            'departements' => $departements,
+            // 'departements' => $departements,
             'communes' => $communes,
             'communesToucher' => $communesToucher,
             'totalPersonnePrevuFormer' => $totalPersonnePrevuFormer,
@@ -114,6 +130,19 @@ class AdminController extends Controller
             'formations' => $formations,
             'allFormations' => $allFormations,
             'session' => $session,
+            'totalCommunesToucher' => $totalCommunesToucher,
+            'totalPersonnesIncrites' => $totalPersonnesIncrites,
+            'totalPersonnesFormees' => $totalPersonnesFormees,
+            'totalPersonnesCU' => $totalPersonnesCU,
+            'totalPersonnesMairie' => $totalPersonnesMairie,
+            'totalPersonnesSG' => $totalPersonnesSG,
+            'totalPersonnesCadreComTech' => $totalPersonnesCadreComTech,
+            'totalPersonnesSDE' => $totalPersonnesSDE,
+            'totalPersonnesScteCivil' => $totalPersonnesScteCivil,
+            'totalPersonnesFEICOM' => $totalPersonnesFEICOM,
+            'totalPersonnesAutresProjProg' => $totalPersonnesAutresProjProg,
+            'totalPersonnesAssocCom' => $totalPersonnesAssocCom,
+            'totalPersonnesC2D' => $totalPersonnesC2D,
         ];
 
         return $data;

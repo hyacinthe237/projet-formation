@@ -31,7 +31,11 @@ class Formation extends Model
         return $this->belongsToMany(Phase::class, 'formation_phases', 'formation_id', 'phase_id');
     }
 
-    // public function etudiants () {
-    //     return $this->hasMany(FormationEtudiant::class);
-    // }
+    public function financeurs () {
+        return $this->belongsToMany(Financeur::class, 'formation_financeurs', 'formation_id', 'financeur_id');
+    }
+
+    public function category () {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 }

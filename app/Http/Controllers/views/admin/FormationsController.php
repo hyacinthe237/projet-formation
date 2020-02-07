@@ -10,8 +10,11 @@ use App\Models\Etudiant;
 use App\Models\Formation;
 use App\Models\Commune;
 use App\Models\FormationEtudiant;
+use App\Models\FormationFinanceur;
 use App\Models\CommuneFormation;
 use App\Models\Session;
+use App\Models\Financeur;
+use App\Models\Category;
 use App\Helpers\FormationHelper;
 use App\Repositories\FormationRepository as formRepo;
 use Illuminate\Http\Request;
@@ -37,12 +40,22 @@ class FormationsController extends Controller
          $session = Session::whereStatus('pending')->first();
          $status = $request->is_active;
          $stagiaires = Etudiant::whereIsActive(true)->count();
-         $formations = Formation::with(['sites', 'sites.commune', 'phases'])
+         $financeurs = Financeur::orderBy('name')->get();
+         $categories = Category::orderBy('name')->get();
+         $formations = Formation::with(['sites', 'sites.commune', 'phases', 'financeurs', 'category'])
              ->when($request->keywords, function($query) use ($request) {
                  return $query->where('title', 'like', '%'.$request->keywords.'%');
              })
              ->when($status, function($query) use ($status) {
                  return $query->where('is_active', $status);
+             })
+             ->when($request->category, function($query) use ($request) {
+                 return $query->where('category_id', $request->category_id);
+             })
+             ->when($request->financeur, function ($q) use ($request) {
+                 return $q->whereHas('financeurs', function($sql) use ($request) {
+                     return $sql->where('financeur_id', $request->financeur);
+                 });
              })
              ->whereSessionId($session->id)
              ->orderBy('id', 'desc')
@@ -53,7 +66,7 @@ class FormationsController extends Controller
                 $item->formes = $this->formRepo->getStagiaireFormees($item->id);
              }
 
-         return view('admin.formations.index', compact('formations', 'stagiaires', 'status'));
+         return view('admin.formations.index', compact('formations', 'stagiaires', 'status', 'categories', 'financeurs'));
      }
 
     /**
@@ -63,8 +76,10 @@ class FormationsController extends Controller
      */
      public function create () {
          $communes = Commune::orderBy('name', 'asc')->get();
+         $financeurs = Financeur::orderBy('name')->get();
+         $categories = Category::orderBy('name')->get();
 
-         return view('admin.formations.create', compact('communes'));
+         return view('admin.formations.create', compact('communes', 'categories', 'financeurs'));
      }
 
     /**
@@ -96,12 +111,14 @@ class FormationsController extends Controller
              $formation = Formation::create([
                'number'      => FormationHelper::makeFormationNumber(),
                'session_id'  => $session->id,
+               'category_id' => $request->category_id,
                'title'       => $request->title,
                'description' => $request->description,
                'is_active'   => $request->is_active
              ]);
 
             $formation->phases()->attach([1,2]);
+            $formation->financeurs()->sync($request->financeurs);
 
              CommuneFormation::create([
                  'session_id' => $session->id,
@@ -200,8 +217,10 @@ class FormationsController extends Controller
          $session = Session::whereStatus('pending')->first();
          $formation->commune_formations = CommuneFormation::whereSessionId($session->id)->with('etudiants.etudiant')->whereFormationId($formation->id)->get();
          $formation->etudiants = $this->formRepo->getStagiaireFormation($formation->id);
+         $financeurs = Financeur::orderBy('name')->get();
+         $categories = Category::orderBy('name')->get();
 
-         return view('admin.formations.edit', compact('formation', 'communes'));
+         return view('admin.formations.edit', compact('formation', 'communes', 'categories', 'financeurs'));
      }
 
     /**
@@ -288,6 +307,8 @@ class FormationsController extends Controller
          $formation->is_active    = $request->has('is_active') ? $request->is_active : $formation->is_active;
          $formation->update();
 
+         $formation->financeurs()->sync($request->financeurs);
+
          return redirect()->back()->with('message', 'Formation mise à jour avec succès');
      }
 
@@ -370,6 +391,11 @@ class FormationsController extends Controller
          foreach ($commune_formations as $item) {
            $item->delete();
            FormationEtudiant::whereCommuneFormationId($item->id)->delete();
+         }
+
+         $financements = FormationFinanceur::whereFormationId($formation->id)->get();
+         foreach ($financements as $item) {
+           $item->delete();
          }
 
          $formation->delete();

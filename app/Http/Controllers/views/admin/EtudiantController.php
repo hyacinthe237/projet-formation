@@ -17,6 +17,8 @@ use App\Models\FormationEtudiantPhase;
 use App\Models\Commune;
 use App\Models\CommuneFormation;
 use App\Models\Session;
+use App\Models\Structure;
+use App\Models\Fonction;
 use App\Helpers\EtudiantHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -44,7 +46,9 @@ class EtudiantController extends Controller
         $communes = Commune::with('departement', 'departement.region')->get();
         $phase = Phase::whereTitle('Formation')->first();
         $etat = Etat::whereName('inscris')->first();
-        return view('admin.etudiants.create', compact('formations', 'communes', 'phase', 'etat'));
+        $structures = Structure::orderBy('name', 'desc')->get();
+        $fonctions = Fonction::orderBy('name', 'desc')->get();
+        return view('admin.etudiants.create', compact('formations', 'communes', 'phase', 'etat', 'fonctions', 'structures'));
     }
 
     public function edit ($number)
@@ -60,8 +64,10 @@ class EtudiantController extends Controller
         $communes = Commune::with('departement', 'departement.region')->get();
         $phases = Phase::get();
         $etats = Etat::get();
+        $structures = Structure::orderBy('name', 'desc')->get();
+        $fonctions = Fonction::orderBy('name', 'desc')->get();
 
-        return view('admin.etudiants.edit', compact('formations', 'communes', 'etudiant', 'phases', 'etats'));
+        return view('admin.etudiants.edit', compact('formations', 'communes', 'etudiant', 'phases', 'etats', 'fonctions', 'structures'));
     }
 
     public function editEtudiantFormation ($id)
@@ -155,8 +161,8 @@ class EtudiantController extends Controller
               'email'           => $request->email,
               'sex'             => $request->sex,
               'dob'             => $request->dob,
-              'structure'       => $request->structure,
-              'fonction'        => $request->fonction,
+              'structure_id'    => $request->structure_id,
+              'fonction_id'     => $request->fonction_id,
               'desc_fonction'   => $request->desc_fonction,
               'form_souhaitee'  => $request->form_souhaitee,
               'diplome_elev'    => $request->diplome_elev,
@@ -256,7 +262,8 @@ class EtudiantController extends Controller
         $etudiant->email             = $request->has('email') ? $request->email : $etudiant->email;
         $etudiant->sex               = $request->has('sex') ? $request->sex : $etudiant->sex;
         $etudiant->dob               = $request->has('dob') ? $request->dob : $etudiant->dob;
-        $etudiant->structure         = $request->has('structure') ? $request->structure : $etudiant->structure;
+        $etudiant->structure_id      = $request->has('structure_id') ? $request->structure_id : $etudiant->structure_id;
+        $etudiant->fonction_id       = $request->has('fonction_id') ? $request->fonction_id : $etudiant->fonction_id;
         $etudiant->desc_fonction     = $request->has('desc_fonction') ? $request->desc_fonction : $etudiant->desc_fonction;
         $etudiant->form_souhaitee    = $request->has('form_souhaitee') ? $request->form_souhaitee : $etudiant->form_souhaitee;
         $etudiant->form_initiale     = $request->has('form_initiale') ? $request->form_initiale : $etudiant->form_initiale;

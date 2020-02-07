@@ -55,25 +55,61 @@
                   <thead>
                       <tr>
                           <th class="td-3">#</th>
-                          <th class="td-10">Régions</th>
-                          <th class="td-30">(Nbre) Communes</th>
-                          <th class="td-5">Nbre. Pers. Inscrites</th>
-                          <th class="td-5">Nbre. Pers. Formées</th>
+                          <th class="td-5">Régions</th>
+                          <th class="td-5">Communes</th>
+                          <th class="td-5">Pers. Inscrites</th>
+                          <th class="td-5">Pers. Formées</th>
+                          <th class="td-5">Pers. CU</th>
+                          <th class="td-5">Pers. Mairie</th>
+                          <th class="td-5">SG</th>
+                          <th class="td-5">Cadre Com Tech</th>
+                          <th class="td-5">Pers. SDE</th>
+                          <th class="td-5">Pers. Scte Civil</th>
+                          <th class="td-5">Pers. FEICOM</th>
+                          <th class="td-5">Pers. Autres proj/prog</th>
+                          <th class="td-5">Pers. Assoc Com</th>
+                          <th class="td-5">Pers. C2D</th>
                       </tr>
                   </thead>
 
                   <tbody>
                       @foreach($data['regions'] as $region)
-                          @if (count($region->commune_touchees))
-                            <tr>
-                                <td class="td-3">{{ $region->id }}</td>
-                                <td class="bold td-10">{{ $region->name }}</td>
-                                <td class="td-30">({{count($region->commune_touchees)}}) @foreach ($region->commune_touchees as $item){{ $data['communes']->where('id', $item->commune_id)->first()->name . ', ' }}@endforeach</td>
-                                <td class="td-5">{{count($region->personnes_inscrite)}}</td>
-                                <td class="td-5">{{count($region->personnes_formee)}}</td>
-                            </tr>
-                          @endif
+                        <tr>
+                            <td class="td-3">{{ $region->id }}</td>
+                            <td class="bold td-5">{{ $region->name }}</td>
+                            <td class="td-5">{{ count($region->commune_touchees) }}</td>
+                            <td class="td-5">{{ count($region->personnes_inscrite) }}</td>
+                            <td class="td-5">{{ count($region->personnes_formee) }}</td>
+                            <td class="td-5">---</td>
+                            <td class="td-5">---</td>
+                            <td class="td-5">---</td>
+                            <td class="td-5">---</td>
+                            <td class="td-5">---</td>
+                            <td class="td-5">---</td>
+                            <td class="td-5">---</td>
+                            <td class="td-5">---</td>
+                            <td class="td-5">---</td>
+                            <td class="td-5">---</td>
+                        </tr>
                       @endforeach
+
+                        <tr>
+                          <td class="td-3"></td>
+                          <td class="td-5 bold">TOTAUX</td>
+                          <td class="td-5">{{ $data['totalCommunesToucher'] }}</td>
+                          <td class="td-5">{{ $data['totalPersonnesIncrites'] }}</td>
+                          <td class="td-5">{{ $data['totalPersonnesFormees'] }}</td>
+                          <td class="td-5">{{ $data['totalPersonnesCU'] }}</td>
+                          <td class="td-5">{{ $data['totalPersonnesMairie'] }}</td>
+                          <td class="td-5">{{ $data['totalPersonnesSG'] }}</td>
+                          <td class="td-5">{{ $data['totalPersonnesCadreComTech'] }}</td>
+                          <td class="td-5">{{ $data['totalPersonnesSDE'] }}</td>
+                          <td class="td-5">{{ $data['totalPersonnesScteCivil'] }}</td>
+                          <td class="td-5">{{ $data['totalPersonnesFEICOM'] }}</td>
+                          <td class="td-5">{{ $data['totalPersonnesAutresProjProg'] }}</td>
+                          <td class="td-5">{{ $data['totalPersonnesAssocCom'] }}</td>
+                          <td class="td-5">{{ $data['totalPersonnesC2D'] }}</td>
+                        </tr>
                   </tbody>
               </table>
             </div>

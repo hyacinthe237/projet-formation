@@ -15,6 +15,7 @@ class CreateFormationsTable extends Migration
     {
         Schema::create('formations', function (Blueprint $table) {
           $table->bigIncrements('id');
+          $table->integer('category_id')->nullable();
           $table->bigInteger('number')->index();
           $table->integer('session_id')->unsigned();
           $table->string('title')->unique();

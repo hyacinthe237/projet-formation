@@ -23,8 +23,8 @@ class CreateEtudiantsTable extends Migration
           $table->string('email')->unique();
           $table->string('sex')->nullable();
           $table->string('dob')->nullable();
-          $table->string('structure')->nullable();
-          $table->string('fonction')->nullable();
+          $table->integer('structure_id')->nullable();
+          $table->integer('fonction_id')->nullable();
           $table->text('desc_fonction')->nullable();
           $table->text('form_souhaitee')->nullable();
           $table->text('form_initiale')->nullable();

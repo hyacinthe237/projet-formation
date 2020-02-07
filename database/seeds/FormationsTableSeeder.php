@@ -34,6 +34,7 @@ class FormationsTableSeeder extends Seeder
         ]);
 
         $form_01->phases()->attach([1,2]);
+        $form_01->financeurs()->attach([1,2]);
 
         $form_02 = Formation::create([
             'number'      => 1000001,

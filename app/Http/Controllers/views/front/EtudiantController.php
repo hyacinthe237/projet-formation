@@ -15,6 +15,8 @@ use App\Models\FormationEtudiant;
 use App\Models\Commune;
 use App\Models\CommuneFormation;
 use App\Models\Session;
+use App\Models\Structure;
+use App\Models\Fonction;
 use App\Helpers\EtudiantHelper;
 use App\Mail\RegistrationMail;
 use Illuminate\Http\Request;
@@ -31,8 +33,10 @@ class EtudiantController extends Controller
         $communes = Commune::with('departement', 'departement.region')->get();
         $phase = Phase::whereTitle('Formation')->first();
         $etat = Etat::whereName('inscris')->first();
+        $structures = Structure::orderBy('name', 'desc')->get();
+        $fonctions = Fonction::orderBy('name', 'desc')->get();
 
-        return view('front.etudiants.create', compact('formations', 'communes', 'phase', 'etat'));
+        return view('front.etudiants.create', compact('formations', 'communes', 'phase', 'etat', 'fonctions', 'structures'));
     }
 
     /**
@@ -71,8 +75,8 @@ class EtudiantController extends Controller
               'email'           => $request->email,
               'sex'             => $request->sex,
               'dob'             => $request->dob,
-              'structure'       => $request->structure,
-              'fonction'        => $request->fonction,
+              'structure_id'    => $request->structure_id,
+              'fonction_id'     => $request->fonction_id,
               'desc_fonction'   => $request->desc_fonction,
               'form_souhaitee'  => $request->form_souhaitee,
               'diplome_elev'    => $request->diplome_elev,
