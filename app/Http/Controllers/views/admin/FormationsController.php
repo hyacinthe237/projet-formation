@@ -311,6 +311,7 @@ class FormationsController extends Controller
          $formation->title        = $request->has('title') ? $request->title : $formation->title;
          $formation->description  = $request->has('description') ? $request->description : $formation->description;
          $formation->is_active    = $request->has('is_active') ? $request->is_active : $formation->is_active;
+         $formation->category_id  = $request->has('category_id') ? $request->category_id : $formation->category_id;
          $formation->update();
 
          $formation->financeurs()->sync($request->financeurs);
