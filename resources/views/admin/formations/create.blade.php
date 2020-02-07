@@ -99,6 +99,22 @@
                             </div>
 
                             <div class="col-sm-12">
+                                <label>Sélectionnez un ou plusieurs financeurs</label>
+                                <div class="row">
+                                    @foreach ($financeurs as $financeur)
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="css-input css-checkbox css-checkbox-primary mr-20">
+                                                    <input type="checkbox" name="financeurs[]" value="{{ $financeur->id }}">
+                                                    <span class="mr-10"></span> {{ $financeur->name }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
                               <div class="form-group">
                                 <label>Description</label>
                                 <textarea name="description" class="form-control input-lg" rows="5" cols="80"></textarea>
@@ -115,6 +131,19 @@
                                   @foreach($communes as $commune)
                                       <option value="{{ $commune->id }}">
                                         {{ $commune->name }}
+                                      </option>
+                                  @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Catégories</label>
+                            <div class="form-select grey">
+                                <select name="category_id" class="form-control input-lg">
+                                  @foreach($categories as $item)
+                                      <option value="{{ $item->id }}">
+                                        {{ $item->name }}
                                       </option>
                                   @endforeach
                                 </select>

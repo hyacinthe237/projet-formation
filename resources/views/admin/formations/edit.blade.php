@@ -45,6 +45,29 @@
                             </div>
 
                             <div class="col-sm-12">
+                                <label>Sélectionnez un ou plusieurs financeurs</label>
+                                <div class="row">
+                                    @foreach ($financeurs as $financeur)
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                @if (in_array($financeur->id, $tab))
+                                                    <label class="css-input css-checkbox css-checkbox-primary mr-20">
+                                                        <input type="checkbox" name="financeurs[]" value="{{ $financeur->id }}" checked>
+                                                        <span class="mr-10"></span> {{ $financeur->name }}
+                                                    </label>
+                                                @else
+                                                    <label class="css-input css-checkbox css-checkbox-primary mr-20">
+                                                        <input type="checkbox" name="financeurs[]" value="{{ $financeur->id }}">
+                                                        <span class="mr-10"></span> {{ $financeur->name }}
+                                                    </label>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
                               <div class="form-group">
                                 <label>Description</label>
                                 <textarea name="description"
@@ -100,8 +123,8 @@
                               @foreach($formation->etudiants as $item)
                                   <tr data-href="{{ route('stagiaires.edit', $item->number) }}">
                                       <td class="bold">{{ $item->firstname . ' ' . $item->lastname }}</td>
-                                      <td>{{ $item->structure }}</td>
-                                      <td>{{ $item->fonction }}</td>
+                                      <td>{{ $item->structure_id }}</td>
+                                      <td>{{ $item->fonction_id }}</td>
                                       <td>{{ date('d/m/Y H:i', strtotime($item->created_at)) }}</td>
                                   </tr>
                               @endforeach

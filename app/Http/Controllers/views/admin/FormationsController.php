@@ -209,7 +209,9 @@ class FormationsController extends Controller
      * @return \Illuminate\Http\Response
      */
      public function edit ($number) {
-         $formation  = Formation::whereNumber($number)->with('phases', 'formateurs', 'formateurs.formateur', 'sites', 'sites.commune', 'sites.etudiants')->first();
+         $tab = [];
+
+         $formation  = Formation::whereNumber($number)->with('phases', 'formateurs', 'financeurs', 'formateurs.formateur', 'sites', 'sites.commune', 'sites.etudiants')->first();
          if (!$formation)
              return redirect()->route('formation.edit', $formation->number);
 
@@ -220,7 +222,11 @@ class FormationsController extends Controller
          $financeurs = Financeur::orderBy('name')->get();
          $categories = Category::orderBy('name')->get();
 
-         return view('admin.formations.edit', compact('formation', 'communes', 'categories', 'financeurs'));
+         foreach ($formation->financeurs as $item) {
+             $tab[] = $item->id;
+         }
+
+         return view('admin.formations.edit', compact('formation', 'communes', 'categories', 'financeurs', 'tab'));
      }
 
     /**

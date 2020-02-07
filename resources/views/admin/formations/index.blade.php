@@ -73,6 +73,7 @@
                         <tr>
                             <th class="bold td-40">Titre</th>
                             <th class="td-5">Status</th>
+                            <th class="td-10">Financeur(s)</th>
                             <th class="td-10">Nbre. formateurs</th>
                             <th class="td-10">Nbre. sites</th>
                             <th class="td-10">Nbre. Stagiares</th>
@@ -87,6 +88,7 @@
                             <tr data-href="{{ route('formation.edit', $formation->number) }}">
                                 <td class="bold td-40">{{ $formation->title }}</td>
                                 <td class="td-5">{{ $formation->is_active ? 'Actif' : 'Non actif' }}</td>
+                                <td class="td-10">@if (count($formation->financeurs)) @foreach ($formation->financeurs as $item) {{ $item->name }} @endforeach @endif</td>
                                 <td class="td-10">{{ count($formation->formateurs) }}</td>
                                 <td class="td-10">{{ count($formation->sites) }}</td>
                                 <td class="td-10">{{ count($formation->etudiants) }}</td>
