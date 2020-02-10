@@ -5,13 +5,13 @@ namespace App\Http\Controllers\views\admin;
 use Auth;
 use DB;
 use Carbon\Carbon;
-use App\Models\Fonction;
+use App\Models\Structure;
 use App\Models\Etudiant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 
-class FonctionController extends Controller
+class StructureController extends Controller
 {
   /**
    * Display a listing of the resource.
@@ -21,27 +21,27 @@ class FonctionController extends Controller
   public function index(Request $request)
   {
       $keywords = $request->keywords;
-      $fonctions = Fonction::when($keywords, function($query) use ($keywords) {
+      $structures = Structure::when($keywords, function($query) use ($keywords) {
           return $query->where('name', 'like', '%'.$keywords.'%');
       })
       ->orderBy('id', 'desc')
       ->paginate(50);
 
-      return view('admin.fonctions.index', compact('fonctions'));
+      return view('admin.structures.index', compact('structures'));
   }
 
     public function create ()
     {
-        return view('admin.fonctions.create');
+        return view('admin.structures.create');
     }
 
     public function edit ($id)
     {
-        $fonction  = Fonction::find($id);
-        if (!$fonction)
-            return redirect()->route('fonctions.index');
+        $structure  = Structure::find($id);
+        if (!$structure)
+            return redirect()->route('structures.index');
 
-        return view('admin.fonctions.edit', compact('fonction'));
+        return view('admin.structures.edit', compact('structure'));
     }
 
     /**
@@ -61,17 +61,17 @@ class FonctionController extends Controller
                   ->withInput($request->all())
                   ->withErrors(['validator' => 'Tous les champs sont obligatoires']);
 
-        $existing = Fonction::whereName($request->name)->first();
+        $existing = Structure::whereName($request->name)->first();
 
         if (!$existing) {
-            $fonction = Fonction::create([
+            $structure = Structure::create([
               'name'      => $request->name
             ]);
 
-            return redirect()->back()->with('message', 'Fonction ajoutée avec succès');
+            return redirect()->back()->with('message', 'Structure ajoutée avec succès');
         }
 
-        return redirect()->back()->withErrors(['existing' => 'Fonction existante']);
+        return redirect()->back()->withErrors(['existing' => 'Structure existante']);
     }
 
     /**
@@ -91,30 +91,30 @@ class FonctionController extends Controller
         if ($validator->fails())
             return redirect()->back()->withInput($request->all())->withErrors(['validator' => 'Tous les champs sont obligatoires']);
 
-        $fonction = Fonction::find($id);
-        if (!$fonction) {
-            return redirect()->back()->withErrors(['category' => 'Fonction inconnue!']);
+        $structure = Structure::find($id);
+        if (!$structure) {
+            return redirect()->back()->withErrors(['category' => 'Structure inconnue!']);
         }
 
-        $fonction->name = $request->has('name') ? $request->name : $fonction->name;
-        $fonction->update();
+        $structure->name = $request->has('name') ? $request->name : $structure->name;
+        $structure->update();
 
-        return redirect()->back()->with('message', 'Fonction mise à jour avec succès');
+        return redirect()->back()->with('message', 'Structure mise à jour avec succès');
     }
 
     public function destroy ($id)
     {
-        $fonction = Fonction::find($id);
-        if (!$fonction)
-            return redirect()->back()->withErrors(['message' => 'Fonction non existante']);
+        $structure = Structure::find($id);
+        if (!$structure)
+            return redirect()->back()->withErrors(['message' => 'Structure non existante']);
 
-        $etudiant = Etudiant::whereFonctionId($fonction->id)->first();
+        $etudiant = Etudiant::whereStructureId($structure->id)->first();
         if ($etudiant)
-           return redirect()->back()->withErrors(['category' => 'Nous ne pouvons pas supprimer cette Fonction, car elle est relié à un stagiaire !']);
+           return redirect()->back()->withErrors(['category' => 'Nous ne pouvons pas supprimer cette Structure, car elle est relié à un stagiaire !']);
 
-        $fonction->delete();
+        $structure->delete();
 
-        return redirect()->route('fonctions.index')->with('message', 'Fonction supprimé');
+        return redirect()->route('structures.index')->with('message', 'Structure supprimé');
     }
 
 }
