@@ -5,13 +5,13 @@ namespace App\Http\Controllers\views\admin;
 use Auth;
 use DB;
 use Carbon\Carbon;
-use App\Models\Financeur;
-use App\Models\Formation;
+use App\Models\Fonction;
+use App\Models\Etudiant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 
-class FinanceurController extends Controller
+class FonctionController extends Controller
 {
   /**
    * Display a listing of the resource.
@@ -21,27 +21,27 @@ class FinanceurController extends Controller
   public function index(Request $request)
   {
       $keywords = $request->keywords;
-      $financeurs = Financeur::when($keywords, function($query) use ($keywords) {
+      $fonctions = Fonction::when($keywords, function($query) use ($keywords) {
           return $query->where('name', 'like', '%'.$keywords.'%');
       })
       ->orderBy('id', 'desc')
       ->paginate(50);
 
-      return view('admin.financeurs.index', compact('financeurs'));
+      return view('admin.fonctions.index', compact('fonctions'));
   }
 
     public function create ()
     {
-        return view('admin.financeurs.create');
+        return view('admin.fonctions.create');
     }
 
     public function edit ($id)
     {
-        $financeur  = Financeur::find($id);
-        if (!$financeur)
-            return redirect()->route('financeurs.index');
+        $fonction  = Fonction::find($id);
+        if (!$fonction)
+            return redirect()->route('fonctions.index');
 
-        return view('admin.financeurs.edit', compact('financeur'));
+        return view('admin.fonctions.edit', compact('category'));
     }
 
     /**
@@ -61,17 +61,17 @@ class FinanceurController extends Controller
                   ->withInput($request->all())
                   ->withErrors(['validator' => 'Tous les champs sont obligatoires']);
 
-        $existing = Financeur::whereName($request->name)->first();
+        $existing = Fonction::whereName($request->name)->first();
 
         if (!$existing) {
-            $financeur = Financeur::create([
+            $fonction = Fonction::create([
               'name'      => $request->name
             ]);
 
-            return redirect()->back()->with('message', 'Financeur ajouté avec succès');
+            return redirect()->back()->with('message', 'Fonction ajoutée avec succès');
         }
 
-        return redirect()->back()->withErrors(['existing' => 'Financeur existant']);
+        return redirect()->back()->withErrors(['existing' => 'Fonction existante']);
     }
 
     /**
@@ -91,33 +91,30 @@ class FinanceurController extends Controller
         if ($validator->fails())
             return redirect()->back()->withInput($request->all())->withErrors(['validator' => 'Tous les champs sont obligatoires']);
 
-        $financeur = Financeur::find($id);
-        if (!$financeur) {
-            return redirect()->back()->withErrors(['financeur' => 'Financeur inconnu!']);
+        $fonction = Fonction::find($id);
+        if (!$fonction) {
+            return redirect()->back()->withErrors(['category' => 'Fonction inconnue!']);
         }
 
-        $financeur->name = $request->has('name') ? $request->name : $financeur->name;
-        $financeur->update();
+        $fonction->name = $request->has('name') ? $request->name : $fonction->name;
+        $fonction->update();
 
-        return redirect()->back()->with('message', 'Financeur mis à jour avec succès');
+        return redirect()->back()->with('message', 'Fonction mise à jour avec succès');
     }
 
     public function destroy ($id)
     {
-        $financeur = Financeur::find($id);
-        if (!$financeur)
-            return redirect()->back()->withErrors(['message' => 'Financeur non existant']);
+        $fonction = Fonction::find($id);
+        if (!$fonction)
+            return redirect()->back()->withErrors(['message' => 'Fonction non existante']);
 
-        $financeurs = Formationfinanceur::whereFinanceurId($financeur->id)->get();
-        if ($financeurs) {
-          foreach ($financeurs as $item) {
-            $item->delete();
-          }
-        }
-        
-        $financeur->delete();
+        $etudiant = Etudiant::whereFonctionId($fonction->id)->first();
+        if ($etudiant)
+           return redirect()->back()->withErrors(['category' => 'Nous ne pouvons pas supprimer cette Fonction, car elle est relié à un stagiaire !']);
 
-        return redirect()->route('financeurs.index')->with('message', 'Financeur supprimé');
+        $fonction->delete();
+
+        return redirect()->route('fonctions.index')->with('message', 'Fonction supprimé');
     }
 
 }
