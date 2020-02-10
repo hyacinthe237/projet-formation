@@ -105,7 +105,7 @@
                               </div>
                             </div>
 
-                            <div class="col-sm-12">
+                            <div class="col-sm-10">
                                 <label>Sélectionnez un ou plusieurs financeurs</label>
                                 <div class="row">
                                     @foreach ($financeurs as $financeur)
@@ -119,6 +119,12 @@
                                         </div>
                                     @endforeach
                                 </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <button class="btn btn-success" data-toggle="modal" data-target="#addFinanceurModal">
+                                    <i class="ion-plus"></i>
+                                </button>
                             </div>
                         </div>
                   </div>
@@ -139,16 +145,26 @@
 
                         <div class="form-group">
                             <label>Catégories</label>
-                            <div class="form-select grey">
-                                <select name="category_id" class="form-control input-lg">
-                                      <option value="">Sélectionnez une catégorie</option>
-                                      @foreach($categories as $item)
-                                          <option value="{{ $item->id }}">
-                                            {{ $item->name }}
-                                          </option>
-                                      @endforeach
-                                </select>
+                            <div class="row">
+                                <div class="col-xs-9">
+                                  <div class="form-select grey">
+                                      <select name="category_id" class="form-control input-lg">
+                                            <option value="">Sélectionnez une catégorie</option>
+                                            @foreach($categories as $item)
+                                                <option value="{{ $item->id }}">
+                                                  {{ $item->name }}
+                                                </option>
+                                            @endforeach
+                                      </select>
+                                  </div>
+                                </div>
+                                <div class="col-xs-3">
+                                  <button class="btn btn-success" data-toggle="modal" data-target="#addCategoryModal">
+                                      <i class="ion-plus"></i>
+                                  </button>
+                                </div>
                             </div>
+
                         </div>
 
                         <div class="form-group">
@@ -182,8 +198,10 @@
           </div>
       </div>
     </form>
-
 </section>
+
+@include('admin.modals.addcategory')
+@include('admin.modals.addfinanceur')
 
 @endsection
 
