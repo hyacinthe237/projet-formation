@@ -16,26 +16,34 @@
       <table width="100%" cellspacing="0" cellpadding="0">
         <tbody>
           <tr>
-            <td class="td-5 text-center bold">#</td>
-            <td class="td-35 text-center bold">Titre</td>
-            <td class="td-5 text-center bold">Nbre Places</td>
-            <td class="td-5 text-center bold">Nbre Sites</td>
+            <td class="td-5">#</td>
+            <td class="bold td-15">Titre</td>
+            <td class="td-5">Financeurs</td>
+            <td class="td-5">Catégorie</td>
+            <td class="td-5">Nbre. formateurs</td>
+            <td class="td-5">Nbre. sites</td>
+            <td class="td-5">Nbre. Inscris</td>
+            <td class="td-5">Nbre. Formés</td>
           </tr>
         </tbody>
       </table>
 
-        @foreach ($formations as $item)
-          <table width="100%" cellspacing="0" cellpadding="0">
-            <tbody>
-              <tr>
-                <td class="td-5">{{ $item->number }}</td>
-                <td class="td-35">{{ $item->title }}</td>
-                <td class="td-5 text-center">{{ $item->qte_requis }}</td>
-                <td class="td-5 text-center">{{ count($item->sites) }}</td>
-              </tr>
-            </tbody>
-          </table>
-        @endforeach
+          @foreach($formations as $formation)
+            <table width="100%" cellspacing="0" cellpadding="0">
+              <tbody>
+                <tr data-href="{{ route('formation.edit', $formation->number) }}">
+                    <td class="td-5">{{ $formation->number }}</td>
+                    <td class="bold td-15">{{ $formation->title }}</td>
+                    <td class="td-5">@if (count($formation->financeurs)) @foreach ($formation->financeurs as $item) {{ $item->name }} @endforeach @endif</td>
+                    <td class="td-5">{{ $formation->category ? $formation->category->name : '---' }}</td>
+                    <td class="td-5">{{ count($formation->formateurs) }}</td>
+                    <td class="td-5">{{ count($formation->sites) }}</td>
+                    <td class="td-5">{{ count($formation->etudiants) }}</td>
+                    <td class="td-5">{{ count($formation->formes) }}</td>
+                </tr>
+              </tbody>
+            </table>
+         @endforeach
 
     </section>
 

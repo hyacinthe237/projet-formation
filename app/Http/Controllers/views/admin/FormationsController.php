@@ -432,9 +432,9 @@ class FormationsController extends Controller
       * @param  [type] $id [description]
       * @return [type]         [description]
       */
-     public function downloadFormation ()
+     public function downloadFormation (formRepo $formRepo)
      {
-         $data = self::takeFormationInfos();
+         $data = self::takeFormationInfos($formRepo);
 
          $pdf = PDF::loadView('pdfs.formation', $data);
          return $pdf->stream();
@@ -445,10 +445,13 @@ class FormationsController extends Controller
       * @param  [type] $id [description]
       * @return [type]         [description]
       */
-     private static function takeFormationInfos ()
+     private static function takeFormationInfos ($formRepo)
      {
-         $formations = Formation::with('sites', 'sites.commune')->whereIsActive(true)->get();
-
+         $formations = Formation::with('sites', 'sites.commune', 'financeurs', 'category')->whereIsActive(true)->get();
+         foreach ($formations as $item) {
+            $item->etudiants = $formRepo->getStagiaireFormation($item->id);
+            $item->formes = $formRepo->getStagiaireFormees($item->id);
+         }
          $data = [
              'formations' => $formations
          ];
