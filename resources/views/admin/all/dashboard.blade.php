@@ -20,24 +20,32 @@
             <div class="col-sm-12 mb-10">
                 <h4 class="bold">Taux de couverture</h4>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="card green">
                     {{-- <i class="ion-users"></i> --}}
                     <h3>{{ $data['totalPersonnePrevuFormer'] . ' %' }}</h3>
-                    <h5>Personnes formées</h5>
+                    <h5>Stagiaires inscris</h5>
                 </div>
             </div>
 
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="card red">
+                    {{-- <i class="ion-users"></i> --}}
+                    <h3>{{ 0 . ' %' }}</h3>
+                    <h5>Stagiaires formés</h5>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="card warning">
                     {{-- <i class="ion-city"></i> --}}
                     <h3>{{ $data['communesToucher'] . ' %' }}</h3>
                     <h5>Communes touchées</h5>
                 </div>
             </div>
 
-            <div class="col-sm-4">
-                <div class="card warning">
+            <div class="col-sm-3">
+                <div class="card dark">
                     {{-- <i class="ion-mark"></i> --}}
                     <h3>{{ $data['formationExecuter'] . ' %' }}</h3>
                     <h5>Formations exécutées</h5>
