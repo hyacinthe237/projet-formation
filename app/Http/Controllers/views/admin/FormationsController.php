@@ -14,6 +14,8 @@ use App\Models\FormationFinanceur;
 use App\Models\CommuneFormation;
 use App\Models\Session;
 use App\Models\Financeur;
+use App\Models\Fonction;
+use App\Models\Structure;
 use App\Models\Category;
 use App\Helpers\FormationHelper;
 use App\Repositories\FormationRepository as formRepo;
@@ -219,14 +221,16 @@ class FormationsController extends Controller
          $session = Session::whereStatus('pending')->first();
          $formation->commune_formations = CommuneFormation::whereSessionId($session->id)->with('etudiants.etudiant')->whereFormationId($formation->id)->get();
          $formation->etudiants = $this->formRepo->getStagiaireFormation($formation->id);
-         $financeurs = Financeur::orderBy('name')->get();
-         $categories = Category::orderBy('name')->get();
+         $financeurs = Financeur::orderBy('name', 'asc')->get();
+         $structures = Structure::orderBy('name', 'asc')->get();
+         $fonctions = Fonction::orderBy('name', 'asc')->get();
+         $categories = Category::orderBy('name', 'asc')->get();
 
          foreach ($formation->financeurs as $item) {
              $tab[] = $item->id;
          }
 
-         return view('admin.formations.edit', compact('formation', 'communes', 'categories', 'financeurs', 'tab'));
+         return view('admin.formations.edit', compact('structures', 'fonctions', 'formation', 'communes', 'categories', 'financeurs', 'tab'));
      }
 
     /**

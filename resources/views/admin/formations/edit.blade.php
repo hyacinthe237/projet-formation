@@ -137,8 +137,8 @@
                               @foreach($formation->etudiants as $item)
                                   <tr data-href="{{ route('stagiaires.edit', $item->number) }}">
                                       <td class="bold">{{ $item->firstname . ' ' . $item->lastname }}</td>
-                                      <td>{{ $item->structure_id }}</td>
-                                      <td>{{ $item->fonction_id }}</td>
+                                      <td>{{ $structures->where('id',$item->structure_id)->first()->name }}</td>
+                                      <td>{{ $fonctions->where('id', $item->fonction_id)->first()->name }}</td>
                                       <td>{{ date('d/m/Y H:i', strtotime($item->created_at)) }}</td>
                                   </tr>
                               @endforeach
