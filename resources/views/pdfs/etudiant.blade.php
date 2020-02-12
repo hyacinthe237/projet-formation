@@ -32,8 +32,8 @@
               <tr>
                 <td class="td-5">{{ $item->number }}</td>
                 <td class="td-30">{{ $item->name }}</td>
-                <td class="td-10 text-center">{{ $item->structure }}</td>
-                <td class="td-10 text-center">{{ $item->fonction }}</td>
+                <td class="td-10 text-center">{{ $item->structure ? $item->structure->name : '...' }}</td>
+                <td class="td-10 text-center">{{ $item->fonction ? $item->fonction->name : '...' }}</td>
                 <td class="td-10 text-center">{{ $item->residence ? $item->residence->name : '...' }}</td>
                 <td class="td-5 text-center">{{ count($item->formations) }}</td>
               </tr>
