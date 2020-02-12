@@ -349,10 +349,6 @@ $(document).ready(function() {
         format: 'dd-mm-yyyy'
     })
 
-    $('.js-example-basic-multiple').select2({
-        placeholder: 'Choix des phases'
-    })
-
     $("body").hover(function() {
         var profilePic = $("input[name='photo']").val();
         if(profilePic)
