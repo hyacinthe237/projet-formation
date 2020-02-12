@@ -361,7 +361,8 @@ class EtudiantController extends Controller
     private static function takeEtudiantInfos (Request $request)
     {
         $keywords = $request->keywords;
-        $etudiants = Etudiant::with('residence', 'formations', 'formations.site', 'formations.site.commune', 'formations.site.formation')
+        $etudiants = Etudiant::with('residence', 'formations', 'formations.site',
+        'formations.site.commune', 'formations.site.formation', 'structure', 'fonction')
         ->when($keywords, function($query) use ($keywords) {
             return $query->where('firstname', 'like', '%'.$keywords.'%')
                         ->orWhere('lastname', 'like', '%'.$keywords.'%');

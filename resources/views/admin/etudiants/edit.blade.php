@@ -63,7 +63,7 @@
                                       </div>
                                   </div>
 
-                                  <div class="col-sm-6">
+                                  {{-- <div class="col-sm-6">
                                       <div class="form-group">
                                           <label>Structure</label>
                                           <input type="text" name="structure" class="form-control input-lg" value="{{ $etudiant->structure }}">
@@ -75,7 +75,7 @@
                                           <label>Fonction</label>
                                           <input type="text" name="fonction" class="form-control input-lg" value="{{ $etudiant->fonction }}">
                                       </div>
-                                  </div>
+                                  </div> --}}
 
                                   <div class="col-sm-6">
                                       <div class="form-group">
@@ -86,29 +86,44 @@
 
                                   <div class="col-sm-12">
                                       <div class="form-group">
+                                          <label>Formation</label>
+                                          <div class="form-select grey">
+                                              <select class="form-control input-lg" name="commune_formation_id">
+                                                  @foreach($formations as $item)
+                                                    <option value="{{ $item->id }}">
+                                                      {{ $item->formation->title }} de {{ $item->commune->name }}
+                                                    </option>
+                                                  @endforeach
+                                              </select>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  <div class="col-sm-12">
+                                      <div class="form-group">
                                           <label>Description fonction</label>
-                                          <textarea name="desc_fonction" rows="4" cols="80" class="form-control input-lg">{{ $etudiant->desc_fonction }}</textarea>
+                                          <textarea name="desc_fonction" rows="2" cols="80" class="form-control input-lg">{{ $etudiant->desc_fonction }}</textarea>
                                       </div>
                                   </div>
 
                                   <div class="col-sm-12">
                                       <div class="form-group">
                                           <label>Formation souhaitée</label>
-                                          <textarea name="form_souhaitee" rows="4" cols="80" class="form-control input-lg">{{ $etudiant->form_souhaitee }}</textarea>
+                                          <textarea name="form_souhaitee" rows="2" cols="80" class="form-control input-lg">{{ $etudiant->form_souhaitee }}</textarea>
                                       </div>
                                   </div>
 
                                   <div class="col-sm-12">
                                       <div class="form-group">
                                           <label>Formation complémentire</label>
-                                          <textarea name="form_compl" rows="4" cols="80" class="form-control input-lg">{{ $etudiant->form_compl }}</textarea>
+                                          <textarea name="form_compl" rows="2" cols="80" class="form-control input-lg">{{ $etudiant->form_compl }}</textarea>
                                       </div>
                                   </div>
 
                                   <div class="col-sm-12">
                                       <div class="form-group">
                                           <label>Diplôme élevée</label>
-                                          <textarea name="diplome_elev" rows="4" cols="80" class="form-control input-lg">{{ $etudiant->diplome_elev }}</textarea>
+                                          <textarea name="diplome_elev" rows="2" cols="80" class="form-control input-lg">{{ $etudiant->diplome_elev }}</textarea>
                                       </div>
                                   </div>
 
@@ -128,18 +143,6 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Formation</label>
-                                    <div class="form-select grey">
-                                        <select class="form-control input-lg" name="commune_formation_id">
-                                            @foreach($formations as $item)
-                                              <option value="{{ $item->id }}">
-                                                {{ $item->formation->title }} de {{ $item->commune->name }}
-                                              </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label>Résidence</label>
                                     <div class="form-select grey">
                                         <select class="form-control input-lg" name="residence_id">
@@ -148,6 +151,30 @@
                                                   {{ $commune->departement->region->name }} |
                                                   {{ $commune->departement->name }} |
                                                   {{ $commune->name }}
+                                              </option>
+                                          @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Structure</label>
+                                    <div class="form-select grey">
+                                        <select class="form-control input-lg" name="structure_id">
+                                          @foreach($structures as $item)
+                                              <option value="{{ $item->id }}" {{ $etudiant->structure_id == $item->id ? 'selected' : '' }}>
+                                                  {{ $item->name }}
+                                              </option>
+                                          @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Fonction</label>
+                                    <div class="form-select grey">
+                                        <select class="form-control input-lg" name="fonction_id">
+                                          @foreach($fonctions as $item)
+                                              <option value="{{ $item->id }}" {{ $etudiant->fonction_id == $item->id ? 'selected' : '' }}>
+                                                  {{ $item->name }}
                                               </option>
                                           @endforeach
                                         </select>

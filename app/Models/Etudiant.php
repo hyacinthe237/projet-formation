@@ -34,6 +34,14 @@ class Etudiant extends Model
     public function residence () {
         return $this->belongsTo(Commune::class, 'residence_id');
     }
+    
+    public function structure () {
+        return $this->belongsTo(Structure::class, 'structure_id');
+    }
+
+    public function fonction () {
+        return $this->belongsTo(Fonction::class, 'fonction_id');
+    }
 
     public function files () {
         return $this->hasMany(File::class, 'fileable');

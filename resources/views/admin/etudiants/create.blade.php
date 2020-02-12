@@ -66,20 +66,6 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Structure</label>
-                                    <input type="text" name="structure" class="form-control input-lg" placeholder="Structure">
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Fonction</label>
-                                    <input type="text" name="fonction" class="form-control input-lg" placeholder="Fonction">
-                                </div>
-                            </div> --}}
-
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Année d'expérience</label>
@@ -87,6 +73,20 @@
                                 </div>
                             </div>
 
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Formation</label>
+                                    <div class="form-select grey">
+                                        <select class="form-control input-lg" name="commune_formation_id">
+                                            @foreach($formations as $item)
+                                                <option value="{{ $item->id }}">
+                                                  {{ $item->formation->title }} de {{ $item->commune->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Description fonction</label>
@@ -150,19 +150,6 @@
                                       @foreach($fonctions as $item)
                                           <option value="{{ $item->id }}">
                                             {{ $item->name }}
-                                          </option>
-                                      @endforeach
-                                  </select>
-                              </div>
-                          </div>
-
-                          <div class="form-group">
-                              <label>Formation</label>
-                              <div class="form-select grey">
-                                  <select class="form-control input-lg" name="commune_formation_id">
-                                      @foreach($formations as $item)
-                                          <option value="{{ $item->id }}">
-                                            {{ $item->formation->title }} de {{ $item->commune->name }}
                                           </option>
                                       @endforeach
                                   </select>

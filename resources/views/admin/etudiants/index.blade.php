@@ -124,8 +124,8 @@
                                 <td> <img src="{{ $etudiant->getImgAttribute() }}" alt="" width="70px" height="70px" class="img-round"> </td>
                                 <td class="bold">{{ $etudiant->getNameAttribute() }}</td>
                                 <td>{{ $etudiant->email }}</td>
-                                <td>{{ $etudiant->structure }}</td>
-                                <td>{{ $etudiant->fonction }}</td>
+                                <td>{{ $etudiant->structure ? $etudiant->structure->name : '---' }}</td>
+                                <td>{{ $etudiant->fonction ? $etudiant->fonction->name : '---' }}</td>
                                 <td>{{ $etudiant->is_active ? 'Actif' : 'Non Actif'}}</td>
                                 <td>{{ $etudiant->residence ? $etudiant->residence->name : 'Non defini' }}</td>
                                 <td>{{ count($etudiant->formations) }}</td>
