@@ -63,20 +63,6 @@
                                       </div>
                                   </div>
 
-                                  {{-- <div class="col-sm-6">
-                                      <div class="form-group">
-                                          <label>Structure</label>
-                                          <input type="text" name="structure" class="form-control input-lg" value="{{ $etudiant->structure }}">
-                                      </div>
-                                  </div>
-
-                                  <div class="col-sm-6">
-                                      <div class="form-group">
-                                          <label>Fonction</label>
-                                          <input type="text" name="fonction" class="form-control input-lg" value="{{ $etudiant->fonction }}">
-                                      </div>
-                                  </div> --}}
-
                                   <div class="col-sm-6">
                                       <div class="form-group">
                                           <label>Année d'expérience</label>
@@ -284,24 +270,26 @@
 
                       <div class="col-sm-3">
                         {!! Form::label('phases', 'Choix des phases') !!}
-                        <div class="">
-                            <select class="js-example-basic-multiple form-control input-lg" name="phases[]" multiple="multiple">
-                                @foreach ($phases as $phase)
-                                    <option value="{{ $phase->id }}">{{ $phase->title }}</option>
-                                @endforeach
-                            </select>
+                        <div class="form-group">
+                          @foreach ($phases as $phase)
+                            <label class="css-input css-checkbox css-checkbox-primary mr-20">
+                                <input type="checkbox" name="phases[]" value="{{ $phase->id }}">
+                                <span class="mr-10"></span> {{ $phase->title }}
+                            </label>
+                          @endforeach
                         </div>
                       </div>
 
                       <div class="col-sm-3">
                         {!! Form::label('etats', 'Choix des états') !!}
-                        <div class="">
-                            <select class="js-example-basic-multiple form-control input-lg" name="etats[]" multiple="multiple">
-                                @foreach ($etats as $etat)
-                                    <option value="{{ $etat->id }}">@if ($etat->name == 'formee') Formé @else Incris @endif</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        @foreach ($etats as $etat)
+                            <div class="form-group">
+                                <label class="css-input css-checkbox css-checkbox-primary mr-20">
+                                    <input type="checkbox" name="etats[]" value="{{ $etat->id }}">
+                                    <span class="mr-10"></span> @if ($etat->name == 'formee') Formé @else Incris @endif
+                                </label>
+                            </div>
+                        @endforeach
                       </div>
 
                       <div class="col-sm-12">
