@@ -32,15 +32,13 @@ class EtudiantController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index(Request $request)
-  {
+  public function index(Request $request) {
       $data = self::takeEtudiantInfos($request);
 
       return view('admin.etudiants.index', compact('data'));
   }
 
-    public function create ()
-    {
+    public function create () {
         $session = Session::whereStatus('pending')->first();
         $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();
         $communes = Commune::with('departement', 'departement.region')->get();
@@ -48,6 +46,7 @@ class EtudiantController extends Controller
         $etat = Etat::whereName('inscris')->first();
         $structures = Structure::orderBy('name', 'desc')->get();
         $fonctions = Fonction::orderBy('name', 'desc')->get();
+
         return view('admin.etudiants.create', compact('formations', 'communes', 'phase', 'etat', 'fonctions', 'structures'));
     }
 
@@ -365,9 +364,7 @@ class EtudiantController extends Controller
         $etudiants = Etudiant::with('residence', 'formations', 'formations.site', 'formations.site.commune', 'formations.site.formation')
         ->when($keywords, function($query) use ($keywords) {
             return $query->where('firstname', 'like', '%'.$keywords.'%')
-                        ->orWhere('lastname', 'like', '%'.$keywords.'%')
-                        ->orWhere('fonction', 'like', '%'.$keywords.'%')
-                        ->orWhere('structure', 'like', '%'.$keywords.'%');
+                        ->orWhere('lastname', 'like', '%'.$keywords.'%');
         })
         ->when($request->commune_formation_id, function ($q) use ($request) {
             return $q->whereHas('formations', function($sql) use ($request) {
@@ -377,6 +374,12 @@ class EtudiantController extends Controller
         ->when($request->residence_id, function($query) use ($request) {
             return $query->where('residence_id', $request->residence_id);
         })
+        ->when($request->structure_id, function($query) use ($request) {
+            return $query->where('structure_id', $request->structure_id);
+        })
+        ->when($request->fonction_id, function($query) use ($request) {
+            return $query->where('fonction_id', $request->fonction_id);
+        })
         ->where('deleted_at', null)
         ->orderBy('id', 'desc')
         ->paginate(50);
@@ -384,11 +387,15 @@ class EtudiantController extends Controller
         $session = Session::whereStatus('pending')->first();
         $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();
         $communes = Commune::orderBy('name', 'asc')->get();
+        $structures = Structure::orderBy('name', 'asc')->get();
+        $fonctions = Fonction::orderBy('name', 'asc')->get();
 
         $data = [
             'etudiants' => $etudiants,
             'formations' => $formations,
-            'communes' => $communes
+            'communes' => $communes,
+            'structures' => $structures,
+            'fonctions' => $fonctions,
         ];
 
         return $data;

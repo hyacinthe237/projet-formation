@@ -22,16 +22,7 @@
             <div class="mt-10">
                 <div class="row">
                     <form class="_form" action="" method="get">
-                        {{-- <div class="col-sm-2">
-                            <div class="form-select grey">
-                                <select class="form-control input-lg" name="etat">
-                                    <option value="">Tous les états</option>
-                                    <option value="{{ Request::get('etat') }}" {{ Request::get('etat') == 1 ? 'selected' : '' }}>Actif</option>
-                                    <option value="{{ Request::get('etat') }}" {{ Request::get('etat') == 0 ? 'selected' : '' }}>Non Actif</option>
-                                </select>
-                            </div>
-                        </div> --}}
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                             <div class="form-select grey">
                                 <select class="form-control input-lg" name="residence_id">
                                     <option value="">Lieux de résidence</option>
@@ -57,8 +48,34 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-sm-3">
+                            <div class="form-select grey">
+                                <select class="form-control input-lg" name="structure_id">
+                                    <option value="">Toutes les structures</option>
+                                    @foreach($data['structures'] as $item)
+                                        <option value="{{ $item->id }}"
+                                          {{ Request::get('structure_id') == $item->id ? 'selected' : '' }}>
+                                            {{ $item->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-select grey">
+                                <select class="form-control input-lg" name="fonction_id">
+                                    <option value="">Toutes les fonctions</option>
+                                    @foreach($data['fonctions'] as $item)
+                                        <option value="{{ $item->id }}"
+                                          {{ Request::get('fonction_id') == $item->id ? 'selected' : '' }}>
+                                            {{ $item->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
-                        <div class="col-sm-7">
+                        <div class="col-sm-12 mt-10">
                             <div class="row">
                                 <div class="col-sm-9">
                                     <div class="form-group">
@@ -66,7 +83,7 @@
                                         name="keywords"
                                         class="form-control input-lg"
                                         value="{{ Request::get('keywords') }}"
-                                        placeholder="Recherche (nom, prénom, struture, fonction)">
+                                        placeholder="Rechercher nom, prénom">
                                     </div>
                                 </div>
 
@@ -80,8 +97,10 @@
                     </form>
                 </div>
             </div>
+            <hr>
 
             @include('errors.list')
+
 
             <div class="mt-10">
                 <table class="table table-striped">

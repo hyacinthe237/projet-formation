@@ -66,7 +66,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            {{-- <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Structure</label>
                                     <input type="text" name="structure" class="form-control input-lg" placeholder="Structure">
@@ -78,7 +78,7 @@
                                     <label>Fonction</label>
                                     <input type="text" name="fonction" class="form-control input-lg" placeholder="Fonction">
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -90,28 +90,28 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Description fonction</label>
-                                    <textarea name="desc_fonction" rows="8" cols="80" class="form-control input-lg" placeholder="Description fonction"></textarea>
+                                    <textarea name="desc_fonction" rows="2" cols="80" class="form-control input-lg" placeholder="Description fonction"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Formation souhaitée</label>
-                                    <textarea name="form_souhaitee" rows="8" cols="80" class="form-control input-lg" placeholder="Formation souhaitée"></textarea>
+                                    <textarea name="form_souhaitee" rows="2" cols="80" class="form-control input-lg" placeholder="Formation souhaitée"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Formation complémentire</label>
-                                    <textarea name="form_compl" rows="8" cols="80" class="form-control input-lg" placeholder="Formation complémentire"></textarea>
+                                    <textarea name="form_compl" rows="2" cols="80" class="form-control input-lg" placeholder="Formation complémentire"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Diplôme élevée</label>
-                                    <textarea name="diplome_elev" rows="8" cols="80" class="form-control input-lg" placeholder="Diplôme élevée"></textarea>
+                                    <textarea name="diplome_elev" rows="2" cols="80" class="form-control input-lg" placeholder="Diplôme élevée"></textarea>
                                 </div>
                             </div>
 
@@ -131,6 +131,32 @@
                           </div>
 
                           <div class="form-group">
+                              <label>Structure</label>
+                              <div class="form-select grey">
+                                  <select class="form-control input-lg" name="structure_id">
+                                      @foreach($structures as $item)
+                                          <option value="{{ $item->id }}">
+                                            {{ $item->name }}
+                                          </option>
+                                      @endforeach
+                                  </select>
+                              </div>
+                          </div>
+
+                          <div class="form-group">
+                              <label>Fonction</label>
+                              <div class="form-select grey">
+                                  <select class="form-control input-lg" name="fonction_id">
+                                      @foreach($fonctions as $item)
+                                          <option value="{{ $item->id }}">
+                                            {{ $item->name }}
+                                          </option>
+                                      @endforeach
+                                  </select>
+                              </div>
+                          </div>
+
+                          <div class="form-group">
                               <label>Formation</label>
                               <div class="form-select grey">
                                   <select class="form-control input-lg" name="commune_formation_id">
@@ -142,6 +168,7 @@
                                   </select>
                               </div>
                           </div>
+
                           <div class="form-group">
                               <label>Résidence</label>
                               <div class="form-select grey">
@@ -149,9 +176,7 @@
                                       <option value="">Sélectionnez le lieu de résidence</option>
                                     @foreach($communes as $commune)
                                         <option value="{{ $commune->id }}">
-                                          {{ 'Région: ' . $commune->departement->region->name }} |
-                                          {{ 'Département: ' . $commune->departement->name }} |
-                                          {{ 'Commune: ' .$commune->name }}
+                                          {{ 'Commune de ' .$commune->name }}
                                         </option>
                                     @endforeach
                                   </select>
