@@ -31,7 +31,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    {{-- <div class="col-sm-4">
                         <div class="form-group">
                             <label>Période</label>
                             <div class="form-select grey">
@@ -42,7 +42,7 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="col-sm-4">
                         <div class="form-group">
@@ -56,7 +56,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-12">
+                    <div class="col-sm-4">
                         <div class="form-group text-right mt-20">
                             <button type="submit" class="btn btn-lg btn-primary">
                                 <i class="ion-checkmark"></i> Enregistrer

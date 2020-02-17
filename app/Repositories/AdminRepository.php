@@ -88,6 +88,38 @@ class AdminRepository
         return  $personnes;
     }
 
+    public function getPersonnesParStructure ($regionId, $sessionId, $structureId) {
+        $personnes =  DB::table('etudiants as e')
+                        ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')
+                        ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
+                        ->join('communes as c', 'c.id', '=', 'cf.commune_id')
+                        ->join('departements as d', 'd.id', '=', 'c.departement_id')
+                        ->join('formation_etudiant_etats as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
+                        ->where('d.region_id', '=', $regionId)
+                        ->where('e.structure_id', '=', $structureId)
+                        ->where('cf.session_id', '=', $sessionId)
+                        ->where('fep.etat_id', '=', 2)
+                        ->get();
+
+        return  $personnes;
+    }
+
+    public function getPersonnesParFonction ($regionId, $sessionId, $fonctionId) {
+        $personnes =  DB::table('etudiants as e')
+                        ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')
+                        ->join('commune_formations as cf', 'cf.id', '=', 'fe.commune_formation_id')
+                        ->join('communes as c', 'c.id', '=', 'cf.commune_id')
+                        ->join('departements as d', 'd.id', '=', 'c.departement_id')
+                        ->join('formation_etudiant_etats as fep', 'fe.id', '=', 'fep.formation_etudiant_id')
+                        ->where('d.region_id', '=', $regionId)
+                        ->where('e.fonction_id', '=', $fonctionId)
+                        ->where('cf.session_id', '=', $sessionId)
+                        ->where('fep.etat_id', '=', 2)
+                        ->get();
+
+        return  $personnes;
+    }
+
     public function getPersonnesInscriteParDepartement ($departementId, $sessionId) {
         $personnes =  DB::table('etudiants as e')
                         ->join('formation_etudiants as fe', 'fe.etudiant_id', '=', 'e.id')

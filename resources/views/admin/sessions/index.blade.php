@@ -56,19 +56,6 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label>Période</label>
-                                        <div class="form-select grey">
-                                            <select name="period" class="form-control input-lg" required>
-                                                <option value="">Sélectionnez une période</option>
-                                                <option value="trimestre">Trimestre</option>
-                                                <option value="semestre">Semestre</option>
-                                                <option value="annuelle">Annuelle</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
                                         <label>Status</label>
                                         <div class="form-select grey">
                                             <select name="status" class="form-control input-lg" required>
@@ -80,7 +67,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-sm-12">
+                                <div class="col-sm-4">
                                     <div class="form-group text-right mt-20">
                                         <button type="submit" class="btn btn-lg btn-primary">
                                             <i class="ion-checkmark"></i> Enregistrer
@@ -100,7 +87,7 @@
                     <thead>
                         <tr>
                             <th>Nom</th>
-                            <th>Période</th>
+                            {{-- <th>Période</th> --}}
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -110,7 +97,7 @@
                         @foreach($sessions as $session)
                             <tr>
                                 <td> <a href="{{ route('sessions.edit', $session->id) }}">{{ $session->name }}</a></td>
-                                <td>
+                                {{-- <td>
                                   @if ($session->period == 'trimestre')
                                     Trimestre
                                   @endif
@@ -122,7 +109,7 @@
                                   @if ($session->period == 'annuelle')
                                     Annuelle
                                   @endif
-                                </td>
+                                </td> --}}
                                 <td>
                                   @if ($session->status == 'pending')
                                     Session active

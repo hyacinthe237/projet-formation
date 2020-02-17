@@ -57,20 +57,6 @@
 
                       <div class="col-sm-6">
                           <div class="form-group">
-                              <label>Structure</label>
-                              <input type="text" name="structure" class="form-control input-lg" placeholder="Structure">
-                          </div>
-                      </div>
-
-                      <div class="col-sm-6">
-                          <div class="form-group">
-                              <label>Fonction</label>
-                              <input type="text" name="fonction" class="form-control input-lg" placeholder="Fonction">
-                          </div>
-                      </div>
-
-                      <div class="col-sm-6">
-                          <div class="form-group">
                               <label>Année d'expérience</label>
                               <input type="text" name="an_exp" class="form-control input-lg" placeholder="Année d'expérience">
                           </div>
@@ -109,6 +95,39 @@
                           </div>
                         </div>
                       </div>
+
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Structure</label>
+                            <div class="form-select grey">
+                                <select class="form-control input-lg" name="structure_id" required>
+                                    <option value="">Sélectionnez une structure</option>
+                                    @foreach($structures as $item)
+                                        <option value="{{ $item->id }}">
+                                          {{ $item->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Fonction</label>
+                            <div class="form-select grey">
+                                <select class="form-control input-lg" name="fonction_id" required>
+                                    <option value="">Sélectionnez une structure</option>
+                                    @foreach($fonctions as $item)
+                                        <option value="{{ $item->id }}">
+                                          {{ $item->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                      </div>
+
                   </div>
                   <div class="row">
                       <div class="col-sm-6">
