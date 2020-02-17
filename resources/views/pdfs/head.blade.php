@@ -23,7 +23,7 @@
     <title>{{ config('app.name') }} - {{ $title ?? '' }}</title>
     <style>
         @page {
-            size: A4 portrait;
+            size: A4 paysage;
         }
 
         * {
@@ -93,7 +93,10 @@
         .td-20 { width:20% }
         .td-15 { width:15% }
         .td-10 { width:10% }
+        .td-7 { width:7% }
         .td-5 { width:5% }
+        .td-3 { width:3% }
+        .td-2 { width:2% }
         .mt-10 { margin-top: 10px }
 
         .grey { background-color: #eaeaea }

@@ -102,9 +102,30 @@ class AdminController extends Controller
             $region->commune_touchees = $adminRepo->getCommunesToucherParRegion($region->id, $session->id);
             $region->personnes_inscrite = $adminRepo->getPersonnesInscriteParRegion($region->id, $session->id);
             $region->personnes_formee = $adminRepo->getPersonnesFormeeParRegion($region->id, $session->id);
+            $region->personnes_cu = $adminRepo->getPersonnesParStructure($region->id, $session->id, 1);
+            $region->personnes_mairie = $adminRepo->getPersonnesParStructure($region->id, $session->id, 2);
+            $region->personnes_sg = $adminRepo->getPersonnesParFonction($region->id, $session->id, 1);
+            $region->personnes_cct = $adminRepo->getPersonnesParFonction($region->id, $session->id, 2);
+            $region->personnes_sde = $adminRepo->getPersonnesParStructure($region->id, $session->id, 3);
+            $region->personnes_sde = $adminRepo->getPersonnesParStructure($region->id, $session->id, 3);
+            $region->personnes_sc = $adminRepo->getPersonnesParStructure($region->id, $session->id, 4);
+            $region->personnes_feicom = $adminRepo->getPersonnesParStructure($region->id, $session->id, 5);
+            $region->personnes_autres = $adminRepo->getPersonnesParStructure($region->id, $session->id, 6);
+            $region->personnes_asscom = $adminRepo->getPersonnesParStructure($region->id, $session->id, 7);
+            $region->personnes_c2d = $adminRepo->getPersonnesParStructure($region->id, $session->id, 8);
             $totalCommunesToucher += count($region->commune_touchees);
             $totalPersonnesIncrites += count($region->personnes_inscrite);
             $totalPersonnesFormees += count($region->personnes_formee);
+            $totalPersonnesCU += count($region->personnes_cu);
+            $totalPersonnesMairie += count($region->personnes_mairie);
+            $totalPersonnesSG += count($region->personnes_sg);
+            $totalPersonnesCadreComTech += count($region->personnes_cct);
+            $totalPersonnesSDE += count($region->personnes_sde);
+            $totalPersonnesScteCivil += count($region->personnes_sc);
+            $totalPersonnesFEICOM += count($region->personnes_feicom);
+            $totalPersonnesAutresProjProg += count($region->personnes_autres);
+            $totalPersonnesAssocCom += count($region->personnes_asscom);
+            $totalPersonnesC2D += count($region->personnes_c2d);
         }
 
         $data = [

@@ -98,10 +98,15 @@ class AdminRepository
                         ->where('d.region_id', '=', $regionId)
                         ->where('e.structure_id', '=', $structureId)
                         ->where('cf.session_id', '=', $sessionId)
-                        ->where('fep.etat_id', '=', 2)
                         ->get();
 
-        return  $personnes;
+        $uniques = array();
+            foreach($personnes as $personne) {
+                $key = $personne->number;
+                $uniques[$key] = $personne;
+            }
+
+        return  $uniques;
     }
 
     public function getPersonnesParFonction ($regionId, $sessionId, $fonctionId) {
@@ -114,10 +119,15 @@ class AdminRepository
                         ->where('d.region_id', '=', $regionId)
                         ->where('e.fonction_id', '=', $fonctionId)
                         ->where('cf.session_id', '=', $sessionId)
-                        ->where('fep.etat_id', '=', 2)
                         ->get();
 
-        return  $personnes;
+        $uniques = array();
+            foreach($personnes as $personne) {
+                $key = $personne->number;
+                $uniques[$key] = $personne;
+            }
+
+        return  $uniques;
     }
 
     public function getPersonnesInscriteParDepartement ($departementId, $sessionId) {

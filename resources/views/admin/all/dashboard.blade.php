@@ -88,16 +88,16 @@
                             <td class="td-5">{{ count($region->commune_touchees) }}</td>
                             <td class="td-5">{{ count($region->personnes_inscrite) }}</td>
                             <td class="td-5">{{ count($region->personnes_formee) }}</td>
-                            <td class="td-5">---</td>
-                            <td class="td-5">---</td>
-                            <td class="td-5">---</td>
-                            <td class="td-5">---</td>
-                            <td class="td-5">---</td>
-                            <td class="td-5">---</td>
-                            <td class="td-5">---</td>
-                            <td class="td-5">---</td>
-                            <td class="td-5">---</td>
-                            <td class="td-5">---</td>
+                            <td class="td-5">{{ count($region->personnes_cu) }}</td>
+                            <td class="td-5">{{ count($region->personnes_mairie) }}</td>
+                            <td class="td-5">{{ count($region->personnes_sg) }}</td>
+                            <td class="td-5">{{ count($region->personnes_cct) }}</td>
+                            <td class="td-5">{{ count($region->personnes_sde) }}</td>
+                            <td class="td-5">{{ count($region->personnes_sc) }}</td>
+                            <td class="td-5">{{ count($region->personnes_feicom) }}</td>
+                            <td class="td-5">{{ count($region->personnes_autres) }}</td>
+                            <td class="td-5">{{ count($region->personnes_asscom) }}</td>
+                            <td class="td-5">{{ count($region->personnes_c2d) }}</td>
                         </tr>
                       @endforeach
 
