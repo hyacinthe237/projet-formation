@@ -10,6 +10,11 @@
             <a href="{{ route('roles.index') }}" class="btn btn-lg btn-primary">
                 <i class="ion-grid"></i> Roles
             </a>
+
+            <a href="{{ route('users.show', Auth::user()->number) }}" class="btn btn-lg btn-warning">
+                <i class="ion-android-people"></i>
+                Mon Profil
+            </a>
         </div>
 
         <div class="title">

@@ -42,13 +42,6 @@
             </a>
         </li>
 
-        <li class="{{ Request::is('admin/users/profile*') ? 'active' : '' }}">
-            <a href="{{ route('users.show', Auth::user()->number) }}">
-                <i class="ion-android-people"></i>
-                Mon Profil
-            </a>
-        </li>
-
         @if (Auth::user()->role->name === 'admin')
             <li class="{{ Request::is('admin/users*') ? 'active' : '' }}">
                 <a href="/admin/users">
