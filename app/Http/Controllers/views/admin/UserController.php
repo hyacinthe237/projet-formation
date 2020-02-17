@@ -33,6 +33,7 @@ class UserController extends Controller
       ->when($role, function($query) use ($role) {
           return $query->where('role_id', $role->id);
       })
+      ->where('id', '!=', Auth::user()->id)
       ->orderBy('id', 'desc')
       ->paginate(50);
 
@@ -45,6 +46,17 @@ class UserController extends Controller
         $roles = Role::get();
 
         return view('admin.users.create', compact('roles'));
+    }
+
+    public function show ($number)
+    {
+        $user  = User::whereIsActive(true)->whereNumber($number)->first();
+
+        if (!$user)
+            return redirect()->route('users.index');
+
+        $roles = Role::get();
+        return view('admin.users.profile', compact('roles', 'user'));
     }
 
     public function edit ($number)
