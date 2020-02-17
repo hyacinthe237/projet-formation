@@ -107,12 +107,6 @@ class AdminController extends Controller
             $totalPersonnesFormees += count($region->personnes_formee);
         }
 
-        // foreach ($departements as $item) {
-        //     $item->commune_touchees = $adminRepo->getCommunesToucherParDepartement($item->id, $session->id);
-        //     $item->personnes_inscrite = $adminRepo->getPersonnesInscriteParDepartement($item->id, $session->id);
-        //     $item->personnes_formee = $adminRepo->getPersonnesFormeeParDepartement($item->id, $session->id);
-        // }
-
         foreach ($allFormations as $item) {
             $item->communes = $adminRepo->getCommunesParFormation($item->id, $session->id);
             $item->personnes_formee = $formRepo->getStagiaireFormees($item->id);
@@ -120,7 +114,6 @@ class AdminController extends Controller
 
         $data = [
             'regions' => $regions,
-            // 'departements' => $departements,
             'communes' => $communes,
             'communesToucher' => $communesToucher,
             'totalPersonnePrevuFormer' => $totalPersonnePrevuFormer,

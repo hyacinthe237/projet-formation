@@ -23,7 +23,7 @@
             <div class="col-sm-3">
                 <div class="card green">
                     {{-- <i class="ion-users"></i> --}}
-                    <h3>{{ $data['totalPersonnePrevuFormer'] . ' %' }}</h3>
+                    <h3>{{ $data['totalPersonnesIncrites'] }}</h3>
                     <h5>Stagiaires inscris</h5>
                 </div>
             </div>
@@ -31,7 +31,7 @@
             <div class="col-sm-3">
                 <div class="card red">
                     {{-- <i class="ion-users"></i> --}}
-                    <h3>{{ 0 . ' %' }}</h3>
+                    <h3>{{ $data['totalPersonnesFormees'] }}</h3>
                     <h5>Stagiaires formés</h5>
                 </div>
             </div>
