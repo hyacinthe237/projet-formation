@@ -80,15 +80,13 @@
 
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label>Résidence</label>
+                          <label>Structure</label>
                           <div class="form-select grey">
-                              <select class="form-control input-lg" name="residence_id" required>
-                                  <option value="">Sélectionnez le lieu de résidence</option>
+                              <select class="form-control input-lg" name="structure_id" required>
+                                  <option value="">Sélectionnez la structure</option>
                                 @foreach($communes as $commune)
                                     <option value="{{ $commune->id }}">
-                                      {{ 'Région: ' . $commune->departement->region->name }} |
-                                      {{ 'Département: ' . $commune->departement->name }} |
-                                      {{ 'Commune: ' .$commune->name }}
+                                      {{ 'Commune de ' .$commune->name }}
                                     </option>
                                 @endforeach
                               </select>
@@ -98,11 +96,11 @@
 
                       <div class="col-sm-6">
                         <div class="form-group">
-                            <label>Structure</label>
+                            <label>Catégorie</label>
                             <div class="form-select grey">
-                                <select class="form-control input-lg" name="structure_id" required>
-                                    <option value="">Sélectionnez une structure</option>
-                                    @foreach($structures as $item)
+                                <select class="form-control input-lg" name="student_category_id" required>
+                                    <option value="">Sélectionnez une Catégorie</option>
+                                    @foreach($categories as $item)
                                         <option value="{{ $item->id }}">
                                           {{ $item->name }}
                                         </option>
@@ -117,7 +115,7 @@
                             <label>Fonction</label>
                             <div class="form-select grey">
                                 <select class="form-control input-lg" name="fonction_id" required>
-                                    <option value="">Sélectionnez une structure</option>
+                                    <option value="">Sélectionnez une fonction</option>
                                     @foreach($fonctions as $item)
                                         <option value="{{ $item->id }}">
                                           {{ $item->name }}

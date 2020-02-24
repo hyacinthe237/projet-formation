@@ -15,7 +15,7 @@ use App\Models\FormationEtudiant;
 use App\Models\Commune;
 use App\Models\CommuneFormation;
 use App\Models\Session;
-use App\Models\Structure;
+use App\Models\StudentCategory;
 use App\Models\Fonction;
 use App\Helpers\EtudiantHelper;
 use App\Mail\RegistrationMail;
@@ -33,10 +33,10 @@ class EtudiantController extends Controller
         $communes = Commune::with('departement', 'departement.region')->get();
         $phase = Phase::whereTitle('Formation')->first();
         $etat = Etat::whereName('inscris')->first();
-        $structures = Structure::orderBy('name', 'desc')->get();
+        $categories = StudentCategory::orderBy('name', 'desc')->get();
         $fonctions = Fonction::orderBy('name', 'desc')->get();
 
-        return view('front.etudiants.create', compact('formations', 'communes', 'phase', 'etat', 'fonctions', 'structures'));
+        return view('front.etudiants.create', compact('formations', 'communes', 'phase', 'etat', 'fonctions', 'categories'));
     }
 
     /**
@@ -51,7 +51,7 @@ class EtudiantController extends Controller
             'firstname'            => 'required',
             'phone'                => 'required',
             'commune_formation_id' => 'required',
-            'residence_id'         => 'required'
+            'structure_id'         => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -61,13 +61,13 @@ class EtudiantController extends Controller
         }
 
         $session = Session::whereStatus('pending')->first();
-        $existing = Etudiant::whereResidenceId($request->residence_id)
+        $existing = Etudiant::whereStuctureId($request->structure_id)
                     ->whereFirstname($request->firstname)
                     ->wherePhone($request->phone)->first();
 
         if (!$existing) {
             $etudiant = Etudiant::create([
-              'residence_id'    => $request->residence_id,
+              'structure_id'    => $request->structure_id,
               'number'          => EtudiantHelper::makeEtudiantNumber(),
               'firstname'       => $request->firstname,
               'lastname'        => $request->lastname,
@@ -75,7 +75,7 @@ class EtudiantController extends Controller
               'email'           => $request->email,
               'sex'             => $request->sex,
               'dob'             => $request->dob,
-              'structure_id'    => $request->structure_id,
+              'student_category_id'    => $request->student_category_id,
               'fonction_id'     => $request->fonction_id,
               'desc_fonction'   => $request->desc_fonction,
               'form_souhaitee'  => $request->form_souhaitee,
