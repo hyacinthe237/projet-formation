@@ -24,11 +24,11 @@
                     <form class="_form" action="" method="get">
                         <div class="col-sm-3">
                             <div class="form-select grey">
-                                <select class="form-control input-lg" name="residence_id">
+                                <select class="form-control input-lg" name="structure">
                                     <option value="">Toutes les structures</option>
                                     @foreach($data['communes'] as $item)
                                         <option value="{{ $item->id }}"
-                                          {{ Request::get('residence_id') == $item->id ? 'selected' : '' }}>
+                                          {{ Request::get('structure') == $item->id ? 'selected' : '' }}>
                                             {{ $item->name }}
                                         </option>
                                     @endforeach
@@ -37,11 +37,11 @@
                         </div>
                         <div class="col-sm-3">
                             <div class="form-select grey">
-                                <select class="form-control input-lg" name="commune_formation_id">
+                                <select class="form-control input-lg" name="commune_formation">
                                     <option value="">Toutes les formations</option>
                                     @foreach($data['formations'] as $item)
                                         <option value="{{ $item->id }}"
-                                          {{ Request::get('commune_formation_id') == $item->id ? 'selected' : '' }}>
+                                          {{ Request::get('commune_formation') == $item->id ? 'selected' : '' }}>
                                             {{ $item->formation->title }} de {{ $item->commune->name }}
                                         </option>
                                     @endforeach
@@ -50,11 +50,11 @@
                         </div>
                         <div class="col-sm-3">
                             <div class="form-select grey">
-                                <select class="form-control input-lg" name="structure_id">
+                                <select class="form-control input-lg" name="student_category">
                                     <option value="">Toutes les catégories</option>
-                                    @foreach($data['structures'] as $item)
+                                    @foreach($data['categories'] as $item)
                                         <option value="{{ $item->id }}"
-                                          {{ Request::get('structure_id') == $item->id ? 'selected' : '' }}>
+                                          {{ Request::get('student_category') == $item->id ? 'selected' : '' }}>
                                             {{ $item->name }}
                                         </option>
                                     @endforeach
@@ -63,11 +63,11 @@
                         </div>
                         <div class="col-sm-3">
                             <div class="form-select grey">
-                                <select class="form-control input-lg" name="fonction_id">
+                                <select class="form-control input-lg" name="fonction">
                                     <option value="">Toutes les fonctions</option>
                                     @foreach($data['fonctions'] as $item)
                                         <option value="{{ $item->id }}"
-                                          {{ Request::get('fonction_id') == $item->id ? 'selected' : '' }}>
+                                          {{ Request::get('fonction') == $item->id ? 'selected' : '' }}>
                                             {{ $item->name }}
                                         </option>
                                     @endforeach
@@ -109,6 +109,7 @@
                             <th></th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Structure</th>
                             <th>Catégorie</th>
                             <th>Fonction</th>
                             <th>Etat</th>
@@ -125,6 +126,7 @@
                                 <td class="bold">{{ $etudiant->getNameAttribute() }}</td>
                                 <td>{{ $etudiant->email }}</td>
                                 <td>{{ $etudiant->structure ? $etudiant->structure->name : '---' }}</td>
+                                <td>{{ $etudiant->category ? $etudiant->category->name : '---' }}</td>
                                 <td>{{ $etudiant->fonction ? $etudiant->fonction->name : '---' }}</td>
                                 <td>{{ $etudiant->is_active ? 'Actif' : 'Non Actif'}}</td>
                                 <td>{{ $etudiant->residence ? $etudiant->residence->name : 'Non defini' }}</td>

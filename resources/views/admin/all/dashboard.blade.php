@@ -55,7 +55,7 @@
 
 
 
-        <div class="cards row mt-40">
+        {{-- <div class="cards row mt-40">
             <div class="col-sm-12 bg-white mt-20">
               <h4 class="mt-20 mb-20 text-center">STATISTIQUE DE L'ACTION PEDAGOGIQUE EN {{ $session->name }}</h4>
 
@@ -121,7 +121,7 @@
                   </tbody>
               </table>
             </div>
-        </div>
+        </div> --}}
 
         {{-- <div class="cards row mt-40">
             <div class="col-sm-12 bg-white mt-20">

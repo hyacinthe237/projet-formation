@@ -31,12 +31,12 @@ class Etudiant extends Model
         return $this->hasMany(FormationEtudiant::class);
     }
 
-    public function residence () {
-        return $this->belongsTo(Commune::class, 'residence_id');
+    public function structure () {
+        return $this->belongsTo(Commune::class, 'structure_id');
     }
 
-    public function structure () {
-        return $this->belongsTo(Structure::class, 'structure_id');
+    public function category () {
+        return $this->belongsTo(StudentCategory::class, 'student_category_id');
     }
 
     public function fonction () {

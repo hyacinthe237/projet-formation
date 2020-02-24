@@ -15,7 +15,7 @@ class SettingsTableSeeder extends Seeder
   {
       Session::create(['name' => '2019', 'status' => 'pending' ]);
 
-      $structures = [
+      $studentCategories = [
            ["name" => "Personnels Communauté Urbaine", 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
            ["name" => "Personnels Mairie", 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
            ["name" => "Personnels SDE", 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
@@ -26,7 +26,7 @@ class SettingsTableSeeder extends Seeder
            ["name" => "Personnels C2D", 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
        ];
 
-      DB::table('structures')->insert($structures);
+      DB::table('student_categories')->insert($studentCategories);
 
       $financeurs = [
            ["name" => "FEICOM", 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],

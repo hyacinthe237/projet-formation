@@ -17,7 +17,7 @@ use App\Models\FormationEtudiantPhase;
 use App\Models\Commune;
 use App\Models\CommuneFormation;
 use App\Models\Session;
-use App\Models\Structure;
+use App\Models\StudentCategory;
 use App\Models\Fonction;
 use App\Helpers\EtudiantHelper;
 use Illuminate\Http\Request;
@@ -44,10 +44,10 @@ class EtudiantController extends Controller
         $communes = Commune::with('departement', 'departement.region')->get();
         $phase = Phase::whereTitle('Formation')->first();
         $etat = Etat::whereName('inscris')->first();
-        $structures = Structure::orderBy('name', 'desc')->get();
+        $categories = StudentCategory::orderBy('name', 'desc')->get();
         $fonctions = Fonction::orderBy('name', 'desc')->get();
 
-        return view('admin.etudiants.create', compact('formations', 'communes', 'phase', 'etat', 'fonctions', 'structures'));
+        return view('admin.etudiants.create', compact('formations', 'communes', 'phase', 'etat', 'fonctions', 'categories'));
     }
 
     public function edit ($number)
@@ -63,10 +63,10 @@ class EtudiantController extends Controller
         $communes = Commune::with('departement', 'departement.region')->get();
         $phases = Phase::get();
         $etats = Etat::get();
-        $structures = Structure::orderBy('name', 'desc')->get();
+        $categories = StudentCategory::orderBy('name', 'desc')->get();
         $fonctions = Fonction::orderBy('name', 'desc')->get();
 
-        return view('admin.etudiants.edit', compact('formations', 'communes', 'etudiant', 'phases', 'etats', 'fonctions', 'structures'));
+        return view('admin.etudiants.edit', compact('formations', 'communes', 'etudiant', 'phases', 'etats', 'fonctions', 'categories'));
     }
 
     public function editEtudiantFormation ($id)
@@ -152,7 +152,7 @@ class EtudiantController extends Controller
 
         if (!$existing) {
             $etudiant = Etudiant::create([
-              'residence_id'     => $request->residence_id,
+              'structure_id'    => $request->structure_id,
               'number'          => EtudiantHelper::makeEtudiantNumber(),
               'firstname'       => $request->firstname,
               'lastname'        => $request->lastname,
@@ -160,7 +160,7 @@ class EtudiantController extends Controller
               'email'           => $request->email,
               'sex'             => $request->sex,
               'dob'             => $request->dob,
-              'structure_id'    => $request->structure_id,
+              'student_category_id'    => $request->student_category_id,
               'fonction_id'     => $request->fonction_id,
               'desc_fonction'   => $request->desc_fonction,
               'form_souhaitee'  => $request->form_souhaitee,
@@ -254,14 +254,14 @@ class EtudiantController extends Controller
         if (!$etudiant)
             return redirect()->back()->withErrors(['user' => 'Stagiaire inconnu!']);
 
-        $etudiant->residence_id      = $request->has('residence_id') ? $request->residence_id : $etudiant->residence_id;
+        $etudiant->structure_id      = $request->has('structure_id') ? $request->structure_id : $etudiant->structure_id;
         $etudiant->firstname         = $request->has('firstname') ? $request->firstname : $etudiant->firstname;
         $etudiant->lastname          = $request->has('lastname') ? $request->lastname : $etudiant->lastname;
         $etudiant->phone             = $request->has('phone') ? $request->phone : $etudiant->phone;
         $etudiant->email             = $request->has('email') ? $request->email : $etudiant->email;
         $etudiant->sex               = $request->has('sex') ? $request->sex : $etudiant->sex;
         $etudiant->dob               = $request->has('dob') ? $request->dob : $etudiant->dob;
-        $etudiant->structure_id      = $request->has('structure_id') ? $request->structure_id : $etudiant->structure_id;
+        $etudiant->student_category_id      = $request->has('student_category_id') ? $request->student_category_id : $etudiant->student_category_id;
         $etudiant->fonction_id       = $request->has('fonction_id') ? $request->fonction_id : $etudiant->fonction_id;
         $etudiant->desc_fonction     = $request->has('desc_fonction') ? $request->desc_fonction : $etudiant->desc_fonction;
         $etudiant->form_souhaitee    = $request->has('form_souhaitee') ? $request->form_souhaitee : $etudiant->form_souhaitee;
@@ -361,25 +361,25 @@ class EtudiantController extends Controller
     private static function takeEtudiantInfos (Request $request)
     {
         $keywords = $request->keywords;
-        $etudiants = Etudiant::with('residence', 'formations', 'formations.site',
+        $etudiants = Etudiant::with('structure', 'category', 'formations', 'formations.site',
         'formations.site.commune', 'formations.site.formation', 'structure', 'fonction')
         ->when($keywords, function($query) use ($keywords) {
             return $query->where('firstname', 'like', '%'.$keywords.'%')
                         ->orWhere('lastname', 'like', '%'.$keywords.'%');
         })
-        ->when($request->commune_formation_id, function ($q) use ($request) {
+        ->when($request->commune_formation, function ($q) use ($request) {
             return $q->whereHas('formations', function($sql) use ($request) {
-                return $sql->where('commune_formation_id', $request->commune_formation_id);
+                return $sql->where('commune_formation_id', $request->commune_formation);
             });
         })
-        ->when($request->residence_id, function($query) use ($request) {
-            return $query->where('residence_id', $request->residence_id);
+        ->when($request->structure, function($query) use ($request) {
+            return $query->where('structure_id', $request->structure);
         })
-        ->when($request->structure_id, function($query) use ($request) {
-            return $query->where('structure_id', $request->structure_id);
+        ->when($request->student_category, function($query) use ($request) {
+            return $query->where('student_category_id', $request->student_category);
         })
-        ->when($request->fonction_id, function($query) use ($request) {
-            return $query->where('fonction_id', $request->fonction_id);
+        ->when($request->fonction, function($query) use ($request) {
+            return $query->where('fonction_id', $request->fonction);
         })
         ->where('deleted_at', null)
         ->orderBy('id', 'desc')
@@ -388,14 +388,14 @@ class EtudiantController extends Controller
         $session = Session::whereStatus('pending')->first();
         $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();
         $communes = Commune::orderBy('name', 'asc')->get();
-        $structures = Structure::orderBy('name', 'asc')->get();
+        $categories = StudentCategory::orderBy('name', 'asc')->get();
         $fonctions = Fonction::orderBy('name', 'asc')->get();
 
         $data = [
             'etudiants' => $etudiants,
             'formations' => $formations,
             'communes' => $communes,
-            'structures' => $structures,
+            'categories' => $categories,
             'fonctions' => $fonctions,
         ];
 

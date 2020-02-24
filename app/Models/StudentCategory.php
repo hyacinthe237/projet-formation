@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Structure extends Model
+class StudentCategory extends Model
 {
-    protected $table = 'structures';
+    protected $table = 'student_categories';
     protected $guarded = ['id'];
 }

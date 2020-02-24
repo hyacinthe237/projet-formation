@@ -15,7 +15,7 @@ class CreateEtudiantsTable extends Migration
     {
         Schema::create('etudiants', function (Blueprint $table) {
           $table->bigIncrements('id');
-          $table->integer('residence_id')->nullable();
+          $table->integer('structure_id')->nullable();
           $table->bigInteger('number')->index();
           $table->string('firstname');
           $table->string('lastname')->nullable();
@@ -23,7 +23,7 @@ class CreateEtudiantsTable extends Migration
           $table->string('email')->unique();
           $table->string('sex')->nullable();
           $table->string('dob')->nullable();
-          $table->integer('structure_id')->nullable();
+          $table->integer('student_category_id')->nullable();
           $table->integer('fonction_id')->nullable();
           $table->text('desc_fonction')->nullable();
           $table->text('form_souhaitee')->nullable();
