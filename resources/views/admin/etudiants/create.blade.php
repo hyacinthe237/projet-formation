@@ -131,7 +131,7 @@
                           </div>
 
                           <div class="form-group">
-                              <label>Structure</label>
+                              <label>Catégorie</label>
                               <div class="form-select grey">
                                   <select class="form-control input-lg" name="structure_id">
                                       @foreach($structures as $item)
@@ -157,10 +157,10 @@
                           </div>
 
                           <div class="form-group">
-                              <label>Résidence</label>
+                              <label>Structure</label>
                               <div class="form-select grey">
                                   <select class="form-control input-lg" name="residence_id">
-                                      <option value="">Sélectionnez le lieu de résidence</option>
+                                      <option value="">Sélectionnez la structure</option>
                                     @foreach($communes as $commune)
                                         <option value="{{ $commune->id }}">
                                           {{ 'Commune de ' .$commune->name }}

@@ -25,7 +25,7 @@
                         <div class="col-sm-3">
                             <div class="form-select grey">
                                 <select class="form-control input-lg" name="residence_id">
-                                    <option value="">Lieux de résidence</option>
+                                    <option value="">Toutes les structures</option>
                                     @foreach($data['communes'] as $item)
                                         <option value="{{ $item->id }}"
                                           {{ Request::get('residence_id') == $item->id ? 'selected' : '' }}>
@@ -51,7 +51,7 @@
                         <div class="col-sm-3">
                             <div class="form-select grey">
                                 <select class="form-control input-lg" name="structure_id">
-                                    <option value="">Toutes les structures</option>
+                                    <option value="">Toutes les catégories</option>
                                     @foreach($data['structures'] as $item)
                                         <option value="{{ $item->id }}"
                                           {{ Request::get('structure_id') == $item->id ? 'selected' : '' }}>
@@ -109,10 +109,10 @@
                             <th></th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Structure</th>
+                            <th>Catégorie</th>
                             <th>Fonction</th>
                             <th>Etat</th>
-                            <th>Résident à</th>
+                            <th>Structure</th>
                             <th>Nbre Form.</th>
                             <th>Created</th>
                         </tr>

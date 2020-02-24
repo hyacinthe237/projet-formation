@@ -241,7 +241,7 @@ class FormationsController extends Controller
      */
      public function editSite ($id) {
          $session = Session::whereStatus('pending')->first();
-         $site = CommuneFormation::whereSessionId($session->id)->with('formation', 'commune', 'etudiants')->find($id);
+         $site = CommuneFormation::whereSessionId($session->id)->with('formation', 'commune', 'etudiants', 'etudiants.etudiant')->find($id);
          if (!$site)
              return redirect()->back()->withErrors(['status' => 'Site inconnu']);
 

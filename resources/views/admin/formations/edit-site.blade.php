@@ -155,9 +155,9 @@
                         <tr>
                             <th></th>
                             <th>Nom</th>
-                            <th>Structure</th>
+                            <th>Catégorie</th>
                             <th>Fonction</th>
-                            <th>Etat</th>
+                            {{-- <th>Etat</th> --}}
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -165,14 +165,13 @@
                     <tbody>
                         @foreach($site->etudiants as $item)
                             <tr>
-                                <td> <img src="{{ $item->etudiant->getImgAttribute() }}" alt="" width="50px" height="50px" class="img-round"> </td>
+                                <td> <img src="{{ $item->etudiant->getImgAttribute()  }}" alt="" width="50px" height="50px" class="img-round"> </td>
                                 <td class="bold">{{ $item->etudiant->getNameAttribute() }}</td>
-                                <td>{{ $item->etudiant->structure }}</td>
-                                <td>{{ $item->etudiant->fonction }}</td>
-                                <td>{{ $item->etat }}</td>
+                                <td>{{ $item->etudiant->structure->name }}</td>
+                                <td>{{ $item->etudiant->fonction->name }}</td>
+                                {{-- <td>{{ $item->etat }}</td> --}}
                                 <td>
                                   <a href="{{ route('stagiaires.desincrire', $item->id) }}" class="btn btn-warning">Désinscrire</a>
-                                  {{-- <a href="" class="btn btn-success">Formé</a> --}}
                                 </td>
                             </tr>
                         @endforeach

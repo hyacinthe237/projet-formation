@@ -34,7 +34,7 @@ class Etudiant extends Model
     public function residence () {
         return $this->belongsTo(Commune::class, 'residence_id');
     }
-    
+
     public function structure () {
         return $this->belongsTo(Structure::class, 'structure_id');
     }

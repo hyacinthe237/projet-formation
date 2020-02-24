@@ -24,7 +24,7 @@
                 <div class="card green">
                     {{-- <i class="ion-users"></i> --}}
                     <h3>{{ $data['totalPersonnesIncrites'] }}</h3>
-                    <h5>Stagiaires inscris</h5>
+                    <h5>Nombre d'inscription</h5>
                 </div>
             </div>
 
@@ -32,7 +32,7 @@
                 <div class="card red">
                     {{-- <i class="ion-users"></i> --}}
                     <h3>{{ $data['totalPersonnesFormees'] }}</h3>
-                    <h5>Stagiaires formés</h5>
+                    <h5>Nombre Stagiaire formés</h5>
                 </div>
             </div>
 
@@ -122,6 +122,37 @@
               </table>
             </div>
         </div>
+
+        {{-- <div class="cards row mt-40">
+            <div class="col-sm-12 bg-white mt-20">
+              <h4 class="mt-20 mb-20 text-center">SYNTHESES DES CTD ATTEINTES EN {{ $session->name }}</h4>
+
+              <table class="table table-striped">
+                  <tbody>
+                      <tr>
+                          <td class="td-5">CTD formés en {{ $session->name }}</td>
+                          <td class="td-5">{{ $data['totalCommunesToucher'] }}</td>
+                      </tr>
+                      <tr>
+                          <td class="td-5">CTD nouvelles atteintes en {{ $session->name }}</td>
+                          <td class="td-5">{{ $data['totalCommunesToucher'] }}</td>
+                      </tr>
+                      <tr>
+                          <td class="td-5">CTD touchés plus d'une fois en {{ $session->name }}</td>
+                          <td class="td-5">{{ $data['totalCommunesToucher'] }}</td>
+                      </tr>
+                      <tr>
+                          <td class="td-5">CTD touchés depuis 2015</td>
+                          <td class="td-5">{{ $data['totalCommunesToucher'] }}</td>
+                      </tr>
+                      <tr>
+                          <td class="td-5">CTD restants à atteindre en {{ $session->name }}</td>
+                          <td class="td-5">{{ $data['totalCommunesToucher'] }}</td>
+                      </tr>
+                  </tbody>
+              </table>
+            </div>
+        </div> --}}
 
     </div>
 </div>
