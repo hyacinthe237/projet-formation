@@ -61,8 +61,7 @@ class EtudiantController extends Controller
         }
 
         $session = Session::whereStatus('pending')->first();
-        $existing = Etudiant::whereStuctureId($request->structure_id)
-                    ->whereFirstname($request->firstname)
+        $existing = Etudiant::whereEmail($request->email)
                     ->wherePhone($request->phone)->first();
 
         if (!$existing) {

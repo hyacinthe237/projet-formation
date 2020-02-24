@@ -129,25 +129,23 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Résidence</label>
+                                    <label>Structure</label>
                                     <div class="form-select grey">
-                                        <select class="form-control input-lg" name="residence_id">
+                                        <select class="form-control input-lg" name="structure_id">
                                           @foreach($communes as $commune)
                                               <option value="{{ $commune->id }}" {{ $etudiant->residence_id == $commune->id ? 'selected' : '' }}>
-                                                  {{ $commune->departement->region->name }} |
-                                                  {{ $commune->departement->name }} |
-                                                  {{ $commune->name }}
+                                                  Commune de {{ $commune->name }}
                                               </option>
                                           @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Structure</label>
+                                    <label>Catégorie</label>
                                     <div class="form-select grey">
-                                        <select class="form-control input-lg" name="structure_id">
-                                          @foreach($structures as $item)
-                                              <option value="{{ $item->id }}" {{ $etudiant->structure_id == $item->id ? 'selected' : '' }}>
+                                        <select class="form-control input-lg" name="student_category_id">
+                                          @foreach($categories as $item)
+                                              <option value="{{ $item->id }}" {{ $etudiant->student_category_id == $item->id ? 'selected' : '' }}>
                                                   {{ $item->name }}
                                               </option>
                                           @endforeach

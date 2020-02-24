@@ -20,6 +20,7 @@
                 <div class="row mt-20">
                   <div class="row">
                       <input type="hidden" name="phase_id" value="{{ $phase->id }}">
+                      <input type="hidden" name="etat_id" value="{{ $etat->id }}">
                       <div class="col-sm-6">
                           <div class="form-group">
                               <label>Prénom(s)</label>
