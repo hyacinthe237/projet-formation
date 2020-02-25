@@ -9,14 +9,14 @@ use Carbon\Carbon;
 use App\Models\Etudiant;
 use App\Models\Formation;
 use App\Models\Commune;
-use App\Models\FormationEtudiant;
-use App\Models\FormationFinanceur;
-use App\Models\CommuneFormation;
 use App\Models\Session;
 use App\Models\Financeur;
 use App\Models\Fonction;
-use App\Models\StudentCategory;
 use App\Models\Category;
+use App\Models\FormationEtudiant;
+use App\Models\FormationFinanceur;
+use App\Models\CommuneFormation;
+use App\Models\StudentCategory;
 use App\Helpers\FormationHelper;
 use App\Repositories\FormationRepository as formRepo;
 use Illuminate\Http\Request;
@@ -222,7 +222,8 @@ class FormationsController extends Controller
          $formation->commune_formations = CommuneFormation::whereSessionId($session->id)->with('etudiants.etudiant')->whereFormationId($formation->id)->get();
          $formation->etudiants = $this->formRepo->getStagiaireFormation($formation->id);
          $financeurs = Financeur::orderBy('name', 'asc')->get();
-         $students_categories = StudentCategory::orderBy('name', 'asc')->get();
+         $categories = Category::orderBy('name', 'asc')->get();
+         $student_categories = StudentCategory::orderBy('name', 'asc')->get();
          $fonctions = Fonction::orderBy('name', 'asc')->get();
          $categories = Category::orderBy('name', 'asc')->get();
 
@@ -230,7 +231,7 @@ class FormationsController extends Controller
              $tab[] = $item->id;
          }
 
-         return view('admin.formations.edit', compact('students_categories', 'fonctions', 'formation', 'communes', 'categories', 'financeurs', 'tab'));
+         return view('admin.formations.edit', compact('student_categories', 'categories', 'fonctions', 'formation', 'communes', 'categories', 'financeurs', 'tab'));
      }
 
     /**
