@@ -20,7 +20,7 @@
             <td class="td-30 bold text-center">Nom(s) et Prénom(s)</td>
             <td class="td-10 bold text-center">Structure</td>
             <td class="td-10 bold text-center">Fonction</td>
-            <td class="td-10 bold text-center">Résident à</td>
+            <td class="td-10 bold text-center">Catégorie</td>
             <td class="td-5 bold text-center">Nbre Form.</td>
           </tr>
         </tbody>
@@ -34,7 +34,7 @@
                 <td class="td-30">{{ $item->name }}</td>
                 <td class="td-10 text-center">{{ $item->structure ? $item->structure->name : '...' }}</td>
                 <td class="td-10 text-center">{{ $item->fonction ? $item->fonction->name : '...' }}</td>
-                <td class="td-10 text-center">{{ $item->residence ? $item->residence->name : '...' }}</td>
+                <td class="td-10 text-center">{{ $item->category ? $item->category->name : '...' }}</td>
                 <td class="td-5 text-center">{{ count($item->formations) }}</td>
               </tr>
             </tbody>
