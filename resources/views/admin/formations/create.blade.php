@@ -27,13 +27,14 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Titre</label>
-                                    <input type="text" name="title" class="form-control input-lg" placeholder="Titre" required>
+                                    <input type="text" name="title"
+                                      class="form-control input-lg" value="{{ old('title')}}" placeholder="Titre" required>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Date de début</label>
-                                    <input type="date" name="start_date" class="form-control input-lg datepicker" placeholder="Date de début" required>
+                                    <input type="date" name="start_date"  value="{{ old('start_date')}}" class="form-control input-lg datepicker" placeholder="Date de début" required>
                                 </div>
                             </div>
                             <div class="col-sm-3">
@@ -66,7 +67,7 @@
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Date de fin</label>
-                                    <input type="date" name="end_date" class="form-control input-lg datepicker" placeholder="Date de fin">
+                                    <input type="date" name="end_date"  value="{{ old('end_date')}}" class="form-control input-lg datepicker" placeholder="Date de fin">
                                 </div>
                             </div>
                             <div class="col-sm-3">
@@ -101,7 +102,7 @@
                             <div class="col-sm-12">
                               <div class="form-group">
                                 <label>Description</label>
-                                <textarea name="description" class="form-control input-lg" rows="5" cols="80"></textarea>
+                                <textarea name="description"  value="{{ old('description')}}" class="form-control input-lg" rows="5" cols="80"></textarea>
                               </div>
                             </div>
 

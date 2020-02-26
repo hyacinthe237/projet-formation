@@ -133,7 +133,8 @@ class FormationsController extends Controller
                  'type'        => $request->type
              ]);
 
-             return redirect()->back()->with('message', 'Formation ajoutée avec succès');
+             return redirect()->route('formation.edit', $formation->number)
+                        ->with('message', 'Formation ajoutée avec succès');
          }
 
          return redirect()->back()
