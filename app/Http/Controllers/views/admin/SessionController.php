@@ -22,7 +22,7 @@ class SessionController extends Controller
             return $query->where('name', 'like', '%'.$keywords.'%');
         })
         ->orderBy('name', 'desc')
-        ->paginate(50);
+        ->paginate(self::BACKEND_PAGINATE);
 
         return view('admin.sessions.index', compact('sessions'));
     }

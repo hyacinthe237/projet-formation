@@ -383,7 +383,7 @@ class EtudiantController extends Controller
         })
         ->where('deleted_at', null)
         ->orderBy('id', 'desc')
-        ->paginate(50);
+        ->paginate(self::BACKEND_PAGINATE);
 
         $session = Session::whereStatus('pending')->first();
         $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();

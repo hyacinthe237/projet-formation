@@ -25,7 +25,7 @@ class FinanceurController extends Controller
           return $query->where('name', 'like', '%'.$keywords.'%');
       })
       ->orderBy('id', 'desc')
-      ->paginate(50);
+      ->paginate(self::BACKEND_PAGINATE);
 
       return view('admin.financeurs.index', compact('financeurs'));
   }
@@ -114,7 +114,7 @@ class FinanceurController extends Controller
             $item->delete();
           }
         }
-        
+
         $financeur->delete();
 
         return redirect()->route('financeurs.index')->with('message', 'Financeur supprimé');

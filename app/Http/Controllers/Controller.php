@@ -12,4 +12,6 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     const USER_IMAGE_FOLDER = '/docs/users/';
+
+    const BACKEND_PAGINATE = 30;
 }

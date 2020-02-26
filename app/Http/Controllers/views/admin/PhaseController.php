@@ -25,7 +25,7 @@ class PhaseController extends Controller
           return $query->where('title', 'like', '%'.$keywords.'%');
       })
       ->orderBy('id', 'desc')
-      ->paginate(50);
+      ->paginate(self::BACKEND_PAGINATE);
 
       return view('admin.phases.index', compact('phases'));
   }

@@ -61,7 +61,7 @@ class FormationsController extends Controller
              })
              ->whereSessionId($session->id)
              ->orderBy('id', 'desc')
-             ->paginate(50);
+             ->paginate(self::BACKEND_PAGINATE);
 
              foreach ($formations as $item) {
                 $item->etudiants = $this->formRepo->getStagiaireFormation($item->id);

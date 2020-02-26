@@ -35,7 +35,7 @@ class UserController extends Controller
       })
       ->where('id', '!=', Auth::user()->id)
       ->orderBy('id', 'desc')
-      ->paginate(50);
+      ->paginate(self::BACKEND_PAGINATE);
 
       $roles = Role::all();
       return view('admin.users.index', compact('users', 'roles'));

@@ -30,7 +30,7 @@ class FormateurController extends Controller
           ->orWhere('lastname', 'like', '%'.$keywords.'%');
       })
       ->orderBy('id', 'desc')
-      ->paginate(50);
+      ->paginate(self::BACKEND_PAGINATE);
 
       return view('admin.formateurs.index', compact('formateurs'));
   }

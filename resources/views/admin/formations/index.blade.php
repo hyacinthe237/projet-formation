@@ -108,7 +108,8 @@
                             </tr>
                         @endforeach
                     </tbody>
-                </table>
+                 </table>
+                 {{ $formations->links() }}
             </div>
             <!-- End of table *123*10*99#. -->
         </div>

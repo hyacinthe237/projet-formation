@@ -34,7 +34,7 @@ class BudgetController extends Controller
       ->whereSessionId($session->id)
       ->with('site')
       ->orderBy('id', 'desc')
-      ->paginate(50);
+      ->paginate(self::BACKEND_PAGINATE);
 
       return view('admin.budgets.index', compact('budgets'));
   }
@@ -305,7 +305,7 @@ class BudgetController extends Controller
           $item->delete();
         }
         $budget->delete();
-        
+
         return redirect()->route('budgets.index')->with('message', 'Budget supprimé');
     }
 

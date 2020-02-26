@@ -25,7 +25,7 @@ class StructureController extends Controller
           return $query->where('name', 'like', '%'.$keywords.'%');
       })
       ->orderBy('id', 'desc')
-      ->paginate(50);
+      ->paginate(self::BACKEND_PAGINATE);
 
       return view('admin.structures.index', compact('structures'));
   }

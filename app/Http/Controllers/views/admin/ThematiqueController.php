@@ -30,7 +30,7 @@ class ThematiqueController extends Controller
           return $query->where('phase_id', $request->phase_id);
       })
       ->orderBy('id', 'desc')
-      ->paginate(50);
+      ->paginate(self::BACKEND_PAGINATE);
 
       $phases = Phase::all();
 
