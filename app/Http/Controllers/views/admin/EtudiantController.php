@@ -135,20 +135,17 @@ class EtudiantController extends Controller
             'firstname' => 'required',
             'email' => 'required',
             'commune_formation_id' => 'required',
-            'residence_id' => 'required'
+            'structure_id' => 'required'
         ]);
 
         if ($validator->fails()) {
           return redirect()->back()
                 ->withInput($request->all())
-                ->withErrors(['validator' => 'Les champs prénom, formation, résidence et Email sont obligatoires']);
+                ->withErrors(['validator' => 'Les champs prénom, formation, structure et Email sont obligatoires']);
         }
 
         $session = Session::whereStatus('pending')->first();
-        $existing = Etudiant::whereResidenceId($request->residence_id)
-                    ->whereFirstname($request->firstname)
-                    ->wherePhone($request->phone)
-                    ->whereEmail($request->email)->first();
+        $existing = Etudiant::wherePhone($request->phone)->whereEmail($request->email)->first();
 
         if (!$existing) {
             $etudiant = Etudiant::create([
@@ -190,7 +187,7 @@ class EtudiantController extends Controller
                     $form->phases()->sync($request->phase_id);
                     $form->etats()->sync($request->etat_id);
 
-                    return redirect()->route('stagiaires.index')
+                    return redirect()->route('stagiaires.edit', $etudiant->number)
                                     ->with('message', "stagiaire enregistré et ajouté avec succès à la formation");
                 } else {
                   return redirect()->back()
@@ -242,13 +239,13 @@ class EtudiantController extends Controller
      */
     public function update(Request $request, $number) {
         $validator = Validator::make($request->all(), [
-            'residence_id' => 'required',
+            'structure_id' => 'required',
             'firstname' => 'required',
             'email' => 'required'
         ]);
 
         if ($validator->fails())
-            return redirect()->back()->withErrors(['validator' => 'Les champs Prénom, residence & Email sont obligatoires']);
+            return redirect()->back()->withErrors(['validator' => 'Les champs Prénom, structure & Email sont obligatoires']);
 
         $etudiant = Etudiant::whereNumber($number)->first();
         if (!$etudiant)
@@ -361,7 +358,7 @@ class EtudiantController extends Controller
     private static function takeEtudiantInfos (Request $request)
     {
         $keywords = $request->keywords;
-        $etudiants = Etudiant::with('structure', 'category', 'formations', 'formations.site',
+        $etudiants = Etudiant::with('category', 'formations', 'formations.site',
         'formations.site.commune', 'formations.site.formation', 'structure', 'fonction')
         ->when($keywords, function($query) use ($keywords) {
             return $query->where('firstname', 'like', '%'.$keywords.'%')

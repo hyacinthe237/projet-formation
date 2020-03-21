@@ -33,43 +33,44 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Prénom(s)</label>
-                                    <input type="text" name="firstname" class="form-control input-lg" placeholder="prénom(s)" required>
+                                    <input type="text" value="{{ old('firstname')}}" name="firstname" class="form-control input-lg" placeholder="prénom(s)" required>
                                     <input type="hidden" name="phase_id" value="{{ $phase->id }}">
+                                    <input type="hidden" name="etat_id" value="{{ $etat->id }}">
                                 </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Nom(s)</label>
-                                    <input type="text" name="lastname" class="form-control input-lg" placeholder="nom(s)">
+                                    <input type="text" value="{{ old('lastname')}}" name="lastname" class="form-control input-lg" placeholder="nom(s)">
                                 </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" name="email" class="form-control input-lg" placeholder="Email" required>
+                                    <input type="email" value="{{ old('email')}}" name="email" class="form-control input-lg" placeholder="Email" required>
                                 </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Téléphone</label>
-                                    <input type="text" name="phone" class="form-control input-lg" placeholder="Téléphone">
+                                    <input type="text" value="{{ old('phone')}}" name="phone" class="form-control input-lg" placeholder="Téléphone">
                                 </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Date de naissance</label>
-                                    <input type="date" name="dob" class="form-control input-lg date" placeholder="Date de naissance">
+                                    <input type="date"  value="{{ old('dob')}}" name="dob" class="form-control input-lg date" placeholder="Date de naissance">
                                 </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Année d'expérience</label>
-                                    <input type="text" name="an_exp" class="form-control input-lg" placeholder="Année d'expérience">
+                                    <input type="text"  value="{{ old('an_exp')}}" name="an_exp" class="form-control input-lg" placeholder="Année d'expérience">
                                 </div>
                             </div>
 
@@ -90,28 +91,28 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Description fonction</label>
-                                    <textarea name="desc_fonction" rows="2" cols="80" class="form-control input-lg" placeholder="Description fonction"></textarea>
+                                    <textarea name="desc_fonction"  value="{{ old('desc_fonction')}}" rows="2" cols="80" class="form-control input-lg" placeholder="Description fonction"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Formation souhaitée</label>
-                                    <textarea name="form_souhaitee" rows="2" cols="80" class="form-control input-lg" placeholder="Formation souhaitée"></textarea>
+                                    <textarea name="form_souhaitee" value="{{ old('form_souhaitee')}}" rows="2" cols="80" class="form-control input-lg" placeholder="Formation souhaitée"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Formation complémentire</label>
-                                    <textarea name="form_compl" rows="2" cols="80" class="form-control input-lg" placeholder="Formation complémentire"></textarea>
+                                    <textarea name="form_compl" value="{{ old('form_compl')}}" rows="2" cols="80" class="form-control input-lg" placeholder="Formation complémentire"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Diplôme élevée</label>
-                                    <textarea name="diplome_elev" rows="2" cols="80" class="form-control input-lg" placeholder="Diplôme élevée"></textarea>
+                                    <textarea name="diplome_elev" value="{{ old('diplome_elev')}}" rows="2" cols="80" class="form-control input-lg" placeholder="Diplôme élevée"></textarea>
                                 </div>
                             </div>
 

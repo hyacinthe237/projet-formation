@@ -31,10 +31,10 @@
             <tbody>
               <tr>
                 <td class="td-5">{{ $item->number }}</td>
-                <td class="td-30">{{ $item->name }}</td>
-                <td class="td-10 text-center">{{ $item->structure ? $item->structure->name : '...' }}</td>
-                <td class="td-10 text-center">{{ $item->fonction ? $item->fonction->name : '...' }}</td>
-                <td class="td-10 text-center">{{ $item->category ? $item->categoryg->name : '...' }}</td>
+                <td class="td-30">{{ $item->firstname }}</td>
+                <td class="td-10 text-center">{{ $item->structure ? $item->structure->name : '---' }}</td>
+                <td class="td-10 text-center">{{ $item->fonction ? $item->fonction->name : '---' }}</td>
+                <td class="td-10 text-center">{{ $item->category ? $item->category->name : '---' }}</td>
                 <td class="td-5 text-center">{{ count($item->formations) }}</td>
               </tr>
             </tbody>
