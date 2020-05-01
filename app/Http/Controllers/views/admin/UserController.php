@@ -96,7 +96,7 @@ class UserController extends Controller
           'lastname'    => $request->lastname,
           'phone'       => $request->phone,
           'email'       => $request->email,
-          'password'    => $request->password,
+          'password'    => bcrypt($request->password),
           'sex'         => $request->sex,
           'is_active'   => $request->is_active,
           'photo'       => $request->photo,
