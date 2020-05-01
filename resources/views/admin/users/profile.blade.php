@@ -2,11 +2,20 @@
 
 @section('body')
     <div class="page-heading">
-        <div class="buttons">
-            <a href="{{ route('users.index') }}" class="btn btn-lg btn-teal">
-                <i class="ion-reply"></i> Cancel
-            </a>
-        </div>
+
+        @if (Auth::user()->role->name === 'admin')
+          <div class="buttons">
+              <a href="{{ route('users.index') }}" class="btn btn-lg btn-teal">
+                  <i class="ion-reply"></i> Cancel
+              </a>
+          </div>
+        @else
+          <div class="buttons">
+              <a href="{{ route('admin') }}" class="btn btn-lg btn-teal">
+                  <i class="ion-reply"></i> Cancel
+              </a>
+          </div>
+        @endif
 
         <div class="title">
             Mon profil

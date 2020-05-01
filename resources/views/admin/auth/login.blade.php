@@ -18,7 +18,7 @@
     <section class="login-form" id="app">
         <h2>Connexion</h2>
 
-        <!-- @include('errors.list') -->
+        @include('errors.list')
 
         <form class="_form" action="" method="post">
             {{ csrf_field() }}

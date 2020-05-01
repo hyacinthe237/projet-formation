@@ -43,7 +43,7 @@ class UserController extends Controller
 
     public function create ()
     {
-        $roles = Role::get();
+        $roles = Role::where('id', '!=', 3)->get();
 
         return view('admin.users.create', compact('roles'));
     }
@@ -55,7 +55,7 @@ class UserController extends Controller
         if (!$user)
             return redirect()->route('users.index');
 
-        $roles = Role::get();
+        $roles = Role::where('id', '!=', 3)->get();
         return view('admin.users.profile', compact('roles', 'user'));
     }
 
@@ -66,7 +66,7 @@ class UserController extends Controller
         if (!$user)
             return redirect()->route('users.index');
 
-        $roles = Role::get();
+        $roles = Role::where('id', '!=', 3)->get();
         return view('admin.users.edit', compact('roles', 'user'));
     }
 

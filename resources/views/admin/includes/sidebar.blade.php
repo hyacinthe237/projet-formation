@@ -65,6 +65,15 @@
             </a>
         </li>
 
+        @if (Auth::user()->role->name === 'editor')
+            <li class="{{ Request::is('admin/users*') ? 'active' : '' }}">
+              <a href="{{ route('users.show', Auth::user()->number) }}">
+                  <i class="ion-android-people"></i>
+                  Mon Profil
+              </a>
+            </li>
+        @endif
+
         <li class="separer"></li>
 
         <li>
