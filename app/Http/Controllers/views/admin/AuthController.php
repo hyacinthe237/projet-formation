@@ -87,6 +87,7 @@ class AuthController extends Controller
 
         $user->password = bcrypt($request->password);
         $user->save();
+        
         return redirect()->back()->with('message', 'Mot de passe changé avec succès');
     }
 

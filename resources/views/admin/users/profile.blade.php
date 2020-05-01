@@ -106,7 +106,7 @@
       {!! Form::close() !!}
     </section>
 
-{{-- <section class="mt-40">
+<section class="mt-10">
 
     <form class="_form" action="{{ route('admin.password') }}" method="post">
         {{ csrf_field() }}
@@ -115,24 +115,22 @@
         <div class="container-fluid">
             <div class="block">
                 <div class="block-content">
-                    <h4>Update Password</h4>
-
                     <div class="row mt-20">
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <input type="password" name="password" required class="form-control input-lg" placeholder="New Password">
+                                <input type="password" name="password" required class="form-control input-lg" placeholder="Nouveau mot de passe">
                             </div>
                         </div>
 
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <input type="password" name="password_confirm" required class="form-control input-lg" placeholder="Confirm Password">
+                                <input type="password" name="password_confirm" required class="form-control input-lg" placeholder="Confirmer mot de passe">
                             </div>
                         </div>
 
                         <div class="col-sm-4">
                             <button type="submit" class="btn btn-lg btn-success btn-block">
-                                <i class="flaticon-lock"></i> Save New Password
+                                <i class="flaticon-lock"></i> Modifier mot de passe
                             </button>
                         </div>
                     </div>
@@ -142,7 +140,7 @@
 
         </div>
     </form>
-</section> --}}
+</section>
 @endsection
 
 @section('js')
