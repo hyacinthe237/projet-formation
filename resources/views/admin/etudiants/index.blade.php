@@ -7,6 +7,9 @@
             <a href="{{ route('stagiaires.download')}}" class="btn btn-lg btn-success" target="_blank">
                 <i class="ion-document"></i> PDF Liste
             </a>
+            <a href="{{ route('fonctions.index') }}" class="btn btn-lg btn-dark">
+                <i class="ion-ios-keypad"></i> Fonctions
+            </a>
             <a href="{{ route('stagiaires.create') }}" class="btn btn-lg btn-primary">
                 <i class="ion-plus"></i> Ajouter stagiaire
             </a>
@@ -29,7 +32,7 @@
                                     @foreach($data['communes'] as $item)
                                         <option value="{{ $item->id }}"
                                           {{ Request::get('structure') == $item->id ? 'selected' : '' }}>
-                                            {{ $item->name }}
+                                            {{ 'Commune de ' . $item->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -110,7 +113,7 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Structure</th>
-                            <th>Catégorie</th>
+                            {{-- <th>Catégorie</th> --}}
                             <th>Fonction</th>
                             <th>Etat</th>
                             <th>Structure</th>
@@ -125,8 +128,8 @@
                                 <td> <img src="{{ $etudiant->getImgAttribute() }}" alt="" width="70px" height="70px" class="img-round"> </td>
                                 <td class="bold">{{ $etudiant->getNameAttribute() }}</td>
                                 <td>{{ $etudiant->email }}</td>
-                                <td>{{ $etudiant->structure ? $etudiant->structure->name : '---' }}</td>
-                                <td>{{ $etudiant->category ? $etudiant->category->name : '---' }}</td>
+                                <td>{{ $etudiant->structure ? 'Commune de ' . $etudiant->structure->name : '---' }}</td>
+                                {{-- <td>{{ $etudiant->category ? $etudiant->category->name : '---' }}</td> --}}
                                 <td>{{ $etudiant->fonction ? $etudiant->fonction->name : '---' }}</td>
                                 <td>{{ $etudiant->is_active ? 'Actif' : 'Non Actif'}}</td>
                                 <td>{{ $etudiant->residence ? $etudiant->residence->name : 'Non defini' }}</td>

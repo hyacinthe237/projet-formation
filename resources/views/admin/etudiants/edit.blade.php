@@ -94,17 +94,17 @@
 
                                   <div class="col-sm-12">
                                       <div class="form-group">
-                                          <label>Formation souhaitée</label>
+                                          <label>Autres Formations souhaitées</label>
                                           <textarea name="form_souhaitee" rows="2" cols="80" class="form-control input-lg">{{ $etudiant->form_souhaitee }}</textarea>
                                       </div>
                                   </div>
 
-                                  <div class="col-sm-12">
+                                  {{-- <div class="col-sm-12">
                                       <div class="form-group">
                                           <label>Formation complémentire</label>
                                           <textarea name="form_compl" rows="2" cols="80" class="form-control input-lg">{{ $etudiant->form_compl }}</textarea>
                                       </div>
-                                  </div>
+                                  </div> --}}
 
                                   <div class="col-sm-12">
                                       <div class="form-group">
@@ -140,7 +140,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label>Catégorie</label>
                                     <div class="form-select grey">
                                         <select class="form-control input-lg" name="student_category_id">
@@ -151,7 +151,7 @@
                                           @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label>Fonction</label>
                                     <div class="form-select grey">
@@ -165,7 +165,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label>Upload photo</h4>
 
                                     <input type="hidden" class="form-control" id="photo" name="photo" readonly value="{{ $etudiant->photo }}">
@@ -176,7 +176,7 @@
                                             <i class='ion-android-attach mr-10'></i> modifier la photo
                                         </a>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <hr>
                                 <div class="form-group text-right mb-20">

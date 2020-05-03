@@ -27,7 +27,7 @@
         <div class="block">
             <div class="block-content form">
 
-                <div class="row mt-20">
+                <div class="row mt-10">
                       <div class="col-sm-8">
                         <div class="row">
                             <div class="col-sm-6">
@@ -97,17 +97,17 @@
 
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label>Formation souhaitée</label>
+                                    <label>Autres Formations souhaitées</label>
                                     <textarea name="form_souhaitee" value="{{ old('form_souhaitee')}}" rows="2" cols="80" class="form-control input-lg" placeholder="Formation souhaitée"></textarea>
                                 </div>
                             </div>
 
-                            <div class="col-sm-12">
+                            {{-- <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Formation complémentire</label>
                                     <textarea name="form_compl" value="{{ old('form_compl')}}" rows="2" cols="80" class="form-control input-lg" placeholder="Formation complémentire"></textarea>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-sm-12">
                                 <div class="form-group">
@@ -131,7 +131,7 @@
                               </div>
                           </div>
 
-                          <div class="form-group">
+                          {{-- <div class="form-group">
                               <label>Catégorie</label>
                               <div class="form-select grey">
                                   <select class="form-control input-lg" name="student_category_id">
@@ -142,7 +142,7 @@
                                       @endforeach
                                   </select>
                               </div>
-                          </div>
+                          </div> --}}
 
                           <div class="form-group">
                               <label>Fonction</label>
@@ -164,17 +164,17 @@
                                       <option value="">Sélectionnez la structure</option>
                                     @foreach($communes as $commune)
                                         <option value="{{ $commune->id }}">
-                                          {{ 'Commune de ' .$commune->name }}
+                                          {{ 'Commune de ' . $commune->name }}
                                         </option>
                                     @endforeach
                                   </select>
                               </div>
                           </div>
 
-                          <div class="form-group">
+                          {{-- <div class="form-group">
                               <label>Upload photo</h4>
 
-                              <input type="hidden" class="form-control" id="photo" name="photo" readonly value="{{ old('photo') }}">
+                              <input type="hidden" class="form-control" id="photo" name='photo' readonly value="{{ old('photo') }}">
                               <div id="photo_view" class="mt-20"></div>
 
                               <div class="text-right mt-10">
@@ -182,7 +182,7 @@
                                       <i class='ion-android-attach mr-10'></i> Uploader une photo
                                   </a>
                               </div>
-                          </div>
+                          </div> --}}
 
                           <hr>
                           <div class="form-group text-right mb-20">

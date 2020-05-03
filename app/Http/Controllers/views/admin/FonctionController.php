@@ -27,13 +27,8 @@ class FonctionController extends Controller
       ->orderBy('id', 'desc')
       ->paginate(self::BACKEND_PAGINATE);
 
-      return view('admin.fonctions.index', compact('fonctions'));
+      return view('admin.etudiants.fonctions.index-create', compact('fonctions'));
   }
-
-    public function create ()
-    {
-        return view('admin.fonctions.create');
-    }
 
     public function edit ($id)
     {
@@ -41,7 +36,7 @@ class FonctionController extends Controller
         if (!$fonction)
             return redirect()->route('fonctions.index');
 
-        return view('admin.fonctions.edit', compact('fonction'));
+        return view('admin.etudiants.fonctions.edit', compact('fonction'));
     }
 
     /**
