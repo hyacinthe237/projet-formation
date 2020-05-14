@@ -55,6 +55,7 @@
         .mt-40 { margin-top: 40px }
         .text-right { text-align: right }
         .text-center { text-align: center }
+        .text-wrap { word-wrap: break-word }
         .card { background-color: #efefef; border-radius: 2px }
         .accent { background-color: #efefef; font-weight: bold }
         .teal { color: #636d7e }

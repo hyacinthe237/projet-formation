@@ -51,7 +51,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-sm-3">
+                        {{-- <div class="col-sm-3">
                             <div class="form-select grey">
                                 <select class="form-control input-lg" name="student_category">
                                     <option value="">Toutes les catégories</option>
@@ -63,7 +63,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-sm-3">
                             <div class="form-select grey">
                                 <select class="form-control input-lg" name="fonction">
@@ -112,13 +112,12 @@
                             <th></th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Téléphone</th>
                             <th>Structure</th>
-                            {{-- <th>Catégorie</th> --}}
                             <th>Fonction</th>
                             <th>Etat</th>
-                            <th>Structure</th>
                             <th>Nbre Form.</th>
-                            <th>Created</th>
+                            <th>Créé le</th>
                         </tr>
                     </thead>
 
@@ -128,11 +127,10 @@
                                 <td> <img src="{{ $etudiant->getImgAttribute() }}" alt="" width="70px" height="70px" class="img-round"> </td>
                                 <td class="bold">{{ $etudiant->getNameAttribute() }}</td>
                                 <td>{{ $etudiant->email }}</td>
+                                <td>{{ $etudiant->phone }}</td>
                                 <td>{{ $etudiant->structure ? 'Commune de ' . $etudiant->structure->name : '---' }}</td>
-                                {{-- <td>{{ $etudiant->category ? $etudiant->category->name : '---' }}</td> --}}
                                 <td>{{ $etudiant->fonction ? $etudiant->fonction->name : '---' }}</td>
                                 <td>{{ $etudiant->is_active ? 'Actif' : 'Non Actif'}}</td>
-                                <td>{{ $etudiant->residence ? $etudiant->residence->name : 'Non defini' }}</td>
                                 <td>{{ count($etudiant->formations) }}</td>
                                 <td>{{ date('d/m/Y H:i', strtotime($etudiant->created_at)) }}</td>
                             </tr>

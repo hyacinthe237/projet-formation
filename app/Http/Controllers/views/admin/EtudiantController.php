@@ -20,6 +20,7 @@ use App\Models\Session;
 use App\Models\StudentCategory;
 use App\Models\Fonction;
 use App\Helpers\EtudiantHelper;
+use App\Repositories\EtudiantRepository as etudiantRepo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
@@ -32,8 +33,8 @@ class EtudiantController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index(Request $request) {
-      $data = self::takeEtudiantInfos($request);
+  public function index(Request $request, etudiantRepo $etudiantRepo) {
+      $data = self::takeEtudiantInfos($request, $etudiantRepo);
 
       return view('admin.etudiants.index', compact('data'));
   }
@@ -65,6 +66,15 @@ class EtudiantController extends Controller
         $etats = Etat::get();
         $categories = StudentCategory::orderBy('name', 'desc')->get();
         $fonctions = Fonction::orderBy('name', 'desc')->get();
+        $session = Session::whereStatus('pending')->first();
+
+        $ind = 0;
+        foreach ($formations as $key => $item) {
+          $count = FormationEtudiant::whereSessionId($session->id)->whereCommuneFormationId($item->id)->count();
+          if ($count === $item->qte_requis) {
+            $formations = $formations->where('id', '<>', $item->id)->get();
+          }
+        }
 
         return view('admin.etudiants.edit', compact('formations', 'communes', 'etudiant', 'phases', 'etats', 'fonctions', 'categories'));
     }
@@ -113,13 +123,7 @@ class EtudiantController extends Controller
 
              return redirect()->back()->with('message', 'stagiaire enregistré et ajouté avec succès à la formation');
          } else {
-           if ($request->phases)
-             $form_etud->phases()->sync($request->phases);
-
-           if ($request->etats)
-             $form_etud->etats()->sync($request->etats);
-
-            return redirect()->back()->with('message', 'Phase modifiée avec avec succès.');
+            return redirect()->back()->withErrors(['validator' => 'Le quota des inscriptions à cette formation a atteind !']);
          }
     }
 
@@ -342,9 +346,9 @@ class EtudiantController extends Controller
      * @param  [type] $id [description]
      * @return [type]         [description]
      */
-    public function downloadEtudiant (Request $request)
+    public function downloadEtudiant (Request $request, etudiantRepo $etudiantRepo)
     {
-        $data = self::takeEtudiantInfos($request);
+        $data = self::takeEtudiantInfos($request, $etudiantRepo);
 
         $pdf = PDF::loadView('pdfs.etudiant', $data);
         return $pdf->stream();
@@ -355,7 +359,7 @@ class EtudiantController extends Controller
      * @param  [type] $id [description]
      * @return [type]         [description]
      */
-    private static function takeEtudiantInfos (Request $request)
+    private static function takeEtudiantInfos (Request $request, etudiantRepo $etudiantRepo)
     {
         $keywords = $request->keywords;
         $etudiants = Etudiant::with('category', 'formations', 'formations.site',
@@ -379,8 +383,9 @@ class EtudiantController extends Controller
             return $query->where('fonction_id', $request->fonction);
         })
         ->where('deleted_at', null)
-        ->orderBy('id', 'desc')
-        ->paginate(self::BACKEND_PAGINATE);
+        ->orderBy('lastname', 'asc')
+        ->get();
+
 
         $session = Session::whereStatus('pending')->first();
         $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();
@@ -389,7 +394,7 @@ class EtudiantController extends Controller
         $fonctions = Fonction::orderBy('name', 'asc')->get();
 
         $data = [
-            'etudiants' => $etudiants,
+            'etudiants' => $etudiantRepo->getLimitedStagiaires($etudiants),
             'formations' => $formations,
             'communes' => $communes,
             'categories' => $categories,

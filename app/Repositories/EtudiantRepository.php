@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 
+use DB;
 use Image;
 use Carbon\Carbon;
 use App\Models\Etudiant;
@@ -37,6 +38,18 @@ class EtudiantRepository
             $etudiant->thumbnail = $thumbName;
 
             return $etudiant;
+        }
+    }
+
+    /**
+     * Get Limited Stagiaires
+     *
+     * @param  Etudiant $etudiants
+     * @return
+     */
+    public function getLimitedStagiaires ($etudiants) {
+        if (count($etudiants) > 0) {
+            return Etudiant::limit(count($etudiants))->get();
         }
     }
 }

@@ -1,4 +1,4 @@
-@include('pdfs.head', ['title' => 'liste des formations'])
+@include('pdfs.head', ['title' => 'Liste des Stagiaires PNFMV'])
 
 <body bgcolor="#fff">
     <section style="margin:20px 40px;">
@@ -7,7 +7,7 @@
               <tbody>
                 <tr>
                   <td class="td-100 text-center bold" style="text-transform:uppercase;">
-                      Liste des Stagiaires du pnfmv
+                      Liste des Stagiaires PNFMV
                   </td>
                 </tr>
               </tbody>
@@ -17,10 +17,11 @@
         <tbody>
           <tr>
             <td class="td-5 bold text-center">#</td>
-            <td class="td-30 bold text-center">Nom(s) et Prénom(s)</td>
+            <td class="td-10 bold text-center">Nom(s) et Prénom(s)</td>
+            <td class="td-10 bold text-center">Email</td>
+            <td class="td-5 bold text-center">Téléphone</td>
             <td class="td-10 bold text-center">Structure</td>
             <td class="td-10 bold text-center">Fonction</td>
-            <td class="td-10 bold text-center">Catégorie</td>
             <td class="td-5 bold text-center">Nbre Form.</td>
           </tr>
         </tbody>
@@ -31,11 +32,12 @@
             <tbody>
               <tr>
                 <td class="td-5">{{ $item->number }}</td>
-                <td class="td-30">{{ $item->firstname }}</td>
-                <td class="td-10 text-center">{{ $item->structure ? $item->structure->name : '---' }}</td>
-                <td class="td-10 text-center">{{ $item->fonction ? $item->fonction->name : '---' }}</td>
-                <td class="td-10 text-center">{{ $item->category ? $item->category->name : '---' }}</td>
-                <td class="td-5 text-center">{{ count($item->formations) }}</td>
+                <td class="td-10 text-wrap">{{ $item->firstname }} {{ $item->lastname }}</td>
+                <td class="td-10 text-center text-wrap">{{ $item->email }}</td>
+                <td class="td-5 text-center text-wrap">{{ $item->phone }}</td>
+                <td class="td-10 text-center text-wrap">{{ $item->structure ? 'Commune de '. $item->structure->name : '---' }}</td>
+                <td class="td-10 text-center text-wrap">{{ $item->fonction ? $item->fonction->name : '---' }}</td>
+                <td class="td-5 text-center text-wrap">{{ count($item->formations) }}</td>
               </tr>
             </tbody>
           </table>
