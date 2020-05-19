@@ -24,11 +24,18 @@
               <div class="row mt-20">
                     <div class="col-sm-9">
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-9">
                                 <div class="form-group">
                                     <label>Titre</label>
                                     <input type="text" name="title"
                                       class="form-control input-lg" value="{{ old('title')}}" placeholder="Titre" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Nombre de place</label>
+                                    <input type="number" name="qte_requis"
+                                      class="form-control input-lg" value="{{ old('qte_requis')}}" placeholder="Nombre de place" required>
                                 </div>
                             </div>
                             <div class="col-sm-3">

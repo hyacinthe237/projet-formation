@@ -10,6 +10,9 @@
             <a href="{{ route('fonctions.index') }}" class="btn btn-lg btn-dark">
                 <i class="ion-ios-keypad"></i> Fonctions
             </a>
+            <a href="{{ route('structures.index') }}" class="btn btn-lg btn-warning">
+                <i class="ion-ios-keypad"></i> Structures
+            </a>
             <a href="{{ route('stagiaires.create') }}" class="btn btn-lg btn-primary">
                 <i class="ion-plus"></i> Ajouter stagiaire
             </a>
