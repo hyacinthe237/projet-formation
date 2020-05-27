@@ -32,12 +32,14 @@
                             <div class="form-select grey">
                                 <select class="form-control input-lg" name="structure">
                                     <option value="">Toutes les structures</option>
-                                    @foreach($data['communes'] as $item)
-                                        <option value="{{ $item->id }}"
-                                          {{ Request::get('structure') == $item->id ? 'selected' : '' }}>
-                                            {{ 'Commune de ' . $item->name }}
-                                        </option>
-                                    @endforeach
+                                    @if (is_array($data['communes']) || is_object($data['communes']))
+                                      @foreach($data['communes'] as $item)
+                                          <option value="{{ $item->id }}"
+                                            {{ Request::get('structure') == $item->id ? 'selected' : '' }}>
+                                              {{ 'Commune de ' . $item->name }}
+                                          </option>
+                                      @endforeach
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -45,12 +47,14 @@
                             <div class="form-select grey">
                                 <select class="form-control input-lg" name="commune_formation">
                                     <option value="">Toutes les formations</option>
-                                    @foreach($data['formations'] as $item)
-                                        <option value="{{ $item->id }}"
-                                          {{ Request::get('commune_formation') == $item->id ? 'selected' : '' }}>
-                                            {{ $item->formation->title }} de {{ $item->commune->name }}
-                                        </option>
-                                    @endforeach
+                                    @if (is_array($data['formations']) || is_object($data['formations']))
+                                        @foreach($data['formations'] as $item)
+                                            <option value="{{ $item->id }}"
+                                              {{ Request::get('commune_formation') == $item->id ? 'selected' : '' }}>
+                                                {{ $item->formation->title }} de {{ $item->commune->name }}
+                                            </option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -71,12 +75,14 @@
                             <div class="form-select grey">
                                 <select class="form-control input-lg" name="fonction">
                                     <option value="">Toutes les fonctions</option>
-                                    @foreach($data['fonctions'] as $item)
-                                        <option value="{{ $item->id }}"
-                                          {{ Request::get('fonction') == $item->id ? 'selected' : '' }}>
-                                            {{ $item->name }}
-                                        </option>
-                                    @endforeach
+                                    @if (is_array($data['fonctions']) || is_object($data['fonctions']))
+                                        @foreach($data['fonctions'] as $item)
+                                            <option value="{{ $item->id }}"
+                                              {{ Request::get('fonction') == $item->id ? 'selected' : '' }}>
+                                                {{ $item->name }}
+                                            </option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -125,19 +131,21 @@
                     </thead>
 
                     <tbody>
-                        @foreach($data['etudiants'] as $etudiant)
-                            <tr data-href="{{ route('stagiaires.edit', $etudiant->number) }}">
-                                <td> <img src="{{ $etudiant->getImgAttribute() }}" alt="" width="70px" height="70px" class="img-round"> </td>
-                                <td class="bold">{{ $etudiant->getNameAttribute() }}</td>
-                                <td>{{ $etudiant->email }}</td>
-                                <td>{{ $etudiant->phone }}</td>
-                                <td>{{ $etudiant->structure ? 'Commune de ' . $etudiant->structure->name : '---' }}</td>
-                                <td>{{ $etudiant->fonction ? $etudiant->fonction->name : '---' }}</td>
-                                <td>{{ $etudiant->is_active ? 'Actif' : 'Non Actif'}}</td>
-                                <td>{{ count($etudiant->formations) }}</td>
-                                <td>{{ date('d/m/Y H:i', strtotime($etudiant->created_at)) }}</td>
-                            </tr>
-                        @endforeach
+                      @if (is_array($data['etudiants']) || is_object($data['etudiants']))
+                              @foreach($data['etudiants'] as $etudiant)
+                                  <tr data-href="{{ route('stagiaires.edit', $etudiant->number) }}">
+                                      <td> <img src="{{ $etudiant->getImgAttribute() }}" alt="" width="70px" height="70px" class="img-round"> </td>
+                                      <td class="bold">{{ $etudiant->getNameAttribute() }}</td>
+                                      <td>{{ $etudiant->email }}</td>
+                                      <td>{{ $etudiant->phone }}</td>
+                                      <td>{{ $etudiant->structure ? 'Commune de ' . $etudiant->structure->name : '---' }}</td>
+                                      <td>{{ $etudiant->fonction ? $etudiant->fonction->name : '---' }}</td>
+                                      <td>{{ $etudiant->is_active ? 'Actif' : 'Non Actif'}}</td>
+                                      <td>{{ count($etudiant->formations) }}</td>
+                                      <td>{{ date('d/m/Y H:i', strtotime($etudiant->created_at)) }}</td>
+                                  </tr>
+                              @endforeach
+                      @endif
                     </tbody>
                 </table>
             </div>

@@ -77,7 +77,7 @@ class AdminController extends Controller
         $allFormations = Formation::whereSessionId($session->id)->whereIsActive(true)->get();
         $communes      = Commune::get();
         $departements  = Departement::get();
-        $regions       = Region::get();
+        $regions       = Region::where('id', '<>', 11)->get();
         $communesToucher  = $adminRepo->getCommunesToucher($session->id);
         $totalPersonnePrevuFormer  = $adminRepo->getTotalPersonnePrevuFormer($session->id);
         $formationExecuter  = $adminRepo->getFormationExecuter($session->id);

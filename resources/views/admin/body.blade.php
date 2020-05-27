@@ -61,7 +61,7 @@
     </div>
 
 
-    <script src="{{ asset('/backend/js/scripts.min.js') }}"></script>
+    <script src="{{ asset('/backend/js/scripts.js') }}"></script>
     <script src="{{ asset('/backend/js/admin.js') }}"></script>
     <script>
       $("#menu-toggle").click(function(e) {

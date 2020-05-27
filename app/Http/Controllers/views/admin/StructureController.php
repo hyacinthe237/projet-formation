@@ -63,7 +63,7 @@ class StructureController extends Controller
         if (!$existing) {
             $structure = Commune::create([
               'name'      => $request->name,
-              'departement_id'      => 57
+              'departement_id'      => 59
             ]);
 
             return redirect()->back()->with('message', 'Structure ajoutée avec succès');

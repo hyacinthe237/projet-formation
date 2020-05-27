@@ -10,14 +10,14 @@
         </div>
 
         <div class="title">
-            Edit Structure
+            Edit département
         </div>
     </div>
 
 
 
     <section class="container-fluid mt-20">
-      {!! Form::model($structure, ['method' => 'PUT', 'route' => ['structures.update', $structure->id], 'class' => '_form' ]) !!}
+      {!! Form::model($departement, ['method' => 'PUT', 'route' => ['departements.update', $departement->id], 'class' => '_form' ]) !!}
 
         @include('errors.list')
 
@@ -29,7 +29,7 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label>Nom</label>
-                            <input type="text" name="name" class="form-control input-lg" value="{{ $structure->name }}" required>
+                            <input type="text" name="name" class="form-control input-lg" value="{{ $departement->name }}" required>
                         </div>
                     </div>
 
@@ -63,10 +63,10 @@
     </section>
 
     @include('admin.modals.confirm', [
-        'route'    => 'structures.destroy',
+        'route'    => 'departements.destroy',
         'method'   => 'delete',
-        'resource' => $structure,
+        'resource' => $departement,
         'confirm'  => 'Oui, je supprime',
-        'message'  => 'Voulez-vous de façon permanente supprimer la structure "'. $structure->name .'" ?'
+        'message'  => 'Voulez-vous de façon permanente supprimer le département "'. $departement->name .'" ?'
     ])
 @endsection
