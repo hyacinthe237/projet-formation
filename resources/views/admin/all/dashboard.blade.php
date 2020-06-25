@@ -53,6 +53,10 @@
             </div>
         </div>
 
+        <div class="mt-20">
+            <chartjs-line></chartjs-line>
+        </div>
+
         <div class="cards row mt-20">
             <div class="col-sm-12 bg-white mt-20">
               <h4 class="mt-20 mb-20 text-center">STATISTIQUE DE L'ACTION PEDAGOGIQUE EN {{ $session->name }}</h4>
@@ -152,9 +156,7 @@
             </div>
         </div> --}}
 
-        <div class="mt-20">
 
-        </div>
     </div>
 </div>
 @endsection

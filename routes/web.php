@@ -16,3 +16,7 @@ Route::get('/stagiaires', 'views\front\EtudiantController@create')->name('front.
 Route::post('/stagiaires', 'views\front\EtudiantController@store')->name('front.stagiaires.store');
 Route::get('/formateurs', 'views\front\FormateurController@create')->name('front.formateurs.create');
 Route::post('/formateurs', 'views\front\FormateurController@store')->name('front.formateurs.store');
+Route::get('/evaluation/{id}/finale', 'views\admin\FormationsController@evaluationFinale')->name('evaluation.finale');
+Route::post('/evaluation', 'views\front\EvaluationController@store')->name('front.evaluations.store');
+Route::get('/besoins', 'views\front\BesoinFormationController@create')->name('front.besoins.create');
+Route::post('/besoins', 'views\front\BesoinFormationController@store')->name('front.besoins.store');

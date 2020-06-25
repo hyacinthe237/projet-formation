@@ -58,6 +58,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], fun
     Route::resource('financeurs', 'views\admin\FinanceurController');
     Route::resource('structures', 'views\admin\StructureController');
     Route::resource('fonctions', 'views\admin\FonctionController');
+    Route::resource('besoins', 'views\admin\BesoinFormationController');
+    Route::resource('cibles', 'views\admin\CibleController');
     Route::get('budgets/{id}/download', 'views\admin\BudgetController@downloadBudget')->name('budgets.download');
 
     Route::group(['prefix' => 'formations'], function () {
@@ -68,6 +70,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], fun
         Route::get('{number}/show', 'views\admin\FormationsController@show')->name('formation.show');
         Route::put('{number}/edit', 'views\admin\FormationsController@update')->name('formation.update');
         Route::delete('{id}', 'views\admin\FormationsController@destroy')->name('formation.delete');
+    });
+
+    Route::group(['prefix' => 'evaluations'], function () {
+        Route::get('/', 'views\admin\EvaluationController@index')->name('evaluation.index');
+        Route::get('{number}/show', 'views\admin\EvaluationController@show')->name('evaluation.show');
     });
 
     Route::group(['prefix' => 'items'], function () {

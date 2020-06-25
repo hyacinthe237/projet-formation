@@ -14,8 +14,8 @@ require('laravel-mix-merge-manifest');
 
  mix.js('resources/assets/js/admin.js', 'public/backend/js')
  .scripts([
-     // 'node_modules/speakingurl/lib/speakingurl.js',
-     // 'node_modules/jquery-slugify/dist/slugify.js',
+     'node_modules/charts.js/dist/Chart.js',
+     'node_modules/hchs-vue-charts/dist/vue-charts.js',
      // 'node_modules/bootstrap-tokenfield/dist/bootstrap-tokenfield.js',
      // 'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
      // 'node_modules/datatables.net/js/jquery.dataTables.js',

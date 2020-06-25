@@ -22,6 +22,13 @@
             </a>
         </li>
 
+        <li class="{{ Request::is('admin/besoins*') ? 'active' : '' }}">
+            <a href="/admin/besoins">
+                <i class="ion-bookmark"></i>
+                Besoins
+            </a>
+        </li>
+
         <li class="{{ Request::is('admin/thematiques*') ? 'active' : '' }}">
             <a href="/admin/thematiques">
                 <i class="ion-ribbon-b"></i>
@@ -39,6 +46,13 @@
             <a href="/admin/formateurs">
                 <i class="ion-ios-person"></i>
                 Formateurs
+            </a>
+        </li>
+
+        <li class="{{ Request::is('admin/evaluations*') ? 'active' : '' }}">
+            <a href="/admin/evaluations">
+                <i class="ion-ios-bookmarks"></i>
+                Evaluations
             </a>
         </li>
 

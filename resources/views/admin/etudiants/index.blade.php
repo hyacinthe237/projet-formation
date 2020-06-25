@@ -4,7 +4,13 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
-            <a href="{{ route('stagiaires.download')}}" class="btn btn-lg btn-success" target="_blank">
+            <a href="{{ route('stagiaires.download',
+              [
+                'structure' => Request::get('structure'),
+                'commune_formation' => Request::get('commune_formation'),
+                'fonction' => Request::get('fonction'),
+                'keywords' => Request::get('keywords'), 
+              ])}}" class="btn btn-lg btn-success" target="_blank">
                 <i class="ion-document"></i> PDF Liste
             </a>
             <a href="{{ route('fonctions.index') }}" class="btn btn-lg btn-dark">
