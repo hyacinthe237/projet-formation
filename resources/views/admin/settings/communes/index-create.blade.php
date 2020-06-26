@@ -8,13 +8,13 @@
                 <i class="ion-ios-keypad"></i> Regions
             </a>
 
-            <a href="{{ route('communes.index') }}" class="btn btn-lg btn-success">
-                <i class="ion-ios-keypad"></i> Communes
+            <a href="{{ route('departements.index') }}" class="btn btn-lg btn-success">
+                <i class="ion-ios-keypad"></i> Départements
             </a>
         </div>
 
         <div class="title">
-            Départements
+            Communes
         </div>
     </div>
 
@@ -46,7 +46,7 @@
 
             <div class="row">
                 <div class="col-sm-6">
-                  {!! Form::open(['method' => 'POST', 'route' => ['departements.store'], 'class' => '_form' ]) !!}
+                  {!! Form::open(['method' => 'POST', 'route' => ['communes.store'], 'class' => '_form' ]) !!}
 
                       <section class="container-fluid">
                           {{ csrf_field() }}
@@ -74,10 +74,10 @@
                                       </div>
                                       <div class="col-sm-12">
                                           <div class="form-group">
-                                              <label>Région</label>
+                                              <label>Département</label>
                                               <div class="form-select grey">
-                                                  <select name="region_id" class="form-control input-lg" value="{{ old('region_id') }}">
-                                                      @foreach($regions as $item)
+                                                  <select name="departement_id" class="form-control input-lg" value="{{ old('departement_id') }}">
+                                                      @foreach($departements as $item)
                                                           <option value="{{ $item->id}}">{{ $item->name }}</option>
                                                       @endforeach
                                                   </select>
@@ -111,16 +111,16 @@
                       </thead>
 
                       <tbody>
-                          @foreach($departements as $departement)
-                              <tr data-href="{{ route('departements.edit', $departement->id) }}">
-                                  <td>{{ $departement->name }}</td>
-                                  <td>{{ date('d/m/Y H:i', strtotime($departement->created_at)) }}</td>
+                          @foreach($communes as $item)
+                              <tr data-href="{{ route('communes.edit', $item->id) }}">
+                                  <td>{{ $item->name }}</td>
+                                  <td>{{ date('d/m/Y H:i', strtotime($item->created_at)) }}</td>
                               </tr>
                           @endforeach
                       </tbody>
                   </table>
                   <div class="mt-10">
-                    {{ $departements->links() }}
+                    {{ $communes->links() }}
                   </div>
                 </div>
             </div>

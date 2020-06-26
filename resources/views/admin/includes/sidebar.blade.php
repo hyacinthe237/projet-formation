@@ -22,6 +22,13 @@
             </a>
         </li>
 
+        <li class="{{ Request::is('admin/regions*') ? 'active' : '' }}">
+            <a href="/admin/regions">
+                <i class="ion-grid"></i>
+                Régions
+            </a>
+        </li>
+
         <li class="{{ Request::is('admin/besoins*') ? 'active' : '' }}">
             <a href="/admin/besoins">
                 <i class="ion-bookmark"></i>

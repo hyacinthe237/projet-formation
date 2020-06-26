@@ -4,20 +4,20 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
-            <a href="{{ route('departements.index') }}" class="btn btn-lg btn-teal">
+            <a href="{{ route('regions.index') }}" class="btn btn-lg btn-teal">
                 <i class="ion-reply"></i> Cancel
             </a>
         </div>
 
         <div class="title">
-            Edit département
+            Edit Région
         </div>
     </div>
 
 
 
     <section class="container-fluid mt-20">
-      {!! Form::model($departement, ['method' => 'PUT', 'route' => ['departements.update', $departement->id], 'class' => '_form' ]) !!}
+      {!! Form::model($region, ['method' => 'PUT', 'route' => ['regions.update', $region->id], 'class' => '_form' ]) !!}
 
         @include('errors.list')
 
@@ -29,31 +29,19 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label>Nom</label>
-                            <input type="text" name="name" class="form-control input-lg" value="{{ $departement->name }}" required>
+                            <input type="text" name="name" class="form-control input-lg" value="{{ $region->name }}" required>
                         </div>
                     </div>
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label>Longitude</label>
-                            <input type="text" name="lon" class="form-control input-lg" value="{{ $departement->lon }}">
+                            <input type="text" name="lon" class="form-control input-lg" value="{{ $region->lon }}">
                         </div>
                     </div>
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label>Latitude</label>
-                            <input type="text" name="lat" class="form-control input-lg" value="{{ $departement->lat }}">
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label>Département</label>
-                            <div class="form-select grey">
-                                <select name="region_id" class="form-control input-lg" value="{{ old('region_id') }}">
-                                    @foreach($regions as $item)
-                                        <option value="{{ $item->id }}" {{ $departement->region_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            <input type="text" name="lat" class="form-control input-lg" value="{{ $region->lat }}">
                         </div>
                     </div>
 

@@ -60,6 +60,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], fun
     Route::resource('fonctions', 'views\admin\FonctionController');
     Route::resource('besoins', 'views\admin\BesoinFormationController');
     Route::resource('cibles', 'views\admin\CibleController');
+    Route::resource('regions', 'views\admin\RegionController');
+    Route::resource('communes', 'views\admin\CommuneController');
+    Route::resource('departements', 'views\admin\DepartementController');
     Route::get('budgets/{id}/download', 'views\admin\BudgetController@downloadBudget')->name('budgets.download');
 
     Route::group(['prefix' => 'formations'], function () {

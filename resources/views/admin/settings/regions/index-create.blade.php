@@ -4,17 +4,17 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
-            <a href="{{ route('regions.index') }}" class="btn btn-lg btn-primary">
-                <i class="ion-ios-keypad"></i> Regions
+            <a href="{{ route('communes.index') }}" class="btn btn-lg btn-primary">
+                <i class="ion-ios-keypad"></i> Communes
             </a>
 
-            <a href="{{ route('communes.index') }}" class="btn btn-lg btn-success">
-                <i class="ion-ios-keypad"></i> Communes
+            <a href="{{ route('departements.index') }}" class="btn btn-lg btn-success">
+                <i class="ion-ios-keypad"></i> Départements
             </a>
         </div>
 
         <div class="title">
-            Départements
+            Régions
         </div>
     </div>
 
@@ -46,7 +46,7 @@
 
             <div class="row">
                 <div class="col-sm-6">
-                  {!! Form::open(['method' => 'POST', 'route' => ['departements.store'], 'class' => '_form' ]) !!}
+                  {!! Form::open(['method' => 'POST', 'route' => ['regions.store'], 'class' => '_form' ]) !!}
 
                       <section class="container-fluid">
                           {{ csrf_field() }}
@@ -70,18 +70,6 @@
                                           <div class="form-group">
                                               <label>Latitude</label>
                                               <input type="text" name="lat" class="form-control input-lg" placeholder="Coordonnée Latitude"  value="{{ old('lat') }}">
-                                          </div>
-                                      </div>
-                                      <div class="col-sm-12">
-                                          <div class="form-group">
-                                              <label>Région</label>
-                                              <div class="form-select grey">
-                                                  <select name="region_id" class="form-control input-lg" value="{{ old('region_id') }}">
-                                                      @foreach($regions as $item)
-                                                          <option value="{{ $item->id}}">{{ $item->name }}</option>
-                                                      @endforeach
-                                                  </select>
-                                              </div>
                                           </div>
                                       </div>
 
@@ -111,16 +99,16 @@
                       </thead>
 
                       <tbody>
-                          @foreach($departements as $departement)
-                              <tr data-href="{{ route('departements.edit', $departement->id) }}">
-                                  <td>{{ $departement->name }}</td>
-                                  <td>{{ date('d/m/Y H:i', strtotime($departement->created_at)) }}</td>
+                          @foreach($regions as $item)
+                              <tr data-href="{{ route('regions.edit', $item->id) }}">
+                                  <td>{{ $item->name }}</td>
+                                  <td>{{ date('d/m/Y H:i', strtotime($item->created_at)) }}</td>
                               </tr>
                           @endforeach
                       </tbody>
                   </table>
                   <div class="mt-10">
-                    {{ $departements->links() }}
+                    {{ $regions->links() }}
                   </div>
                 </div>
             </div>
