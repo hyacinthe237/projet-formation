@@ -18,6 +18,18 @@ class EvaluationController extends Controller
 {
 
   /**
+   * Evaluation finale
+   *
+   * @return \Illuminate\Http\Response
+   */
+   public function evaluation ()
+   {
+     $sites = CommuneFormation::with('commune', 'formation')->get();
+
+     return view('front.evaluations.create', compact('sites'));
+   }
+
+  /**
    * Store a newly created resource in storage.
    *
    * @param  \Illuminate\Http\Request  $request

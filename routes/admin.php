@@ -77,6 +77,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], fun
 
     Route::group(['prefix' => 'evaluations'], function () {
         Route::get('/', 'views\admin\EvaluationController@index')->name('evaluation.index');
+        Route::post('/', 'views\admin\EvaluationController@store')->name('evaluations.store');
+        Route::get('/create', 'views\admin\EvaluationController@create')->name('evaluations.create');
         Route::get('{number}/show', 'views\admin\EvaluationController@show')->name('evaluation.show');
     });
 

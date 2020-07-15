@@ -4,9 +4,9 @@
 @section('body')
     <div class="page-heading">
         <div class="buttons">
-            {{-- <a href="{{ route('stagiaires.download')}}" class="btn btn-lg btn-success" target="_blank">
-                <i class="ion-document"></i> PDF Liste
-            </a> --}}
+            <a href="{{ route('evaluations.create')}}" class="btn btn-lg btn-success">
+                <i class="ion-plus"></i> Nouveau Formulaire
+            </a>
         </div>
 
         <div class="title">

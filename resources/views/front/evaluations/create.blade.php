@@ -20,20 +20,27 @@
                 <div class="row mt-20">
                   {{-- <div class="row"> --}}
                       <div class="col-sm-12 bg-primary text-center bold">
-                        programme de formation sur "{{ $site->formation->title }}" Commune de {{ $site->commune->name }}
-                        <br>du {{ date('d/m/Y H:i', strtotime($site->start_date)) }}
-                        au {{ date('d/m/Y H:i', strtotime($site->end_date)) }}
+                        Evaluation Finale
                       </div>
-
-                      <input type="hidden" name="commune_formation_id" value="{{ $site->id }}">
 
                       <div class="col-sm-12 mt-40">
                         <fieldset>
                             <legend>Identification du stagiare</legend>
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Email</label>
                                     <input type="email" name="email" class="form-control input-lg" placeholder="Votre adresse email" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <label>Sélectionnez une formation</label>
+                                    <select class="form-control input-lg" name="commune_formation_id" required>
+                                        <option value="">Sélectionnez une formation</option>
+                                        @foreach ($sites as $item)
+                                          <option value="{{ $item->id }}">{{ $item->formation->title }} de {{ $item->commune->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </fieldset>

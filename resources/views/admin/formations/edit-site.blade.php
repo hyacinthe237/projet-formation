@@ -9,10 +9,6 @@
             <a href="{{ route('formation.edit', $site->formation->number) }}" class="btn btn-lg btn-teal">
                 <i class="ion-reply"></i> Annuler
             </a>
-
-            <a href="{{ route('evaluation.finale', $site->id) }}" target="_blank" class="btn btn-lg btn-success">
-                <i class="ion-reply"></i> Evaluation Finale
-            </a>
         </div>
 
         <div class="title">

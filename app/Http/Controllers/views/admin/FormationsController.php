@@ -85,18 +85,6 @@ class FormationsController extends Controller
      }
 
     /**
-     * Evaluation finale
-     *
-     * @return \Illuminate\Http\Response
-     */
-     public function evaluationFinale ($id)
-     {
-       $site = CommuneFormation::with('commune', 'formation')->findOrFail($id);
-
-       return view('front.evaluations.create', compact('site'));
-     }
-
-    /**
      * Store a newly created formation in storage.
      *
      * @param  \Illuminate\Http\Request  $request
