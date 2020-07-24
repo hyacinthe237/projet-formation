@@ -164,7 +164,7 @@
                                       <option value="">Sélectionnez la structure</option>
                                     @foreach($communes as $commune)
                                         <option value="{{ $commune->id }}">
-                                          {{ 'Commune de ' . $commune->name }}
+                                          {{ $commune->departement_id === 59 ? $commune->name : 'Commune de ' . $commune->name }}
                                         </option>
                                     @endforeach
                                   </select>

@@ -9,7 +9,7 @@
                 'structure' => Request::get('structure'),
                 'commune_formation' => Request::get('commune_formation'),
                 'fonction' => Request::get('fonction'),
-                'keywords' => Request::get('keywords'), 
+                'keywords' => Request::get('keywords'),
               ])}}" class="btn btn-lg btn-success" target="_blank">
                 <i class="ion-document"></i> PDF Liste
             </a>
@@ -42,7 +42,7 @@
                                       @foreach($data['communes'] as $item)
                                           <option value="{{ $item->id }}"
                                             {{ Request::get('structure') == $item->id ? 'selected' : '' }}>
-                                              {{ 'Commune de ' . $item->name }}
+                                              {{ $item->name }}
                                           </option>
                                       @endforeach
                                     @endif
@@ -144,7 +144,7 @@
                                       <td class="bold">{{ $etudiant->getNameAttribute() }}</td>
                                       <td>{{ $etudiant->email }}</td>
                                       <td>{{ $etudiant->phone }}</td>
-                                      <td>{{ $etudiant->structure ? 'Commune de ' . $etudiant->structure->name : '---' }}</td>
+                                      <td>{{ $etudiant->structure->departement_id === 59 ? $etudiant->structure->name : 'Commune de ' . $etudiant->structure->name }}</td>
                                       <td>{{ $etudiant->fonction ? $etudiant->fonction->name : '---' }}</td>
                                       <td>{{ $etudiant->is_active ? 'Actif' : 'Non Actif'}}</td>
                                       <td>{{ count($etudiant->formations) }}</td>

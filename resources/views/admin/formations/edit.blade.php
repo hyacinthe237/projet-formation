@@ -138,9 +138,9 @@
                               @foreach($formation->etudiants as $item)
                                   <tr data-href="{{ route('stagiaires.edit', $item->number) }}">
                                       <td class="bold">{{ $item->firstname . ' ' . $item->lastname }}</td>
-                                      <td>{{ $communes->where('id',$item->structure_id)->first()->name }}</td>
-                                      <td>{{ $student_categories->where('id',$item->student_category_id)->first()->name }}</td>
-                                      <td>{{ $fonctions->where('id', $item->fonction_id)->first()->name }}</td>
+                                      <td>{{ sizeOf($communes) ? $communes->where('id', $item->structure_id)->first()->name : '...'}}</td>
+                                      <td>{{  sizeOf($student_categories) ? $student_categories->where('id', $item->student_category_id)->first()->name : '...' }}</td>
+                                      <td>{{ sizeOf($fonctions) ? $fonctions->where('id', $item->fonction_id)->first()->name : '...' }}</td>
                                       <td>{{ date('d/m/Y H:i', strtotime($item->created_at)) }}</td>
                                   </tr>
                               @endforeach

@@ -42,11 +42,11 @@ class EtudiantController extends Controller
     public function create () {
         $session = Session::whereStatus('pending')->first();
         $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();
-        $communes = Commune::with('departement', 'departement.region')->get();
+        $communes = Commune::with('departement', 'departement.region')->orderBy('name', 'asc')->get();
         $phase = Phase::whereTitle('Formation')->first();
         $etat = Etat::whereName('inscris')->first();
-        $categories = StudentCategory::orderBy('name', 'desc')->get();
-        $fonctions = Fonction::orderBy('name', 'desc')->get();
+        $categories = StudentCategory::orderBy('name', 'asc')->get();
+        $fonctions = Fonction::orderBy('name', 'ascasc')->get();
 
         return view('admin.etudiants.create', compact('formations', 'communes', 'phase', 'etat', 'fonctions', 'categories'));
     }
@@ -61,11 +61,11 @@ class EtudiantController extends Controller
             return redirect()->route('stagiaires.index');
 
         $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();
-        $communes = Commune::with('departement', 'departement.region')->get();
+        $communes = Commune::with('departement', 'departement.region')->orderBy('id', 'asc')->get();
         $phases = Phase::get();
         $etats = Etat::get();
-        $categories = StudentCategory::orderBy('name', 'desc')->get();
-        $fonctions = Fonction::orderBy('name', 'desc')->get();
+        $categories = StudentCategory::orderBy('name', 'asc')->get();
+        $fonctions = Fonction::orderBy('name', 'asc')->get();
         $session = Session::whereStatus('pending')->first();
 
         $ind = 0;

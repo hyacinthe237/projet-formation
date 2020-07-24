@@ -63,6 +63,9 @@
 
     <script src="{{ asset('/backend/js/scripts.js') }}"></script>
     <script src="{{ asset('/backend/js/admin.js') }}"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&libraries=&v=weekly" defer></script>
+
     <script>
       $("#menu-toggle").click(function(e) {
           e.preventDefault();

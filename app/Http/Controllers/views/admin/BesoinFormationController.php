@@ -202,6 +202,16 @@ class BesoinFormationController extends Controller
               ->withInput($request->all())
               ->withErrors(['validator' => 'Formulaire inexistant']);
       }
+  }
 
+  public function destroy ($id)
+  {
+      $besoin = BesoinFormation::find($id);
+      if (!$besoin)
+          return redirect()->back()->withErrors(['message' => 'Besoin non existant']);
+
+      $besoin->delete();
+
+      return redirect()->route('besoins.index')->with('message', 'Besoin supprimé');
   }
 }

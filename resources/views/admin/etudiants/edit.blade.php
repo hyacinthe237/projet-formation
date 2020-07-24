@@ -134,7 +134,7 @@
                                         <select class="form-control input-lg" name="structure_id">
                                           @foreach($communes as $commune)
                                               <option value="{{ $commune->id }}" {{ $etudiant->residence_id == $commune->id ? 'selected' : '' }}>
-                                                  Commune de {{ $commune->name }}
+                                                  {{ $commune->departement_id === 59 ? $commune->name : 'Commune de ' . $commune->name }}
                                               </option>
                                           @endforeach
                                         </select>
