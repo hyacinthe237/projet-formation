@@ -46,7 +46,7 @@ class EtudiantController extends Controller
         $phase = Phase::whereTitle('Formation')->first();
         $etat = Etat::whereName('inscris')->first();
         $categories = StudentCategory::orderBy('name', 'asc')->get();
-        $fonctions = Fonction::orderBy('name', 'ascasc')->get();
+        $fonctions = Fonction::orderBy('name', 'asc')->get();
 
         return view('admin.etudiants.create', compact('formations', 'communes', 'phase', 'etat', 'fonctions', 'categories'));
     }
@@ -137,7 +137,7 @@ class EtudiantController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'firstname' => 'required',
-            'email' => 'required',
+            'phone' => 'required',
             'commune_formation_id' => 'required',
             'structure_id' => 'required'
         ]);
@@ -145,11 +145,11 @@ class EtudiantController extends Controller
         if ($validator->fails()) {
           return redirect()->back()
                 ->withInput($request->all())
-                ->withErrors(['validator' => 'Les champs prénom, formation, structure et Email sont obligatoires']);
+                ->withErrors(['validator' => 'Les champs prénom, formation, structure et Telephone sont obligatoires']);
         }
 
         $session = Session::whereStatus('pending')->first();
-        $existing = Etudiant::wherePhone($request->phone)->whereEmail($request->email)->first();
+        $existing = Etudiant::wherePhone($request->phone)->first();
 
         if (!$existing) {
             $etudiant = Etudiant::create([
@@ -161,7 +161,7 @@ class EtudiantController extends Controller
               'email'           => $request->email,
               'sex'             => $request->sex,
               'dob'             => $request->dob,
-              'student_category_id'    => $request->student_category_id,
+              'student_category_id' => $request->student_category_id,
               'fonction_id'     => $request->fonction_id,
               'desc_fonction'   => $request->desc_fonction,
               'form_souhaitee'  => $request->form_souhaitee,
@@ -195,6 +195,7 @@ class EtudiantController extends Controller
                                     ->with('message', "stagiaire enregistré et ajouté avec succès à la formation");
                 } else {
                   return redirect()->back()
+                         ->withInput($request->all())
                          ->withErrors(['existing' => 'stagiaire enregistré, mais pas lié à la formation car le quota requis est atteint']);
                 }
 
@@ -245,11 +246,11 @@ class EtudiantController extends Controller
         $validator = Validator::make($request->all(), [
             'structure_id' => 'required',
             'firstname' => 'required',
-            'email' => 'required'
+            'phone' => 'required'
         ]);
 
         if ($validator->fails())
-            return redirect()->back()->withErrors(['validator' => 'Les champs Prénom, structure & Email sont obligatoires']);
+            return redirect()->back()->withInput($request->all())->withErrors(['validator' => 'Les champs Prénom, structure & Telephone sont obligatoires']);
 
         $etudiant = Etudiant::whereNumber($number)->first();
         if (!$etudiant)

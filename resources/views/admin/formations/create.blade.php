@@ -208,8 +208,21 @@
     </form>
 </section>
 
-@include('admin.modals.addcategory')
-@include('admin.modals.addfinanceur')
+@include('admin.modals.add', [
+  'modalId' => 'addCategoryModal',
+  'route' => 'categories.store',
+  'title' => 'Ajouter une categorie',
+  'label' => 'Nom de la categorie',
+  'placeholder' => 'Saisissez le nom de la categorie',
+])
+
+@include('admin.modals.add', [
+  'modalId' => 'addFinanceurModal',
+  'route' => 'financeurs.store',
+  'title' => 'Ajouter un financeur',
+  'label' => 'Nom du financeur',
+  'placeholder' => 'Saisissez le nom du financeur',
+])
 
 @endsection
 
