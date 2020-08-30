@@ -153,11 +153,9 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th></th>
                             <th>Nom</th>
-                            <th>Catégorie</th>
+                            <th>Structure</th>
                             <th>Fonction</th>
-                            {{-- <th>Etat</th> --}}
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -165,15 +163,41 @@
                     <tbody>
                         @foreach($site->etudiants as $item)
                             <tr>
-                                <td> <img src="{{ $item->etudiant->getImgAttribute()  }}" alt="" width="50px" height="50px" class="img-round"> </td>
-                                <td class="bold">{{ $item->etudiant->getNameAttribute() }}</td>
-                                <td>{{ $item->etudiant->structure->name }}</td>
-                                <td>{{ $item->etudiant->fonction->name }}</td>
-                                {{-- <td>{{ $item->etat }}</td> --}}
+                                <td class="bold">{{ $item->firstname }} {{ $item->lastname }}</td>
+                                <td>{{ $communes->where('id', $item->structure_id)->first()->name }}</td>
+                                <td>{{ $fonctions->where('id', $item->fonction_id)->first()->name }}</td>
                                 <td>
-                                  <a href="{{ route('stagiaires.desincrire', $item->id) }}" class="btn btn-warning">Désinscrire</a>
+                                  <button class="btn btn-warning" data-toggle="modal" data-target="#unsubscribeModal{{$item->id}}">
+                                      Désinscrire
+                                  </button>
                                 </td>
                             </tr>
+
+                            <div class="modal fade" tabindex="-1" role="dialog" id="unsubscribeModal{{$item->id}}">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            {!! Form::open([ 'method'  => 'GET', 'route' => [ 'stagiaires.desincrire', $item->id ], 'class' => '_form']) !!}
+
+                                                <h4>Voulez-vous de façon permanente désincrire <b>{{ $item->firsname }} {{ $item->lastname }}</b> de ce site ?</h4>
+
+                                                <hr>
+                                                <div class="mt-20 pb-10 text-right">
+                                                    <a class="btn btn-teal mr-10 btn-lg" data-dismiss="modal">
+                                                        <i class="ion-reply"></i>
+                                                        Annuler
+                                                    </a>
+
+                                                    <button type="submit" class="btn btn-success btn-lg">
+                                                        <i class="ion-checkmark"></i>
+                                                        Oui, je valide
+                                                    </button>
+                                                </div>
+                                            {!! Form::close() !!}
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div>
                         @endforeach
                     </tbody>
                 </table>

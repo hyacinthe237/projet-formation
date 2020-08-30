@@ -33,6 +33,14 @@ class AdminController extends Controller
         $this->formRepo = $formRepo;
     }
 
+    public function getDashboard () {
+        $session = Session::whereStatus('pending')->first();
+        $communes = CommuneFormation::with('commune', 'formation')->whereSessionId($session->id)->get();
+        if (!$communes) return response()->json([]);
+
+        return response()->json($communes);
+    }
+
     public function dashboard (Request $request)
     {
         $user    = User::find(Auth::id());

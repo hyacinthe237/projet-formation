@@ -220,7 +220,7 @@ class FormationsController extends Controller
 
          $communes   = Commune::with('departement', 'departement.region')->get();
          $session = Session::whereStatus('pending')->first();
-         $formation->commune_formations = CommuneFormation::whereSessionId($session->id)->with('etudiants.etudiant')->whereFormationId($formation->id)->get();
+         $formation->commune_formations = CommuneFormation::whereSessionId($session->id)->with('etudiants')->whereFormationId($formation->id)->get();
          $formation->etudiants = $this->formRepo->getStagiaireFormation($formation->id);
          $financeurs = Financeur::orderBy('name', 'asc')->get();
          $categories = Category::orderBy('name', 'asc')->get();
@@ -243,14 +243,17 @@ class FormationsController extends Controller
      */
      public function editSite ($id) {
          $session = Session::whereStatus('pending')->first();
-         $site = CommuneFormation::whereSessionId($session->id)->with('formation', 'commune', 'etudiants', 'etudiants.etudiant')->find($id);
+         $site = CommuneFormation::whereSessionId($session->id)->with('formation', 'commune', 'etudiants')->find($id);
          if (!$site)
              return redirect()->back()->withErrors(['status' => 'Site inconnu']);
 
          $communes = Commune::orderBy('name', 'asc')->get();
+         $fonctions = Fonction::orderBy('name', 'asc')->get();
          $etudiants  = Etudiant::whereIsActive(true)->get();
 
-         return view('admin.formations.edit-site', compact('communes', 'etudiants', 'site'));
+         // dd($site->etudiants);
+
+         return view('admin.formations.edit-site', compact('communes', 'etudiants', 'site', 'fonctions'));
      }
 
      /**

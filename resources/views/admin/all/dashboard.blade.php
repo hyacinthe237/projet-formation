@@ -54,8 +54,7 @@
         </div>
 
         <div class="mt-20">
-            {{-- <chartjs-line></chartjs-line> --}}
-            
+            <maps></maps>
         </div>
 
         <div class="cards row mt-20">

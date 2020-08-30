@@ -54,7 +54,7 @@ class CommuneFormation extends Model
     }
 
     public function etudiants () {
-        return $this->hasMany(FormationEtudiant::class);
+        return $this->belongsToMany(Etudiant::class, 'formation_etudiants', 'commune_formation_id', 'etudiant_id');
     }
 
 }

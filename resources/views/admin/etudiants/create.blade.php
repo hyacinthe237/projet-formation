@@ -153,15 +153,21 @@
                           </div> --}}
 
                           <div class="form-group">
-                              <label>Fonction</label>
+                              <label class="typo__label">Fonction</label>
                               <div class="form-select grey">
-                                  <select class="form-control input-lg" name="fonction_id">
+                                  {{-- <select class="form-control input-lg" name="fonction_id">
                                       @foreach($fonctions as $item)
                                           <option value="{{ $item->id }}">
                                             {{ $item->name }}
                                           </option>
                                       @endforeach
-                                  </select>
+                                  </select> --}}
+                                  <multiselect
+                                    v-model="fonction_id"
+                                    :options="{{ $fonctions }}"
+                                    placeholder="Votre choix"
+                                    label="name"
+                                    track-by="name"></multiselect>
                               </div>
                           </div>
 

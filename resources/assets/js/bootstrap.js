@@ -22,7 +22,7 @@ try {
 
 window.axios = require('axios')
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-window.axios.defaults.baseURL = '/api/v1'
+window.axios.defaults.baseURL = '/'
 window.webAxios = axios.create({ baseURL: '/' })
 if (typeof _auth !== 'undefined') {
     window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + _auth;

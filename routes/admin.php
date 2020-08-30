@@ -19,6 +19,7 @@ Route::post('admin/login', 'views\admin\AuthController@signin')->name('admin.sig
 
 Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], function() {
     Route::get('/', 'views\admin\AdminController@dashboard')->name('admin');
+    Route::get('/dashboard', 'views\admin\AdminController@getDashboard');
     Route::get('logout', 'views\admin\AuthController@logout')->name('admin.logout');
     Route::post('password', 'views\admin\AuthController@password')->name('admin.password');
     Route::post('stagiaires/{number}/inscrire', 'views\admin\EtudiantController@inscrireEtudiant')->name('inscrire.etudiant.formation');
@@ -42,7 +43,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], fun
     Route::get('formations/liste-des-formations-pnfmv', 'views\admin\FormationsController@downloadFormation')->name('formations.download');
     Route::get('stagiaires/liste-des-etudiants-pnfmv', 'views\admin\EtudiantController@downloadEtudiant')->name('stagiaires.download');
     Route::get('dashboard/statistiques', 'views\admin\AdminController@download')->name('dashboard.statistiques');
-    Route::get('stagiaires/{id}/desincrire', 'views\admin\EtudiantController@desincrire')->name('stagiaires.desincrire');
+    Route::post('stagiaires/{id}/desincrire', 'views\admin\EtudiantController@desincrire')->name('stagiaires.desincrire');
 
     Route::resource('users', 'views\admin\UserController');
     Route::resource('roles', 'views\admin\RoleController');
