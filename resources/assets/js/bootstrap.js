@@ -9,8 +9,9 @@ window.moment = require('moment');
  */
 
 try {
-    // window.$ = window.jQuery = require('jquery');
-    global.$ = global.jQuery = require('jquery');
+    window.$ = window.jQuery = require('jquery');
+    // global.$ = global.jQuery = require('jquery');
+
     require('bootstrap-sass');
 } catch (e) {}
 

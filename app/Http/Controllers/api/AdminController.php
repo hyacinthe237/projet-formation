@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\views\admin;
+namespace App\Http\Controllers\api;
 
 use Auth;
 use PDF;
@@ -33,31 +33,12 @@ class AdminController extends Controller
         $this->formRepo = $formRepo;
     }
 
-    public function getDashboard () {
-        $session = Session::whereStatus('pending')->first();
-        $communes = CommuneFormation::with('commune', 'formation')->whereSessionId($session->id)->get();
-        if (!$communes) return response()->json([]);
-
-        return response()->json($communes);
-    }
-
-    public function dashboard (Request $request)
+    public function index (Request $request)
     {
-        $user    = User::find(Auth::id());
-        $users   = User::whereIsActive(true)->get();
         $session = Session::whereStatus('pending')->first();
         $data    = self::takeInfos($this->adminRepo, $this->formRepo, $session);
 
-        if ($request->start_date) {
-            $debut = $request->start_date .' '. $request->start_heure.':'.$request->start_minutes;
-            $fin = $request->end_date .' '. $request->end_heure.':'.$request->end_minutes;
-            $start_date = Carbon::parse($debut)->format('Y-m-d H:i');
-            $end_date = Carbon::parse($fin)->format('Y-m-d H:i');
-
-            $communeParPeriode  = $this->adminRepo->getCommunesToucherParPeriode($start_date, $end_date);
-        }
-
-        return view('admin.all.dashboard', compact(['data', 'users', 'user', 'requetes', 'session']));
+        return response()->json($data);
     }
 
     /**

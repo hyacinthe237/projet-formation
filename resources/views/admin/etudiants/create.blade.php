@@ -155,19 +155,13 @@
                           <div class="form-group">
                               <label class="typo__label">Fonction</label>
                               <div class="form-select grey">
-                                  {{-- <select class="form-control input-lg" name="fonction_id">
+                                  <select class="form-control input-lg" name="fonction_id">
                                       @foreach($fonctions as $item)
                                           <option value="{{ $item->id }}">
                                             {{ $item->name }}
                                           </option>
                                       @endforeach
-                                  </select> --}}
-                                  <multiselect
-                                    v-model="fonction_id"
-                                    :options="{{ $fonctions }}"
-                                    placeholder="Votre choix"
-                                    label="name"
-                                    track-by="name"></multiselect>
+                                  </select>
                               </div>
                           </div>
 
@@ -232,28 +226,5 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="/backend/js/scripts.js"></script>
-<script type="text/javascript" src="/backend/fancybox/jquery.fancybox.js"></script>
-<script>
-$(document).ready(function() {
-    $('.iframe-btn').fancybox({
-        'width'     : 900,
-        'maxHeight' : 600,
-        'minHeight'    : 400,
-        'type'      : 'iframe',
-        'autoSize'      : false
-    });
-
-    $('.date').datepicker({
-        autoclose: true,
-        format: 'dd-mm-yyyy'
-    })
-
-    $("body").hover(function() {
-        var profilePic = $("input[name='photo']").val();
-        if(profilePic)
-            $('#photo_view').html("<img class='thumbnail img-responsive mb-10' src='" + profilePic +"'/>");
-    });
-})
-</script>
+  @include('admin.includes.scripts')
 @endsection

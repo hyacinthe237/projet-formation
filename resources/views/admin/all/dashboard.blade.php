@@ -22,7 +22,6 @@
             </div>
             <div class="col-sm-3">
                 <div class="card green">
-                    {{-- <i class="ion-users"></i> --}}
                     <h3>{{ $data['totalPersonnesIncrites'] }}</h3>
                     <h5>Nombre d'inscription</h5>
                 </div>
@@ -30,7 +29,6 @@
 
             <div class="col-sm-3">
                 <div class="card red">
-                    {{-- <i class="ion-users"></i> --}}
                     <h3>{{ $data['totalPersonnesFormees'] }}</h3>
                     <h5>Nombre Stagiaire formés</h5>
                 </div>
@@ -38,7 +36,6 @@
 
             <div class="col-sm-3">
                 <div class="card warning">
-                    {{-- <i class="ion-city"></i> --}}
                     <h3>{{ $data['communesToucher'] . ' %' }}</h3>
                     <h5>Communes touchées</h5>
                 </div>
@@ -46,15 +43,10 @@
 
             <div class="col-sm-3">
                 <div class="card dark">
-                    {{-- <i class="ion-mark"></i> --}}
                     <h3>{{ $data['formationExecuter'] . ' %' }}</h3>
                     <h5>Formations exécutées</h5>
                 </div>
             </div>
-        </div>
-
-        <div class="mt-20">
-            <maps></maps>
         </div>
 
         <div class="cards row mt-20">
@@ -123,7 +115,7 @@
                   </tbody>
               </table>
             </div>
-        </div>
+        </div> --}}
 
         {{-- <div class="cards row mt-20">
             <div class="col-sm-12 bg-white mt-20">
@@ -155,8 +147,6 @@
               </table>
             </div>
         </div> --}}
-
-
     </div>
 </div>
 @endsection

@@ -30,7 +30,7 @@
             <div class="mt-10">
                 <div class="row">
                     <form class="_form" action="" method="get">
-                      <div class="col-sm-2">
+                      <div class="col-sm-3">
                           <div class="form-select grey">
                               <select name="is_active" class="form-control input-lg">
                                   <option value="">Tous les status</option>
@@ -119,4 +119,8 @@
             <!-- End of table *123*10*99#. -->
         </div>
     </section>
+@endsection
+
+@section('js')
+    @include('admin.includes.scripts')
 @endsection

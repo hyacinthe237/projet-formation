@@ -157,6 +157,8 @@
             </div>
         </div>
     </section>
+@endsection
 
-
+@section('js')
+    @include('admin.includes.scripts')
 @endsection

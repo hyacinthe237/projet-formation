@@ -133,7 +133,7 @@
                                     <div class="form-select grey">
                                         <select class="form-control input-lg" name="structure_id">
                                           @foreach($communes as $commune)
-                                              <option value="{{ $commune->id }}" {{ $etudiant->residence_id == $commune->id ? 'selected' : '' }}>
+                                              <option value="{{ $commune->id }}" {{ $etudiant->structure_id == $commune->id ? 'selected' : '' }}>
                                                   {{ $commune->departement_id === 59 ? $commune->name : 'Commune de ' . $commune->name }}
                                               </option>
                                           @endforeach
@@ -330,28 +330,5 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="/backend/js/scripts.js"></script>
-<script type="text/javascript" src="/backend/fancybox/jquery.fancybox.js"></script>
-<script>
-$(document).ready(function() {
-    $('.iframe-btn').fancybox({
-        'width'     : 900,
-        'maxHeight' : 600,
-        'minHeight'    : 400,
-        'type'      : 'iframe',
-        'autoSize'      : false
-    });
-
-    $('.date').datepicker({
-        autoclose: true,
-        format: 'dd-mm-yyyy'
-    })
-
-    $("body").hover(function() {
-        var profilePic = $("input[name='photo']").val();
-        if(profilePic)
-            $('#photo_view').html("<img class='thumbnail img-responsive mb-10' src='" + profilePic +"'/>");
-    });
-})
-</script>
+  @include('admin.includes.scripts')
 @endsection

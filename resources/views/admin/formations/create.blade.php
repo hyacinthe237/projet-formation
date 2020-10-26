@@ -41,7 +41,7 @@
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Date de début</label>
-                                    <input type="date" name="start_date"  value="{{ old('start_date')}}" class="form-control input-lg datepicker" placeholder="Date de début" required>
+                                    <input type="date" name="start_date"  value="{{ old('start_date')}}" class="form-control input-lg date" placeholder="Date de début" required>
                                 </div>
                             </div>
                             <div class="col-sm-3">
@@ -74,7 +74,7 @@
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Date de fin</label>
-                                    <input type="date" name="end_date"  value="{{ old('end_date')}}" class="form-control input-lg datepicker" placeholder="Date de fin">
+                                    <input type="date" name="end_date"  value="{{ old('end_date')}}" class="form-control input-lg date" placeholder="Date de fin">
                                 </div>
                             </div>
                             <div class="col-sm-3">
@@ -227,14 +227,5 @@
 @endsection
 
 @section('js')
-<script>
-$(document).ready(function() {
-    $('.datepicker').datepicker({
-        startdate: 'd',
-        format: 'dd-mm-yyyy',
-        autoclose: true,
-        todayHightlight: true,
-    })
-})
-</script>
+    @include('admin.includes.scripts')
 @endsection

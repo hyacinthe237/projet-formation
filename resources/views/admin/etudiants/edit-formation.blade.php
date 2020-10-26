@@ -112,14 +112,5 @@
 @endsection
 
 @section('js')
-<script>
-$(document).ready(function() {
-    $('.datepicker').datepicker({
-        startdate: 'd',
-        format: 'dd-mm-yyyy',
-        autoclose: true,
-        todayHightlight: true,
-    })
-})
-</script>
+    @include('admin.includes.scripts')
 @endsection

@@ -195,7 +195,6 @@ class EtudiantController extends Controller
                                     ->with('message', "stagiaire enregistré et ajouté avec succès à la formation");
                 } else {
                   return redirect()->back()
-                         ->withInput($request->all())
                          ->withErrors(['existing' => 'stagiaire enregistré, mais pas lié à la formation car le quota requis est atteint']);
                 }
 
@@ -363,30 +362,30 @@ class EtudiantController extends Controller
     private static function takeEtudiantInfos (Request $request, etudiantRepo $etudiantRepo)
     {
         $keywords = $request->keywords;
+        $commune_formation = $request->commune_formation;
+        $structure = $request->structure;
+        $fonction = $request->fonction;
+
         $etudiants = Etudiant::with('category', 'formations', 'formations.site',
         'formations.site.commune', 'formations.site.formation', 'structure', 'fonction')
         ->when($keywords, function($query) use ($keywords) {
             return $query->where('firstname', 'like', '%'.$keywords.'%')
                         ->orWhere('lastname', 'like', '%'.$keywords.'%');
         })
-        ->when($request->commune_formation, function ($q) use ($request) {
-            return $q->whereHas('formations', function($sql) use ($request) {
-                return $sql->where('commune_formation_id', $request->commune_formation);
+        ->when($commune_formation, function ($q) use ($commune_formation) {
+            return $q->whereHas('formations', function($sql) use ($commune_formation) {
+                return $sql->where('commune_formation_id', '=', $commune_formation);
             });
         })
-        ->when($request->structure, function($query) use ($request) {
-            return $query->where('structure_id', $request->structure);
+        ->when($structure, function($query) use ($structure) {
+            return $query->where('structure_id', '=', $structure);
         })
-        ->when($request->student_category, function($query) use ($request) {
-            return $query->where('student_category_id', $request->student_category);
-        })
-        ->when($request->fonction, function($query) use ($request) {
-            return $query->where('fonction_id', $request->fonction);
+        ->when($fonction, function($query) use ($fonction) {
+            return $query->where('fonction_id', '=', $fonction);
         })
         ->where('deleted_at', null)
         ->orderBy('lastname', 'asc')
-        ->get();
-
+        ->paginate(self::BACKEND_PAGINATE);
 
         $session = Session::whereStatus('pending')->first();
         $formations = CommuneFormation::whereSessionId($session->id)->with('commune', 'formation')->orderBy('id', 'desc')->get();
@@ -395,7 +394,7 @@ class EtudiantController extends Controller
         $fonctions = Fonction::orderBy('name', 'asc')->get();
 
         $data = [
-            'etudiants' => $etudiantRepo->getLimitedStagiaires($etudiants),
+            'etudiants' => $etudiants,
             'formations' => $formations,
             'communes' => $communes,
             'categories' => $categories,

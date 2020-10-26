@@ -41,7 +41,7 @@
                                 <input type="hidden" name="formation_id" value="{{ $site->formation_id }}">
                                 <div class="form-group">
                                     <label>Date de début</label>
-                                    <input type="date" name="start_date" class="form-control input-lg datepicker" value="{{ $site->datesdebut }}" required>
+                                    <input type="date" name="start_date" class="form-control input-lg date" value="{{ $site->datesdebut }}" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -74,7 +74,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Date de fin</label>
-                                    <input type="date" name="end_date" class="form-control input-lg datepicker" value="{{ $site->datesfin }}">
+                                    <input type="date" name="end_date" class="form-control input-lg date" value="{{ $site->datesfin }}">
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -260,14 +260,5 @@
 @endsection
 
 @section('js')
-<script>
-$(document).ready(function() {
-    $('.datepicker').datepicker({
-        startdate: 'd',
-        format: 'dd-mm-yyyy',
-        autoclose: true,
-        todayHightlight: true,
-    })
-})
-</script>
+    @include('admin.includes.scripts')
 @endsection
