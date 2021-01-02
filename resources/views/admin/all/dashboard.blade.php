@@ -75,6 +75,16 @@
                   </thead>
 
                   <tbody>
+                      <input type="hidden" id="Adamaoua" value="{{ $data['Adamaoua'] }}">
+                      <input type="hidden" id="Sud" value="{{ $data['Sud'] }}">
+                      <input type="hidden" id="Est" value="{{ $data['Est'] }}">
+                      <input type="hidden" id="Ouest" value="{{ $data['Ouest'] }}">
+                      <input type="hidden" id="Nord" value="{{ $data['Nord'] }}">
+                      <input type="hidden" id="Littoral" value="{{ $data['Littoral'] }}">
+                      <input type="hidden" id="NordOuest" value="{{ $data['NordOuest'] }}">
+                      <input type="hidden" id="SudOuest" value="{{ $data['SudOuest'] }}">
+                      <input type="hidden" id="ExtremeNord" value="{{ $data['ExtremeNord'] }}">
+                      <input type="hidden" id="Centre" value="{{ $data['Centre'] }}">
                       @foreach($data['regions'] as $region)
                         <tr>
                             <td class="td-3">{{ $region->id }}</td>
@@ -115,7 +125,7 @@
                   </tbody>
               </table>
             </div>
-        </div> --}}
+        </div>
 
         {{-- <div class="cards row mt-20">
             <div class="col-sm-12 bg-white mt-20">
@@ -147,6 +157,86 @@
               </table>
             </div>
         </div> --}}
+
+        <div class="row mt-40 mb-20">
+          Google Maps
+            <div class="mt-20" id="map" style="width: 100%; height: 600px;"></div>
+        </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+  <script src="https://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+  <script type="text/javascript">
+    var InputCentre = document.getElementById('Centre').value
+    var InputNord = document.getElementById('Nord').value
+    var InputNordOuest = document.getElementById('NordOuest').value
+    var InputAdamaoua = document.getElementById('Adamaoua').value
+    var InputEst = document.getElementById('Est').value
+    var InputOuest = document.getElementById('Ouest').value
+    var InputLittoral = document.getElementById('Littoral').value
+    var InputSud = document.getElementById('Sud').value
+    var InputExtremeNord = document.getElementById('ExtremeNord').value
+    var InputSudOuest = document.getElementById('SudOuest').value
+
+    var Centre = JSON.parse(InputCentre);
+    var Nord = JSON.parse(InputNord);
+    var NordOuest = JSON.parse(InputNordOuest);
+    var Adamaoua = JSON.parse(InputAdamaoua);
+    var Est = JSON.parse(InputEst);
+    var Ouest = JSON.parse(InputOuest);
+    var Littoral = JSON.parse(InputLittoral);
+    var Sud = JSON.parse(InputSud);
+    var ExtremeNord = JSON.parse(InputExtremeNord);
+    var SudOuest = JSON.parse(InputSudOuest);
+    
+    var locations = [
+      // [name, lat, lon, id, commune_touchees, personnes_inscrite, personnes_formee],
+      [Adamaoua.name, Adamaoua.lat, Adamaoua.lon, 1, Adamaoua.commune_touchees.length, Adamaoua.personnes_inscrite.length, Adamaoua.personnes_formee.length],
+      [Centre.name, Centre.lat, Centre.lon, 2, Centre.commune_touchees.length, Centre.personnes_inscrite.length, Centre.personnes_formee.length],
+      [Est.name, Est.lat, Est.lon, 3, Est.commune_touchees.length, Est.personnes_inscrite.length, Est.personnes_formee.length],
+      [ExtremeNord.name, ExtremeNord.lat, ExtremeNord.lon, 4, ExtremeNord.commune_touchees.length, ExtremeNord.personnes_inscrite.length, ExtremeNord.personnes_formee.length],
+      [Littoral.name, Littoral.lat, Littoral.lon, 5, Littoral.commune_touchees.length, Littoral.personnes_inscrite.length, Littoral.personnes_formee.length],
+      [Nord.name, Nord.lat, Nord.lon, 6, Nord.commune_touchees.length, Nord.personnes_inscrite.length, Nord.personnes_formee.length],
+      [NordOuest.name, NordOuest.lat, NordOuest.lon, 7, NordOuest.commune_touchees.length, NordOuest.personnes_inscrite.length, NordOuest.personnes_formee.length],
+      [Ouest.name, Ouest.lat, Ouest.lon, 8, Ouest.commune_touchees.length, Ouest.personnes_inscrite.length, Ouest.personnes_formee.length],
+      [Sud.name, Sud.lat, Sud.lon, 9, Sud.commune_touchees.length, Sud.personnes_inscrite.length, Sud.personnes_formee.length],
+      [SudOuest.name, SudOuest.lat, SudOuest.lon, 10, SudOuest.commune_touchees.length, SudOuest.personnes_inscrite.length, SudOuest.personnes_formee.length],
+    ];
+
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 7,
+      center: new google.maps.LatLng(3.868987, 11.521334),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent('<div class="card">' +
+            '<div class="card-body">' +
+              '<h5 class="card-title">' + locations[i][0] + '</h5>' +
+              '<ul class="unstyled">' +
+              '<li> Communes Touchées ' + locations[i][4] + '</li>' +
+              '<li> Personnes Inscrites ' + locations[i][5] + '</li>' +
+              '<li> Personnes Formées ' + locations[i][6] + '</li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>');
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+  </script>
 @endsection

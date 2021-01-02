@@ -7,12 +7,15 @@ use DB;
 use Carbon\Carbon;
 use App\Models\Departement;
 use App\Models\Commune;
+use App\Traits\SlugTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 
 class CommuneController extends Controller
 {
+  use SlugTrait;
+
   /**
    * Display a listing of the resource.
    *
@@ -54,7 +57,8 @@ class CommuneController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'     => 'required'
+            'name'     => 'required',
+            'slug'     => 'required',
         ]);
 
         if ($validator->fails())
@@ -62,13 +66,18 @@ class CommuneController extends Controller
                   ->withInput($request->all())
                   ->withErrors(['validator' => 'Le champ Nom est obligatoire']);
 
+        //Check if the slug exists using slug trait
+        $slug = $this->getUniqueSlug($request->slug, 'communes');
         $existing = Commune::whereName($request->name)->first();
         if (!$existing) {
             Commune::create([
               'departement_id' => $request->departement_id,
               'name'      => $request->name,
+              'slug'      => $slug,
+              'tags'      => $request->tags,
               'lon'      => $request->lon,
-              'lat'      => $request->lat
+              'lat'      => $request->lat,
+              'image'      => $request->image,
             ]);
 
             return redirect()->back()->with('message', 'Commune ajoutée avec succès');
@@ -90,7 +99,8 @@ class CommuneController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'name'     => 'required'
+            'name'     => 'required',
+            'slug'     => 'required',
         ]);
 
         if ($validator->fails())
@@ -102,8 +112,10 @@ class CommuneController extends Controller
 
         $commune->departement_id = $request->has('departement_id') ? $request->departement_id : $commune->departement_id;
         $commune->name = $request->has('name') ? $request->name : $commune->name;
+        $commune->tags = $request->has('tags') ? $request->tags : $commune->tags;
         $commune->lon = $request->has('lon') ? $request->lon : $commune->lon;
         $commune->lat = $request->has('lat') ? $request->lat : $commune->lat;
+        $commune->image = $request->has('image') ? $request->image : $commune->image;
         $commune->update();
 
         return redirect()->back()->with('message', 'Commune mise à jour avec succès');

@@ -29,7 +29,7 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label>Nom</label>
-                            <input type="text" name="name" class="form-control input-lg" value="{{ $region->name }}" required>
+                            <input type="text" name="name" class="form-control input-lg" value="{{ $region->name }}" required readonly>
                         </div>
                     </div>
                     <div class="col-sm-12">

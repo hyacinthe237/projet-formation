@@ -13,10 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 Route::group(['prefix' => 'v1'], function () {
-    return redirect()->to('admin');
+    Route::post('/signin', 'api\AuthController@signin');
+
+    // Auth routes
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::get('me', 'api\AuthController@user');
+        Route::get('/formations', 'api\AdminController@index');
+    });
 });

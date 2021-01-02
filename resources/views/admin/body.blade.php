@@ -64,9 +64,7 @@
 
     <script src="{{ asset('/backend/js/scripts.js') }}"></script>
     <script src="{{ asset('/backend/js/admin.js') }}"></script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://unpkg.com/vue-multiselect@2.1.0"></script>
-
     <script>
       $("#menu-toggle").click(function(e) {
           e.preventDefault();

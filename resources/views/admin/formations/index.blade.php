@@ -98,20 +98,22 @@
                     </thead>
 
                     <tbody>
-                        @foreach($formations as $formation)
-                            <tr data-href="{{ route('formation.edit', $formation->number) }}">
-                                <td class="bold td-40">{{ $formation->title }}</td>
-                                <td class="td-5">{{ $formation->is_active ? 'Actif' : 'Non actif' }}</td>
-                                <td class="td-10">@if (count($formation->financeurs)) @foreach ($formation->financeurs as $item) {{ $item->name }} @endforeach @endif</td>
-                                <td class="td-10">{{ $formation->category ? $formation->category->name : '---' }}</td>
-                                <td class="td-10">{{ count($formation->formateurs) }}</td>
-                                <td class="td-10">{{ count($formation->sites) }}</td>
-                                <td class="td-10">{{ count($formation->etudiants) }}</td>
-                                <td class="td-10">{{ count($formation->etudiants) }}</td>
-                                <td class="td-10">{{ count($formation->formes) }}</td>
-                                <td class="td-15">{{ date('d/m/Y H:i', strtotime($formation->created_at)) }}</td>
-                            </tr>
-                        @endforeach
+                        @if (count($formations) > 0)
+                          @foreach($formations as $formation)
+                              <tr data-href="{{ route('formation.edit', $formation->number) }}">
+                                  <td class="bold td-40">{{ $formation->title }}</td>
+                                  <td class="td-5">{{ $formation->is_active ? 'Actif' : 'Non actif' }}</td>
+                                  <td class="td-10">@if (count($formation->financeurs)) @foreach ($formation->financeurs as $item) {{ $item->name }} @endforeach @endif</td>
+                                  <td class="td-10">{{ $formation->category ? $formation->category->name : '---' }}</td>
+                                  <td class="td-10">{{ count($formation->formateurs) }}</td>
+                                  <td class="td-10">{{ count($formation->sites) }}</td>
+                                  <td class="td-10">{{ count($formation->etudiants) }}</td>
+                                  <td class="td-10">{{ count($formation->etudiants) }}</td>
+                                  <td class="td-10">{{ count($formation->formes) }}</td>
+                                  <td class="td-15">{{ date('d/m/Y H:i', strtotime($formation->created_at)) }}</td>
+                              </tr>
+                          @endforeach
+                        @endif
                     </tbody>
                  </table>
                  {{ $formations->links() }}

@@ -35,7 +35,7 @@ class EtudiantController extends Controller
    */
   public function index(Request $request, etudiantRepo $etudiantRepo) {
       $data = self::takeEtudiantInfos($request, $etudiantRepo);
-
+      
       return view('admin.etudiants.index', compact('data'));
   }
 

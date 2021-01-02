@@ -28,8 +28,7 @@ class FormationsController extends Controller
     private $formRepo;
 
     // model args
-    public function __construct(formRepo $formRepo)
-    {
+    public function __construct(formRepo $formRepo) {
         $this->formRepo = $formRepo;
     }
 
@@ -119,7 +118,7 @@ class FormationsController extends Controller
                'is_active'   => $request->is_active
              ]);
 
-            $formation->phases()->attach([1,2]);
+            $formation->phases()->sync([1,2]);
             $formation->financeurs()->sync($request->financeurs);
 
              CommuneFormation::create([
@@ -135,11 +134,12 @@ class FormationsController extends Controller
 
              return redirect()->route('formation.edit', $formation->number)
                         ->with('message', 'Formation ajoutée avec succès');
+         } else {
+           return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['status' => "Vous tentez d'ajouter une formation qui existe déjà dans la base de données"]);
          }
 
-         return redirect()->back()
-              ->withInput($request->all())
-              ->withErrors(['existing' => 'Cette Formation existe déjà']);
      }
     /**
      * Store a newly created site formation in storage.
@@ -414,7 +414,8 @@ class FormationsController extends Controller
            $item->delete();
          }
 
-         $formation->delete();
+         $formation->phases()->detach();
+         $formation->forceDelete();
          return redirect()->route('formation.index')->with('message', 'Formation supprimée');
      }
 
@@ -441,8 +442,7 @@ class FormationsController extends Controller
       * @param  [type] $id [description]
       * @return [type]         [description]
       */
-     public function downloadFormation (formRepo $formRepo)
-     {
+     public function downloadFormation (formRepo $formRepo) {
          $data = self::takeFormationInfos($formRepo);
 
          $pdf = PDF::loadView('pdfs.formation', $data);
@@ -454,8 +454,7 @@ class FormationsController extends Controller
       * @param  [type] $id [description]
       * @return [type]         [description]
       */
-     private static function takeFormationInfos ($formRepo)
-     {
+     private static function takeFormationInfos ($formRepo) {
          $formations = Formation::with('sites', 'sites.commune', 'financeurs', 'category')->whereIsActive(true)->get();
          foreach ($formations as $item) {
             $item->etudiants = $formRepo->getStagiaireFormation($item->id);

@@ -105,8 +105,54 @@ class AdminController extends Controller
         $totalPersonnesAutresProjProg = 0;
         $totalPersonnesAssocCom = 0;
         $totalPersonnesC2D = 0;
+        $SudOuest = null;
+        $Sud	 = null;
+        $Ouest	 = null;
+        $NordOuest = null;
+        $Nord	 = null;
+        $Littoral	 = null;
+        $ExtremeNord	 = null;
+        $Est = null;
+        $Centre	 = null;
+        $Adamaoua	 = null;
+
 
         foreach ($regions as $region) {
+          if (strtolower($region->name) == 'adamaoua') {
+            $Adamaoua = $region;
+          }
+
+          if (strtolower($region->name) == 'centre') {
+            $Centre = $region;
+          }
+
+          if (strtolower($region->name) == 'est') {
+            $Est = $region;
+          }
+
+          if (strtolower($region->name) == 'sud') {
+            $Sud = $region;
+          }
+
+          if (strtolower($region->name) == 'extrême nord') {
+            $ExtremeNord = $region;
+          }
+
+          if (strtolower($region->name) == 'littoral') {
+            $Littoral = $region;
+          }
+          if (strtolower($region->name) == 'nord') {
+            $Nord = $region;
+          }
+          if (strtolower($region->name) == 'nord ouest') {
+            $NordOuest = $region;
+          }
+          if (strtolower($region->name) == 'ouest') {
+            $Ouest = $region;
+          }
+          if (strtolower($region->name) == 'sud ouest') {
+            $SudOuest = $region;
+          }
             $region->commune_touchees = $adminRepo->getCommunesToucherParRegion($region->id, $session->id);
             $region->personnes_inscrite = $adminRepo->getPersonnesInscriteParRegion($region->id, $session->id);
             $region->personnes_formee = $adminRepo->getPersonnesFormeeParRegion($region->id, $session->id);
@@ -156,6 +202,16 @@ class AdminController extends Controller
             'totalPersonnesAutresProjProg' => $totalPersonnesAutresProjProg,
             'totalPersonnesAssocCom' => $totalPersonnesAssocCom,
             'totalPersonnesC2D' => $totalPersonnesC2D,
+            'Adamaoua' => $Adamaoua,
+            'Sud' => $Sud,
+            'Est' => $Est,
+            'NordOuest' => $NordOuest,
+            'Nord' => $Nord,
+            'Littoral' => $Littoral,
+            'Centre' => $Centre,
+            'ExtremeNord' => $ExtremeNord,
+            'SudOuest' => $SudOuest,
+            'Ouest' => $Ouest
         ];
 
         return $data;
