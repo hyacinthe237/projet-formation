@@ -103,8 +103,41 @@
           </tr>
         </tbody>
       </table>
-
-
     </section>
 
+    <section style="margin:20px 40px;">
+      <table width="100%" cellspacing="0" cellpadding="0">
+        <tbody>
+          <tr class="tr-section">
+            <td class="td-100 text-center bold" style="text-transform:uppercase;">
+                TABLEAU GLOBAL DES CTD TOUCHEES
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table width="100%" cellspacing="0" cellpadding="0">
+        <tbody>
+          <tr class="bold">
+            <td class="td-20">Régions</td>
+            <td class="td-20">Nombres de CTD touchées</td>
+            <td class="td-20">Nombre de CTD pas encore touchées</td>
+            <td class="td-20">Taux de couverture (en %)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table width="100%" cellspacing="0" cellpadding="0">
+        <tbody>
+          @foreach($regions as $region)
+            <tr>
+                <td class="bold td-5">{{ $region->name }}</td>
+                <td class="td-5">{{ count($region->commune_touchees) }}</td>
+                <td class="td-5">{{ $region->nontouchees }}</td>
+                <td class="td-5">{{ number_format($region->couverture, 2) }} %</td>
+            </tr>
+          @endforeach
+        </tbody>
+      </table>
+    </section>
 </body>

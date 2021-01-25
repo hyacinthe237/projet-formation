@@ -6,7 +6,12 @@
 
 @section('body')
 
-{!! Form::open(['method' => 'POST', 'route' => ['front.formateurs.store'], 'class' => '_form bg-white' ]) !!}
+{!! Form::open([
+    'method' => 'POST',
+    'route' => ['front.formateurs.store'],
+    'enctype' => 'multipart/form-data',
+    'class' => '_form bg-white'
+]) !!}
 
     <section class="container">
 
@@ -36,7 +41,7 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Qualification</label>
-                            <input type="text" name="qualification" class="form-control input-lg" placeholder="Email" required>
+                            <input type="text" name="qualification" class="form-control input-lg" placeholder="Qualification" required>
                         </div>
                     </div>
 
@@ -146,6 +151,13 @@
                                   </select>
                               </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="cv">Téléchargez votre CV</label>
+                            <input type="file" name="cv" class="form-control input-lg" id="chooseFile">
                         </div>
                     </div>
 

@@ -75,6 +75,7 @@
                   </thead>
 
                   <tbody>
+                    {{-- LIster les regions --}}
                       <input type="hidden" id="Adamaoua" value="{{ $data['Adamaoua'] }}">
                       <input type="hidden" id="Sud" value="{{ $data['Sud'] }}">
                       <input type="hidden" id="Est" value="{{ $data['Est'] }}">
@@ -85,6 +86,18 @@
                       <input type="hidden" id="SudOuest" value="{{ $data['SudOuest'] }}">
                       <input type="hidden" id="ExtremeNord" value="{{ $data['ExtremeNord'] }}">
                       <input type="hidden" id="Centre" value="{{ $data['Centre'] }}">
+
+                      {{-- compter le nombre de SG dans chaque region --}}
+                      <input type="hidden" id="NombreSGAdamaoua" value="{{ count($data['Adamaoua']->personnes_sg) }}">
+                      <input type="hidden" id="NombreSGSud" value="{{ count($data['Sud']->personnes_sg) }}">
+                      <input type="hidden" id="NombreSGEst" value="{{ count($data['Est']->personnes_sg) }}">
+                      <input type="hidden" id="NombreSGOuest" value="{{ count($data['Ouest']->personnes_sg) }}">
+                      <input type="hidden" id="NombreSGNord" value="{{ count($data['Nord']->personnes_sg) }}">
+                      <input type="hidden" id="NombreSGLittoral" value="{{ count($data['Littoral']->personnes_sg) }}">
+                      <input type="hidden" id="NombreSGNordOuest" value="{{ count($data['NordOuest']->personnes_sg) }}">
+                      <input type="hidden" id="NombreSGSudOuest" value="{{ count($data['SudOuest']->personnes_sg) }}">
+                      <input type="hidden" id="NombreSGExtremeNord" value="{{ count($data['ExtremeNord']->personnes_sg) }}">
+                      <input type="hidden" id="NombreSGCentre" value="{{ count($data['Centre']->personnes_sg) }}">
                       @foreach($data['regions'] as $region)
                         <tr>
                             <td class="td-3">{{ $region->id }}</td>
@@ -127,40 +140,75 @@
             </div>
         </div>
 
-        {{-- <div class="cards row mt-20">
-            <div class="col-sm-12 bg-white mt-20">
-              <h4 class="mt-20 mb-20 text-center">SYNTHESES DES CTD ATTEINTES EN {{ $session->name }}</h4>
+        <div class="cards row mt-20">
+            <div class="col-sm-6 bg-white mt-20">
+              <h4 class="mt-20 mb-20 text-center">TABLEAU GLOBAL DES CTD TOUCHEES</h4>
 
               <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Régions</th>
+                      <th>Nombres de CTD touchées</th>
+                      <th>Nombre de CTD pas encore touchées</th>
+                      <th>Taux de couverture (en %)</th>
+                    </tr>
+                  </thead>
                   <tbody>
+                    @foreach($data['regions'] as $region)
                       <tr>
-                          <td class="td-5">CTD formés en {{ $session->name }}</td>
-                          <td class="td-5">{{ $data['totalCommunesToucher'] }}</td>
+                          <td class="bold td-5">{{ $region->name }}</td>
+                          <td class="td-5">{{ count($region->commune_touchees) }}</td>
+                          <td class="td-5">{{ $region->nontouchees }}</td>
+                          <td class="td-5">{{ number_format($region->couverture, 2) }} %</td>
                       </tr>
-                      <tr>
-                          <td class="td-5">CTD nouvelles atteintes en {{ $session->name }}</td>
-                          <td class="td-5">{{ $data['totalCommunesToucher'] }}</td>
-                      </tr>
-                      <tr>
-                          <td class="td-5">CTD touchés plus d'une fois en {{ $session->name }}</td>
-                          <td class="td-5">{{ $data['totalCommunesToucher'] }}</td>
-                      </tr>
-                      <tr>
-                          <td class="td-5">CTD touchés depuis 2015</td>
-                          <td class="td-5">{{ $data['totalCommunesToucher'] }}</td>
-                      </tr>
-                      <tr>
-                          <td class="td-5">CTD restants à atteindre en {{ $session->name }}</td>
-                          <td class="td-5">{{ $data['totalCommunesToucher'] }}</td>
-                      </tr>
+                    @endforeach
                   </tbody>
               </table>
             </div>
-        </div> --}}
+
+            <div class="col-sm-6 bg-white mt-20">
+              <h4 class="mt-20 mb-20 text-center">TABLEAU GLOBAL DES FORMATIONS</h4>
+
+              <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Titre de la formation</th>
+                      <th>Nombre de stagiaires prévus</th>
+                      <th>Nombre de stagiaires effectif</th>
+                      <th>Nombre de stagiaires total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($data['allFormations'] as $item)
+                      <tr>
+                          <td class="bold td-5">{{ $item->title }}</td>
+                          <td class="td-5">{{ $item->nb_prevus }}</td>
+                          <td class="td-5">{{ $item->nb_effectif }}</td>
+                          <td class="td-5">{{ 0 }}</td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+              </table>
+              <div class="mt-10">
+                {{ $data['allFormations']->links() }}
+              </div>
+            </div>
+        </div>
 
         <div class="row mt-40 mb-20">
-          Google Maps
+            <h4>Représentation Géographique</h4>
             <div class="mt-20" id="map" style="width: 100%; height: 600px;"></div>
+        </div>
+
+        <div class="row mt-40 mb-20">
+            <h4>Représentation Graphique</h4>
+            <div class="col-sm-6">
+                <div id="piechart_1" class="mt-20" style="width: 100%; height: 500px;"></div>
+            </div>
+
+            <div class="col-sm-6">
+                <div id="piechart_2" class="mt-20" style="width: 100%; height: 500px;"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -168,6 +216,7 @@
 
 @section('js')
   <script src="https://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript">
     var InputCentre = document.getElementById('Centre').value
     var InputNord = document.getElementById('Nord').value
@@ -190,7 +239,19 @@
     var Sud = JSON.parse(InputSud);
     var ExtremeNord = JSON.parse(InputExtremeNord);
     var SudOuest = JSON.parse(InputSudOuest);
-    
+
+    // recuperation du nombre de sg par region
+    var InputNombreSGCentre = document.getElementById('NombreSGCentre').value
+    var InputNombreSGNord = document.getElementById('NombreSGNord').value
+    var InputNombreSGNordOuest = document.getElementById('NombreSGNordOuest').value
+    var InputNombreSGAdamaoua = document.getElementById('NombreSGAdamaoua').value
+    var InputNombreSGEst = document.getElementById('NombreSGEst').value
+    var InputNombreSGOuest = document.getElementById('NombreSGOuest').value
+    var InputNombreSGLittoral = document.getElementById('NombreSGLittoral').value
+    var InputNombreSGSud = document.getElementById('NombreSGSud').value
+    var InputNombreSGExtremeNord = document.getElementById('NombreSGExtremeNord').value
+    var InputNombreSGSudOuest = document.getElementById('NombreSGSudOuest').value
+
     var locations = [
       // [name, lat, lon, id, commune_touchees, personnes_inscrite, personnes_formee],
       [Adamaoua.name, Adamaoua.lat, Adamaoua.lon, 1, Adamaoua.commune_touchees.length, Adamaoua.personnes_inscrite.length, Adamaoua.personnes_formee.length],
@@ -237,6 +298,64 @@
           infowindow.open(map, marker);
         }
       })(marker, i));
+    }
+
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart1);
+    google.charts.setOnLoadCallback(drawChart2);
+
+    function drawChart1() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Région', 'Commune touchée'],
+        [Adamaoua.name,  Adamaoua.commune_touchees.length],
+        [Centre.name, Centre.commune_touchees.length],
+        [Est.name,  Est.commune_touchees.length],
+        [ExtremeNord.name,  ExtremeNord.commune_touchees.length],
+        [Littoral.name,  Littoral.commune_touchees.length],
+        [Nord.name,  Nord.commune_touchees.length],
+        [NordOuest.name,  NordOuest.commune_touchees.length],
+        [Ouest.name,  Ouest.commune_touchees.length],
+        [Sud.name, Sud.commune_touchees.length],
+        [SudOuest.name, SudOuest.commune_touchees.length]
+      ]);
+
+      var options = {
+        title: 'POURCENTAGE DE MAIRES TOUCHES PAR REGIONS',
+        is3D: true,
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('piechart_1'));
+
+      chart.draw(data, options);
+    }
+
+    function drawChart2() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Région', 'SG'],
+        [Adamaoua.name, InputNombreSGAdamaoua],
+        [Centre.name, InputNombreSGCentre],
+        [Est.name,  InputNombreSGEst],
+        [ExtremeNord.name,  InputNombreSGExtremeNord],
+        [Littoral.name,  InputNombreSGLittoral],
+        [Nord.name,  InputNombreSGNord],
+        [NordOuest.name,  InputNombreSGNordOuest],
+        [Ouest.name,  InputNombreSGOuest],
+        [Sud.name, InputNombreSGSud],
+        [SudOuest.name, InputNombreSGSudOuest]
+      ]);
+
+      var options = {
+        title: 'POURCENTAGES DE SG TOUCHES PAR REGIONS',
+        // is3D: true,
+        pieHole: 0.4,
+        sliceVisibilityThreshold: .2
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('piechart_2'));
+
+      chart.draw(data, options);
     }
   </script>
 @endsection

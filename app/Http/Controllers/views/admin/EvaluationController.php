@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\Evaluation;
 use App\Models\CommuneFormation;
 use App\Models\Etudiant;
+use App\Helpers\EvaluationHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
@@ -67,7 +68,6 @@ class EvaluationController extends Controller
   public function store(Request $request)
   {
       $validator = Validator::make($request->all(), [
-          'email'            => 'required',
           'etudiant_id' => 'required',
           'commune_formation_id' => 'required',
       ]);

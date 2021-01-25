@@ -10,7 +10,7 @@ class Departement extends Model
     protected $guarded = ['id'];
 
     public function communes () {
-        return $this->hasMany(Commune::class, 'depatement_id');
+        return $this->hasMany(Commune::class, 'departement_id');
     }
 
     public function region () {

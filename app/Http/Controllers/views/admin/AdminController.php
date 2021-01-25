@@ -82,7 +82,14 @@ class AdminController extends Controller
      */
     private static function takeInfos ($adminRepo, $formRepo, $session)
     {
-        $allFormations = Formation::whereSessionId($session->id)->whereIsActive(true)->get();
+        $allFormations = Formation::whereSessionId($session->id)->whereIsActive(true)->with('sites', 'sites.etudiants')->paginate(10);
+        foreach ($allFormations as $item) {
+          foreach ($item->sites as $value) {
+              $item->nb_prevus += $value->qte_requis;
+              $item->nb_effectif += count($value->etudiants);
+          }
+        }
+
         $communes      = Commune::get();
         $departements  = Departement::get();
         $regions       = Region::where('id', '<>', 11)->get();
@@ -118,41 +125,17 @@ class AdminController extends Controller
 
 
         foreach ($regions as $region) {
-          if (strtolower($region->name) == 'adamaoua') {
-            $Adamaoua = $region;
-          }
+          if (strtolower($region->name) == 'adamaoua') { $Adamaoua = $region; }
+          if (strtolower($region->name) == 'centre') { $Centre = $region; }
+          if (strtolower($region->name) == 'est') { $Est = $region; }
+          if (strtolower($region->name) == 'sud') { $Sud = $region; }
+          if (strtolower($region->name) == 'extrême nord') { $ExtremeNord = $region; }
+          if (strtolower($region->name) == 'littoral') { $Littoral = $region; }
+          if (strtolower($region->name) == 'nord') { $Nord = $region; }
+          if (strtolower($region->name) == 'nord ouest') { $NordOuest = $region; }
+          if (strtolower($region->name) == 'ouest') { $Ouest = $region; }
+          if (strtolower($region->name) == 'sud ouest') { $SudOuest = $region; }
 
-          if (strtolower($region->name) == 'centre') {
-            $Centre = $region;
-          }
-
-          if (strtolower($region->name) == 'est') {
-            $Est = $region;
-          }
-
-          if (strtolower($region->name) == 'sud') {
-            $Sud = $region;
-          }
-
-          if (strtolower($region->name) == 'extrême nord') {
-            $ExtremeNord = $region;
-          }
-
-          if (strtolower($region->name) == 'littoral') {
-            $Littoral = $region;
-          }
-          if (strtolower($region->name) == 'nord') {
-            $Nord = $region;
-          }
-          if (strtolower($region->name) == 'nord ouest') {
-            $NordOuest = $region;
-          }
-          if (strtolower($region->name) == 'ouest') {
-            $Ouest = $region;
-          }
-          if (strtolower($region->name) == 'sud ouest') {
-            $SudOuest = $region;
-          }
             $region->commune_touchees = $adminRepo->getCommunesToucherParRegion($region->id, $session->id);
             $region->personnes_inscrite = $adminRepo->getPersonnesInscriteParRegion($region->id, $session->id);
             $region->personnes_formee = $adminRepo->getPersonnesFormeeParRegion($region->id, $session->id);
@@ -167,6 +150,9 @@ class AdminController extends Controller
             $region->personnes_autres = $adminRepo->getPersonnesParStructure($region->id, $session->id, 6);
             $region->personnes_asscom = $adminRepo->getPersonnesParStructure($region->id, $session->id, 7);
             $region->personnes_c2d = $adminRepo->getPersonnesParStructure($region->id, $session->id, 8);
+            $region->communes = $adminRepo->getCommunesParRegion($region->id);
+            $region->couverture = (count($region->commune_touchees) * 100) / $region->communes;
+            $region->nontouchees = $region->communes - count($region->commune_touchees);
             $totalCommunesToucher += count($region->commune_touchees);
             $totalPersonnesIncrites += count($region->personnes_inscrite);
             $totalPersonnesFormees += count($region->personnes_formee);
@@ -185,6 +171,7 @@ class AdminController extends Controller
         $data = [
             'regions' => $regions,
             'communes' => $communes,
+            'allFormations' => $allFormations,
             'formations' => $formations,
             'communesToucher' => $communesToucher,
             'formationExecuter' => $formationExecuter,

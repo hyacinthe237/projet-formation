@@ -78,7 +78,7 @@
                     <tbody>
                       @if (is_array($evaluations) || is_object($evaluations))
                               @foreach($evaluations as $item)
-                                  <tr>
+                                  <tr data-href="{{ route('evaluation.show', $item->number) }}">
                                       <td>{{ $item->number }}</td>
                                       <td class="bold">{{ $item->stagiaire->firstname }} {{ $item->stagiaire->lastname }}</td>
                                       <td>{{ $item->stagiaire->structure ? 'Commune de ' . $item->stagiaire->structure->name : '---' }}</td>

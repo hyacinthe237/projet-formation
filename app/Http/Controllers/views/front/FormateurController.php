@@ -64,6 +64,14 @@ class FormateurController extends Controller
             ]);
 
             if ($formateur) {
+                if($request->file()) {
+                    $fileName = time().'_'.$request->cv->getClientOriginalName();
+                    $filePath = $request->file('cv')->storeAs('uploads', $fileName, 'public');
+
+                    $formateur->cv = $filePath;
+                    $formateur->save();
+                }
+
               FormateurFormation::create([
                 'formateur_id' => $formateur->id,
                 'formation_id' => $formation->id

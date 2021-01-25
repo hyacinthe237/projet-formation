@@ -5,6 +5,7 @@ namespace App\Repositories;
 use DB;
 use Carbon\Carbon;
 use App\Models\Etudiant;
+use App\Models\Departement;
 use App\Models\Formation;
 use App\Models\FormationEtudiant;
 use App\Models\CommuneFormation;
@@ -38,6 +39,16 @@ class AdminRepository
                         ->where('c.departement_id', $departementId)
                         ->where('cf.session_id', $sessionId)
                         ->get();
+
+        return $communes;
+    }
+
+    public function getCommunesParRegion ($regionId) {
+        $departements = Departement::whereRegionId($regionId)->with('communes')->get();
+        $communes = 0;
+        foreach ($departements as $item) {
+          $communes +=  count($item->communes);
+        }
 
         return $communes;
     }
