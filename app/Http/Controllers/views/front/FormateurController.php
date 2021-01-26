@@ -5,6 +5,7 @@ namespace App\Http\Controllers\views\front;
 use Auth;
 use DB;
 use Carbon\Carbon;
+use App\Utilities\Uploads;
 use App\Models\Formation;
 use App\Models\Formateur;
 use App\Models\Thematique;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Controller;
 
 class FormateurController extends Controller
 {
+  use Uploads;
 
     public function create ()
     {
@@ -64,13 +66,14 @@ class FormateurController extends Controller
             ]);
 
             if ($formateur) {
-                if($request->file()) {
-                    $fileName = time().'_'.$request->cv->getClientOriginalName();
-                    $filePath = $request->file('cv')->storeAs('uploads', $fileName, 'public');
+              if($request->file()) {
+                $cv = $request->cv;
+                $directory = self::UPLOADS_DIRECTORY;
+                $file = $this->upload($cv, $directory);
 
-                    $formateur->cv = $filePath;
-                    $formateur->save();
-                }
+                $formateur->cv = $file->link;
+                $formateur->save();
+              }
 
               FormateurFormation::create([
                 'formateur_id' => $formateur->id,

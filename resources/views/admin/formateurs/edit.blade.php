@@ -14,7 +14,12 @@
         </div>
     </div>
 <section class="container-fluid mt-20">
-    {!! Form::model($formateur, ['method' => 'PUT', 'route' => ['formateurs.update', $formateur->id], 'class' => '_form' ]) !!}
+    {!! Form::model($formateur, [
+        'method' => 'PUT',
+        'route' => ['formateurs.update', $formateur->id],
+        'enctype' => 'multipart/form-data',
+        'class' => '_form'
+        ]) !!}
 
             @include('errors.list')
             {{ csrf_field() }}
@@ -53,6 +58,18 @@
                                     </select>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="cv">Téléchargez votre CV</label>
+                                <input type="file" name="cv" class="form-control input-lg" id="chooseFile">
+                            </div>
+                            {{-- {{ dd(public_path(). '' .$formateur->cv) }} --}}
+                            @if ($formateur->cv !== null)
+                                <iframe src="{{ $formateur->cv }}" border="0" type="application/pdf" width="100%" height="500px"></iframe>
+                            @endif
+
                         </div>
 
                         <div class="col-sm-12">

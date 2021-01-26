@@ -215,7 +215,7 @@
 @endsection
 
 @section('js')
-  <script src="https://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+  <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript">
     var InputCentre = document.getElementById('Centre').value
@@ -301,10 +301,10 @@
     }
 
     google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChart1);
-    google.charts.setOnLoadCallback(drawChart2);
+    google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(drawChartNombreSG);
 
-    function drawChart1() {
+    function drawChart () {
 
       var data = google.visualization.arrayToDataTable([
         ['Région', 'Commune touchée'],
@@ -330,9 +330,20 @@
       chart.draw(data, options);
     }
 
-    function drawChart2() {
+    console.log(Adamaoua.name, InputNombreSGAdamaoua);
+    console.log(Centre.name, InputNombreSGCentre);
+    console.log(Est.name,  InputNombreSGEst);
+    console.log(ExtremeNord.name,  InputNombreSGExtremeNord);
+    console.log(Littoral.name,  InputNombreSGLittoral);
+    console.log(Nord.name,  InputNombreSGNord);
+    console.log(NordOuest.name,  InputNombreSGNordOuest);
+    console.log(Ouest.name,  InputNombreSGOuest);
+    console.log(Sud.name, InputNombreSGSud);
+    console.log(SudOuest.name, InputNombreSGSudOuest);
 
-      var data = google.visualization.arrayToDataTable([
+    function drawChartNombreSG () {
+
+      var dataNombreSG = google.visualization.arrayToDataTable([
         ['Région', 'SG'],
         [Adamaoua.name, InputNombreSGAdamaoua],
         [Centre.name, InputNombreSGCentre],
@@ -346,16 +357,14 @@
         [SudOuest.name, InputNombreSGSudOuest]
       ]);
 
-      var options = {
+      var optionsNombreSG = {
         title: 'POURCENTAGES DE SG TOUCHES PAR REGIONS',
-        // is3D: true,
         pieHole: 0.4,
-        sliceVisibilityThreshold: .2
       };
 
-      var chart = new google.visualization.PieChart(document.getElementById('piechart_2'));
+      var chartNombreSG = new google.visualization.PieChart(document.getElementById('piechart_2'));
 
-      chart.draw(data, options);
+      chartNombreSG.draw(dataNombreSG, optionsNombreSG);
     }
   </script>
 @endsection

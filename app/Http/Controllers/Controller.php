@@ -19,7 +19,7 @@ class Controller extends BaseController
     const HTTP_ERROR 			    = 500;
     const HTTP_NOTIMPLEMENTED = 501;
 
-    const USER_IMAGE_FOLDER = '/docs/users/';
+    const UPLOADS_DIRECTORY = '/docs/uploads/';
 
     const BACKEND_PAGINATE = 30;
 }

@@ -13,7 +13,11 @@
         </div>
     </div>
 
-{!! Form::open(['method' => 'POST', 'route' => ['formateurs.store'], 'class' => '_form' ]) !!}
+{!! Form::open([
+    'method' => 'POST',
+    'route' => ['formateurs.store'],
+    'enctype' => 'multipart/form-data',
+    'class' => '_form' ]) !!}
 
     <section class="container-fluid mt-20">
 
@@ -151,6 +155,13 @@
                                   </select>
                               </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="cv">Téléchargez le CV</label>
+                            <input type="file" name="cv" class="form-control input-lg" id="chooseFile">
                         </div>
                     </div>
 

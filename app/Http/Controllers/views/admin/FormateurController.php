@@ -5,6 +5,7 @@ namespace App\Http\Controllers\views\admin;
 use Auth;
 use DB;
 use Carbon\Carbon;
+use App\Utilities\Uploads;
 use App\Models\Formation;
 use App\Models\Formateur;
 use App\Models\Thematique;
@@ -16,6 +17,8 @@ use App\Http\Controllers\Controller;
 
 class FormateurController extends Controller
 {
+
+  use Uploads;
 
   /**
    * Display a listing of the resource.
@@ -94,6 +97,15 @@ class FormateurController extends Controller
             ]);
 
             if ($formateur) {
+              if($request->file()) {
+                $cv = $request->cv;
+                $directory = self::UPLOADS_DIRECTORY;
+                $file = $this->upload($cv, $directory);
+
+                $formateur->cv = $file->link;
+                $formateur->save();
+              }
+
               FormateurFormation::create([
                 'formateur_id' => $formateur->id,
                 'formation_id' => $formation->id
@@ -147,6 +159,15 @@ class FormateurController extends Controller
         $formateur->qualification  = $request->has('qualification') ? $request->qualification : $formateur->qualification;
         $formateur->type           = $request->has('type') ? $request->type : $formateur->type;
         $formateur->update();
+
+        if($request->file()) {
+          $cv = $request->cv;
+          $directory = self::UPLOADS_DIRECTORY;
+          $file = $this->upload($cv, $directory);
+
+          $formateur->cv = $file->link;
+          $formateur->save();
+        }
 
         return redirect()->back()->with('message', 'Formateur mis à jour avec succès');
     }
