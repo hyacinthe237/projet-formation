@@ -166,7 +166,7 @@
               </table>
             </div>
 
-            <div class="col-sm-6 bg-white mt-20">
+            <div class="col-sm-6 mt-20">
               <h4 class="mt-20 mb-20 text-center">TABLEAU GLOBAL DES FORMATIONS</h4>
 
               <table class="table table-striped">
