@@ -1,5 +1,66 @@
 @extends('admin.body')
 
+@section('head')
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+  // google.charts.setOnLoadCallback(drawChartNombreSG);
+
+  function drawChart () {
+
+    var data = google.visualization.arrayToDataTable([
+      ['Région', 'Commune touchée'],
+      [Adamaoua.name,  Adamaoua.commune_touchees.length],
+      [Centre.name, Centre.commune_touchees.length],
+      [Est.name,  Est.commune_touchees.length],
+      [ExtremeNord.name,  ExtremeNord.commune_touchees.length],
+      [Littoral.name,  Littoral.commune_touchees.length],
+      [Nord.name,  Nord.commune_touchees.length],
+      [NordOuest.name,  NordOuest.commune_touchees.length],
+      [Ouest.name,  Ouest.commune_touchees.length],
+      [Sud.name, Sud.commune_touchees.length],
+      [SudOuest.name, SudOuest.commune_touchees.length]
+    ]);
+
+    var options = {
+      title: 'POURCENTAGE DE MAIRES TOUCHES PAR REGIONS',
+      is3D: true,
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart_1'));
+
+    chart.draw(data, options);
+  }
+
+  // function drawChartNombreSG () {
+  //
+  //   var dataNombreSG = google.visualization.arrayToDataTable([
+  //     ['Region', 'Nombre SG']
+  //     [Adamaoua.name, InputNombreSGAdamaoua],
+  //     [Centre.name, InputNombreSGCentre],
+  //     [Est.name,  InputNombreSGEst],
+  //     [ExtremeNord.name,  InputNombreSGExtremeNord],
+  //     [Littoral.name,  InputNombreSGLittoral],
+  //     [Nord.name,  InputNombreSGNord],
+  //     [NordOuest.name,  InputNombreSGNordOuest],
+  //     [Ouest.name,  InputNombreSGOuest],
+  //     [Sud.name, InputNombreSGSud],
+  //     [SudOuest.name, InputNombreSGSudOuest]
+  //   ]);
+  //
+  //   var optionsNombreSG = {
+  //     title: 'POURCENTAGES DE SG TOUCHES PAR REGIONS',
+  //     is3D: true,
+  //   };
+  //
+  //   var chartNombreSG = new google.visualization.PieChart(document.getElementById('piechart_2'));
+  //
+  //   chartNombreSG.draw(dataNombreSG, optionsNombreSG);
+  // }
+  </script>
+@endsection
+
 @section('body')
 <div class="page-heading">
     <div class="buttons">
@@ -141,10 +202,10 @@
         </div>
 
         <div class="cards row mt-20">
-            <div class="col-sm-6 bg-white mt-20">
+            <div class="col-sm-7 mt-20">
               <h4 class="mt-20 mb-20 text-center">TABLEAU GLOBAL DES CTD TOUCHEES</h4>
 
-              <table class="table table-striped">
+              <table class="table table-striped bg-white">
                   <thead>
                     <tr>
                       <th>Régions</th>
@@ -166,10 +227,39 @@
               </table>
             </div>
 
-            <div class="col-sm-6 mt-20">
+            <div class="col-sm-5 mt-20">
+              <h4 class="mt-20 mb-20 text-center">SYNTHESES DES CTD ATTEINTES EN {{ $data['session']->name }}</h4>
+
+              <table class="table table-striped bg-white">
+                  <tbody>
+                      <tr>
+                          <td class="bold td-5">Synthèses des CTD atteintes en {{ $data['session']->name }}</td>
+                          <td class="td-5">{{ $data['stat_touchees'] . ' %' }}</td>
+                      </tr>
+                      <tr>
+                          <td class="bold td-5">CTD nouvellement atteintes en {{ $data['session']->name }}</td>
+                          <td class="td-5">{{ $data['stat_new'] . ' %' }}</td>
+                      </tr>
+                      <tr>
+                          <td class="bold td-5">CTD touchés plus d'une fois en {{ $data['session']->name }}</td>
+                          <td class="td-5">{{ $data['stat_plus'] . ' %' }}</td>
+                      </tr>
+                      <tr>
+                          <td class="bold td-5">CTD touchés depuis 2015</td>
+                          <td class="td-5">{{ $data['stat_2015'] . ' %' }}</td>
+                      </tr>
+                      <tr>
+                          <td class="bold td-5">CTD restants à atteindre en {{ $data['session']->name }}</td>
+                          <td class="td-5">{{ $data['stat_restantes'] . ' %' }}</td>
+                      </tr>
+                  </tbody>
+              </table>
+            </div>
+
+            <div class="col-sm-12 mt-20">
               <h4 class="mt-20 mb-20 text-center">TABLEAU GLOBAL DES FORMATIONS</h4>
 
-              <table class="table table-striped">
+              <table class="table table-striped bg-white">
                   <thead>
                     <tr>
                       <th>Titre de la formation</th>
@@ -193,6 +283,115 @@
                 {{ $data['allFormations']->links() }}
               </div>
             </div>
+
+            <div class="col-sm-4 mt-20">
+              <h4 class="mt-20 mb-20 text-center">TABLEAU DES PERSONNES PAR DIPLOME</h4>
+
+              <table class="table table-striped bg-white">
+                  <thead>
+                    <tr>
+                      <th>Diplomes</th>
+                      <th>Effectifs</th>
+                      <th>Pourcentages</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($data['personnes_diplome'] as $item)
+                      <tr>
+                          <td class="bold td-5">{{ $item->diplome_elev ? $item->diplome_elev : 'Uncategorized'}}</td>
+                          <td class="td-5">{{ $item->total }}</td>
+                          <td class="td-5">{{ $item->pourcentage . '%' }}</td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+              </table>
+            </div>
+
+            <div class="col-sm-4 mt-20">
+              <h4 class="mt-20 mb-20 text-center">TABLEAU DES PERSONNES PAR AGE</h4>
+
+              <table class="table table-striped bg-white">
+                  <thead>
+                    <tr>
+                      <th>Ages</th>
+                      <th>Effectifs</th>
+                      <th>Pourcentages</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($data['personnes_age'] as $item)
+                      <tr>
+                          <td class="bold td-5">{{ $item->age > 1 ? $item->age . ' ans' : $item->age . ' an' }}</td>
+                          <td class="td-5">{{ $item->total }}</td>
+                          <td class="td-5">{{ $item->pourcentage . '%' }}</td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+              </table>
+            </div>
+
+            <div class="col-sm-4 mt-20">
+              <h4 class="mt-20 mb-20 text-center">TABLEAU DES PERSONNES PAR AGE ET PAR SEXE</h4>
+
+              <table class="table table-striped bg-white">
+                  <thead>
+                    <tr>
+                      <th>Ages</th>
+                      <th>Effectifs</th>
+                      <th>Pourcentages</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @if ((count($data['personnes_agesex']['pers_20_30_male'])>0) || (count($data['personnes_agesex']['pers_20_30_female'])>0))
+                      <tr>
+                          <td class="bold td-5" rowspan="2">De 20 à 30 ans</td>
+                          <td class="td-5">{{ count($data['personnes_agesex']['pers_20_30_male']) .' Masculin' }}</td>
+                          <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_20_30_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                      </tr>
+                      <tr>
+                          <td class="td-5">{{ count($data['personnes_agesex']['pers_20_30_female']) .' Féminin' }}</td>
+                          <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_20_30_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                      </tr>
+                    @endif
+
+                    @if ((count($data['personnes_agesex']['pers_31_40_male'])>0) || (count($data['personnes_agesex']['pers_31_40_female'])>0))
+                      <tr>
+                          <td class="bold td-5" rowspan="2">De 31 à 40 ans</td>
+                          <td class="td-5">{{ count($data['personnes_agesex']['pers_31_40_male']) .' Masculin' }}</td>
+                          <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_31_40_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                      </tr>
+                      <tr>
+                          <td class="td-5">{{ count($data['personnes_agesex']['pers_31_40_female']) .' Féminin' }}</td>
+                          <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_31_40_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                      </tr>
+                    @endif
+
+                    @if ((count($data['personnes_agesex']['pers_41_50_male'])>0) || (count($data['personnes_agesex']['pers_41_50_female'])>0))
+                      <tr>
+                          <td class="bold td-5" rowspan="2">De 41 à 50 ans</td>
+                          <td class="td-5">{{ count($data['personnes_agesex']['pers_41_50_male']) .' Masculin' }}</td>
+                          <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_41_50_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                      </tr>
+                      <tr>
+                          <td class="td-5">{{ count($data['personnes_agesex']['pers_41_50_female']) .' Féminin' }}</td>
+                          <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_41_50_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                      </tr>
+                    @endif
+
+                    @if ((count($data['personnes_agesex']['pers_51_60_male'])>0) || (count($data['personnes_agesex']['pers_51_60_female'])>0))
+                      <tr>
+                          <td class="bold td-5" rowspan="2">De 51 à 60 ans</td>
+                          <td class="td-5">{{ count($data['personnes_agesex']['pers_51_60_male']) .' Masculin' }}</td>
+                          <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_51_60_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                      </tr>
+                      <tr>
+                          <td class="td-5">{{ count($data['personnes_agesex']['pers_51_60_female']) .' Féminin' }}</td>
+                          <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_51_60_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                      </tr>
+                    @endif
+                  </tbody>
+              </table>
+            </div>
         </div>
 
         <div class="row mt-40 mb-20">
@@ -202,12 +401,16 @@
 
         <div class="row mt-40 mb-20">
             <h4>Représentation Graphique</h4>
-            <div class="col-sm-6">
-                <div id="piechart_1" class="mt-20" style="width: 100%; height: 500px;"></div>
+            <div class="col-sm-4">
+                <div id="piechart_1" class="mt-20" style="width: 100%; height: 400px;"></div>
             </div>
 
-            <div class="col-sm-6">
-                <div id="piechart_2" class="mt-20" style="width: 100%; height: 500px;"></div>
+            <div class="col-sm-4">
+                {{-- <div id="piechart_2" class="mt-20" style="width: 100%; height: 400px;"></div> --}}
+            </div>
+
+            <div class="col-sm-4">
+                {{-- <div id="piechart_2" class="mt-20" style="width: 100%; height: 400px;"></div> --}}
             </div>
         </div>
     </div>
@@ -216,7 +419,6 @@
 
 @section('js')
   <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript">
     var InputCentre = document.getElementById('Centre').value
     var InputNord = document.getElementById('Nord').value
@@ -298,73 +500,6 @@
           infowindow.open(map, marker);
         }
       })(marker, i));
-    }
-
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
-    google.charts.setOnLoadCallback(drawChartNombreSG);
-
-    function drawChart () {
-
-      var data = google.visualization.arrayToDataTable([
-        ['Région', 'Commune touchée'],
-        [Adamaoua.name,  Adamaoua.commune_touchees.length],
-        [Centre.name, Centre.commune_touchees.length],
-        [Est.name,  Est.commune_touchees.length],
-        [ExtremeNord.name,  ExtremeNord.commune_touchees.length],
-        [Littoral.name,  Littoral.commune_touchees.length],
-        [Nord.name,  Nord.commune_touchees.length],
-        [NordOuest.name,  NordOuest.commune_touchees.length],
-        [Ouest.name,  Ouest.commune_touchees.length],
-        [Sud.name, Sud.commune_touchees.length],
-        [SudOuest.name, SudOuest.commune_touchees.length]
-      ]);
-
-      var options = {
-        title: 'POURCENTAGE DE MAIRES TOUCHES PAR REGIONS',
-        is3D: true,
-      };
-
-      var chart = new google.visualization.PieChart(document.getElementById('piechart_1'));
-
-      chart.draw(data, options);
-    }
-
-    console.log(Adamaoua.name, InputNombreSGAdamaoua);
-    console.log(Centre.name, InputNombreSGCentre);
-    console.log(Est.name,  InputNombreSGEst);
-    console.log(ExtremeNord.name,  InputNombreSGExtremeNord);
-    console.log(Littoral.name,  InputNombreSGLittoral);
-    console.log(Nord.name,  InputNombreSGNord);
-    console.log(NordOuest.name,  InputNombreSGNordOuest);
-    console.log(Ouest.name,  InputNombreSGOuest);
-    console.log(Sud.name, InputNombreSGSud);
-    console.log(SudOuest.name, InputNombreSGSudOuest);
-
-    function drawChartNombreSG () {
-
-      var dataNombreSG = google.visualization.arrayToDataTable([
-        ['Région', 'SG'],
-        [Adamaoua.name, InputNombreSGAdamaoua],
-        [Centre.name, InputNombreSGCentre],
-        [Est.name,  InputNombreSGEst],
-        [ExtremeNord.name,  InputNombreSGExtremeNord],
-        [Littoral.name,  InputNombreSGLittoral],
-        [Nord.name,  InputNombreSGNord],
-        [NordOuest.name,  InputNombreSGNordOuest],
-        [Ouest.name,  InputNombreSGOuest],
-        [Sud.name, InputNombreSGSud],
-        [SudOuest.name, InputNombreSGSudOuest]
-      ]);
-
-      var optionsNombreSG = {
-        title: 'POURCENTAGES DE SG TOUCHES PAR REGIONS',
-        pieHole: 0.4,
-      };
-
-      var chartNombreSG = new google.visualization.PieChart(document.getElementById('piechart_2'));
-
-      chartNombreSG.draw(dataNombreSG, optionsNombreSG);
     }
   </script>
 @endsection

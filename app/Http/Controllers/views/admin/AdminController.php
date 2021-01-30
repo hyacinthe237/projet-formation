@@ -91,15 +91,24 @@ class AdminController extends Controller
         }
 
         $communes      = Commune::get();
+        $personnes_diplome  = $adminRepo->getPersonnesParDiplome();
+        $personnes_age  = $adminRepo->getPersonnesParAge();
+        $personnes_agesex  = $adminRepo->getPersonnesParGenreEtAge();
         $departements  = Departement::get();
         $regions       = Region::where('id', '<>', 11)->get();
         $communesToucher  = $adminRepo->getCommunesToucher($session->id);
         $totalPersonnePrevuFormer  = $adminRepo->getTotalPersonnePrevuFormer($session->id);
         $formationExecuter  = $adminRepo->getFormationExecuter($session->id);
         $etudiants     = $adminRepo->getStagiaires($session->id);
+        $stat_restantes     = $adminRepo->getCTDRestantes($session->id);
+        $stat_touchees     = $adminRepo->getCTDTouchees($session->id);
+        $stat_plus     = $adminRepo->getCTDPlusUneFois($session->id);
+        $stat_new     = $adminRepo->getCTDNouvelles($session->id);
+        $stat_2015     = $adminRepo->getCTD2015();
         $formateurs    = Formateur::get();
-        $formations    = CommuneFormation::whereSessionId($session->id)->with('formation', 'commune')->get();
+        $formations    = CommuneFormation::whereSessionId($session->id)->with('formation', 'commune', 'evaluations')->get();
         $totalCommunesToucher = 0;
+        $totalCommunesNonToucher = 0;
         $totalPersonnesIncrites = 0;
         $totalPersonnesFormees = 0;
         $totalPersonnesCU = 0;
@@ -154,6 +163,7 @@ class AdminController extends Controller
             $region->couverture = (count($region->commune_touchees) * 100) / $region->communes;
             $region->nontouchees = $region->communes - count($region->commune_touchees);
             $totalCommunesToucher += count($region->commune_touchees);
+            $totalCommunesNonToucher += $region->nontouchees;
             $totalPersonnesIncrites += count($region->personnes_inscrite);
             $totalPersonnesFormees += count($region->personnes_formee);
             $totalPersonnesCU += count($region->personnes_cu);
@@ -170,6 +180,14 @@ class AdminController extends Controller
 
         $data = [
             'regions' => $regions,
+            'stat_2015' => $stat_2015,
+            'stat_restantes' => $stat_restantes,
+            'stat_touchees' => $stat_touchees,
+            'stat_plus' => $stat_plus,
+            'stat_new' => $stat_new,
+            'personnes_diplome' => $personnes_diplome,
+            'personnes_age' => $personnes_age,
+            'personnes_agesex' => $personnes_agesex,
             'communes' => $communes,
             'allFormations' => $allFormations,
             'formations' => $formations,
@@ -177,6 +195,7 @@ class AdminController extends Controller
             'formationExecuter' => $formationExecuter,
             'session' => $session,
             'totalCommunesToucher' => $totalCommunesToucher,
+            'totalCommunesNonToucher' => $totalCommunesNonToucher,
             'totalPersonnesIncrites' => $totalPersonnesIncrites,
             'totalPersonnesFormees' => $totalPersonnesFormees,
             'totalPersonnesCU' => $totalPersonnesCU,

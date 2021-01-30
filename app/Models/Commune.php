@@ -13,4 +13,8 @@ class Commune extends Model
         return $this->belongsTo(Departement::class, 'departement_id');
     }
 
+    public function formations () {
+        return $this->hasMany(CommuneFormation::class, 'commune_id');
+    }
+
 }

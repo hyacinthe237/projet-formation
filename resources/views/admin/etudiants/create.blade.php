@@ -130,6 +130,17 @@
 
                     <div class="col-sm-4">
                           <div class="form-group">
+                              <label>Genre</label>
+                              <div class="form-select grey">
+                                  <select name="sex" class="form-control input-lg">
+                                      <option value="">Sélectionnez le genre</option>
+                                      <option value="female">Féminin</option>
+                                      <option value="male">Masculin</option>
+                                  </select>
+                              </div>
+                          </div>
+
+                          <div class="form-group">
                               <label>Status</label>
                               <div class="form-select grey">
                                   <select name="is_active" class="form-control input-lg">

@@ -140,4 +140,41 @@
         </tbody>
       </table>
     </section>
+
+    <section style="margin:20px 40px;">
+      <table width="100%" cellspacing="0" cellpadding="0">
+        <tbody>
+          <tr class="tr-section">
+            <td class="td-100 text-center bold" style="text-transform:uppercase;">
+                SYNTHESES DES CTD ATTEINTES EN {{ $session->name }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table width="100%" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <td class="bold td-5">Synthèses des CTD atteintes en {{ $session->name }}</td>
+                <td class="td-5">{{ $stat_touchees . ' %' }}</td>
+            </tr>
+            <tr>
+                <td class="bold td-5">CTD nouvellement atteintes en {{ $session->name }}</td>
+                <td class="td-5">{{ $stat_new . ' %' }}</td>
+            </tr>
+            <tr>
+                <td class="bold td-5">CTD touchés plus d'une fois en {{ $session->name }}</td>
+                <td class="td-5">{{ $stat_plus . ' %' }}</td>
+            </tr>
+            <tr>
+                <td class="bold td-5">CTD touchés depuis 2015</td>
+                <td class="td-5">{{ $stat_2015 . ' %' }}</td>
+            </tr>
+            <tr>
+                <td class="bold td-5">CTD restants à atteindre en {{ $session->name }}</td>
+                <td class="td-5">{{ $stat_restantes . ' %' }}</td>
+            </tr>
+        </tbody>
+      </table>
+    </section>
 </body>
