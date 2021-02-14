@@ -76,6 +76,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin_auth', 'admin']], fun
         Route::delete('{id}', 'views\admin\FormationsController@destroy')->name('formation.delete');
     });
 
+    Route::group(['prefix' => 'settings'], function () {
+        Route::post('/', 'views\admin\SettingsController@store');
+    });
+
     Route::group(['prefix' => 'evaluations'], function () {
         Route::get('/', 'views\admin\EvaluationController@index')->name('evaluation.index');
         Route::post('/', 'views\admin\EvaluationController@store')->name('evaluations.store');

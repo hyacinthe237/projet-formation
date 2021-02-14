@@ -117,18 +117,42 @@
                                 </div>
                             </div> --}}
 
-                            <div class="col-sm-12">
+                            {{-- <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Diplôme élevée</label>
                                     <textarea name="diplome_elev" value="{{ old('diplome_elev')}}" rows="2" cols="80" class="form-control input-lg" placeholder="Diplôme élevée"></textarea>
                                 </div>
-                            </div>
+                            </div> --}}
 
 
                         </div>
                     </div>
 
                     <div class="col-sm-4">
+                          <div class="form-group">
+                              <label>Diplôme élevé</label>
+                              <div class="form-select grey">
+                                  <select name="diplome_elev" class="form-control input-lg">
+                                      <option value="">Sélectionnez le diplôme élevé</option>
+                                      <option value="PAS DE DIPLOME">PAS DE DIPLOME</option>
+                                      <option value="CEPE/CEP">CEPE - CEP</option>
+                                      <option value="BEPC">BEPC</option>
+                                      <option value="CAP">CAP</option>
+                                      <option value="GCEO">GCEO</option>
+                                      <option value="PROBATOIRE">PROBATOIRE</option>
+                                      <option value="BACCALAUREAT">BACCALAUREAT</option>
+                                      <option value="BREVET TECHNIQUE">BREVET TECHNIQUE</option>
+                                      <option value="BTS">BTS</option>
+                                      <option value="HND">HND</option>
+                                      <option value="INGENIEUR DES TRAVAUX">INGENIEUR DES TRAVAUX</option>
+                                      <option value="LICENCE">LICENCE</option>
+                                      <option value="MASTER 1">MASTER 1</option>
+                                      <option value="MASTER 2">MASTER 2</option>
+                                      <option value="DOCTORAT">DOCTORAT</option>
+                                  </select>
+                              </div>
+                          </div>
+
                           <div class="form-group">
                               <label>Genre</label>
                               <div class="form-select grey">

@@ -106,18 +106,42 @@
                                       </div>
                                   </div> --}}
 
-                                  <div class="col-sm-12">
+                                  {{-- <div class="col-sm-12">
                                       <div class="form-group">
                                           <label>Diplôme élevée</label>
                                           <textarea name="diplome_elev" rows="2" cols="80" class="form-control input-lg">{{ $etudiant->diplome_elev }}</textarea>
                                       </div>
-                                  </div>
+                                  </div> --}}
 
 
                               </div>
                           </div>
 
                           <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Diplôme élevé</label>
+                                    <div class="form-select grey">
+                                        <select name="diplome_elev" class="form-control input-lg">
+                                            <option value="">Sélectionnez le diplôme élevé</option>
+                                            <option value="PAS DE DIPLOME" {{ $etudiant->diplome_elev == 'PAS DE DIPLOME' ? 'selected' : ''}}>PAS DE DIPLOME</option>
+                                            <option value="CEPE/CEP" {{ $etudiant->diplome_elev == 'CEPE/CEP' ? 'selected' : ''}}>CEPE - CEP</option>
+                                            <option value="BEPC" {{ $etudiant->diplome_elev == 'BEPC' ? 'selected' : ''}}>BEPC</option>
+                                            <option value="CAP" {{ $etudiant->diplome_elev == 'CAP' ? 'selected' : ''}}>CAP</option>
+                                            <option value="GCEO" {{ $etudiant->diplome_elev == 'GCEO' ? 'selected' : ''}}>GCEO</option>
+                                            <option value="PROBATOIRE" {{ $etudiant->diplome_elev == 'PROBATOIRE' ? 'selected' : ''}}>PROBATOIRE</option>
+                                            <option value="BACCALAUREAT" {{ $etudiant->diplome_elev == 'BACCALAUREAT' ? 'selected' : ''}}>BACCALAUREAT</option>
+                                            <option value="BREVET TECHNIQUE" {{ $etudiant->diplome_elev == 'BREVET TECHNIQUE' ? 'selected' : ''}}>BREVET TECHNIQUE</option>
+                                            <option value="BTS" {{ $etudiant->diplome_elev == 'BTS' ? 'selected' : ''}}>BTS</option>
+                                            <option value="HND" {{ $etudiant->diplome_elev == 'HND' ? 'selected' : ''}}>HND</option>
+                                            <option value="INGENIEUR DES TRAVAUX" {{ $etudiant->diplome_elev == 'INGENIEUR DES TRAVAUX' ? 'selected' : ''}}>INGENIEUR DES TRAVAUX</option>
+                                            <option value="LICENCE" {{ $etudiant->diplome_elev == 'LICENCE' ? 'selected' : ''}}>LICENCE</option>
+                                            <option value="MASTER 1" {{ $etudiant->diplome_elev == 'MASTER 1' ? 'selected' : ''}}>MASTER 1</option>
+                                            <option value="MASTER 2" {{ $etudiant->diplome_elev == 'MASTER 2' ? 'selected' : ''}}>MASTER 2</option>
+                                            <option value="DOCTORAT" {{ $etudiant->diplome_elev == 'DOCTORAT' ? 'selected' : ''}}>DOCTORAT</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label>Genre</label>
                                     <div class="form-select grey">

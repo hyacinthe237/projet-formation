@@ -47,13 +47,45 @@ class AdminRepository
                       ->get();
 
 
-      foreach ($personnes as $value) {
-        $value->pourcentage = number_format(($value->total/$etudiants) * 100, 2);
-        $value->age = Carbon::parse($value->dob)->diff(Carbon::now())->format('%y');
-
+      if ($etudiants>0) {
+        foreach ($personnes as $value) {
+          $value->pourcentage = number_format(($value->total/$etudiants) * 100, 2);
+          $value->age = Carbon::parse($value->dob)->diff(Carbon::now())->format('%y');
+        }
       }
 
-      return $personnes;
+      $pers_20_30 = [];
+      $pers_31_40= [];
+      $pers_41_50 = [];
+      $pers_51_60 = [];
+      $index = 0;
+      foreach ($personnes as $item) {
+        if (($item->age >= 20) && ($item->age <= 30)) {
+          $pers_20_30[$index] = $item;
+        }
+
+        if (($item->age >= 31) && ($item->age <= 40)) {
+          $pers_31_40[$index] = $item;
+        }
+
+        if (($item->age >= 41) && ($item->age <= 50)) {
+          $pers_41_50[$index] = $item;
+        }
+
+        if (($item->age >= 51) && ($item->age <= 60)) {
+          $pers_51_60[$index] = $item;
+        }
+
+        $index++;
+      }
+
+      return [
+        'pers_20_30' => $pers_20_30,
+        'pers_31_40' => $pers_31_40,
+        'pers_41_50' => $pers_41_50,
+        'pers_51_60' => $pers_51_60,
+        'personnes' => count($personnes),
+      ];
     }
 
     public function getPersonnesParGenreEtAge () {
@@ -107,7 +139,6 @@ class AdminRepository
         }
 
         if (($item->age >= 51) && ($item->age <= 60)) {
-          $pers_51_60[$index] = $item;
           if ($item->sex == 'female') {
             $pers_51_60_female[$index] = $item;
           } else {
@@ -290,11 +321,11 @@ class AdminRepository
 
     public function getCommunesToucher ($sessionId) {
         $resultat = 0;
-        $commune_formations = CommuneFormation::whereSessionId($sessionId)->get();
+        $commune_formations = CommuneFormation::whereSessionId($sessionId)->count();
         $communes = Commune::count();
 
-        if (count($commune_formations))
-           $resultat = (count($commune_formations)/$communes) * 100;
+        if ($communes > 0)
+           $resultat = ($commune_formations/$communes) * 100;
 
         $resultat = $resultat >= 100 ? 100 : $resultat;
         return  number_format($resultat, 2);
@@ -331,6 +362,8 @@ class AdminRepository
         $communes = Commune::count();
         $formations = CommuneFormation::count();
         $total = $communes + $formations;
+
+        if ($total == 0) return 0;
 
         return number_format(($formations/$total) * 100, 2);
     }

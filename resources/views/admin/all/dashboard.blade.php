@@ -1,11 +1,16 @@
 @extends('admin.body')
 
 @section('head')
+  <script>
+      var _auth = <?php echo json_encode(Auth::user()->api_token); ?>;
+  </script>
+
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript">
   google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(drawChart);
-  // google.charts.setOnLoadCallback(drawChartNombreSG);
+  let formData = new FormData();
+  let req = new XMLHttpRequest();
 
   function drawChart () {
 
@@ -28,36 +33,29 @@
       is3D: true,
     };
 
-    var chart = new google.visualization.PieChart(document.getElementById('piechart_1'));
+    var chart_div = document.getElementById('piechart_1');
+    var chart = new google.visualization.PieChart(chart_div);
+    // Wait for the chart to finish drawing before calling the getImageURI() method.
+      google.visualization.events.addListener(chart, 'ready', function () {
+        chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+
+        formData.append('image', chart.getImageURI());
+        req.open("POST", 'admin/settings');
+        let token = document.head.querySelector('meta[name="csrf-token"]');
+        if (token) {
+            req.setRequestHeader('X-CSRF-TOKEN', token.content);
+            if (typeof _auth !== 'undefined')
+                req.setRequestHeader('Authorization', 'Bearer ' + _auth);
+        } else {
+            console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+        }
+        req.send(formData);
+      });
 
     chart.draw(data, options);
   }
 
-  // function drawChartNombreSG () {
-  //
-  //   var dataNombreSG = google.visualization.arrayToDataTable([
-  //     ['Region', 'Nombre SG']
-  //     [Adamaoua.name, InputNombreSGAdamaoua],
-  //     [Centre.name, InputNombreSGCentre],
-  //     [Est.name,  InputNombreSGEst],
-  //     [ExtremeNord.name,  InputNombreSGExtremeNord],
-  //     [Littoral.name,  InputNombreSGLittoral],
-  //     [Nord.name,  InputNombreSGNord],
-  //     [NordOuest.name,  InputNombreSGNordOuest],
-  //     [Ouest.name,  InputNombreSGOuest],
-  //     [Sud.name, InputNombreSGSud],
-  //     [SudOuest.name, InputNombreSGSudOuest]
-  //   ]);
-  //
-  //   var optionsNombreSG = {
-  //     title: 'POURCENTAGES DE SG TOUCHES PAR REGIONS',
-  //     is3D: true,
-  //   };
-  //
-  //   var chartNombreSG = new google.visualization.PieChart(document.getElementById('piechart_2'));
-  //
-  //   chartNombreSG.draw(dataNombreSG, optionsNombreSG);
-  // }
+
   </script>
 @endsection
 
@@ -76,6 +74,7 @@
 </div>
 
 <div class="dashboard">
+  <input type="hidden" name="_token" value="{{ csrf_token() }}" />
     <div class="container-fluid">
         <div class="cards row mt-20">
             <div class="col-sm-12 mb-10">
@@ -111,9 +110,10 @@
         </div>
 
         <div class="cards row mt-20">
-            <div class="col-sm-12 bg-white mt-20">
+            <div class="col-sm-12">
               <h4 class="mt-20 mb-20 text-center">STATISTIQUE DE L'ACTION PEDAGOGIQUE EN {{ $session->name }}</h4>
-
+            </div>
+            <div class="col-sm-12 bg-white mt-20">
               <table class="table table-striped">
                   <thead>
                       <tr>
@@ -202,9 +202,10 @@
         </div>
 
         <div class="cards row mt-20">
-            <div class="col-sm-7 mt-20">
-              <h4 class="mt-20 mb-20 text-center">TABLEAU GLOBAL DES CTD TOUCHEES</h4>
-
+          <div class="col-sm-12">
+            <h4 class="mt-20 mb-20 text-center">TABLEAU GLOBAL DES CTD TOUCHEES</h4>
+          </div>
+            <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
               <table class="table table-striped bg-white">
                   <thead>
                     <tr>
@@ -227,9 +228,10 @@
               </table>
             </div>
 
-            <div class="col-sm-5 mt-20">
+            <div class="col-sm-12">
               <h4 class="mt-20 mb-20 text-center">SYNTHESES DES CTD ATTEINTES EN {{ $data['session']->name }}</h4>
-
+            </div>
+            <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
               <table class="table table-striped bg-white">
                   <tbody>
                       <tr>
@@ -256,16 +258,16 @@
               </table>
             </div>
 
-            <div class="col-sm-12 mt-20">
+            <div class="col-sm-12">
               <h4 class="mt-20 mb-20 text-center">TABLEAU GLOBAL DES FORMATIONS</h4>
-
+            </div>
+            <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
               <table class="table table-striped bg-white">
                   <thead>
                     <tr>
                       <th>Titre de la formation</th>
                       <th>Nombre de stagiaires prévus</th>
                       <th>Nombre de stagiaires effectif</th>
-                      <th>Nombre de stagiaires total</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -274,19 +276,42 @@
                           <td class="bold td-5">{{ $item->title }}</td>
                           <td class="td-5">{{ $item->nb_prevus }}</td>
                           <td class="td-5">{{ $item->nb_effectif }}</td>
-                          <td class="td-5">{{ 0 }}</td>
                       </tr>
                     @endforeach
                   </tbody>
               </table>
-              <div class="mt-10">
-                {{ $data['allFormations']->links() }}
-              </div>
             </div>
 
-            <div class="col-sm-4 mt-20">
-              <h4 class="mt-20 mb-20 text-center">TABLEAU DES PERSONNES PAR DIPLOME</h4>
+            <div class="col-sm-12">
+              <h4 class="mt-20 mb-20 text-center">POURCENTAGE DES SG TOUCHES PAR REGION</h4>
+            </div>
+            <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
+              <table class="table table-striped bg-white">
+                  <thead>
+                    <tr>
+                      <th>Regions</th>
+                      <th>Pourcentages</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($data['regions'] as $item)
+                      <tr>
+                          <td class="bold td-5">{{ $item->name }}</td>
+                          @if ($data['totalPersonnesSG']>0)
+                            <td class="td-5">{{ number_format((count($item->personnes_sg)/$data['totalPersonnesSG'])*100,2) . '%' }}</td>
+                          @else
+                            <td class="td-5">{{ 0.00 . '%' }}</td>
+                          @endif
+                      </tr>
+                    @endforeach
+                  </tbody>
+              </table>
+            </div>
 
+            <div class="col-sm-12">
+              <h4 class="mt-20 mb-20 text-center">TABLEAU DES PERSONNES PAR DIPLOME</h4>
+            </div>
+            <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
               <table class="table table-striped bg-white">
                   <thead>
                     <tr>
@@ -307,9 +332,10 @@
               </table>
             </div>
 
-            <div class="col-sm-4 mt-20">
+            <div class="col-sm-12">
               <h4 class="mt-20 mb-20 text-center">TABLEAU DES PERSONNES PAR AGE</h4>
-
+            </div>
+            <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
               <table class="table table-striped bg-white">
                   <thead>
                     <tr>
@@ -319,20 +345,62 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($data['personnes_age'] as $item)
+                    @if (count($data['personnes_age']['pers_20_30'])>0)
                       <tr>
-                          <td class="bold td-5">{{ $item->age > 1 ? $item->age . ' ans' : $item->age . ' an' }}</td>
-                          <td class="td-5">{{ $item->total }}</td>
-                          <td class="td-5">{{ $item->pourcentage . '%' }}</td>
+                          <td class="bold td-5">De 20 à 30 ans</td>
+                          <td class="td-5">{{ count($data['personnes_age']['pers_20_30']) }}</td>
+                          @if ($data['personnes_age']['personnes'] > 0)
+                            <td class="td-5">{{ number_format((count($data['personnes_age']['pers_20_30'])/$data['personnes_age']['personnes'])*100,2) . '%' }}</td>
+                          @else
+                            <td class="td-5">{{ 0.00 . '%' }}</td>
+                          @endif
                       </tr>
-                    @endforeach
+                    @endif
+
+                    @if (count($data['personnes_age']['pers_31_40'])>0)
+                      <tr>
+                          <td class="bold td-5">De 31 à 40 ans</td>
+                          <td class="td-5">{{ count($data['personnes_age']['pers_31_40']) }}</td>
+                          @if ($data['personnes_age']['personnes'] > 0)
+                            <td class="td-5">{{ number_format((count($data['personnes_age']['pers_31_40'])/$data['personnes_age']['personnes'])*100,2) . '%' }}</td>
+                          @else
+                            <td class="td-5">{{ 0.00 . '%' }}</td>
+                          @endif
+                      </tr>
+                    @endif
+
+                    @if (count($data['personnes_age']['pers_41_50'])>0)
+                      <tr>
+                          <td class="bold td-5">De 41 à 50 ans</td>
+                          <td class="td-5">{{ count($data['personnes_age']['pers_41_50']) }}</td>
+                          @if ($data['personnes_age']['personnes'] > 0)
+                            <td class="td-5">{{ number_format((count($data['personnes_age']['pers_41_50'])/$data['personnes_age']['personnes'])*100,2) . '%' }}</td>
+                          @else
+                            <td class="td-5">{{ 0.00 . '%' }}</td>
+                          @endif
+                      </tr>
+                    @endif
+
+                    @if (count($data['personnes_age']['pers_51_60'])>0)
+                      <tr>
+                          <td class="bold td-5">De 51 à 60 ans</td>
+                          <td class="td-5">{{ count($data['personnes_age']['pers_51_60']) }}</td>
+                          @if ($data['personnes_age']['personnes'] > 0)
+                            <td class="td-5">{{ number_format((count($data['personnes_age']['pers_51_60'])/$data['personnes_age']['personnes'])*100,2) . '%' }}</td>
+                          @else
+                            <td class="td-5">{{ 0.00 . '%' }}</td>
+                          @endif
+                      </tr>
+                    @endif
+
                   </tbody>
               </table>
             </div>
 
-            <div class="col-sm-4 mt-20">
+            <div class="col-sm-12">
               <h4 class="mt-20 mb-20 text-center">TABLEAU DES PERSONNES PAR AGE ET PAR SEXE</h4>
-
+            </div>
+            <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
               <table class="table table-striped bg-white">
                   <thead>
                     <tr>
@@ -346,11 +414,21 @@
                       <tr>
                           <td class="bold td-5" rowspan="2">De 20 à 30 ans</td>
                           <td class="td-5">{{ count($data['personnes_agesex']['pers_20_30_male']) .' Masculin' }}</td>
-                          <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_20_30_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                          @if ($data['personnes_agesex']['personnes']>0)
+                            <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_20_30_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                          @else
+                            <td class="td-5">{{ 0.00 . '%' }}</td>
+                          @endif
+
                       </tr>
                       <tr>
                           <td class="td-5">{{ count($data['personnes_agesex']['pers_20_30_female']) .' Féminin' }}</td>
-                          <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_20_30_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                          @if ($data['personnes_agesex']['personnes']>0)
+                            <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_20_30_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                          @else
+                            <td class="td-5">{{ 0.00 . '%' }}</td>
+                          @endif
+
                       </tr>
                     @endif
 
@@ -358,11 +436,21 @@
                       <tr>
                           <td class="bold td-5" rowspan="2">De 31 à 40 ans</td>
                           <td class="td-5">{{ count($data['personnes_agesex']['pers_31_40_male']) .' Masculin' }}</td>
-                          <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_31_40_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                          @if ($data['personnes_agesex']['personnes']>0)
+                            <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_31_40_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                          @else
+                            <td class="td-5">{{ 0.00 . '%' }}</td>
+                          @endif
+
                       </tr>
                       <tr>
                           <td class="td-5">{{ count($data['personnes_agesex']['pers_31_40_female']) .' Féminin' }}</td>
-                          <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_31_40_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                          @if ($data['personnes_agesex']['personnes']>0)
+                            <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_31_40_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                          @else
+                            <td class="td-5">{{ 0.00 . '%' }}</td>
+                          @endif
+
                       </tr>
                     @endif
 
@@ -370,11 +458,21 @@
                       <tr>
                           <td class="bold td-5" rowspan="2">De 41 à 50 ans</td>
                           <td class="td-5">{{ count($data['personnes_agesex']['pers_41_50_male']) .' Masculin' }}</td>
-                          <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_41_50_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                          @if ($data['personnes_agesex']['personnes']>0)
+                            <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_41_50_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                          @else
+                            <td class="td-5">{{ 0.00 . '%' }}</td>
+                          @endif
+
                       </tr>
                       <tr>
                           <td class="td-5">{{ count($data['personnes_agesex']['pers_41_50_female']) .' Féminin' }}</td>
-                          <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_41_50_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                          @if ($data['personnes_agesex']['personnes']>0)
+                            <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_41_50_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                          @else
+                            <td class="td-5">{{ 0.00 . '%' }}</td>
+                          @endif
+
                       </tr>
                     @endif
 
@@ -382,15 +480,31 @@
                       <tr>
                           <td class="bold td-5" rowspan="2">De 51 à 60 ans</td>
                           <td class="td-5">{{ count($data['personnes_agesex']['pers_51_60_male']) .' Masculin' }}</td>
-                          <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_51_60_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                          @if ($data['personnes_agesex']['personnes']>0)
+                            <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_51_60_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                          @else
+                            <td class="td-5">{{ 0.00 . '%' }}</td>
+                          @endif
+
                       </tr>
                       <tr>
                           <td class="td-5">{{ count($data['personnes_agesex']['pers_51_60_female']) .' Féminin' }}</td>
-                          <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_51_60_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                          @if ($data['personnes_agesex']['personnes']>0)
+                            <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_51_60_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                          @else
+                            <td class="td-5">{{ 0.00 . '%' }}</td>
+                          @endif
                       </tr>
                     @endif
                   </tbody>
               </table>
+            </div>
+
+            <div class="col-sm-12">
+              <h4 class="mt-20 mb-20 text-center">TABLEAU D'EVALUATIONS PAR FORMATION</h4>
+            </div>
+            <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
+
             </div>
         </div>
 
@@ -401,16 +515,8 @@
 
         <div class="row mt-40 mb-20">
             <h4>Représentation Graphique</h4>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <div id="piechart_1" class="mt-20" style="width: 100%; height: 400px;"></div>
-            </div>
-
-            <div class="col-sm-4">
-                {{-- <div id="piechart_2" class="mt-20" style="width: 100%; height: 400px;"></div> --}}
-            </div>
-
-            <div class="col-sm-4">
-                {{-- <div id="piechart_2" class="mt-20" style="width: 100%; height: 400px;"></div> --}}
             </div>
         </div>
     </div>

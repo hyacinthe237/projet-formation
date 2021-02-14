@@ -16,6 +16,7 @@ use App\Models\Departement;
 use App\Models\Commune;
 use App\Models\Thematique;
 use App\Models\Session;
+use App\Models\Setting;
 use App\Repositories\AdminRepository as adminRepo;
 use App\Repositories\FormationRepository as formRepo;
 use Illuminate\Http\Request;
@@ -82,7 +83,7 @@ class AdminController extends Controller
      */
     private static function takeInfos ($adminRepo, $formRepo, $session)
     {
-        $allFormations = Formation::whereSessionId($session->id)->whereIsActive(true)->with('sites', 'sites.etudiants')->paginate(10);
+        $allFormations = Formation::whereSessionId($session->id)->whereIsActive(true)->with('sites', 'sites.etudiants')->get();
         foreach ($allFormations as $item) {
           foreach ($item->sites as $value) {
               $item->nb_prevus += $value->qte_requis;
@@ -91,6 +92,7 @@ class AdminController extends Controller
         }
 
         $communes      = Commune::get();
+        $setting      = Setting::whereSessionId($session->id)->first();
         $personnes_diplome  = $adminRepo->getPersonnesParDiplome();
         $personnes_age  = $adminRepo->getPersonnesParAge();
         $personnes_agesex  = $adminRepo->getPersonnesParGenreEtAge();
@@ -107,6 +109,13 @@ class AdminController extends Controller
         $stat_2015     = $adminRepo->getCTD2015();
         $formateurs    = Formateur::get();
         $formations    = CommuneFormation::whereSessionId($session->id)->with('formation', 'commune', 'evaluations')->get();
+        // foreach ($formations as $item) {
+        //   if (count($item->evaluations) > 0) {
+        //     foreach ($item->evaluations as $itm) {
+        //
+        //     }
+        //   }
+        // }
         $totalCommunesToucher = 0;
         $totalCommunesNonToucher = 0;
         $totalPersonnesIncrites = 0;
@@ -180,6 +189,7 @@ class AdminController extends Controller
 
         $data = [
             'regions' => $regions,
+            'setting' => $setting,
             'stat_2015' => $stat_2015,
             'stat_restantes' => $stat_restantes,
             'stat_touchees' => $stat_touchees,

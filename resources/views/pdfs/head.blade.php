@@ -20,6 +20,64 @@
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/manifest.json">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    var InputCentre = document.getElementById('Centre').value
+    var InputNord = document.getElementById('Nord').value
+    var InputNordOuest = document.getElementById('NordOuest').value
+    var InputAdamaoua = document.getElementById('Adamaoua').value
+    var InputEst = document.getElementById('Est').value
+    var InputOuest = document.getElementById('Ouest').value
+    var InputLittoral = document.getElementById('Littoral').value
+    var InputSud = document.getElementById('Sud').value
+    var InputExtremeNord = document.getElementById('ExtremeNord').value
+    var InputSudOuest = document.getElementById('SudOuest').value
+
+    var Centre = JSON.parse(InputCentre);
+    var Nord = JSON.parse(InputNord);
+    var NordOuest = JSON.parse(InputNordOuest);
+    var Adamaoua = JSON.parse(InputAdamaoua);
+    var Est = JSON.parse(InputEst);
+    var Ouest = JSON.parse(InputOuest);
+    var Littoral = JSON.parse(InputLittoral);
+    var Sud = JSON.parse(InputSud);
+    var ExtremeNord = JSON.parse(InputExtremeNord);
+    var SudOuest = JSON.parse(InputSudOuest);
+
+    function drawChart () {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Région', 'Commune touchée'],
+        [Adamaoua.name,  Adamaoua.commune_touchees.length],
+        [Centre.name, Centre.commune_touchees.length],
+        [Est.name,  Est.commune_touchees.length],
+        [ExtremeNord.name,  ExtremeNord.commune_touchees.length],
+        [Littoral.name,  Littoral.commune_touchees.length],
+        [Nord.name,  Nord.commune_touchees.length],
+        [NordOuest.name,  NordOuest.commune_touchees.length],
+        [Ouest.name,  Ouest.commune_touchees.length],
+        [Sud.name, Sud.commune_touchees.length],
+        [SudOuest.name, SudOuest.commune_touchees.length]
+      ]);
+
+      var options = {
+        title: 'POURCENTAGE DE MAIRES TOUCHES PAR REGIONS',
+        is3D: true,
+      };
+
+      var chart_div = document.getElementById('piechart_1');
+      var chart = new google.visualization.PieChart(chart_div);
+      // Wait for the chart to finish drawing before calling the getImageURI() method.
+        google.visualization.events.addListener(chart, 'ready', function () {
+          chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+          console.log(chart_div.innerHTML);
+        });
+
+      chart.draw(data, options);
+    }
+    </script>
     <title>{{ config('app.name') }} - {{ $title ?? '' }}</title>
     <style>
         @page {
