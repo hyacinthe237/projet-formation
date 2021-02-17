@@ -14,11 +14,17 @@ use App\Models\Commune;
 class AdminRepository
 {
     public function getEvaluations ($sessionId) {
-      $formations = CommuneFormation::with('evaluations')
-                      ->whereSessionId($sessionId)
+      $com_forms =  CommuneFormation::whereSessionId($sessionId)->with('commune', 'formation')->get();
+      $evaluations = DB::table('evaluations')
+                      ->select('commune_formation_id', DB::raw('count(*) as total'))
+                      ->groupBy('commune_formation_id')
                       ->get();
 
-      return $formations;
+      foreach ($evaluations as $item) {
+        $item->com_form = $com_forms->where('id', $item->commune_formation_id)->first();
+      }
+      
+      return $evaluations;
     }
 
     public function getPersonnesParDiplome () {

@@ -94,6 +94,7 @@ class AdminController extends Controller
         $communes      = Commune::get();
         $setting      = Setting::whereSessionId($session->id)->first();
         $personnes_diplome  = $adminRepo->getPersonnesParDiplome();
+        $evaluations  = $adminRepo->getEvaluations($session->id);
         $personnes_age  = $adminRepo->getPersonnesParAge();
         $personnes_agesex  = $adminRepo->getPersonnesParGenreEtAge();
         $departements  = Departement::get();
@@ -109,13 +110,6 @@ class AdminController extends Controller
         $stat_2015     = $adminRepo->getCTD2015();
         $formateurs    = Formateur::get();
         $formations    = CommuneFormation::whereSessionId($session->id)->with('formation', 'commune', 'evaluations')->get();
-        // foreach ($formations as $item) {
-        //   if (count($item->evaluations) > 0) {
-        //     foreach ($item->evaluations as $itm) {
-        //
-        //     }
-        //   }
-        // }
         $totalCommunesToucher = 0;
         $totalCommunesNonToucher = 0;
         $totalPersonnesIncrites = 0;
@@ -189,6 +183,7 @@ class AdminController extends Controller
 
         $data = [
             'regions' => $regions,
+            'evaluations' => $evaluations,
             'setting' => $setting,
             'stat_2015' => $stat_2015,
             'stat_restantes' => $stat_restantes,

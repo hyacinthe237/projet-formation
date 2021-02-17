@@ -202,31 +202,59 @@
         </div>
 
         <div class="cards row mt-20">
-          <div class="col-sm-12">
-            <h4 class="mt-20 mb-20 text-center">TABLEAU GLOBAL DES CTD TOUCHEES</h4>
-          </div>
-            <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
-              <table class="table table-striped bg-white">
-                  <thead>
-                    <tr>
-                      <th>Régions</th>
-                      <th>Nombres de CTD touchées</th>
-                      <th>Nombre de CTD pas encore touchées</th>
-                      <th>Taux de couverture (en %)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($data['regions'] as $region)
-                      <tr>
-                          <td class="bold td-5">{{ $region->name }}</td>
-                          <td class="td-5">{{ count($region->commune_touchees) }}</td>
-                          <td class="td-5">{{ $region->nontouchees }}</td>
-                          <td class="td-5">{{ number_format($region->couverture, 2) }} %</td>
-                      </tr>
-                    @endforeach
-                  </tbody>
-              </table>
+          @if (count($data['evaluations']) > 0)
+            <div class="col-sm-12">
+              <h4 class="mt-20 mb-20 text-center">RECAPUTILATIF DES EVALUATIONS PAR FORMQTION ET COMMUNE</h4>
             </div>
+            <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
+                <table class="table table-striped bg-white">
+                    <thead>
+                      <tr>
+                        <th>Formation</th>
+                        <th>Commune</th>
+                        <th>Nombre d'évaluations</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($data['evaluations'] as $item)
+                        <tr>
+                            <td class="bold td-5">{{ $item->com_form->formation->title }}</td>
+                            <td class="td-5">{{ $item->com_form->commune->name }}</td>
+                            <td class="td-5">{{ $item->total }}</td>
+                        </tr>
+                      @endforeach
+                    </tbody>
+                </table>
+              </div>
+          @endif
+
+          @if (count($data['regions']) > 0)
+            <div class="col-sm-12">
+              <h4 class="mt-20 mb-20 text-center">TABLEAU GLOBAL DES CTD TOUCHEES</h4>
+            </div>
+              <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
+                <table class="table table-striped bg-white">
+                    <thead>
+                      <tr>
+                        <th>Régions</th>
+                        <th>Nombres de CTD touchées</th>
+                        <th>Nombre de CTD pas encore touchées</th>
+                        <th>Taux de couverture (en %)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($data['regions'] as $region)
+                        <tr>
+                            <td class="bold td-5">{{ $region->name }}</td>
+                            <td class="td-5">{{ count($region->commune_touchees) }}</td>
+                            <td class="td-5">{{ $region->nontouchees }}</td>
+                            <td class="td-5">{{ number_format($region->couverture, 2) }} %</td>
+                        </tr>
+                      @endforeach
+                    </tbody>
+                </table>
+              </div>
+          @endif
 
             <div class="col-sm-12">
               <h4 class="mt-20 mb-20 text-center">SYNTHESES DES CTD ATTEINTES EN {{ $data['session']->name }}</h4>
@@ -258,254 +286,258 @@
               </table>
             </div>
 
-            <div class="col-sm-12">
-              <h4 class="mt-20 mb-20 text-center">TABLEAU GLOBAL DES FORMATIONS</h4>
-            </div>
-            <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
-              <table class="table table-striped bg-white">
-                  <thead>
-                    <tr>
-                      <th>Titre de la formation</th>
-                      <th>Nombre de stagiaires prévus</th>
-                      <th>Nombre de stagiaires effectif</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($data['allFormations'] as $item)
+            @if (count($data['allFormations']) > 0)
+              <div class="col-sm-12">
+                <h4 class="mt-20 mb-20 text-center">TABLEAU GLOBAL DES FORMATIONS</h4>
+              </div>
+              <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
+                <table class="table table-striped bg-white">
+                    <thead>
                       <tr>
-                          <td class="bold td-5">{{ $item->title }}</td>
-                          <td class="td-5">{{ $item->nb_prevus }}</td>
-                          <td class="td-5">{{ $item->nb_effectif }}</td>
+                        <th>Titre de la formation</th>
+                        <th>Nombre de stagiaires prévus</th>
+                        <th>Nombre de stagiaires effectif</th>
                       </tr>
-                    @endforeach
-                  </tbody>
-              </table>
-            </div>
+                    </thead>
+                    <tbody>
+                      @foreach($data['allFormations'] as $item)
+                        <tr>
+                            <td class="bold td-5">{{ $item->title }}</td>
+                            <td class="td-5">{{ $item->nb_prevus }}</td>
+                            <td class="td-5">{{ $item->nb_effectif }}</td>
+                        </tr>
+                      @endforeach
+                    </tbody>
+                </table>
+              </div>
+            @endif
 
-            <div class="col-sm-12">
-              <h4 class="mt-20 mb-20 text-center">POURCENTAGE DES SG TOUCHES PAR REGION</h4>
-            </div>
-            <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
-              <table class="table table-striped bg-white">
-                  <thead>
-                    <tr>
-                      <th>Regions</th>
-                      <th>Pourcentages</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($data['regions'] as $item)
+            @if (count($data['regions']) > 0)
+              <div class="col-sm-12">
+                <h4 class="mt-20 mb-20 text-center">POURCENTAGE DES SG TOUCHES PAR REGION</h4>
+              </div>
+              <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
+                <table class="table table-striped bg-white">
+                    <thead>
                       <tr>
-                          <td class="bold td-5">{{ $item->name }}</td>
-                          @if ($data['totalPersonnesSG']>0)
-                            <td class="td-5">{{ number_format((count($item->personnes_sg)/$data['totalPersonnesSG'])*100,2) . '%' }}</td>
-                          @else
-                            <td class="td-5">{{ 0.00 . '%' }}</td>
-                          @endif
+                        <th>Regions</th>
+                        <th>Pourcentages</th>
                       </tr>
-                    @endforeach
-                  </tbody>
-              </table>
-            </div>
+                    </thead>
+                    <tbody>
+                      @foreach($data['regions'] as $item)
+                        <tr>
+                            <td class="bold td-5">{{ $item->name }}</td>
+                            @if ($data['totalPersonnesSG']>0)
+                              <td class="td-5">{{ number_format((count($item->personnes_sg)/$data['totalPersonnesSG'])*100,2) . '%' }}</td>
+                            @else
+                              <td class="td-5">{{ 0.00 . '%' }}</td>
+                            @endif
+                        </tr>
+                      @endforeach
+                    </tbody>
+                </table>
+              </div>
+            @endif
 
-            <div class="col-sm-12">
-              <h4 class="mt-20 mb-20 text-center">TABLEAU DES PERSONNES PAR DIPLOME</h4>
-            </div>
-            <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
-              <table class="table table-striped bg-white">
-                  <thead>
-                    <tr>
-                      <th>Diplomes</th>
-                      <th>Effectifs</th>
-                      <th>Pourcentages</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($data['personnes_diplome'] as $item)
+            @if (count($data['personnes_diplome']) > 0)
+              <div class="col-sm-12">
+                <h4 class="mt-20 mb-20 text-center">TABLEAU DES PERSONNES PAR DIPLOME</h4>
+              </div>
+              <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
+                <table class="table table-striped bg-white">
+                    <thead>
                       <tr>
-                          <td class="bold td-5">{{ $item->diplome_elev ? $item->diplome_elev : 'Uncategorized'}}</td>
-                          <td class="td-5">{{ $item->total }}</td>
-                          <td class="td-5">{{ $item->pourcentage . '%' }}</td>
+                        <th>Diplomes</th>
+                        <th>Effectifs</th>
+                        <th>Pourcentages</th>
                       </tr>
-                    @endforeach
-                  </tbody>
-              </table>
-            </div>
+                    </thead>
+                    <tbody>
+                      @foreach($data['personnes_diplome'] as $item)
+                        <tr>
+                            <td class="bold td-5">{{ $item->diplome_elev ? $item->diplome_elev : 'Uncategorized'}}</td>
+                            <td class="td-5">{{ $item->total }}</td>
+                            <td class="td-5">{{ $item->pourcentage . '%' }}</td>
+                        </tr>
+                      @endforeach
+                    </tbody>
+                </table>
+              </div>
+            @endif
 
-            <div class="col-sm-12">
-              <h4 class="mt-20 mb-20 text-center">TABLEAU DES PERSONNES PAR AGE</h4>
-            </div>
-            <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
-              <table class="table table-striped bg-white">
-                  <thead>
-                    <tr>
-                      <th>Ages</th>
-                      <th>Effectifs</th>
-                      <th>Pourcentages</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @if (count($data['personnes_age']['pers_20_30'])>0)
+            @if (count($data['personnes_age']) > 0)
+              <div class="col-sm-12">
+                <h4 class="mt-20 mb-20 text-center">TABLEAU DES PERSONNES PAR AGE</h4>
+              </div>
+              <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
+                <table class="table table-striped bg-white">
+                    <thead>
                       <tr>
-                          <td class="bold td-5">De 20 à 30 ans</td>
-                          <td class="td-5">{{ count($data['personnes_age']['pers_20_30']) }}</td>
-                          @if ($data['personnes_age']['personnes'] > 0)
-                            <td class="td-5">{{ number_format((count($data['personnes_age']['pers_20_30'])/$data['personnes_age']['personnes'])*100,2) . '%' }}</td>
-                          @else
-                            <td class="td-5">{{ 0.00 . '%' }}</td>
-                          @endif
+                        <th>Ages</th>
+                        <th>Effectifs</th>
+                        <th>Pourcentages</th>
                       </tr>
-                    @endif
+                    </thead>
+                    <tbody>
+                      @if (count($data['personnes_age']['pers_20_30'])>0)
+                        <tr>
+                            <td class="bold td-5">De 20 à 30 ans</td>
+                            <td class="td-5">{{ count($data['personnes_age']['pers_20_30']) }}</td>
+                            @if ($data['personnes_age']['personnes'] > 0)
+                              <td class="td-5">{{ number_format((count($data['personnes_age']['pers_20_30'])/$data['personnes_age']['personnes'])*100,2) . '%' }}</td>
+                            @else
+                              <td class="td-5">{{ 0.00 . '%' }}</td>
+                            @endif
+                        </tr>
+                      @endif
 
-                    @if (count($data['personnes_age']['pers_31_40'])>0)
+                      @if (count($data['personnes_age']['pers_31_40'])>0)
+                        <tr>
+                            <td class="bold td-5">De 31 à 40 ans</td>
+                            <td class="td-5">{{ count($data['personnes_age']['pers_31_40']) }}</td>
+                            @if ($data['personnes_age']['personnes'] > 0)
+                              <td class="td-5">{{ number_format((count($data['personnes_age']['pers_31_40'])/$data['personnes_age']['personnes'])*100,2) . '%' }}</td>
+                            @else
+                              <td class="td-5">{{ 0.00 . '%' }}</td>
+                            @endif
+                        </tr>
+                      @endif
+
+                      @if (count($data['personnes_age']['pers_41_50'])>0)
+                        <tr>
+                            <td class="bold td-5">De 41 à 50 ans</td>
+                            <td class="td-5">{{ count($data['personnes_age']['pers_41_50']) }}</td>
+                            @if ($data['personnes_age']['personnes'] > 0)
+                              <td class="td-5">{{ number_format((count($data['personnes_age']['pers_41_50'])/$data['personnes_age']['personnes'])*100,2) . '%' }}</td>
+                            @else
+                              <td class="td-5">{{ 0.00 . '%' }}</td>
+                            @endif
+                        </tr>
+                      @endif
+
+                      @if (count($data['personnes_age']['pers_51_60'])>0)
+                        <tr>
+                            <td class="bold td-5">De 51 à 60 ans</td>
+                            <td class="td-5">{{ count($data['personnes_age']['pers_51_60']) }}</td>
+                            @if ($data['personnes_age']['personnes'] > 0)
+                              <td class="td-5">{{ number_format((count($data['personnes_age']['pers_51_60'])/$data['personnes_age']['personnes'])*100,2) . '%' }}</td>
+                            @else
+                              <td class="td-5">{{ 0.00 . '%' }}</td>
+                            @endif
+                        </tr>
+                      @endif
+
+                    </tbody>
+                </table>
+              </div>
+            @endif
+
+            @if (count($data['personnes_agesex']) > 0)
+              <div class="col-sm-12">
+                <h4 class="mt-20 mb-20 text-center">TABLEAU DES PERSONNES PAR AGE ET PAR SEXE</h4>
+              </div>
+              <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
+                <table class="table table-striped bg-white">
+                    <thead>
                       <tr>
-                          <td class="bold td-5">De 31 à 40 ans</td>
-                          <td class="td-5">{{ count($data['personnes_age']['pers_31_40']) }}</td>
-                          @if ($data['personnes_age']['personnes'] > 0)
-                            <td class="td-5">{{ number_format((count($data['personnes_age']['pers_31_40'])/$data['personnes_age']['personnes'])*100,2) . '%' }}</td>
-                          @else
-                            <td class="td-5">{{ 0.00 . '%' }}</td>
-                          @endif
+                        <th>Ages</th>
+                        <th>Effectifs</th>
+                        <th>Pourcentages</th>
                       </tr>
-                    @endif
+                    </thead>
+                    <tbody>
+                      @if ((count($data['personnes_agesex']['pers_20_30_male'])>0) || (count($data['personnes_agesex']['pers_20_30_female'])>0))
+                        <tr>
+                            <td class="bold td-5" rowspan="2">De 20 à 30 ans</td>
+                            <td class="td-5">{{ count($data['personnes_agesex']['pers_20_30_male']) .' Masculin' }}</td>
+                            @if ($data['personnes_agesex']['personnes']>0)
+                              <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_20_30_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                            @else
+                              <td class="td-5">{{ 0.00 . '%' }}</td>
+                            @endif
 
-                    @if (count($data['personnes_age']['pers_41_50'])>0)
-                      <tr>
-                          <td class="bold td-5">De 41 à 50 ans</td>
-                          <td class="td-5">{{ count($data['personnes_age']['pers_41_50']) }}</td>
-                          @if ($data['personnes_age']['personnes'] > 0)
-                            <td class="td-5">{{ number_format((count($data['personnes_age']['pers_41_50'])/$data['personnes_age']['personnes'])*100,2) . '%' }}</td>
-                          @else
-                            <td class="td-5">{{ 0.00 . '%' }}</td>
-                          @endif
-                      </tr>
-                    @endif
+                        </tr>
+                        <tr>
+                            <td class="td-5">{{ count($data['personnes_agesex']['pers_20_30_female']) .' Féminin' }}</td>
+                            @if ($data['personnes_agesex']['personnes']>0)
+                              <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_20_30_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                            @else
+                              <td class="td-5">{{ 0.00 . '%' }}</td>
+                            @endif
 
-                    @if (count($data['personnes_age']['pers_51_60'])>0)
-                      <tr>
-                          <td class="bold td-5">De 51 à 60 ans</td>
-                          <td class="td-5">{{ count($data['personnes_age']['pers_51_60']) }}</td>
-                          @if ($data['personnes_age']['personnes'] > 0)
-                            <td class="td-5">{{ number_format((count($data['personnes_age']['pers_51_60'])/$data['personnes_age']['personnes'])*100,2) . '%' }}</td>
-                          @else
-                            <td class="td-5">{{ 0.00 . '%' }}</td>
-                          @endif
-                      </tr>
-                    @endif
+                        </tr>
+                      @endif
 
-                  </tbody>
-              </table>
-            </div>
+                      @if ((count($data['personnes_agesex']['pers_31_40_male'])>0) || (count($data['personnes_agesex']['pers_31_40_female'])>0))
+                        <tr>
+                            <td class="bold td-5" rowspan="2">De 31 à 40 ans</td>
+                            <td class="td-5">{{ count($data['personnes_agesex']['pers_31_40_male']) .' Masculin' }}</td>
+                            @if ($data['personnes_agesex']['personnes']>0)
+                              <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_31_40_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                            @else
+                              <td class="td-5">{{ 0.00 . '%' }}</td>
+                            @endif
 
-            <div class="col-sm-12">
-              <h4 class="mt-20 mb-20 text-center">TABLEAU DES PERSONNES PAR AGE ET PAR SEXE</h4>
-            </div>
-            <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
-              <table class="table table-striped bg-white">
-                  <thead>
-                    <tr>
-                      <th>Ages</th>
-                      <th>Effectifs</th>
-                      <th>Pourcentages</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @if ((count($data['personnes_agesex']['pers_20_30_male'])>0) || (count($data['personnes_agesex']['pers_20_30_female'])>0))
-                      <tr>
-                          <td class="bold td-5" rowspan="2">De 20 à 30 ans</td>
-                          <td class="td-5">{{ count($data['personnes_agesex']['pers_20_30_male']) .' Masculin' }}</td>
-                          @if ($data['personnes_agesex']['personnes']>0)
-                            <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_20_30_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
-                          @else
-                            <td class="td-5">{{ 0.00 . '%' }}</td>
-                          @endif
+                        </tr>
+                        <tr>
+                            <td class="td-5">{{ count($data['personnes_agesex']['pers_31_40_female']) .' Féminin' }}</td>
+                            @if ($data['personnes_agesex']['personnes']>0)
+                              <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_31_40_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                            @else
+                              <td class="td-5">{{ 0.00 . '%' }}</td>
+                            @endif
 
-                      </tr>
-                      <tr>
-                          <td class="td-5">{{ count($data['personnes_agesex']['pers_20_30_female']) .' Féminin' }}</td>
-                          @if ($data['personnes_agesex']['personnes']>0)
-                            <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_20_30_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
-                          @else
-                            <td class="td-5">{{ 0.00 . '%' }}</td>
-                          @endif
+                        </tr>
+                      @endif
 
-                      </tr>
-                    @endif
+                      @if ((count($data['personnes_agesex']['pers_41_50_male'])>0) || (count($data['personnes_agesex']['pers_41_50_female'])>0))
+                        <tr>
+                            <td class="bold td-5" rowspan="2">De 41 à 50 ans</td>
+                            <td class="td-5">{{ count($data['personnes_agesex']['pers_41_50_male']) .' Masculin' }}</td>
+                            @if ($data['personnes_agesex']['personnes']>0)
+                              <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_41_50_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                            @else
+                              <td class="td-5">{{ 0.00 . '%' }}</td>
+                            @endif
 
-                    @if ((count($data['personnes_agesex']['pers_31_40_male'])>0) || (count($data['personnes_agesex']['pers_31_40_female'])>0))
-                      <tr>
-                          <td class="bold td-5" rowspan="2">De 31 à 40 ans</td>
-                          <td class="td-5">{{ count($data['personnes_agesex']['pers_31_40_male']) .' Masculin' }}</td>
-                          @if ($data['personnes_agesex']['personnes']>0)
-                            <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_31_40_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
-                          @else
-                            <td class="td-5">{{ 0.00 . '%' }}</td>
-                          @endif
+                        </tr>
+                        <tr>
+                            <td class="td-5">{{ count($data['personnes_agesex']['pers_41_50_female']) .' Féminin' }}</td>
+                            @if ($data['personnes_agesex']['personnes']>0)
+                              <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_41_50_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                            @else
+                              <td class="td-5">{{ 0.00 . '%' }}</td>
+                            @endif
 
-                      </tr>
-                      <tr>
-                          <td class="td-5">{{ count($data['personnes_agesex']['pers_31_40_female']) .' Féminin' }}</td>
-                          @if ($data['personnes_agesex']['personnes']>0)
-                            <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_31_40_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
-                          @else
-                            <td class="td-5">{{ 0.00 . '%' }}</td>
-                          @endif
+                        </tr>
+                      @endif
 
-                      </tr>
-                    @endif
+                      @if ((count($data['personnes_agesex']['pers_51_60_male'])>0) || (count($data['personnes_agesex']['pers_51_60_female'])>0))
+                        <tr>
+                            <td class="bold td-5" rowspan="2">De 51 à 60 ans</td>
+                            <td class="td-5">{{ count($data['personnes_agesex']['pers_51_60_male']) .' Masculin' }}</td>
+                            @if ($data['personnes_agesex']['personnes']>0)
+                              <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_51_60_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                            @else
+                              <td class="td-5">{{ 0.00 . '%' }}</td>
+                            @endif
 
-                    @if ((count($data['personnes_agesex']['pers_41_50_male'])>0) || (count($data['personnes_agesex']['pers_41_50_female'])>0))
-                      <tr>
-                          <td class="bold td-5" rowspan="2">De 41 à 50 ans</td>
-                          <td class="td-5">{{ count($data['personnes_agesex']['pers_41_50_male']) .' Masculin' }}</td>
-                          @if ($data['personnes_agesex']['personnes']>0)
-                            <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_41_50_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
-                          @else
-                            <td class="td-5">{{ 0.00 . '%' }}</td>
-                          @endif
+                        </tr>
+                        <tr>
+                            <td class="td-5">{{ count($data['personnes_agesex']['pers_51_60_female']) .' Féminin' }}</td>
+                            @if ($data['personnes_agesex']['personnes']>0)
+                              <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_51_60_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
+                            @else
+                              <td class="td-5">{{ 0.00 . '%' }}</td>
+                            @endif
+                        </tr>
+                      @endif
+                    </tbody>
+                </table>
+              </div>
+            @endif
 
-                      </tr>
-                      <tr>
-                          <td class="td-5">{{ count($data['personnes_agesex']['pers_41_50_female']) .' Féminin' }}</td>
-                          @if ($data['personnes_agesex']['personnes']>0)
-                            <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_41_50_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
-                          @else
-                            <td class="td-5">{{ 0.00 . '%' }}</td>
-                          @endif
-
-                      </tr>
-                    @endif
-
-                    @if ((count($data['personnes_agesex']['pers_51_60_male'])>0) || (count($data['personnes_agesex']['pers_51_60_female'])>0))
-                      <tr>
-                          <td class="bold td-5" rowspan="2">De 51 à 60 ans</td>
-                          <td class="td-5">{{ count($data['personnes_agesex']['pers_51_60_male']) .' Masculin' }}</td>
-                          @if ($data['personnes_agesex']['personnes']>0)
-                            <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_51_60_male'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
-                          @else
-                            <td class="td-5">{{ 0.00 . '%' }}</td>
-                          @endif
-
-                      </tr>
-                      <tr>
-                          <td class="td-5">{{ count($data['personnes_agesex']['pers_51_60_female']) .' Féminin' }}</td>
-                          @if ($data['personnes_agesex']['personnes']>0)
-                            <td class="td-5">{{ number_format((count($data['personnes_agesex']['pers_51_60_female'])/$data['personnes_agesex']['personnes'])*100,2) . '%' }}</td>
-                          @else
-                            <td class="td-5">{{ 0.00 . '%' }}</td>
-                          @endif
-                      </tr>
-                    @endif
-                  </tbody>
-              </table>
-            </div>
-
-            <div class="col-sm-12">
-              <h4 class="mt-20 mb-20 text-center">TABLEAU D'EVALUATIONS PAR FORMATION</h4>
-            </div>
-            <div class="col-sm-12" style="max-height: 300px; overflow: auto;">
-
-            </div>
         </div>
 
         <div class="row mt-40 mb-20">
